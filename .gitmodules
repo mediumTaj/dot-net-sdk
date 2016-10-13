@@ -1,0 +1,4 @@
+[submodule "sdk/src/services"]
+	path = sdk/src/services
+	url = git@github.com:mediumTaj/csharp-sdk-base.git
+	branch = master
