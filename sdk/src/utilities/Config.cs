@@ -18,7 +18,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using IBM.Watson.DeveloperCloud.Logging;
-using UnityEngine;
+//using UnityEngine;
 using FullSerializer;
 using System.IO;
 using MiniJSON;
@@ -228,22 +228,18 @@ namespace IBM.Watson.DeveloperCloud.Utilities
         /// </summary>
         public void LoadConfig()
         {
-#if !UNITY_ANDROID || UNITY_EDITOR
             try
             {
-                if (!Directory.Exists(Application.streamingAssetsPath))
-                    Directory.CreateDirectory(Application.streamingAssetsPath);
-                LoadConfig(System.IO.File.ReadAllText(Application.streamingAssetsPath + Constants.Path.CONFIG_FILE));
+                if (!Directory.Exists("appdata"))
+                    Directory.CreateDirectory("appdata");
+                LoadConfig(File.ReadAllText("appdata" + Path.DirectorySeparatorChar + Constants.Path.CONFIG_FILE));
             }
-            catch (System.IO.FileNotFoundException)
+            catch (FileNotFoundException)
             {
                 // mark as loaded anyway, so we don't keep retrying..
                 Log.Error("Config", "Failed to load config file.");
                 ConfigLoaded = true;
             }
-#else
-            Runnable.Run(LoadConfigCR());
-#endif
         }
 
         /// <summary>
@@ -293,8 +289,8 @@ namespace IBM.Watson.DeveloperCloud.Utilities
             fsData data = null;
             sm_Serializer.TrySerialize(GetType(), this, out data);
 
-            if (!System.IO.Directory.Exists(Application.streamingAssetsPath))
-                System.IO.Directory.CreateDirectory(Application.streamingAssetsPath);
+            if (!System.IO.Directory.Exists("appdata"))
+                System.IO.Directory.CreateDirectory("appdata");
 
             if (pretty)
                 return fsJsonPrinter.PrettyJson(data);
@@ -310,7 +306,7 @@ namespace IBM.Watson.DeveloperCloud.Utilities
             bool success = true;
             try
             {
-                File.WriteAllText(Application.streamingAssetsPath + Constants.Path.CONFIG_FILE, SaveConfig(true));
+                File.WriteAllText("appdata" + Path.DirectorySeparatorChar + Constants.Path.CONFIG_FILE, SaveConfig(true));
             }
             catch (Exception ex)
             {
@@ -417,17 +413,6 @@ namespace IBM.Watson.DeveloperCloud.Utilities
             }
 
             return output;
-        }
-
-        private IEnumerator LoadConfigCR()
-        {
-            // load the config using WWW, since this works on all platforms..
-            WWW request = new WWW(Application.streamingAssetsPath + Constants.Path.CONFIG_FILE);
-            while (!request.isDone)
-                yield return null;
-
-            LoadConfig(request.text);
-            yield break;
         }
     }
 }

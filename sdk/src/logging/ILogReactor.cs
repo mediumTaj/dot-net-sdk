@@ -15,9 +15,6 @@
 *
 */
 
-using UnityEngine;
-using System.Collections;
-
 namespace IBM.Watson.DeveloperCloud.Logging
 {
     /// <summary>

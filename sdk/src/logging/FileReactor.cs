@@ -20,7 +20,6 @@ using System.IO;
 
 namespace IBM.Watson.DeveloperCloud.Logging
 {
-#if !UNITY_WEBPLAYER
 
     /// <summary>
     /// FileReactor log reactor class.
@@ -112,6 +111,4 @@ namespace IBM.Watson.DeveloperCloud.Logging
         }
         #endregion
     }
-#endif
-
 }
