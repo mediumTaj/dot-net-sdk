@@ -18,7 +18,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using IBM.Watson.DeveloperCloud.Logging;
-//using UnityEngine;
 using FullSerializer;
 using System.IO;
 using MiniJSON;
@@ -230,9 +229,9 @@ namespace IBM.Watson.DeveloperCloud.Utilities
         {
             try
             {
-                if (!Directory.Exists("appdata"))
-                    Directory.CreateDirectory("appdata");
-                LoadConfig(File.ReadAllText("appdata" + Path.DirectorySeparatorChar + Constants.Path.CONFIG_FILE));
+                if (!Directory.Exists(Constants.Path.APP_DATA))
+                    Directory.CreateDirectory(Constants.Path.APP_DATA);
+                LoadConfig(File.ReadAllText(Constants.Path.APP_DATA + Constants.Path.CONFIG_FILE));
             }
             catch (FileNotFoundException)
             {
@@ -289,8 +288,8 @@ namespace IBM.Watson.DeveloperCloud.Utilities
             fsData data = null;
             sm_Serializer.TrySerialize(GetType(), this, out data);
 
-            if (!System.IO.Directory.Exists("appdata"))
-                System.IO.Directory.CreateDirectory("appdata");
+            if (!System.IO.Directory.Exists(Constants.Path.APP_DATA))
+                System.IO.Directory.CreateDirectory(Constants.Path.APP_DATA);
 
             if (pretty)
                 return fsJsonPrinter.PrettyJson(data);
@@ -306,7 +305,7 @@ namespace IBM.Watson.DeveloperCloud.Utilities
             bool success = true;
             try
             {
-                File.WriteAllText("appdata" + Path.DirectorySeparatorChar + Constants.Path.CONFIG_FILE, SaveConfig(true));
+                File.WriteAllText(Constants.Path.APP_DATA + Constants.Path.CONFIG_FILE, SaveConfig(true));
             }
             catch (Exception ex)
             {

@@ -47,6 +47,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="src\connection\RESTConnector.cs" />
+    <Compile Include="src\connection\WSConnector.cs" />
+    <Compile Include="src\logging\FileReactor.cs" />
+    <Compile Include="src\logging\ILogReactor.cs" />
+    <Compile Include="src\logging\Logger.cs" />
     <Compile Include="src\services\AlchemyAPI\AlchemyAPI.cs" />
     <Compile Include="src\services\AlchemyAPI\DataModels.cs" />
     <Compile Include="src\services\Conversation-Experimental\Conversation-Experimental.cs" />
@@ -78,6 +83,24 @@
     <Compile Include="src\services\TradeoffAnalytics\TradeoffAnalytics.cs" />
     <Compile Include="src\services\VisualRecognition\DataModels.cs" />
     <Compile Include="src\services\VisualRecognition\VisualRecognition.cs" />
+    <Compile Include="src\utilities\AudioClipUtil.cs" />
+    <Compile Include="src\utilities\Config.cs" />
+    <Compile Include="src\utilities\Constants.cs" />
+    <Compile Include="src\utilities\Credentials.cs" />
+    <Compile Include="src\utilities\DataCache.cs" />
+    <Compile Include="src\utilities\EventManager.cs" />
+    <Compile Include="src\utilities\FrameRateCounter.cs" />
+    <Compile Include="src\utilities\KeyEventManager.cs" />
+    <Compile Include="src\utilities\NestedPrefabs.cs" />
+    <Compile Include="src\utilities\Runnable.cs" />
+    <Compile Include="src\utilities\SerializedDelegate.cs" />
+    <Compile Include="src\utilities\Singleton.cs" />
+    <Compile Include="src\utilities\TimedDestroy.cs" />
+    <Compile Include="src\utilities\TouchEventManager.cs" />
+    <Compile Include="src\utilities\UnityObjectUtil.cs" />
+    <Compile Include="src\utilities\Utility.cs" />
+    <Compile Include="src\utilities\WatsonException.cs" />
+    <Compile Include="src\utilities\WaveFile.cs" />
     <Compile Include="test\HelloWorld.cs" />
     <Compile Include="obj\Debug\TemporaryGeneratedFile_036C0B5B-1481-4323-8D20-8F5ADCB23D92.cs" />
     <Compile Include="obj\Debug\TemporaryGeneratedFile_5937a670-0e60-4077-877b-f7221da3dda1.cs" />
