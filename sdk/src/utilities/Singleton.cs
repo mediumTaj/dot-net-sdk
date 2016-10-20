@@ -15,9 +15,6 @@
 *
 */
 
-#define SINGLETONS_VISIBLE
-
-using UnityEngine;
 using System;
 
 namespace IBM.Watson.DeveloperCloud.Utilities
@@ -54,26 +51,7 @@ namespace IBM.Watson.DeveloperCloud.Utilities
         /// </summary>
         private static void CreateInstance()
         {
-            if (typeof(MonoBehaviour).IsAssignableFrom(typeof(T)))
-            {
-                string singletonName = "_" + typeof(T).Name;
-
-                GameObject singletonObject = GameObject.Find(singletonName);
-                if (singletonObject == null)
-                    singletonObject = new GameObject(singletonName);
-#if SINGLETONS_VISIBLE
-                singletonObject.hideFlags = HideFlags.DontSave;
-#else
-                singletonObject.hideFlags = HideFlags.HideAndDontSave;
-#endif
-                sm_Instance = singletonObject.GetComponent<T>();
-                if (sm_Instance == null)
-                    sm_Instance = singletonObject.AddComponent(typeof(T)) as T;
-            }
-            else
-            {
-                sm_Instance = Activator.CreateInstance(typeof(T)) as T;
-            }
+			sm_Instance = Activator.CreateInstance(typeof(T)) as T;
 
             if (sm_Instance == null)
                 throw new WatsonException("Failed to create instance " + typeof(T).Name);

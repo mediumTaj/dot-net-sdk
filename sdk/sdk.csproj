@@ -89,11 +89,8 @@
     <Compile Include="src\utilities\Credentials.cs" />
     <Compile Include="src\utilities\DataCache.cs" />
     <Compile Include="src\utilities\EventManager.cs" />
-    <Compile Include="src\utilities\FrameRateCounter.cs" />
     <Compile Include="src\utilities\KeyEventManager.cs" />
-    <Compile Include="src\utilities\NestedPrefabs.cs" />
     <Compile Include="src\utilities\Runnable.cs" />
-    <Compile Include="src\utilities\SerializedDelegate.cs" />
     <Compile Include="src\utilities\Singleton.cs" />
     <Compile Include="src\utilities\TimedDestroy.cs" />
     <Compile Include="src\utilities\TouchEventManager.cs" />

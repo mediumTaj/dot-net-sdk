@@ -22,7 +22,6 @@ using System;
 using System.Collections.Generic;
 using System.Security.Cryptography;
 using System.Text;
-using UnityEngine;
 using System.Net.NetworkInformation;
 using System.Text.RegularExpressions;
 using System.Runtime.InteropServices;
@@ -80,121 +79,7 @@ namespace IBM.Watson.DeveloperCloud.Utilities
         {
             return (Math.Abs(a - b) < tolerance);
         }
-
-        /// <summary>
-        /// Approximately the specified a, b and tolerance.
-        /// </summary>
-        /// <param name="a">The first component.</param>
-        /// <param name="b">The second component.</param>
-        /// <param name="tolerance">Tolerance.</param>
-        public static bool Approximately(Vector3 a, Vector3 b, float tolerance = 0.0001f)
-        {
-            return Approximately(a.x, b.x, tolerance) && Approximately(a.y, b.y, tolerance) && Approximately(a.z, b.z, tolerance);
-        }
-
-        /// <summary>
-        /// Approximately Quaternion with the specified a, b and tolerance.
-        /// </summary>
-        /// <param name="a">The first component.</param>
-        /// <param name="b">The second component.</param>
-        /// <param name="tolerance">Tolerance.</param>
-        public static bool Approximately(Quaternion a, Quaternion b, float tolerance = 0.0001f)
-        {
-            return
-                (Approximately(a.eulerAngles.x, b.eulerAngles.x, tolerance) || Approximately((a.eulerAngles.x < 0 ? a.eulerAngles.x + 360.0f : a.eulerAngles.x), (b.eulerAngles.x < 0 ? b.eulerAngles.x + 360.0f : b.eulerAngles.x), tolerance)) &&
-                    (Approximately(a.eulerAngles.y, b.eulerAngles.y, tolerance) || Approximately((a.eulerAngles.y < 0 ? a.eulerAngles.y + 360.0f : a.eulerAngles.y), (b.eulerAngles.y < 0 ? b.eulerAngles.y + 360.0f : b.eulerAngles.y), tolerance)) &&
-                    (Approximately(a.eulerAngles.z, b.eulerAngles.z, tolerance) || Approximately((a.eulerAngles.z < 0 ? a.eulerAngles.z + 360.0f : a.eulerAngles.z), (b.eulerAngles.z < 0 ? b.eulerAngles.z + 360.0f : b.eulerAngles.z), tolerance));
-        }
-
-        /// <summary>
-        /// Finds the object in child of parent object by name of child
-        /// </summary>
-        /// <returns>The object.</returns>
-        /// <param name="parent">Parent Object.</param>
-        /// <param name="nameChild">Name child.</param>
-        public static GameObject FindObject(GameObject parent, string nameChild)
-        {
-            GameObject childObject = null;
-
-            string[] childPath = nameChild.Split('/');
-
-            for (int i = 0; i < childPath.Length; i++)
-            {
-                string childTransformName = childPath[i];
-
-                Transform[] childerenTransform = parent.GetComponentsInChildren<Transform>(includeInactive: true);
-                if (childerenTransform != null)
-                {
-                    foreach (Transform item in childerenTransform)
-                    {
-                        if (string.Equals(item.name, childTransformName))
-                        {
-                            if (i == childPath.Length - 1)
-                            {
-                                childObject = item.gameObject;
-                            }
-                            else
-                            {
-                                parent = item.gameObject;
-                            }
-                            break;
-                        }
-                    }
-                }
-            }
-            return childObject;
-        }
-
-        /// <summary>
-        /// Finds the objects in children of parent object by name of child
-        /// </summary>
-        /// <returns>The objects.</returns>
-        /// <param name="parent">Parent.</param>
-        /// <param name="nameChild">Name child.</param>
-        /// <param name="isContains">Check string contains the name instead of equality.</param>
-        /// <param name="sortByName">If true, children will be returned sorted by their name.</param>
-		public static T[] FindObjects<T>(GameObject parent, string nameChild, bool isContains = false, bool sortByName = false, bool includeInactive = true) where T : Component
-        {
-            T[] childObjects = null;
-            List<T> listGameObject = new List<T>();
-
-            string[] childPath = nameChild.Split('/');
-
-            for (int i = 0; i < childPath.Length; i++)
-            {
-                string childTransformName = childPath[i];
-				T[] childerenTransform = parent.GetComponentsInChildren<T>(includeInactive: includeInactive);
-                if (childerenTransform != null)
-                {
-                    foreach (T item in childerenTransform)
-                    {
-                        if ((isContains && item.name.Contains(childTransformName)) || string.Equals(item.name, childTransformName))
-                        {
-                            if (i == childPath.Length - 1)
-                            {
-                                listGameObject.Add(item);
-                            }
-                            else
-                            {
-                                parent = item.gameObject;
-                            }
-                        }
-                    }
-                }
-            }
-
-            if (listGameObject.Count > 0)
-            {
-                if (sortByName)
-                {
-                    listGameObject.Sort((x, y) => x.name.CompareTo(y.name));
-                }
-                childObjects = listGameObject.ToArray();
-            }
-
-            return childObjects;
-        }
-
+		
         /// <summary>
         /// Get the MD5 hash of a string.
         /// </summary>
@@ -252,8 +137,7 @@ namespace IBM.Watson.DeveloperCloud.Utilities
         {
             return b?"ON": "OFF";
         }
-
-
+		
         /// <summary>
         /// Strips the prepending ! statment from string.
         /// </summary>
@@ -342,36 +226,6 @@ namespace IBM.Watson.DeveloperCloud.Utilities
 
                 return sm_MacAddress;
             }
-        }
-
-        /// <summary>
-        /// Converts Color32 array to Byte array.
-        /// </summary>
-        /// <param name="colors">Color32 array of the image.</param>
-        /// <returns></returns>
-        public static byte[] Color32ArrayToByteArray(Color32[] colors)
-        {
-            if (colors == null || colors.Length == 0)
-                return null;
-
-            int lengthOfColor32 = Marshal.SizeOf(typeof(Color32));
-            int length = lengthOfColor32 * colors.Length;
-            byte[] bytes = new byte[length];
-
-            GCHandle handle = default(GCHandle);
-            try
-            {
-                handle = GCHandle.Alloc(colors, GCHandleType.Pinned);
-                IntPtr ptr = handle.AddrOfPinnedObject();
-                Marshal.Copy(ptr, bytes, 0, length);
-            }
-            finally
-            {
-                if (handle != default(GCHandle))
-                    handle.Free();
-            }
-
-            return bytes;
         }
 
         #region Cache Generic Deserialization
