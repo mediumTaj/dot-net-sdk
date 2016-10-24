@@ -24,13 +24,8 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Text;
-using System.Threading;
-using UnityEngine;
-
-#if UNITY_EDITOR
 using System.Net;
 using System.Net.Security;
-#endif
 
 namespace IBM.Watson.DeveloperCloud.Connection
 {

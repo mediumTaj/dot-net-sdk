@@ -92,9 +92,6 @@
     <Compile Include="src\utilities\KeyEventManager.cs" />
     <Compile Include="src\utilities\Runnable.cs" />
     <Compile Include="src\utilities\Singleton.cs" />
-    <Compile Include="src\utilities\TimedDestroy.cs" />
-    <Compile Include="src\utilities\TouchEventManager.cs" />
-    <Compile Include="src\utilities\UnityObjectUtil.cs" />
     <Compile Include="src\utilities\Utility.cs" />
     <Compile Include="src\utilities\WatsonException.cs" />
     <Compile Include="src\utilities\WaveFile.cs" />
