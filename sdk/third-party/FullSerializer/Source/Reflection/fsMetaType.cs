@@ -264,13 +264,13 @@ namespace FullSerializer {
                 throw new Exception("Cannot create an instance of an interface or abstract type for " + ReflectedType);
             }
 
-#if !NO_UNITY
-            // Unity requires special construction logic for types that derive from
-            // ScriptableObject.
-            if (typeof(UnityEngine.ScriptableObject).IsAssignableFrom(ReflectedType)) {
-                return UnityEngine.ScriptableObject.CreateInstance(ReflectedType);
-            }
-#endif
+//#if !NO_UNITY
+//            // Unity requires special construction logic for types that derive from
+//            // ScriptableObject.
+//            if (typeof(UnityEngine.ScriptableObject).IsAssignableFrom(ReflectedType)) {
+//                return UnityEngine.ScriptableObject.CreateInstance(ReflectedType);
+//            }
+//#endif
 
             // Strings don't have default constructors but also fail when run through
             // FormatterSerivces.GetSafeUninitializedObject

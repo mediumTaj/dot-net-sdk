@@ -9,7 +9,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>sdk</RootNamespace>
     <AssemblyName>sdk</AssemblyName>
-    <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <TargetFrameworkProfile />
@@ -44,7 +44,6 @@
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
-    <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
@@ -53,37 +52,6 @@
     <Compile Include="src\logging\FileReactor.cs" />
     <Compile Include="src\logging\ILogReactor.cs" />
     <Compile Include="src\logging\Logger.cs" />
-    <Compile Include="src\services\AlchemyAPI\AlchemyAPI.cs" />
-    <Compile Include="src\services\AlchemyAPI\DataModels.cs" />
-    <Compile Include="src\services\Conversation-Experimental\Conversation-Experimental.cs" />
-    <Compile Include="src\services\Conversation-Experimental\DataModels.cs" />
-    <Compile Include="src\services\Conversation\Conversation.cs" />
-    <Compile Include="src\services\Conversation\DataModels.cs" />
-    <Compile Include="src\services\DeepQA\DataModels.cs" />
-    <Compile Include="src\services\DeepQA\DeepQA.cs" />
-    <Compile Include="src\services\DocumentConversion\DataModels.cs" />
-    <Compile Include="src\services\DocumentConversion\DocumentConversion.cs" />
-    <Compile Include="src\services\IWatsonService.cs" />
-    <Compile Include="src\services\LanguageTranslation\DataModels.cs" />
-    <Compile Include="src\services\LanguageTranslation\LanguageTranslation.cs" />
-    <Compile Include="src\services\LanguageTranslator\DataModels.cs" />
-    <Compile Include="src\services\LanguageTranslator\LanguageTranslator.cs" />
-    <Compile Include="src\services\NaturalLanguageClassifier\DataModels.cs" />
-    <Compile Include="src\services\NaturalLanguageClassifier\NaturalLanguageClassifier.cs" />
-    <Compile Include="src\services\PersonalityInsights\DataModels.cs" />
-    <Compile Include="src\services\PersonalityInsights\PersonalityInsights.cs" />
-    <Compile Include="src\services\RetrieveAndRank\DataModels.cs" />
-    <Compile Include="src\services\RetrieveAndRank\RetrieveAndRank.cs" />
-    <Compile Include="src\services\SpeechToText\DataModels.cs" />
-    <Compile Include="src\services\SpeechToText\SpeechToText.cs" />
-    <Compile Include="src\services\TextToSpeech\DataModels.cs" />
-    <Compile Include="src\services\TextToSpeech\TextToSpeech.cs" />
-    <Compile Include="src\services\ToneAnalyzer\DataModels.cs" />
-    <Compile Include="src\services\ToneAnalyzer\ToneAnalyzer.cs" />
-    <Compile Include="src\services\TradeoffAnalytics\DataModels.cs" />
-    <Compile Include="src\services\TradeoffAnalytics\TradeoffAnalytics.cs" />
-    <Compile Include="src\services\VisualRecognition\DataModels.cs" />
-    <Compile Include="src\services\VisualRecognition\VisualRecognition.cs" />
     <Compile Include="src\utilities\AudioClipUtil.cs" />
     <Compile Include="src\utilities\Config.cs" />
     <Compile Include="src\utilities\Constants.cs" />
@@ -114,13 +82,6 @@
     <Compile Include="third-party\FullSerializer\Source\Converters\fsReflectedConverter.cs" />
     <Compile Include="third-party\FullSerializer\Source\Converters\fsTypeConverter.cs" />
     <Compile Include="third-party\FullSerializer\Source\Converters\fsWeakReferenceConverter.cs" />
-    <Compile Include="third-party\FullSerializer\Source\Converters\Unity\AnimationCurve_DirectConverter.cs" />
-    <Compile Include="third-party\FullSerializer\Source\Converters\Unity\Bounds_DirectConverter.cs" />
-    <Compile Include="third-party\FullSerializer\Source\Converters\Unity\Gradient_DirectConverter.cs" />
-    <Compile Include="third-party\FullSerializer\Source\Converters\Unity\Keyframe_DirectConverter.cs" />
-    <Compile Include="third-party\FullSerializer\Source\Converters\Unity\LayerMask_DirectConverter.cs" />
-    <Compile Include="third-party\FullSerializer\Source\Converters\Unity\Rect_DirectConverter.cs" />
-    <Compile Include="third-party\FullSerializer\Source\Editor\AotHelpers.cs" />
     <Compile Include="third-party\FullSerializer\Source\fsAotCompilationManager.cs" />
     <Compile Include="third-party\FullSerializer\Source\fsBaseConverter.cs" />
     <Compile Include="third-party\FullSerializer\Source\fsConfig.cs" />
@@ -151,7 +112,6 @@
     <Compile Include="third-party\FullSerializer\Source\Reflection\fsReflectionUtility.cs" />
     <Compile Include="third-party\FullSerializer\Source\Reflection\fsTypeLookup.cs" />
     <Compile Include="third-party\MiniJSON\MiniJSON.cs" />
-    <Compile Include="third-party\WebSocketSharp\AssemblyInfo.cs" />
     <Compile Include="third-party\WebSocketSharp\ByteOrder.cs" />
     <Compile Include="third-party\WebSocketSharp\CloseEventArgs.cs" />
     <Compile Include="third-party\WebSocketSharp\CloseStatusCode.cs" />
@@ -233,6 +193,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="src\testing\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

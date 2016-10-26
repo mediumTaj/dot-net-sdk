@@ -16,10 +16,8 @@
 */
 
 using IBM.Watson.DeveloperCloud.Utilities;
-using IBM.Watson.DeveloperCloud.Debug;
 using System;
 using System.Collections.Generic;
-using UnityEngine;
 
 namespace IBM.Watson.DeveloperCloud.Logging
 {
@@ -142,19 +140,11 @@ namespace IBM.Watson.DeveloperCloud.Logging
                 LogSystem.Instance.InstallReactor(new DebugReactor());
 #endif
 
-        if (!string.IsNullOrEmpty(Constants.Path.LOG_FOLDER) && !System.IO.Directory.Exists(Application.persistentDataPath + Constants.Path.LOG_FOLDER))
-          System.IO.Directory.CreateDirectory(Application.persistentDataPath + Constants.Path.LOG_FOLDER);
+        if (!string.IsNullOrEmpty(Constants.Path.LOG_FOLDER) && !System.IO.Directory.Exists(Constants.Path.LOG_FOLDER))
+          System.IO.Directory.CreateDirectory(Constants.Path.LOG_FOLDER);
 
-        LogSystem.Instance.InstallReactor(new FileReactor(Application.persistentDataPath + Constants.Path.LOG_FOLDER + "/" + Application.productName + ".log", logLevelFileReactor, logHistory));
-
-        Application.logMessageReceived += UnityLogCallback;
+        LogSystem.Instance.InstallReactor(new FileReactor(Constants.Path.LOG_FOLDER + "/debug.log", logLevelFileReactor, logHistory));
       }
-    }
-
-    static void UnityLogCallback(string condition, string stacktrace, LogType type)
-    {
-      if (type == LogType.Exception)
-        Log.Critical("Unity", "Unity Exception {0} : {1}", condition, stacktrace);
     }
 
     /// <summary>

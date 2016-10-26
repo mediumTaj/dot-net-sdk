@@ -408,7 +408,7 @@ namespace IBM.Watson.DeveloperCloud.Connection
 #endif
 
           // wait for the request to complete.
-          float timeout = Mathf.Max(Config.Instance.TimeOut, req.Timeout);
+          float timeout = Math.Max(Config.Instance.TimeOut, req.Timeout);
           while (!www.isDone)
           {
             if (req.Cancel)
