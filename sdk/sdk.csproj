@@ -47,11 +47,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="src\connection\RESTConnector.cs" />
-    <Compile Include="src\connection\WSConnector.cs" />
     <Compile Include="src\logging\FileReactor.cs" />
     <Compile Include="src\logging\ILogReactor.cs" />
     <Compile Include="src\logging\Logger.cs" />
+    <Compile Include="src\testing\UnitTest.cs" />
+    <Compile Include="src\testing\TestRunnable.cs" />
     <Compile Include="src\utilities\AudioClipUtil.cs" />
     <Compile Include="src\utilities\Config.cs" />
     <Compile Include="src\utilities\Constants.cs" />
@@ -194,9 +194,7 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="src\testing\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
