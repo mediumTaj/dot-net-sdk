@@ -17,41 +17,41 @@
 
 namespace IBM.Watson.DeveloperCloud.Utilities
 {
+  /// <summary>
+  /// This class wraps all constants.
+  /// </summary>
+  public static class Constants
+  {
     /// <summary>
-    /// This class wraps all constants.
+    /// All constant path variables liste here. Exp. Configuration file
     /// </summary>
-    public static class Constants
+    public static class Path
     {
-        /// <summary>
-        /// All constant path variables liste here. Exp. Configuration file
-        /// </summary>
-        public static class Path
-        {
-            /// <summary>
-            /// Configuration file name.
-            /// </summary>
-            public const string CONFIG_FILE = "/Config.json";
-            /// <summary>
-            /// Cache folder to customize a parent folder for cache directory
-            /// </summary>
-            public static string CACHE_FOLDER = "/cache";   //It needs to start with /
-            /// <summary>
-            /// Log folder to customize a parent folder for logs
-            /// </summary>
-            public static string LOG_FOLDER = "";    //It needs to start with /
-			/// <summary>
-			/// Directory name where all application data is stored
-			/// </summary>
-			public const string APP_DATA = "appdata";
-        }
-
-        /// <summary>
-        /// All string variables or string formats used in the SDK listed here. Exp. Quality Debug Format = Quality {0}
-        /// </summary>
-        public static class String
-        {
-            /// <exclude />
-            public const string VERSION = "watson-developer-cloud-dot-net-sdk-0.1.0";
-        }
+      /// <summary>
+      /// Configuration file name.
+      /// </summary>
+      public const string CONFIG_FILE = "/Config.json";
+      /// <summary>
+      /// Cache folder to customize a parent folder for cache directory
+      /// </summary>
+      public static string CACHE_FOLDER = "/cache";   //It needs to start with /
+                                                      /// <summary>
+                                                      /// Log folder to customize a parent folder for logs
+                                                      /// </summary>
+      public static string LOG_FOLDER = "";    //It needs to start with /
+                                               /// <summary>
+                                               /// Directory name where all application data is stored
+                                               /// </summary>
+      public const string APP_DATA = "appdata";
     }
+
+    /// <summary>
+    /// All string variables or string formats used in the SDK listed here. Exp. Quality Debug Format = Quality {0}
+    /// </summary>
+    public static class String
+    {
+      /// <exclude />
+      public const string VERSION = "watson-developer-cloud-dot-net-sdk-0.1.0";
+    }
+  }
 }
