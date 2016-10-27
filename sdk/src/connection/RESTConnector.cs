@@ -18,14 +18,15 @@
 // uncomment to enable debugging
 //#define ENABLE_DEBUGGING
 
-using IBM.Watson.DeveloperCloud.Utilities;
-using IBM.Watson.DeveloperCloud.Logging;
 using System;
+using System.Net;
+using System.Net.Security;
 using System.Collections;
 using System.Collections.Generic;
 using System.Text;
-using System.Net;
-using System.Net.Security;
+using IBM.Watson.DeveloperCloud.Utilities;
+using IBM.Watson.DeveloperCloud.Logging;
+using System.IO;
 
 namespace IBM.Watson.DeveloperCloud.Connection
 {
@@ -341,7 +342,7 @@ namespace IBM.Watson.DeveloperCloud.Connection
           var value = kp.Value;
 
           if (value is string)
-            value = WWW.EscapeURL((string)value);             // escape the value
+            value = Uri.EscapeUriString((string)value);             // escape the value
           else if (value is byte[])
             value = Convert.ToBase64String((byte[])value);    // convert any byte data into base64 string
           else if (value is Int32 || value is Int64 || value is UInt32 || value is UInt64)
@@ -364,12 +365,16 @@ namespace IBM.Watson.DeveloperCloud.Connection
 
         AddHeaders(req.Headers);
 
+        WebHeaderCollection headers = new WebHeaderCollection();
+        foreach (KeyValuePair<string, string> kv in req.Headers)
+          headers.Add(kv.Key, kv.Value);
+
         Response resp = new Response();
 
         DateTime startTime = DateTime.Now;
         if (!req.Delete)
         {
-          WWW www = null;
+          HttpWebRequest www = null;
           if (req.Forms != null)
           {
             if (req.Send != null)
@@ -396,12 +401,30 @@ namespace IBM.Watson.DeveloperCloud.Connection
             {
               Log.Error("RESTConnector", "Exception when initializing WWWForm: {0}", e.ToString());
             }
-            www = new WWW(url, form.data, req.Headers);
+            www = (HttpWebRequest)WebRequest.Create(url);//new WebRequest(url, form.data, req.Headers);
+
+            www.Headers = headers;
+
+            //  add data
           }
           else if (req.Send == null)
-            www = new WWW(url, null, req.Headers);
+          {
+            //www = new WebRequest(url, null, req.Headers);
+            www = (HttpWebRequest)WebRequest.Create(url);
+            www.Headers = headers;
+          }
           else
-            www = new WWW(url, req.Send, req.Headers);
+          {
+            //www = new WebRequest(url, req.Send, req.Headers);
+            www = (HttpWebRequest)WebRequest.Create(url);
+            www.Headers = headers;
+
+            www.Method = "POST";
+            www.ContentLength = req.Send.Length;
+            www.ContentType = "";
+            Stream newStream = www.GetRequestStream();
+            newStream.Write(req.Send, 0, req.Send.Length);
+          }
 
 #if ENABLE_DEBUGGING
                     Log.Debug("RESTConnector", "URL: {0}", url);
@@ -468,7 +491,6 @@ namespace IBM.Watson.DeveloperCloud.Connection
               bError = true;
           }*/
 
-
           // generate the Response object now..
           if (!bError)
           {
@@ -491,7 +513,7 @@ namespace IBM.Watson.DeveloperCloud.Connection
           if (req.OnResponse != null)
             req.OnResponse(req, resp);
 
-          www.Dispose();
+          www = null;
         }
         else
         {

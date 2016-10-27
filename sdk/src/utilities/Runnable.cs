@@ -15,8 +15,10 @@
 *
 */
 
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
 
 namespace IBM.Watson.DeveloperCloud.Utilities
 {
@@ -123,16 +125,17 @@ namespace IBM.Watson.DeveloperCloud.Utilities
     public Coroutine StartCoroutine(Routine r)
     {
       Coroutine coroutine = new Coroutine();
-
-
-
+      //coroutine.r = r;
 
       return coroutine;
     }
 
     public class Coroutine
     {
-      //	Define coroutine class!
+      //public Routine r { get; set; }
+
+      //ThreadStart childThreadRef = new ThreadStart(r);
+      //Thread childThread = new Thread(childThreadRef);
     }
     #endregion
 
