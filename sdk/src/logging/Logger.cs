@@ -197,17 +197,11 @@ namespace IBM.Watson.DeveloperCloud.Logging
     /// <param name="subSystem">Name of the subsystem.</param>
     /// <param name="messageFmt">Message with formatting.</param>
     /// <param name="args">Formatting arguments.</param>
-#if UNITY_EDITOR
-        public static void Debug(string subSystem, string messageFmt, params object[] args)
-        {
-            LogSystem.Instance.ProcessLog(new LogRecord(LogLevel.DEBUG, subSystem, messageFmt, args));
-            System.Console.WriteLine("[{0}][{1}]: {2}", LogLevel.DEBUG, subSystem, string.Format(messageFmt, args));
-        }
-#else
-    // We compile out Log.Debug() functions in release builds.
     public static void Debug(string subSystem, string messageFmt, params object[] args)
-    { }
-#endif
+    {
+      LogSystem.Instance.ProcessLog(new LogRecord(LogLevel.DEBUG, subSystem, messageFmt, args));
+      System.Console.WriteLine("[{0}][{1}]: {2}", LogLevel.DEBUG, subSystem, string.Format(messageFmt, args));
+    }
 
     /// <summary>
     /// Log a STATUS level message.

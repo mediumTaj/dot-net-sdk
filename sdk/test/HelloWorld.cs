@@ -1,6 +1,7 @@
 ﻿using IBM.Watson.DeveloperCloud.Logging;
 using IBM.Watson.DeveloperCloud.Services.ToneAnalyzer.v3;
 using System;
+using System.IO;
 
 namespace IBM.Watson.DeveloperCloud.Test
 {
@@ -10,16 +11,14 @@ namespace IBM.Watson.DeveloperCloud.Test
     {
       LogSystem.InstallDefaultReactors();
 
-      Console.WriteLine("Hello, World!");
-      Console.WriteLine("Press any key to continue...");
+      Log.Debug("HelloWorld", "Hello, World! {0}", Directory.GetCurrentDirectory());
+      Log.Debug("HelloWorld", "Press any key to continue...");
       Log.Debug("HelloWorld", "Testing Tone Analyzer....");
 
       ToneAnalyzerTest toneAnalyzerTest = new ToneAnalyzerTest();
       toneAnalyzerTest.TestToneAnalyzer();
 
       Console.ReadKey();
-
-      
     }
   }
 
