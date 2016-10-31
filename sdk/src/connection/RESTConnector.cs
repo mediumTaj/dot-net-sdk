@@ -15,6 +15,22 @@
 *
 */
 
+<<<<<<< HEAD
+=======
+// uncomment to enable debugging
+//#define ENABLE_DEBUGGING
+
+using System;
+using System.Net;
+using System.Net.Security;
+using System.Collections;
+using System.Collections.Generic;
+using System.Text;
+using IBM.Watson.DeveloperCloud.Utilities;
+using IBM.Watson.DeveloperCloud.Logging;
+using System.IO;
+
+>>>>>>> 02312704c1d56c82f5cf8bf141b7e27ddb360f5f
 namespace IBM.Watson.DeveloperCloud.Connection
 {
   /// <summary>
@@ -251,7 +267,11 @@ namespace IBM.Watson.DeveloperCloud.Connection
           var value = kp.Value;
 
           if (value is string)
+<<<<<<< HEAD
             value = Uri.EscapeUriString((string)value);
+=======
+            value = Uri.EscapeUriString((string)value);             // escape the value
+>>>>>>> 02312704c1d56c82f5cf8bf141b7e27ddb360f5f
           else if (value is byte[])
             value = Convert.ToBase64String((byte[])value);
           else if (value is Int32 || value is Int64 || value is UInt32 || value is UInt64)
@@ -264,18 +284,210 @@ namespace IBM.Watson.DeveloperCloud.Connection
           if (args == null)
             args = new StringBuilder();
           else
+<<<<<<< HEAD
             args.Append("&");
 
           args.Append(key + "=" + value);
+=======
+            args.Append("&");                  // append separator
+
+          args.Append(key + "=" + value);       // append key=value
+        }
+
+        if (args != null && args.Length > 0)
+          url += "?" + args.ToString();
+
+        AddHeaders(req.Headers);
+
+        WebHeaderCollection headers = new WebHeaderCollection();
+        foreach (KeyValuePair<string, string> kv in req.Headers)
+          headers.Add(kv.Key, kv.Value);
+
+        Response resp = new Response();
+
+        DateTime startTime = DateTime.Now;
+        if (!req.Delete)
+        {
+          HttpWebRequest www = null;
+          if (req.Forms != null)
+          {
+            if (req.Send != null)
+              Log.Warning("RESTConnector", "Do not use both Send & Form fields in a Request object.");
+
+            WWWForm form = new WWWForm();
+            try
+            {
+              foreach (var formData in req.Forms)
+              {
+                if (formData.Value.IsBinary)
+                  form.AddBinaryData(formData.Key, formData.Value.Contents, formData.Value.FileName, formData.Value.MimeType);
+                else if (formData.Value.BoxedObject is string)
+                  form.AddField(formData.Key, (string)formData.Value.BoxedObject);
+                else if (formData.Value.BoxedObject is int)
+                  form.AddField(formData.Key, (int)formData.Value.BoxedObject);
+                else if (formData.Value.BoxedObject != null)
+                  Log.Warning("RESTConnector", "Unsupported form field type {0}", formData.Value.BoxedObject.GetType().ToString());
+              }
+              foreach (var headerData in form.headers)
+                req.Headers[headerData.Key] = headerData.Value;
+            }
+            catch (Exception e)
+            {
+              Log.Error("RESTConnector", "Exception when initializing WWWForm: {0}", e.ToString());
+            }
+            www = (HttpWebRequest)WebRequest.Create(url);//new WebRequest(url, form.data, req.Headers);
+
+            www.Headers = headers;
+
+            //  add data
+          }
+          else if (req.Send == null)
+          {
+            //www = new WebRequest(url, null, req.Headers);
+            www = (HttpWebRequest)WebRequest.Create(url);
+            www.Headers = headers;
+          }
+          else
+          {
+            //www = new WebRequest(url, req.Send, req.Headers);
+            www = (HttpWebRequest)WebRequest.Create(url);
+            www.Headers = headers;
+
+            www.Method = "POST";
+            www.ContentLength = req.Send.Length;
+            www.ContentType = "";
+            Stream newStream = www.GetRequestStream();
+            newStream.Write(req.Send, 0, req.Send.Length);
+          }
+
+#if ENABLE_DEBUGGING
+                    Log.Debug("RESTConnector", "URL: {0}", url);
+#endif
+
+          // wait for the request to complete.
+          float timeout = Math.Max(Config.Instance.TimeOut, req.Timeout);
+          while (!www.isDone)
+          {
+            if (req.Cancel)
+              break;
+            if ((DateTime.Now - startTime).TotalSeconds > timeout)
+              break;
+            if (req.OnUploadProgress != null)
+              req.OnUploadProgress(www.uploadProgress);
+            if (req.OnDownloadProgress != null)
+              req.OnDownloadProgress(www.progress);
+
+#if UNITY_EDITOR
+                        if (!UnityEditorInternal.InternalEditorUtility.inBatchMode)
+                            yield return null;
+#else
+            yield return null;
+#endif
+          }
+
+          if (req.Cancel)
+            continue;
+
+          bool bError = false;
+          if (!string.IsNullOrEmpty(www.error))
+          {
+            int nErrorCode = -1;
+            int nSeperator = www.error.IndexOf(' ');
+            if (nSeperator > 0 && int.TryParse(www.error.Substring(0, nSeperator).Trim(), out nErrorCode))
+            {
+              switch (nErrorCode)
+              {
+                case 200:
+                case 201:
+                  bError = false;
+                  break;
+                default:
+                  bError = true;
+                  break;
+              }
+            }
+
+            if (bError)
+              Log.Error("RESTConnector", "URL: {0}, ErrorCode: {1}, Error: {2}, Response: {3}", url, nErrorCode, www.error,
+                  string.IsNullOrEmpty(www.text) ? "" : www.text);
+            else
+              Log.Warning("RESTConnector", "URL: {0}, ErrorCode: {1}, Error: {2}, Response: {3}", url, nErrorCode, www.error,
+                  string.IsNullOrEmpty(www.text) ? "" : www.text);
+          }
+          if (!www.isDone)
+          {
+            Log.Error("RESTConnector", "Request timed out for URL: {0}", url);
+            bError = true;
+          }
+          /*if (!bError && (www.bytes == null || www.bytes.Length == 0))
+          {
+              Log.Warning("RESTConnector", "No data recevied for URL: {0}", url);
+              bError = true;
+          }*/
+
+          // generate the Response object now..
+          if (!bError)
+          {
+            resp.Success = true;
+            resp.Data = www.bytes;
+          }
+          else
+          {
+            resp.Success = false;
+            resp.Error = string.Format("Request Error.\nURL: {0}\nError: {1}",
+                url, string.IsNullOrEmpty(www.error) ? "Timeout" : www.error);
+          }
+>>>>>>> 02312704c1d56c82f5cf8bf141b7e27ddb360f5f
 
           if (args != null && args.Length > 0)
             url += "?" + args.ToString();
 
           AddHeaders(req.Headers);
 
+<<<<<<< HEAD
           WebHeaderCollection headers = new WebHeaderCollection();
           foreach (KeyValuePair<string, string> kv in req.Headers)
             headers.Add(kv.Key, kv.Value);
+=======
+          if (req.OnResponse != null)
+            req.OnResponse(req, resp);
+
+          www = null;
+        }
+        else
+        {
+
+#if ENABLE_DEBUGGING
+                    Log.Debug("RESTConnector", "Delete Request URL: {0}", url);
+#endif
+
+#if UNITY_EDITOR
+                    float timeout = Mathf.Max(Config.Instance.TimeOut, req.Timeout);
+
+                    DeleteRequest deleteReq = new DeleteRequest();
+                    deleteReq.Send(url, req.Headers);
+                    while (!deleteReq.IsComplete)
+                    {
+                        if (req.Cancel)
+                            break;
+                        if ((DateTime.Now - startTime).TotalSeconds > timeout)
+                            break;
+                        yield return null;
+                    }
+
+                    if (req.Cancel)
+                        continue;
+
+                    resp.Success = deleteReq.Success;
+
+#else
+          Log.Warning("RESTConnector", "DELETE method is supported in the editor only.");
+          resp.Success = false;
+#endif
+          resp.ElapsedTime = (float)(DateTime.Now - startTime).TotalSeconds;
+          if (req.OnResponse != null)
+            req.OnResponse(req, resp);
+>>>>>>> 02312704c1d56c82f5cf8bf141b7e27ddb360f5f
         }
       }
     }

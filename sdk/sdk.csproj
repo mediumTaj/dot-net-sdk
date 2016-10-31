@@ -47,7 +47,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+<<<<<<< HEAD
     <Compile Include="src\connection\RESTConnector_unity.cs" />
+=======
+    <Compile Include="src\connection\RESTConnector.cs" />
+>>>>>>> 02312704c1d56c82f5cf8bf141b7e27ddb360f5f
     <Compile Include="src\logging\FileReactor.cs" />
     <Compile Include="src\logging\ILogReactor.cs" />
     <Compile Include="src\logging\Logger.cs" />
@@ -319,6 +323,7 @@
     <Compile Include="third-party\Newtonsoft.Json\Utilities\TypeExtensions.cs" />
     <Compile Include="third-party\Newtonsoft.Json\Utilities\ValidationUtils.cs" />
     <Compile Include="third-party\Newtonsoft.Json\WriteState.cs" />
+<<<<<<< HEAD
     <Compile Include="third-party\RestSharp\RestSharp.Android\Properties\AssemblyInfo.cs" />
     <Compile Include="third-party\RestSharp\RestSharp.Build\NuSpecUpdateTask.cs" />
     <Compile Include="third-party\RestSharp\RestSharp.Build\Properties\AssemblyInfo.cs" />
@@ -475,6 +480,8 @@
     </Compile>
     <Compile Include="third-party\RestSharp\RestSharp\Validation\Require.cs" />
     <Compile Include="third-party\RestSharp\RestSharp\Validation\Validate.cs" />
+=======
+>>>>>>> 02312704c1d56c82f5cf8bf141b7e27ddb360f5f
     <Compile Include="third-party\WebSocketSharp\ByteOrder.cs" />
     <Compile Include="third-party\WebSocketSharp\CloseEventArgs.cs" />
     <Compile Include="third-party\WebSocketSharp\CloseStatusCode.cs" />
@@ -566,6 +573,7 @@
     <None Include="third-party\Newtonsoft.Json\Newtonsoft.Json.project.json" />
     <None Include="third-party\Newtonsoft.Json\Newtonsoft.Json.ruleset" />
     <None Include="third-party\Newtonsoft.Json\project.json" />
+<<<<<<< HEAD
     <None Include="third-party\RestSharp\.nuget\NuGet.Config" />
     <None Include="third-party\RestSharp\.nuget\NuGet.targets" />
     <None Include="third-party\RestSharp\appveyor.yml" />
@@ -597,6 +605,8 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>T4Helper.tt</DependentUpon>
     </None>
+=======
+>>>>>>> 02312704c1d56c82f5cf8bf141b7e27ddb360f5f
   </ItemGroup>
   <ItemGroup>
     <Content Include="third-party\Newtonsoft.Json\Newtonsoft.Json.csproj" />
@@ -605,6 +615,7 @@
     <Content Include="third-party\Newtonsoft.Json\Newtonsoft.Json.Net40.csproj" />
     <Content Include="third-party\Newtonsoft.Json\Newtonsoft.Json.Portable.csproj" />
     <Content Include="third-party\Newtonsoft.Json\Newtonsoft.Json.Portable40.csproj" />
+<<<<<<< HEAD
     <Content Include="third-party\RestSharp\.gitattributes" />
     <Content Include="third-party\RestSharp\.gitignore" />
     <Content Include="third-party\RestSharp\.nuget\NuGet.exe" />
@@ -684,6 +695,8 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+=======
+>>>>>>> 02312704c1d56c82f5cf8bf141b7e27ddb360f5f
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
