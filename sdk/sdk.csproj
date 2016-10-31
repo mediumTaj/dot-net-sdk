@@ -38,6 +38,14 @@
       <HintPath>packages\HtmlAgilityPack.1.4.9.5\lib\Net40\HtmlAgilityPack.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="MiniJson, Version=2.3.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>packages\M3.MiniJson.2.3.1\lib\net40-client\MiniJson.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>packages\Newtonsoft.Json.9.0.2-beta1\lib\net40\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="RestSharp, Version=105.2.3.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>packages\RestSharp.105.2.3\lib\net4\RestSharp.dll</HintPath>
       <Private>True</Private>
@@ -49,6 +57,10 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
+    <Reference Include="websocket-sharp, Version=1.0.2.59611, Culture=neutral, PublicKeyToken=5660b08a1845a91e, processorArchitecture=MSIL">
+      <HintPath>packages\WebSocketSharp.1.0.3-rc11\lib\websocket-sharp.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="src\connection\RESTConnector.cs" />
@@ -113,85 +125,6 @@
     <Compile Include="third-party\FullSerializer\Source\Reflection\fsMetaType.cs" />
     <Compile Include="third-party\FullSerializer\Source\Reflection\fsReflectionUtility.cs" />
     <Compile Include="third-party\FullSerializer\Source\Reflection\fsTypeLookup.cs" />
-    <Compile Include="third-party\MiniJSON\MiniJSON.cs" />
-    <Compile Include="third-party\WebSocketSharp\ByteOrder.cs" />
-    <Compile Include="third-party\WebSocketSharp\CloseEventArgs.cs" />
-    <Compile Include="third-party\WebSocketSharp\CloseStatusCode.cs" />
-    <Compile Include="third-party\WebSocketSharp\CompressionMethod.cs" />
-    <Compile Include="third-party\WebSocketSharp\ErrorEventArgs.cs" />
-    <Compile Include="third-party\WebSocketSharp\Ext.cs" />
-    <Compile Include="third-party\WebSocketSharp\Fin.cs" />
-    <Compile Include="third-party\WebSocketSharp\HttpBase.cs" />
-    <Compile Include="third-party\WebSocketSharp\HttpRequest.cs" />
-    <Compile Include="third-party\WebSocketSharp\HttpResponse.cs" />
-    <Compile Include="third-party\WebSocketSharp\LogData.cs" />
-    <Compile Include="third-party\WebSocketSharp\Logger.cs" />
-    <Compile Include="third-party\WebSocketSharp\LogLevel.cs" />
-    <Compile Include="third-party\WebSocketSharp\Mask.cs" />
-    <Compile Include="third-party\WebSocketSharp\MessageEventArgs.cs" />
-    <Compile Include="third-party\WebSocketSharp\Net\AuthenticationBase.cs" />
-    <Compile Include="third-party\WebSocketSharp\Net\AuthenticationChallenge.cs" />
-    <Compile Include="third-party\WebSocketSharp\Net\AuthenticationResponse.cs" />
-    <Compile Include="third-party\WebSocketSharp\Net\AuthenticationSchemes.cs" />
-    <Compile Include="third-party\WebSocketSharp\Net\Chunk.cs" />
-    <Compile Include="third-party\WebSocketSharp\Net\ChunkedRequestStream.cs" />
-    <Compile Include="third-party\WebSocketSharp\Net\ChunkStream.cs" />
-    <Compile Include="third-party\WebSocketSharp\Net\ClientSslConfiguration.cs" />
-    <Compile Include="third-party\WebSocketSharp\Net\Cookie.cs" />
-    <Compile Include="third-party\WebSocketSharp\Net\CookieCollection.cs" />
-    <Compile Include="third-party\WebSocketSharp\Net\CookieException.cs" />
-    <Compile Include="third-party\WebSocketSharp\Net\EndPointListener.cs" />
-    <Compile Include="third-party\WebSocketSharp\Net\EndPointManager.cs" />
-    <Compile Include="third-party\WebSocketSharp\Net\HttpBasicIdentity.cs" />
-    <Compile Include="third-party\WebSocketSharp\Net\HttpConnection.cs" />
-    <Compile Include="third-party\WebSocketSharp\Net\HttpDigestIdentity.cs" />
-    <Compile Include="third-party\WebSocketSharp\Net\HttpHeaderInfo.cs" />
-    <Compile Include="third-party\WebSocketSharp\Net\HttpHeaderType.cs" />
-    <Compile Include="third-party\WebSocketSharp\Net\HttpListener.cs" />
-    <Compile Include="third-party\WebSocketSharp\Net\HttpListenerAsyncResult.cs" />
-    <Compile Include="third-party\WebSocketSharp\Net\HttpListenerContext.cs" />
-    <Compile Include="third-party\WebSocketSharp\Net\HttpListenerException.cs" />
-    <Compile Include="third-party\WebSocketSharp\Net\HttpListenerPrefix.cs" />
-    <Compile Include="third-party\WebSocketSharp\Net\HttpListenerPrefixCollection.cs" />
-    <Compile Include="third-party\WebSocketSharp\Net\HttpListenerRequest.cs" />
-    <Compile Include="third-party\WebSocketSharp\Net\HttpListenerResponse.cs" />
-    <Compile Include="third-party\WebSocketSharp\Net\HttpRequestHeader.cs" />
-    <Compile Include="third-party\WebSocketSharp\Net\HttpResponseHeader.cs" />
-    <Compile Include="third-party\WebSocketSharp\Net\HttpStatusCode.cs" />
-    <Compile Include="third-party\WebSocketSharp\Net\HttpStreamAsyncResult.cs" />
-    <Compile Include="third-party\WebSocketSharp\Net\HttpUtility.cs" />
-    <Compile Include="third-party\WebSocketSharp\Net\HttpVersion.cs" />
-    <Compile Include="third-party\WebSocketSharp\Net\InputChunkState.cs" />
-    <Compile Include="third-party\WebSocketSharp\Net\InputState.cs" />
-    <Compile Include="third-party\WebSocketSharp\Net\LineState.cs" />
-    <Compile Include="third-party\WebSocketSharp\Net\NetworkCredential.cs" />
-    <Compile Include="third-party\WebSocketSharp\Net\QueryStringCollection.cs" />
-    <Compile Include="third-party\WebSocketSharp\Net\ReadBufferState.cs" />
-    <Compile Include="third-party\WebSocketSharp\Net\RequestStream.cs" />
-    <Compile Include="third-party\WebSocketSharp\Net\ResponseStream.cs" />
-    <Compile Include="third-party\WebSocketSharp\Net\ServerSslConfiguration.cs" />
-    <Compile Include="third-party\WebSocketSharp\Net\SslConfiguration.cs" />
-    <Compile Include="third-party\WebSocketSharp\Net\WebHeaderCollection.cs" />
-    <Compile Include="third-party\WebSocketSharp\Net\WebSockets\HttpListenerWebSocketContext.cs" />
-    <Compile Include="third-party\WebSocketSharp\Net\WebSockets\TcpListenerWebSocketContext.cs" />
-    <Compile Include="third-party\WebSocketSharp\Net\WebSockets\WebSocketContext.cs" />
-    <Compile Include="third-party\WebSocketSharp\Opcode.cs" />
-    <Compile Include="third-party\WebSocketSharp\PayloadData.cs" />
-    <Compile Include="third-party\WebSocketSharp\Rsv.cs" />
-    <Compile Include="third-party\WebSocketSharp\Server\HttpRequestEventArgs.cs" />
-    <Compile Include="third-party\WebSocketSharp\Server\HttpServer.cs" />
-    <Compile Include="third-party\WebSocketSharp\Server\IWebSocketSession.cs" />
-    <Compile Include="third-party\WebSocketSharp\Server\ServerState.cs" />
-    <Compile Include="third-party\WebSocketSharp\Server\WebSocketBehavior.cs" />
-    <Compile Include="third-party\WebSocketSharp\Server\WebSocketServer.cs" />
-    <Compile Include="third-party\WebSocketSharp\Server\WebSocketServiceHost.cs" />
-    <Compile Include="third-party\WebSocketSharp\Server\WebSocketServiceHost`1.cs" />
-    <Compile Include="third-party\WebSocketSharp\Server\WebSocketServiceManager.cs" />
-    <Compile Include="third-party\WebSocketSharp\Server\WebSocketSessionManager.cs" />
-    <Compile Include="third-party\WebSocketSharp\WebSocket.cs" />
-    <Compile Include="third-party\WebSocketSharp\WebSocketException.cs" />
-    <Compile Include="third-party\WebSocketSharp\WebSocketFrame.cs" />
-    <Compile Include="third-party\WebSocketSharp\WebSocketState.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
