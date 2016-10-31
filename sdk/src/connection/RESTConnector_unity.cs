@@ -481,7 +481,7 @@ namespace IBM.Watson.DeveloperCloud.Connection
 
             if (bError)
               Log.Error("RESTConnector", "URL: {0}, ErrorCode: {1}, Error: {2}, Response: {3}", url, nErrorCode, www.error,
-                  string.IsNullOrEmpty(www.) ? "" : www.text);
+                  string.IsNullOrEmpty(www.text) ? "" : www.text);
             else
               Log.Warning("RESTConnector", "URL: {0}, ErrorCode: {1}, Error: {2}, Response: {3}", url, nErrorCode, www.error,
                   string.IsNullOrEmpty(www.text) ? "" : www.text);
