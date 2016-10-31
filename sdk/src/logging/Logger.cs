@@ -136,9 +136,6 @@ namespace IBM.Watson.DeveloperCloud.Logging
       {
         // install the default reactors...
         sm_bInstalledDefaultReactors = true;
-#if UNITY_EDITOR || UNITY_IOS || UNITY_ANDROID
-                LogSystem.Instance.InstallReactor(new DebugReactor());
-#endif
 
         if (!string.IsNullOrEmpty(Constants.Path.LOG_FOLDER) && !System.IO.Directory.Exists(Constants.Path.LOG_FOLDER))
           System.IO.Directory.CreateDirectory(Constants.Path.LOG_FOLDER);

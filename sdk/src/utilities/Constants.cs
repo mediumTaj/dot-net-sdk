@@ -1,4 +1,7 @@
-﻿/**
+﻿
+
+using System;
+/**
 * Copyright 2015 IBM Corp. All Rights Reserved.
 *
 * Licensed under the Apache License, Version 2.0 (the "License");
@@ -14,7 +17,6 @@
 * limitations under the License.
 *
 */
-
 namespace IBM.Watson.DeveloperCloud.Utilities
 {
   /// <summary>
@@ -34,11 +36,11 @@ namespace IBM.Watson.DeveloperCloud.Utilities
       /// <summary>
       /// Cache folder to customize a parent folder for cache directory
       /// </summary>
-      public static string CACHE_FOLDER = "/cache";   //It needs to start with /
+      public static string CACHE_FOLDER = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + "/wdc/cache";   //It needs to start with /
                                                       /// <summary>
                                                       /// Log folder to customize a parent folder for logs
                                                       /// </summary>
-      public static string LOG_FOLDER = "";    //It needs to start with /
+      public static string LOG_FOLDER = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + "/wdc/logs";    //It needs to start with /
                                                /// <summary>
                                                /// Directory name where all application data is stored
                                                /// </summary>

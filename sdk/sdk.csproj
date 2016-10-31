@@ -38,10 +38,6 @@
       <HintPath>packages\HtmlAgilityPack.1.4.9.5\lib\Net40\HtmlAgilityPack.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="MiniJson, Version=2.3.1.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>packages\M3.MiniJson.2.3.1\lib\net40-client\MiniJson.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>packages\Newtonsoft.Json.9.0.2-beta1\lib\net40\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
@@ -67,6 +63,9 @@
     <Compile Include="src\logging\FileReactor.cs" />
     <Compile Include="src\logging\ILogReactor.cs" />
     <Compile Include="src\logging\Logger.cs" />
+    <Compile Include="src\services\IWatsonService.cs" />
+    <Compile Include="src\services\ToneAnalyzer\DataModels.cs" />
+    <Compile Include="src\services\ToneAnalyzer\ToneAnalyzer.cs" />
     <Compile Include="src\testing\UnitTest.cs" />
     <Compile Include="src\testing\TestRunnable.cs" />
     <Compile Include="src\utilities\AudioClipUtil.cs" />
@@ -125,10 +124,18 @@
     <Compile Include="third-party\FullSerializer\Source\Reflection\fsMetaType.cs" />
     <Compile Include="third-party\FullSerializer\Source\Reflection\fsReflectionUtility.cs" />
     <Compile Include="third-party\FullSerializer\Source\Reflection\fsTypeLookup.cs" />
+    <Compile Include="third-party\MiniJSON\MiniJSON.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
+    <None Include="src\services\.github\CONTRIBUTING.md" />
+    <None Include="src\services\.github\issue_template.md" />
+    <None Include="src\services\.github\pull_request_template.md" />
+    <None Include="src\services\.gitignore" />
+    <None Include="src\services\CHANGELOG.md" />
+    <None Include="src\services\LICENSE" />
+    <None Include="src\services\README.md" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

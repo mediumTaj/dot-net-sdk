@@ -1,27 +1,66 @@
-﻿using System;
-//using IBM.Watson.DeveloperCloud.Services.SpeechToText.v1;
+﻿using IBM.Watson.DeveloperCloud.Logging;
+using IBM.Watson.DeveloperCloud.Services.ToneAnalyzer.v3;
+using System;
 
 namespace IBM.Watson.DeveloperCloud.Test
 {
   class HelloWorld
   {
-    //private SpeechToText m_SpeechToText = new SpeechToText();
     public static void Main()
     {
+      LogSystem.InstallDefaultReactors();
+
       Console.WriteLine("Hello, World!");
       Console.WriteLine("Press any key to continue...");
+      Log.Debug("HelloWorld", "Testing Tone Analyzer....");
+
+      ToneAnalyzerTest toneAnalyzerTest = new ToneAnalyzerTest();
+      toneAnalyzerTest.TestToneAnalyzer();
+
       Console.ReadKey();
-    }
 
-    public HelloWorld()
+      
+    }
+  }
+
+  class ToneAnalyzerTest
+  {
+
+    private ToneAnalyzer m_ToneAnalyzer = new ToneAnalyzer();
+    private string m_TextString = "Hello, what a beautiful day!";
+    public ToneAnalyzerTest()
     {
-      //if (!m_SpeechToText.GetModels(OnGetModels))
-      //	Console.WriteLine("Failed to get models!");
+      Log.Debug("ToneAnalyzerTest", "Constructor!");
     }
 
-    //private void OnGetModels(Model[] models, string data)
-    //{
+    public void TestToneAnalyzer()
+    {
+      if (!m_ToneAnalyzer.GetToneAnalyze(OnGetToneAnalyzed, m_TextString))
+        Console.WriteLine("Failed to get tone!");
+    }
 
-    //}
+    private void OnGetToneAnalyzed(ToneAnalyzerResponse resp, string data)
+    {
+      if (resp != null)
+      {
+        if (resp.document_tone != null)
+        {
+          if (resp.document_tone.tone_categories != null && resp.document_tone.tone_categories.Length > 0)
+          {
+            foreach (ToneCategory category in resp.document_tone.tone_categories)
+            {
+              category.ToString();
+            }
+          }
+        }
+
+        if (resp.sentences_tone != null && resp.sentences_tone.Length > 0)
+          resp.sentences_tone.ToString();
+      }
+      else
+      {
+        Log.Debug("HelloWorld", "OnGetToneAnalyzed: resp is null!");
+      }
+    }
   }
 }
