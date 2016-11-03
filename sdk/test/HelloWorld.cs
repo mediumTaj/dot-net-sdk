@@ -34,7 +34,7 @@ namespace IBM.Watson.DeveloperCloud.Test
 
     public void TestToneAnalyzer()
     {
-      if (!m_ToneAnalyzer.GetToneAnalyze(OnGetToneAnalyzed, m_TextString))
+      if (!m_ToneAnalyzer.GetToneAnalyze(m_TextString, OnGetToneAnalyzed))
         Console.WriteLine("Failed to get tone!");
     }
 
@@ -48,13 +48,13 @@ namespace IBM.Watson.DeveloperCloud.Test
           {
             foreach (ToneCategory category in resp.document_tone.tone_categories)
             {
-              category.ToString();
+              Log.Debug("HelloWorld", category.ToString());
             }
           }
         }
 
         if (resp.sentences_tone != null && resp.sentences_tone.Length > 0)
-          resp.sentences_tone.ToString();
+              Log.Debug("HelloWorld", resp.sentences_tone.ToString());
       }
       else
       {

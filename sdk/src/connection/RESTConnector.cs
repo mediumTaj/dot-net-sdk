@@ -16,7 +16,7 @@
 */
 
 // uncomment to enable debugging
-//#define ENABLE_DEBUGGING
+#define ENABLE_DEBUGGING
 
 using System;
 using System.Net;
@@ -28,6 +28,8 @@ using IBM.Watson.DeveloperCloud.Utilities;
 using IBM.Watson.DeveloperCloud.Logging;
 using System.IO;
 using RestSharp;
+using MiniJSON;
+using FullSerializer;
 
 namespace IBM.Watson.DeveloperCloud.Connection
 {
@@ -36,6 +38,8 @@ namespace IBM.Watson.DeveloperCloud.Connection
   /// </summary>
   public class RESTConnector
   {
+
+    private static fsSerializer sm_Serializer = new fsSerializer();
     #region Public Types
     /// <summary>
     /// This delegate type is declared for a Response handler function.
@@ -301,7 +305,10 @@ namespace IBM.Watson.DeveloperCloud.Connection
       {
         // This co-routine will increment m_ActiveConnections then yield back to us so
         // we can return from the Send() as quickly as possible.
-        Runnable.Run(ProcessRequestQueue());
+        //Runnable.Run(ProcessRequestQueue());
+        ProcessRequestQueue();
+
+        //var ienum = ProcessRequestQueue();
       }
 
       return true;
@@ -329,10 +336,10 @@ namespace IBM.Watson.DeveloperCloud.Connection
     #endregion
 
     #region ProcessRequestQueue
-    private IEnumerator ProcessRequestQueue()
+    private void ProcessRequestQueue()
     {
       m_ActiveConnections += 1;
-      yield return null;
+      //yield return null;
 
       while (m_Requests.Count > 0)
       {
@@ -407,19 +414,14 @@ namespace IBM.Watson.DeveloperCloud.Connection
               {
                 if (formData.Value.IsBinary)
                   restRequest.AddFileBytes(formData.Key, formData.Value.Contents, formData.Value.FileName, formData.Value.MimeType);
-                //form.AddBinaryData(formData.Key, formData.Value.Contents, formData.Value.FileName, formData.Value.MimeType);
                 else if (formData.Value.BoxedObject is string)
                   restRequest.AddParameter(formData.Key, formData.Value, ParameterType.GetOrPost);
-                //form.AddField(formData.Key, (string)formData.Value.BoxedObject);
                 else if (formData.Value.BoxedObject is int)
                   restRequest.AddParameter(formData.Key, formData.Value, ParameterType.GetOrPost);
 
                 else if (formData.Value.BoxedObject != null)
                   Log.Warning("RESTConnector", "Unsupported form field type {0}", formData.Value.BoxedObject.GetType().ToString());
               }
-
-              //foreach (var headerData in form.headers)
-              //  req.Headers[headerData.Key] = headerData.Value;
             }
             catch (Exception e)
             {
@@ -436,7 +438,21 @@ namespace IBM.Watson.DeveloperCloud.Connection
           //  Body POST
           {
             //  TODO body
-            //restRequest.Method = Method.POST;
+            restRequest.Method = Method.POST;
+
+            
+            fsData data = null;
+            fsResult r = fsJsonParser.Parse(Encoding.UTF8.GetString(req.Send), out data);
+            if (!r.Succeeded)
+              throw new WatsonException(r.FormattedMessages);
+
+            object obj = new object();
+            r = sm_Serializer.TryDeserialize(data, obj.GetType(), ref obj);
+            if (!r.Succeeded)
+              throw new WatsonException(r.FormattedMessages);
+
+
+            restRequest.AddBody(data);
             //restRequest.AddBody()
             //restRequest.AddParameter("", req.send, ParameterType.RequestBody);
             //FileParameter param = new FileParameter();
@@ -451,12 +467,12 @@ namespace IBM.Watson.DeveloperCloud.Connection
                     Log.Debug("RESTConnector", "URL: {0}", url);
 #endif
 
-          //IRestResponse response = m_restClient.Execute(restRequest);
 
           m_restClient.ExecuteAsync(restRequest, response =>
           {
             resp.Success = true;
             resp.Data = response.RawBytes;
+            req.OnResponse?.Invoke(req, resp);
           });
 
           // wait for the request to complete.

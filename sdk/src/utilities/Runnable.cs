@@ -1,4 +1,8 @@
-﻿/**
+﻿
+#define ENABLE_RUNNABLE_DEBUGGING
+
+using IBM.Watson.DeveloperCloud.Logging;
+/**
 * Copyright 2015 IBM Corp. All Rights Reserved.
 *
 * Licensed under the Apache License, Version 2.0 (the "License");
@@ -14,11 +18,8 @@
 * limitations under the License.
 *
 */
-
-using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Threading;
 
 namespace IBM.Watson.DeveloperCloud.Utilities
 {
@@ -96,7 +97,7 @@ namespace IBM.Watson.DeveloperCloud.Utilities
 
         Runnable.Instance.m_Routines[ID] = this;
 #if ENABLE_RUNNABLE_DEBUGGING
-                Debug.Log( string.Format("Coroutine {0} started.", ID ) ); 
+        Log.Debug("Runnable", string.Format("Coroutine {0} started.", ID ) ); 
 #endif
       }
 
@@ -112,7 +113,7 @@ namespace IBM.Watson.DeveloperCloud.Utilities
         {
           Runnable.Instance.m_Routines.Remove(ID);      // remove from the mapping
 #if ENABLE_RUNNABLE_DEBUGGING
-                    Debug.Log( string.Format("Coroutine {0} stopped.", ID ) );
+         Log.Debug("Runnable", string.Format("Coroutine {0} stopped.", ID ) );
 #endif
         }
 
@@ -124,18 +125,83 @@ namespace IBM.Watson.DeveloperCloud.Utilities
 
     public Coroutine StartCoroutine(Routine r)
     {
-      Coroutine coroutine = new Coroutine();
-      //coroutine.r = r;
-
-      return coroutine;
+      return new Coroutine(r);
     }
 
     public class Coroutine
     {
-      //public Routine r { get; set; }
+      private Routine m_Routine;
+      private CoroutineState m_State;
+      public CoroutineState State
+      {
+        get { return m_State; }
+        set
+        {
+          m_State = value;
+        }
+      }
+      public Coroutine(Routine r)
+      {
+        m_Routine = r;
+        State = CoroutineState.Ready;
+        Start();
+      }
 
-      //ThreadStart childThreadRef = new ThreadStart(r);
-      //Thread childThread = new Thread(childThreadRef);
+      public IEnumerator Start()
+      {
+        if(State != CoroutineState.Ready)
+          throw new WatsonException("Unable to start coroutine in state " + State);
+
+        State = CoroutineState.Running;
+        while (m_Routine.MoveNext())
+        {
+          yield return m_Routine.Current;
+          while (State == CoroutineState.Paused)
+          {
+            yield return null;
+          }
+          if (State == CoroutineState.Finished)
+          {
+            yield break;
+          }
+        }
+
+        State = CoroutineState.Finished;
+      }
+
+      public void Stop()
+      {
+        if (State != CoroutineState.Running && State != CoroutineState.Paused)
+          throw new System.InvalidOperationException("Unable to stop coroutine in state: " + State);
+
+        State = CoroutineState.Finished;
+      }
+
+      public void Pause()
+      {
+        if (State != CoroutineState.Running)
+          throw new System.InvalidOperationException("Unable to pause coroutine in state: " + State);
+
+        State = CoroutineState.Paused;
+      }
+
+      public void Resume()
+      {
+        if (State != CoroutineState.Paused)
+          throw new System.InvalidOperationException("Unable to resume coroutine in state: " + State);
+
+        State = CoroutineState.Running;
+      }
+    }
+    #endregion
+
+    #region Coroutine States
+    public enum CoroutineState
+    {
+      Ready,
+      Running,
+      Paused,
+      Finished
     }
     #endregion
 
