@@ -16,7 +16,7 @@
 */
 
 // uncomment to enable debugging
-#define ENABLE_DEBUGGING
+//#define ENABLE_DEBUGGING
 
 using System;
 using System.Net;
@@ -384,7 +384,6 @@ namespace IBM.Watson.DeveloperCloud.Connection
         DateTime startTime = DateTime.Now;
         if (!req.Delete)
         {
-          //  Forms POST
           if (req.Forms != null)
           {
             restRequest.Method = req.Put ? Method.PUT : Method.POST;
@@ -416,7 +415,6 @@ namespace IBM.Watson.DeveloperCloud.Connection
             restRequest.Method = Method.GET;
           }
           else
-          //  Body POST
           {
             restRequest.Method = req.Put ? Method.PUT : Method.POST;
             
@@ -557,12 +555,21 @@ namespace IBM.Watson.DeveloperCloud.Connection
                     resp.Success = deleteReq.Success;
 
 #else
-          Log.Warning("RESTConnector", "DELETE method is supported in the editor only.");
-          resp.Success = false;
+          //Log.Warning("RESTConnector", "DELETE method is supported in the editor only.");
+          //resp.Success = false;
+
+          restRequest.Method = Method.DELETE;
+
+          m_restClient.ExecuteAsync(restRequest, response =>
+          {
+            resp.Success = true;
+            resp.Data = response.RawBytes;
+            req.OnResponse?.Invoke(req, resp);
+          });
 #endif
           resp.ElapsedTime = (float)(DateTime.Now - startTime).TotalSeconds;
-          if (req.OnResponse != null)
-            req.OnResponse(req, resp);
+          //if (req.OnResponse != null)
+          //  req.OnResponse(req, resp);
         }
         else if(req.Put)
         {

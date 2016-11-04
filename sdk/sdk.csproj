@@ -66,8 +66,10 @@
     <Compile Include="src\services\AlchemyAPI\AlchemyAPI.cs" />
     <Compile Include="src\services\AlchemyAPI\DataModels.cs" />
     <Compile Include="src\services\IWatsonService.cs" />
-    <Compile Include="src\services\ToneAnalyzer\DataModels.cs" />
-    <Compile Include="src\services\ToneAnalyzer\ToneAnalyzer.cs" />
+    <Compile Include="src\services\TradeoffAnalytics\ToneAnalyzer\DataModels.cs" />
+    <Compile Include="src\services\TradeoffAnalytics\ToneAnalyzer\ToneAnalyzer.cs" />
+    <Compile Include="src\services\VisualRecognition\DataModels.cs" />
+    <Compile Include="src\services\VisualRecognition\VisualRecognition.cs" />
     <Compile Include="src\testing\UnitTest.cs" />
     <Compile Include="src\testing\TestRunnable.cs" />
     <Compile Include="src\utilities\AudioClipUtil.cs" />
