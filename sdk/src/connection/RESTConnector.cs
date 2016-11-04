@@ -365,20 +365,21 @@ namespace IBM.Watson.DeveloperCloud.Connection
         {
           var key = kp.Key;
           var value = kp.Value;
+          string newVal = "";
 
           if (value is string)
-            value = Uri.EscapeUriString((string)value);
-
+            newVal = Uri.EscapeUriString((string)value);
           else if (value is byte[])
-            value = Convert.ToBase64String((byte[])value);
+            newVal = Convert.ToBase64String((byte[])value);
           else if (value is Int32 || value is Int64 || value is UInt32 || value is UInt64)
-            value = value.ToString();
+            newVal = value.ToString();
           else if (value != null)
             Log.Warning("RESTConnector", "Unsupported parameter value type {0}", value.GetType().Name);
           else
             Log.Error("RESTConnector", "Parameger {0} value is null", key);
 
-          restRequest.AddParameter(key, value, ParameterType.QueryString);
+          if(!string.IsNullOrEmpty(newVal))
+            restRequest.AddQueryParameter(key, newVal);
         }
 
         //  add headers
@@ -415,9 +416,15 @@ namespace IBM.Watson.DeveloperCloud.Connection
                 if (formData.Value.IsBinary)
                   restRequest.AddFileBytes(formData.Key, formData.Value.Contents, formData.Value.FileName, formData.Value.MimeType);
                 else if (formData.Value.BoxedObject is string)
-                  restRequest.AddParameter(formData.Key, formData.Value, ParameterType.GetOrPost);
+                {
+                  //restRequest.AlwaysMultipartFormData = true;
+                  restRequest.AddParameter(formData.Key, formData.Value.BoxedObject, ParameterType.GetOrPost);
+                }
                 else if (formData.Value.BoxedObject is int)
-                  restRequest.AddParameter(formData.Key, formData.Value, ParameterType.GetOrPost);
+                {
+                  //restRequest.AlwaysMultipartFormData = true;
+                  restRequest.AddParameter(formData.Key, formData.Value.BoxedObject, ParameterType.GetOrPost);
+                }
 
                 else if (formData.Value.BoxedObject != null)
                   Log.Warning("RESTConnector", "Unsupported form field type {0}", formData.Value.BoxedObject.GetType().ToString());
@@ -555,8 +562,8 @@ namespace IBM.Watson.DeveloperCloud.Connection
           //if (resp.ElapsedTime > LogResponseTime)
           //  Log.Warning("RESTConnector", "Request {0} completed in {1} seconds.", url, resp.ElapsedTime);
 
-          if (req.OnResponse != null)
-            req.OnResponse(req, resp);
+          //if (req.OnResponse != null)
+          //  req.OnResponse(req, resp);
 
           //www = null;
         }

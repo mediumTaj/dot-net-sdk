@@ -63,6 +63,8 @@
     <Compile Include="src\logging\FileReactor.cs" />
     <Compile Include="src\logging\ILogReactor.cs" />
     <Compile Include="src\logging\Logger.cs" />
+    <Compile Include="src\services\AlchemyAPI\AlchemyAPI.cs" />
+    <Compile Include="src\services\AlchemyAPI\DataModels.cs" />
     <Compile Include="src\services\IWatsonService.cs" />
     <Compile Include="src\services\ToneAnalyzer\DataModels.cs" />
     <Compile Include="src\services\ToneAnalyzer\ToneAnalyzer.cs" />
