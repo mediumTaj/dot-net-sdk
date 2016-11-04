@@ -38,8 +38,6 @@ namespace IBM.Watson.DeveloperCloud.Connection
   /// </summary>
   public class RESTConnector
   {
-
-    private static fsSerializer sm_Serializer = new fsSerializer();
     #region Public Types
     /// <summary>
     /// This delegate type is declared for a Response handler function.
@@ -182,6 +180,10 @@ namespace IBM.Watson.DeveloperCloud.Connection
       /// </summary>
       public bool Delete { get; set; }
       /// <summary>
+      /// True to send request as PUT.
+      /// </summary>
+      public bool Put { get; set; }
+      /// <summary>
       /// The name of the function to invoke on the server.
       /// </summary>
       public string Function { get; set; }
@@ -239,6 +241,7 @@ namespace IBM.Watson.DeveloperCloud.Connection
     private int m_ActiveConnections = 0;
     private Queue<Request> m_Requests = new Queue<Request>();
     private RestClient m_restClient = new RestClient();
+    private static fsSerializer sm_Serializer = new fsSerializer();
     #endregion
 
     #region Connectors
