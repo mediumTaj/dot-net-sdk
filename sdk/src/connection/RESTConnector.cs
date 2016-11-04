@@ -301,18 +301,9 @@ namespace IBM.Watson.DeveloperCloud.Connection
         throw new ArgumentNullException("request");
 
       m_Requests.Enqueue(request);
-
-      // if we are not already running a co-routine to send the Requests
-      // then start one at this point.
+      
       if (m_ActiveConnections < Config.Instance.MaxRestConnections)
-      {
-        // This co-routine will increment m_ActiveConnections then yield back to us so
-        // we can return from the Send() as quickly as possible.
-        //Runnable.Run(ProcessRequestQueue());
         ProcessRequestQueue();
-
-        //var ienum = ProcessRequestQueue();
-      }
 
       return true;
     }
@@ -342,7 +333,6 @@ namespace IBM.Watson.DeveloperCloud.Connection
     private void ProcessRequestQueue()
     {
       m_ActiveConnections += 1;
-      //yield return null;
 
       while (m_Requests.Count > 0)
       {
@@ -362,8 +352,7 @@ namespace IBM.Watson.DeveloperCloud.Connection
         m_restClient.UserAgent = Constants.String.VERSION;
 
         RestRequest restRequest = new RestRequest();
-
-        //  add query string params to request
+        
         foreach (var kp in req.Parameters)
         {
           var key = kp.Key;
@@ -384,21 +373,12 @@ namespace IBM.Watson.DeveloperCloud.Connection
           if(!string.IsNullOrEmpty(newVal))
             restRequest.AddQueryParameter(key, newVal);
         }
-
-        //  add headers
+        
         AddHeaders(req.Headers);
 
         foreach (KeyValuePair<string, string> kv in req.Headers)
           restRequest.AddHeader(kv.Key, kv.Value);
-
-
-
-
-
-
-
-
-
+        
         Response resp = new Response();
 
         DateTime startTime = DateTime.Now;
@@ -407,7 +387,7 @@ namespace IBM.Watson.DeveloperCloud.Connection
           //  Forms POST
           if (req.Forms != null)
           {
-            restRequest.Method = Method.POST;
+            restRequest.Method = req.Put ? Method.PUT : Method.POST;
 
             if (req.Send != null)
               Log.Warning("RESTConnector", "Do not use both Send & Form fields in a Request object.");
@@ -419,16 +399,9 @@ namespace IBM.Watson.DeveloperCloud.Connection
                 if (formData.Value.IsBinary)
                   restRequest.AddFileBytes(formData.Key, formData.Value.Contents, formData.Value.FileName, formData.Value.MimeType);
                 else if (formData.Value.BoxedObject is string)
-                {
-                  //restRequest.AlwaysMultipartFormData = true;
                   restRequest.AddParameter(formData.Key, formData.Value.BoxedObject, ParameterType.GetOrPost);
-                }
                 else if (formData.Value.BoxedObject is int)
-                {
-                  //restRequest.AlwaysMultipartFormData = true;
                   restRequest.AddParameter(formData.Key, formData.Value.BoxedObject, ParameterType.GetOrPost);
-                }
-
                 else if (formData.Value.BoxedObject != null)
                   Log.Warning("RESTConnector", "Unsupported form field type {0}", formData.Value.BoxedObject.GetType().ToString());
               }
@@ -438,8 +411,6 @@ namespace IBM.Watson.DeveloperCloud.Connection
               Log.Error("RESTConnector", "Exception when initializing form: {0}", e.ToString());
             }
           }
-
-          //  GET
           else if (req.Send == null)
           {
             restRequest.Method = Method.GET;
@@ -447,9 +418,7 @@ namespace IBM.Watson.DeveloperCloud.Connection
           else
           //  Body POST
           {
-            //  TODO body
-            restRequest.Method = Method.POST;
-
+            restRequest.Method = req.Put ? Method.PUT : Method.POST;
             
             fsData data = null;
             fsResult r = fsJsonParser.Parse(Encoding.UTF8.GetString(req.Send), out data);
@@ -460,17 +429,8 @@ namespace IBM.Watson.DeveloperCloud.Connection
             r = sm_Serializer.TryDeserialize(data, obj.GetType(), ref obj);
             if (!r.Succeeded)
               throw new WatsonException(r.FormattedMessages);
-
-
-            restRequest.AddBody(data);
-            //restRequest.AddBody()
-            //restRequest.AddParameter("", req.send, ParameterType.RequestBody);
-            //FileParameter param = new FileParameter();
-            ////Stream dataStream = new MemoryStream();
-            //Action<Stream> dataStream = Stream.Write(req.Send, 0, req.Send.Length);
-            ////param.Writer = dataStream.Write(req.Send, 0, req.Send.Length);
-
-            //param.Writer = dataStream;
+            
+            restRequest.AddParameter("application/json", data, ParameterType.RequestBody);
           }
 
 #if ENABLE_DEBUGGING
@@ -570,7 +530,7 @@ namespace IBM.Watson.DeveloperCloud.Connection
 
           //www = null;
         }
-        else
+        else if(req.Delete)
         {
 
 #if ENABLE_DEBUGGING
@@ -603,6 +563,10 @@ namespace IBM.Watson.DeveloperCloud.Connection
           resp.ElapsedTime = (float)(DateTime.Now - startTime).TotalSeconds;
           if (req.OnResponse != null)
             req.OnResponse(req, resp);
+        }
+        else if(req.Put)
+        {
+          //  put call
         }
       }
 

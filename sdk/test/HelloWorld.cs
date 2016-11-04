@@ -16,12 +16,12 @@ namespace IBM.Watson.DeveloperCloud.Test
       Log.Debug("HelloWorld", "Press any key to continue...");
       Log.Debug("HelloWorld", "Testing Tone Analyzer....");
 
-      //ToneAnalyzerTest toneAnalyzerTest = new ToneAnalyzerTest();
-      //toneAnalyzerTest.TestToneAnalyzer();
+      ToneAnalyzerTest toneAnalyzerTest = new ToneAnalyzerTest();
+      toneAnalyzerTest.TestToneAnalyzer();
 
-      AlchemyAPITest alchemyAPITest = new AlchemyAPITest();
-      alchemyAPITest.TestAlchemyAPI();
-      
+      //AlchemyAPITest alchemyAPITest = new AlchemyAPITest();
+      //alchemyAPITest.TestAlchemyAPI();
+
       Console.ReadKey();
     }
   }
@@ -37,7 +37,7 @@ namespace IBM.Watson.DeveloperCloud.Test
 
     public void TestToneAnalyzer()
     {
-      if (!m_ToneAnalyzer.GetToneAnalyze(m_TextString, OnGetToneAnalyzed))
+      if (!m_ToneAnalyzer.GetToneAnalyze(OnGetToneAnalyzed, m_TextString))
         Console.WriteLine("Failed to get tone!");
     }
 
