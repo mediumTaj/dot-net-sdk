@@ -66,8 +66,10 @@
     <Compile Include="src\services\AlchemyAPI\AlchemyAPI.cs" />
     <Compile Include="src\services\AlchemyAPI\DataModels.cs" />
     <Compile Include="src\services\IWatsonService.cs" />
-    <Compile Include="src\services\TradeoffAnalytics\ToneAnalyzer\DataModels.cs" />
-    <Compile Include="src\services\TradeoffAnalytics\ToneAnalyzer\ToneAnalyzer.cs" />
+    <Compile Include="src\services\RetrieveAndRank\DataModels.cs" />
+    <Compile Include="src\services\RetrieveAndRank\RetrieveAndRank.cs" />
+    <Compile Include="src\services\ToneAnalyzer\DataModels.cs" />
+    <Compile Include="src\services\ToneAnalyzer\ToneAnalyzer.cs" />
     <Compile Include="src\services\VisualRecognition\DataModels.cs" />
     <Compile Include="src\services\VisualRecognition\VisualRecognition.cs" />
     <Compile Include="src\testing\UnitTest.cs" />
@@ -146,6 +148,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="obj\Debug\" />
+    <Folder Include="src\services\TradeoffAnalytics\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.

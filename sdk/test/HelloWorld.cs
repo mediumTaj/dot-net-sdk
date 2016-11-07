@@ -1,9 +1,11 @@
 ﻿using IBM.Watson.DeveloperCloud.Logging;
 using IBM.Watson.DeveloperCloud.Services.AlchemyAPI.v1;
+using IBM.Watson.DeveloperCloud.Services.RetrieveAndRank.v1;
 using IBM.Watson.DeveloperCloud.Services.ToneAnalyzer.v3;
 using IBM.Watson.DeveloperCloud.Services.VisualRecognition.v3;
 using System;
 using System.IO;
+using System.Threading.Tasks;
 
 namespace IBM.Watson.DeveloperCloud.Test
 {
@@ -24,6 +26,9 @@ namespace IBM.Watson.DeveloperCloud.Test
 
       //VisualRecognitionTest visualRecognitionTest = new VisualRecognitionTest();
       //visualRecognitionTest.TestVisualRecognition();
+
+      RetrieveAndRankTest retrieveAndRankTest = new RetrieveAndRankTest();
+      retrieveAndRankTest.TestRetrieveAndRank();
 
       Console.ReadKey();
     }
@@ -208,6 +213,7 @@ namespace IBM.Watson.DeveloperCloud.Test
         Log.Debug("VisualRecognitonTest", "Collection creation failed! Collection is null!");
       }
     }
+  #endregion
 
     #region Delete Collection
     private void DeleteCollection(string collectionID)
@@ -262,5 +268,209 @@ namespace IBM.Watson.DeveloperCloud.Test
     #endregion
   }
   #endregion
+
+  #region Test RetrieveAndRank and PUT
+  class RetrieveAndRankTest
+  {
+    private RetrieveAndRank m_RetrieveAndRank = new RetrieveAndRank();
+    private string m_ClusterName = "dot-net-test-cluster";
+    private int m_ClusterSize = 3;
+    private int m_NewClusterSize = 7;
+    private string m_ClusterID = "scb4d14896_c80a_44c1_8572_f53af7bc8b2e";
+
+    public RetrieveAndRankTest()
+    {
+      Log.Debug("RetrieveAndRankTest", "Constructor!");
+    }
+
+    public void TestRetrieveAndRank()
+    {
+      //CreateCluster(m_ClusterName, m_ClusterSize.ToString());
+      ResizeCluster(m_ClusterID, 2);
+      //GetResizeStatus(m_ClusterID);
+    }
+
+    #region Create Cluster
+    private void CreateCluster(string clusterName, string clusterSize)
+    {
+      Log.Debug("RetrieveAndRankTest", "Attempting to create cluster '{0}'", clusterName);
+      if (!m_RetrieveAndRank.CreateCluster(OnCreateCluster, clusterName, clusterSize))
+        Log.Debug("RetrieveAndRankTest", "Failed to create cluster!");
+    }
+
+    private void OnCreateCluster(SolrClusterResponse resp, string data)
+    {
+      if (resp != null)
+      {
+        Log.Debug("RetrieveAndRankTest", "OnCreateCluster | name: {0}, size: {1}, ID: {2}, status: {3}.", resp.cluster_name, resp.cluster_size, resp.solr_cluster_id, resp.solr_cluster_status);
+        m_ClusterID = resp.solr_cluster_id;
+        GetCluster(m_ClusterID);
+      }
+      else
+      {
+        Log.Debug("RetrieveAndRankTest", "OnCreateCluster | Get Cluster Response is null!");
+      }
+    }
+    #endregion
+
+    #region GetCluster
+    private void GetCluster(string clusterID)
+    {
+      Log.Debug("RetrieveAndRankTest", "Attempting to get cluster '{0}'", clusterID);
+      if (!m_RetrieveAndRank.GetCluster(OnGetCluster, clusterID))
+        Log.Debug("RetrieveAndRankTest", "Failed to get cluster!");
+    }
+
+    private void OnGetCluster(SolrClusterResponse resp, string data)
+    {
+      if (resp != null)
+      {
+        Log.Debug("RetrieveAndRankTest", "OnGetCluster | name: {0}, size: {1}, ID: {2}, status: {3}.", resp.cluster_name, resp.cluster_size, resp.solr_cluster_id, resp.solr_cluster_status);
+        if (resp.solr_cluster_status != "READY")
+        {
+          //DelayMethod(HandleDelay, 10000);
+          GetCluster(m_ClusterID);
+          //GetClusterStats(m_ClusterID);
+        }
+        //else
+      }
+      else
+      {
+        Log.Debug("RetrieveAndRankTest", "OnGetCluster | Get Cluster Response is null!");
+      }
+    }
+
+    private void HandleDelay()
+    {
+      GetCluster(m_ClusterID);
+    }
+    #endregion
+
+    #region Get Cluster Statistics
+    private void GetClusterStats(string clusterID)
+    {
+      Log.Debug("RetrieveAndRankTest", "Attempting to get stats for cluster '{0}'", clusterID);
+      if (!m_RetrieveAndRank.GetClusterStats(OnGetClusterStats, clusterID))
+        Log.Debug("RetrieveAndRankTest", "Failed to get cluster stats!");
+    }
+
+    private void OnGetClusterStats(StatsResponse resp, string data)
+    {
+      if (resp != null)
+      {
+        if (resp.disk_usage != null)
+        {
+          foreach(DiskUsageResults result in  resp.disk_usage)
+            Log.Debug("RetrieveAndRankTest", "Disk Usage: bytes: {0}/{1} | Used: {2}/{3} | Percentage used: {4}", result.used_bytes, result.total_bytes, result.used, result.total, result.percent_used);
+        }
+
+        if(resp.memory_usage != null)
+        {
+          foreach(MemUsageResults result in resp.memory_usage)
+            Log.Debug("RetrieveAndRankTest", "Memory Usage: bytes: {0}/{1} | Used: {2}/{3} | Percentage used: {4}", result.used_bytes, result.total_bytes, result.used, result.total, result.percent_used);
+        }
+
+        ResizeCluster(m_ClusterID, m_NewClusterSize);
+      }
+      else
+        Log.Debug("RetrieveAndRankTest", "Failed to get cluster stats!");
+    }
+    #endregion
+
+    #region Resize Cluster
+    private void ResizeCluster(string clusterID, int clusterSize)
+    {
+      Log.Debug("RetrieveAndRankTest", "Attempting to resize cluster {0} to {1}!", clusterID, clusterSize.ToString());
+      if(!m_RetrieveAndRank.ResizeCluster(OnResizeCluster, clusterID, clusterSize))
+        Log.Debug("RetrieveAndRankTest", "Resize cluster {0} to {1} failed!", clusterID, clusterSize.ToString());
+    }
+
+    private void OnResizeCluster(ResizeResponse resp, string data)
+    {
+      if (resp != null)
+      {
+        Log.Debug("RetrieveAndRankTest", "OnResizeCluster: ID: {0} | Cluster size: {1} | Status: {2} | Target cluster size: {3} | Message: {4}",
+          resp.cluster_id,
+          resp.cluster_size,
+          resp.status,
+          resp.target_cluster_size,
+          resp.message);
+
+        GetResizeStatus(m_ClusterID);
+      }
+      else
+      {
+        Log.Debug("RetrieveAndRankTest", "Failed to resize cluster {0}", m_ClusterID);
+      }
+    }
+    #endregion
+
+    #region Get Cluster Resize Status
+    private void GetResizeStatus(string clusterID)
+    {
+      Log.Debug("RetrieveAndRankTest", "Attempting to get cluster resize status {0}", clusterID);
+      if(!m_RetrieveAndRank.GetClusterResizeStatus(OnGetResizeStatus, clusterID))
+        Log.Debug("RetrieveAndRankTest", "Failed to get cluster resize status {0}!", clusterID);
+    }
+
+    private void OnGetResizeStatus(ResizeResponse resp, string data)
+    {
+      if(resp != null)
+      {
+        Log.Debug("RetrieveAndRankTest", "OnGetResizeStatus: ID: {0} | Cluster size: {1} | Status: {2} | Target cluster size: {3} | Message: {4}", 
+          resp.cluster_id, 
+          resp.cluster_size, 
+          resp.status, 
+          resp.target_cluster_size, 
+          resp.message);
+
+        if(resp.status == "READY")
+        {
+          Log.Debug("RetrieveAndRankTest", "Cluster is ready!");
+          DeleteCluster(m_ClusterID);
+        }
+        else
+        {
+          Log.Debug("RetrieveAndRankTest", "Cluster not ready! Status is {0}!", resp.status);
+          GetResizeStatus(m_ClusterID);
+        }
+      }
+      else
+      {
+        Log.Debug("RetrieveAndRankTest", "Failed to get resize status of cluster {0}", m_ClusterID);
+      }
+    }
+    #endregion
+
+    #region Delete Cluster
+    private void DeleteCluster(string clusterID)
+    {
+      Log.Debug("RetrieveAndRankTest", "Attempting to delete cluster {0}", clusterID);
+      if (!m_RetrieveAndRank.DeleteCluster(OnDeleteCluster, clusterID))
+        Log.Debug("RetrieveAndRankTest", "Failed to delete cluster {0}", clusterID);
+    }
+
+    private void OnDeleteCluster(bool success, string data)
+    {
+      if (success)
+        Log.Debug("RetrieveAndRankTest", "Deleted cluster {0}", m_ClusterID);
+      else
+        Log.Debug("RetrieveAndRankTest", "Failed to delete cluster {0}", m_ClusterID);
+    }
+    #endregion
+
+    #region Delay
+    public delegate void OnDelay();
+
+    public void DelayMethod(OnDelay callback, int time)
+    {
+      System.Timers.Timer timer = new System.Timers.Timer();
+      timer.Interval = time;
+      timer.Elapsed += (o, e) => callback();
+      timer.Start();
+    }
+    #endregion
+  }
   #endregion
+
 }
