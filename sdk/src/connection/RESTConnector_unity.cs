@@ -27,16 +27,13 @@ using System.Text;
 using IBM.Watson.DeveloperCloud.Utilities;
 using IBM.Watson.DeveloperCloud.Logging;
 using System.IO;
-using RestSharp;
-using MiniJSON;
-using FullSerializer;
 
 namespace IBM.Watson.DeveloperCloud.Connection
 {
   /// <summary>
   /// REST connector class.
   /// </summary>
-  public class RESTConnector
+  public class RESTConnector_Unity
   {
     #region Public Types
     /// <summary>
@@ -51,12 +48,6 @@ namespace IBM.Watson.DeveloperCloud.Connection
     /// </summary>
     /// <param name="progress"></param>
     public delegate void ProgressEvent(float progress);
-    /// <summary>
-    /// The class is returned by a Request object containing the response to a request made
-    /// by the client.
-    /// </summary>
-    /// 
-    #region Response
     /// <summary>
     /// The class is returned by a Request object containing the response to a request made
     /// by the client.
@@ -81,10 +72,8 @@ namespace IBM.Watson.DeveloperCloud.Connection
       /// </summary>
       public float ElapsedTime { get; set; }
       #endregion
-    }
-    #endregion
+    };
 
-    #region Form
     /// <summary>
     /// Multi-part form data class.
     /// </summary>
@@ -144,9 +133,7 @@ namespace IBM.Watson.DeveloperCloud.Connection
       /// </summary>
       public string MimeType { get; set; }
     };
-    #endregion
 
-    #region Request
     /// <summary>
     /// This class is created to make a request to send to the server.
     /// </summary>
@@ -162,11 +149,6 @@ namespace IBM.Watson.DeveloperCloud.Connection
       }
 
       #region Public Properties
-      private static float sm_LogResponseTime = 3.0f;
-      /// <summary>
-      /// Specify a time to log to the logging system when a response takes longer than this amount.
-      /// </summary>
-      public static float LogResponseTime { get { return sm_LogResponseTime; } set { sm_LogResponseTime = value; } }
       /// <summary>
       /// Custom timeout for this Request. This timeout is used if this timeout is larger than the value in the Config class.
       /// </summary>
@@ -179,10 +161,6 @@ namespace IBM.Watson.DeveloperCloud.Connection
       /// True to send a delete method.
       /// </summary>
       public bool Delete { get; set; }
-      /// <summary>
-      /// True to send request as PUT.
-      /// </summary>
-      public bool Put { get; set; }
       /// <summary>
       /// The name of the function to invoke on the server.
       /// </summary>
@@ -218,9 +196,13 @@ namespace IBM.Watson.DeveloperCloud.Connection
       #endregion
     }
     #endregion
-    #endregion
 
     #region Public Properties
+    private static float sm_LogResponseTime = 3.0f;
+    /// <summary>
+    /// Specify a time to log to the logging system when a response takes longer than this amount.
+    /// </summary>
+    public static float LogResponseTime { get { return sm_LogResponseTime; } set { sm_LogResponseTime = value; } }
     /// <summary>
     /// Base URL for REST requests.
     /// </summary>
@@ -237,14 +219,9 @@ namespace IBM.Watson.DeveloperCloud.Connection
 
     #region Private Data
     //! Dictionary of connectors by service & function.
-    private static Dictionary<string, RESTConnector> sm_Connectors = new Dictionary<string, RESTConnector>();
-    private int m_ActiveConnections = 0;
-    private Queue<Request> m_Requests = new Queue<Request>();
-    private RestClient m_restClient = new RestClient();
-    private static fsSerializer sm_Serializer = new fsSerializer();
+    private static Dictionary<string, RESTConnector_Unity> sm_Connectors = new Dictionary<string, RESTConnector_Unity>();
     #endregion
 
-    #region Connectors
     /// <summary>
     /// This function returns a RESTConnector object for the given service and function. 
     /// </summary>
@@ -252,9 +229,9 @@ namespace IBM.Watson.DeveloperCloud.Connection
     /// <param name="function">The name of the function.</param>
     /// <param name="useCache">If true, then the connections will use a static cache.</param>
     /// <returns>Returns a RESTConnector object or null on error.</returns>
-    public static RESTConnector GetConnector(string serviceID, string function, bool useCache = true)
+    public static RESTConnector_Unity GetConnector(string serviceID, string function, bool useCache = true)
     {
-      RESTConnector connector = null;
+      RESTConnector_Unity connector = null;
 
       string connectorID = serviceID + function;
       if (useCache && sm_Connectors.TryGetValue(connectorID, out connector))
@@ -268,7 +245,7 @@ namespace IBM.Watson.DeveloperCloud.Connection
         return null;
       }
 
-      connector = new RESTConnector();
+      connector = new RESTConnector_Unity();
       connector.URL = cred.m_URL + function;
       if (cred.HasCredentials())
         connector.Authentication = new Credentials(cred.m_User, cred.m_Password);
@@ -285,7 +262,6 @@ namespace IBM.Watson.DeveloperCloud.Connection
     {
       sm_Connectors.Clear();
     }
-    #endregion
 
     #region Send Interface
     /// <summary>
@@ -301,15 +277,26 @@ namespace IBM.Watson.DeveloperCloud.Connection
         throw new ArgumentNullException("request");
 
       m_Requests.Enqueue(request);
-      
+
+      // if we are not already running a co-routine to send the Requests
+      // then start one at this point.
       if (m_ActiveConnections < Config.Instance.MaxRestConnections)
-        ProcessRequestQueue();
+      {
+        // This co-routine will increment m_ActiveConnections then yield back to us so
+        // we can return from the Send() as quickly as possible.
+        Runnable.Run(ProcessRequestQueue());
+      }
 
       return true;
     }
     #endregion
 
-    #region AddHeaders
+    #region Private Data
+    private int m_ActiveConnections = 0;
+    private Queue<Request> m_Requests = new Queue<Request>();
+    #endregion
+
+    #region Private Functions
     private void AddHeaders(Dictionary<string, string> headers)
     {
       if (Authentication != null)
@@ -327,177 +314,183 @@ namespace IBM.Watson.DeveloperCloud.Connection
 
       headers.Add("User-Agent", Constants.String.VERSION);
     }
-    #endregion
 
-    #region ProcessRequestQueue
-    private void ProcessRequestQueue()
+    private IEnumerator ProcessRequestQueue()
     {
+      // yield AFTER we increment the connection count, so the Send() function can return immediately
       m_ActiveConnections += 1;
+#if UNITY_EDITOR
+            if (!UnityEditorInternal.InternalEditorUtility.inBatchMode)
+                yield return null;
+#else
+      yield return null;
+#endif
 
       while (m_Requests.Count > 0)
       {
-        if (m_restClient == null)
-          throw new WatsonException("Rest Client is null!");
-
         Request req = m_Requests.Dequeue();
-
         if (req.Cancel)
           continue;
-
         string url = URL;
         if (!string.IsNullOrEmpty(req.Function))
           url += req.Function;
 
-        m_restClient.BaseUrl = new Uri(url);
-        m_restClient.UserAgent = Constants.String.VERSION;
-
-        RestRequest restRequest = new RestRequest();
-        
+        StringBuilder args = null;
         foreach (var kp in req.Parameters)
         {
           var key = kp.Key;
           var value = kp.Value;
-          string newVal = "";
 
           if (value is string)
-            newVal = Uri.EscapeUriString((string)value);
+            value = Uri.EscapeUriString((string)value);         // escape the value
           else if (value is byte[])
-            newVal = Convert.ToBase64String((byte[])value);
+            value = Convert.ToBase64String((byte[])value);      // convert any byte data into base64 string
           else if (value is Int32 || value is Int64 || value is UInt32 || value is UInt64)
-            newVal = value.ToString();
+            value = value.ToString();
           else if (value != null)
             Log.Warning("RESTConnector", "Unsupported parameter value type {0}", value.GetType().Name);
           else
-            Log.Error("RESTConnector", "Parameger {0} value is null", key);
+            Log.Error("RESTConnector", "Parameter {0} value is null", key);
 
-          if(!string.IsNullOrEmpty(newVal))
-            restRequest.AddQueryParameter(key, newVal);
+          if (args == null)
+            args = new StringBuilder();
+          else
+            args.Append("&");                   // append separator
+
+          args.Append(key + "=" + value);       // append key=value
         }
-        
+
+        if (args != null && args.Length > 0)
+          url += "?" + args.ToString();
+
         AddHeaders(req.Headers);
 
+        WebHeaderCollection headers = new WebHeaderCollection();
         foreach (KeyValuePair<string, string> kv in req.Headers)
-          restRequest.AddHeader(kv.Key, kv.Value);
-        
+          headers.Add(kv.Key, kv.Value);
+
         Response resp = new Response();
 
         DateTime startTime = DateTime.Now;
         if (!req.Delete)
         {
+          HttpWebRequest www = null;
+
+          //  Forms POST
           if (req.Forms != null)
           {
-            restRequest.Method = req.Put ? Method.PUT : Method.POST;
-
             if (req.Send != null)
               Log.Warning("RESTConnector", "Do not use both Send & Form fields in a Request object.");
 
+            WWWForm form = new WWWForm();
             try
             {
               foreach (var formData in req.Forms)
               {
                 if (formData.Value.IsBinary)
-                  restRequest.AddFileBytes(formData.Key, formData.Value.Contents, formData.Value.FileName, formData.Value.MimeType);
+                  form.AddBinaryData(formData.Key, formData.Value.Contents, formData.Value.FileName, formData.Value.MimeType);
                 else if (formData.Value.BoxedObject is string)
-                  restRequest.AddParameter(formData.Key, formData.Value.BoxedObject, ParameterType.GetOrPost);
+                  form.AddField(formData.Key, (string)formData.Value.BoxedObject);
                 else if (formData.Value.BoxedObject is int)
-                  restRequest.AddParameter(formData.Key, formData.Value.BoxedObject, ParameterType.GetOrPost);
+                  form.AddField(formData.Key, (int)formData.Value.BoxedObject);
                 else if (formData.Value.BoxedObject != null)
                   Log.Warning("RESTConnector", "Unsupported form field type {0}", formData.Value.BoxedObject.GetType().ToString());
               }
+              foreach (var headerData in form.headers)
+                req.Headers[headerData.Key] = headerData.Value;
             }
             catch (Exception e)
             {
-              Log.Error("RESTConnector", "Exception when initializing form: {0}", e.ToString());
+              Log.Error("RESTConnector", "Exception when initializing WWWForm: {0}", e.ToString());
             }
+            www = (HttpWebRequest)WebRequest.Create(url);//new WebRequest(url, form.data, req.Headers);
+
+            www.Headers = headers;
+
+            //  add data
           }
+
+          //  GET
           else if (req.Send == null)
           {
-            restRequest.Method = Method.GET;
+            //www = new WebRequest(url, null, req.Headers);
+            www = (HttpWebRequest)WebRequest.Create(url);
+            www.Headers = headers;
+            www.Method = "GET";
           }
           else
+          //  Body POST
           {
-            restRequest.Method = req.Put ? Method.PUT : Method.POST;
-            
-            fsData data = null;
-            fsResult r = fsJsonParser.Parse(Encoding.UTF8.GetString(req.Send), out data);
-            if (!r.Succeeded)
-              throw new WatsonException(r.FormattedMessages);
+            //www = new WebRequest(url, req.Send, req.Headers);
+            www = (HttpWebRequest)WebRequest.Create(url);
+            www.Headers = headers;
 
-            object obj = new object();
-            r = sm_Serializer.TryDeserialize(data, obj.GetType(), ref obj);
-            if (!r.Succeeded)
-              throw new WatsonException(r.FormattedMessages);
-            
-            restRequest.AddParameter("application/json", data, ParameterType.RequestBody);
+            www.Method = "POST";
+            www.ContentLength = req.Send.Length;
+            www.ContentType = "";
+            Stream dataStream = www.GetRequestStream();
+            dataStream.Write(req.Send, 0, req.Send.Length);
           }
 
 #if ENABLE_DEBUGGING
                     Log.Debug("RESTConnector", "URL: {0}", url);
 #endif
 
-
-          m_restClient.ExecuteAsync(restRequest, response =>
-          {
-            resp.Success = true;
-            resp.Data = response.RawBytes;
-            req.OnResponse?.Invoke(req, resp);
-          });
-
           // wait for the request to complete.
           float timeout = Math.Max(Config.Instance.TimeOut, req.Timeout);
-          //while (!www.isDone)
-          //{
-          //  if (req.Cancel)
-          //    break;
-          //if ((DateTime.Now - startTime).TotalSeconds > timeout)
-          //  break;
-          //if (req.OnUploadProgress != null)
-          //  req.OnUploadProgress(www.uploadProgress);
-          //if (req.OnDownloadProgress != null)
-          //  req.OnDownloadProgress(www.progress);
+          while (!www.isDone)
+          {
+            if (req.Cancel)
+              break;
+            if ((DateTime.Now - startTime).TotalSeconds > timeout)
+              break;
+            if (req.OnUploadProgress != null)
+              req.OnUploadProgress(www.uploadProgress);
+            if (req.OnDownloadProgress != null)
+              req.OnDownloadProgress(www.progress);
 
-          //  yield return null;
-
-          //}
+#if UNITY_EDITOR
+                        if (!UnityEditorInternal.InternalEditorUtility.inBatchMode)
+                            yield return null;
+#else
+            yield return null;
+#endif
+          }
 
           if (req.Cancel)
             continue;
 
-          //bool bError = false;
-          //if (!string.IsNullOrEmpty(www.error))
-          //{
-          //  int nErrorCode = -1;
-          //  int nSeperator = www.error.IndexOf(' ');
-          //  if (nSeperator > 0 && int.TryParse(www.error.Substring(0, nSeperator).Trim(), out nErrorCode))
-          //  {
-          //    switch (nErrorCode)
-          //    {
-          //      case 200:
-          //      case 201:
-          //        bError = false;
-          //        break;
-          //      default:
-          //        bError = true;
-          //        break;
-          //    }
-          //  }
+          bool bError = false;
+          if (!string.IsNullOrEmpty(www.error))
+          {
+            int nErrorCode = -1;
+            int nSeperator = www.error.IndexOf(' ');
+            if (nSeperator > 0 && int.TryParse(www.error.Substring(0, nSeperator).Trim(), out nErrorCode))
+            {
+              switch (nErrorCode)
+              {
+                case 200:
+                case 201:
+                  bError = false;
+                  break;
+                default:
+                  bError = true;
+                  break;
+              }
+            }
 
-          //  if (bError)
-          //    Log.Error("RESTConnector", "URL: {0}, ErrorCode: {1}, Error: {2}, Response: {3}", url, nErrorCode, www.error,
-          //        string.IsNullOrEmpty(www.text) ? "" : www.text);
-          //  else
-          //    Log.Warning("RESTConnector", "URL: {0}, ErrorCode: {1}, Error: {2}, Response: {3}", url, nErrorCode, www.error,
-          //        string.IsNullOrEmpty(www.text) ? "" : www.text);
-          //}
-
-
-          //if (!www.isDone)
-          //{
-          //  Log.Error("RESTConnector", "Request timed out for URL: {0}", url);
-          //  bError = true;
-          //}
-
-
+            if (bError)
+              Log.Error("RESTConnector", "URL: {0}, ErrorCode: {1}, Error: {2}, Response: {3}", url, nErrorCode, www.error,
+                  string.IsNullOrEmpty(www.text) ? "" : www.text);
+            else
+              Log.Warning("RESTConnector", "URL: {0}, ErrorCode: {1}, Error: {2}, Response: {3}", url, nErrorCode, www.error,
+                  string.IsNullOrEmpty(www.text) ? "" : www.text);
+          }
+          if (!www.isDone)
+          {
+            Log.Error("RESTConnector", "Request timed out for URL: {0}", url);
+            bError = true;
+          }
           /*if (!bError && (www.bytes == null || www.bytes.Length == 0))
           {
               Log.Warning("RESTConnector", "No data recevied for URL: {0}", url);
@@ -505,30 +498,30 @@ namespace IBM.Watson.DeveloperCloud.Connection
           }*/
 
           // generate the Response object now..
-          //if (!bError)
-          //{
-          //resp.Success = true;
-          //resp.Data = www.bytes;
-          //}
-          //else
-          //{
-          //  resp.Success = false;
-          //  resp.Error = string.Format("Request Error.\nURL: {0}\nError: {1}",
-          //      url, string.IsNullOrEmpty(www.error) ? "Timeout" : www.error);
-          //}
+          if (!bError)
+          {
+            resp.Success = true;
+            resp.Data = www.bytes;
+          }
+          else
+          {
+            resp.Success = false;
+            resp.Error = string.Format("Request Error.\nURL: {0}\nError: {1}",
+                url, string.IsNullOrEmpty(www.error) ? "Timeout" : www.error);
+          }
 
           resp.ElapsedTime = (float)(DateTime.Now - startTime).TotalSeconds;
 
           // if the response is over a threshold, then log with status instead of debug
-          //if (resp.ElapsedTime > LogResponseTime)
-          //  Log.Warning("RESTConnector", "Request {0} completed in {1} seconds.", url, resp.ElapsedTime);
+          if (resp.ElapsedTime > LogResponseTime)
+            Log.Warning("RESTConnector", "Request {0} completed in {1} seconds.", url, resp.ElapsedTime);
 
-          //if (req.OnResponse != null)
-          //  req.OnResponse(req, resp);
+          if (req.OnResponse != null)
+            req.OnResponse(req, resp);
 
-          //www = null;
+          www = null;
         }
-        else if(req.Delete)
+        else
         {
 
 #if ENABLE_DEBUGGING
@@ -555,40 +548,82 @@ namespace IBM.Watson.DeveloperCloud.Connection
                     resp.Success = deleteReq.Success;
 
 #else
-          //Log.Warning("RESTConnector", "DELETE method is supported in the editor only.");
-          //resp.Success = false;
-
-          restRequest.Method = Method.DELETE;
-
-          m_restClient.ExecuteAsync(restRequest, response =>
-          {
-            resp.Success = true;
-            resp.Data = response.RawBytes;
-            req.OnResponse?.Invoke(req, resp);
-          });
+          Log.Warning("RESTConnector", "DELETE method is supported in the editor only.");
+          resp.Success = false;
 #endif
           resp.ElapsedTime = (float)(DateTime.Now - startTime).TotalSeconds;
-          //if (req.OnResponse != null)
-          //  req.OnResponse(req, resp);
-        }
-        else if(req.Put)
-        {
-          //  put call
+          if (req.OnResponse != null)
+            req.OnResponse(req, resp);
         }
       }
 
-
-
-
-
-
-
-
-
-
-
+      // reduce the connection count before we exit..
+      m_ActiveConnections -= 1;
+      yield break;
     }
-  }
-  #endregion
-}
 
+#if UNITY_EDITOR
+        private class DeleteRequest
+        {
+            public string URL { get; set; }
+            public Dictionary<string, string> Headers { get; set; }
+            public bool IsComplete { get; set; }
+            public bool Success { get; set; }
+
+            private Thread m_Thread = null;
+
+            public bool Send(string url, Dictionary<string, string> headers)
+            {
+#if ENABLE_DEBUGGING
+                Log.Debug("RESTConnector", "DeleteRequest, Send: {0}, m_Thread:{1}", url, m_Thread);
+#endif
+                if (m_Thread != null && m_Thread.IsAlive)
+                    return false;
+
+                URL = url;
+                Headers = new Dictionary<string, string>();
+                foreach (var kp in headers)
+                {
+                    if (kp.Key != "User-Agent")
+                        Headers[kp.Key] = kp.Value;
+                }
+
+                m_Thread = new Thread(ProcessRequest);
+
+                m_Thread.Start();
+                return true;
+            }
+            
+            private void ProcessRequest()
+            {
+                // This fixes the exception thrown by self-signed certificates.
+                ServicePointManager.ServerCertificateValidationCallback = new RemoteCertificateValidationCallback(delegate { return true; });
+
+#if ENABLE_DEBUGGING
+                Log.Debug("RESTConnector", "DeleteRequest, ProcessRequest {0}", URL);
+#endif
+
+                WebRequest deleteReq = WebRequest.Create(URL);
+
+                foreach (var kp in Headers)
+                    deleteReq.Headers.Add(kp.Key, kp.Value);
+                deleteReq.Method = "DELETE";
+
+#if ENABLE_DEBUGGING
+                Log.Debug("RESTConnector", "DeleteRequest, sending deletereq {0}", deleteReq);
+#endif
+                HttpWebResponse deleteResp = deleteReq.GetResponse() as HttpWebResponse;
+#if ENABLE_DEBUGGING
+                Log.Debug("RESTConnector", "DELETE Request SENT: {0}", URL);
+#endif
+                Success = deleteResp.StatusCode == HttpStatusCode.OK || deleteResp.StatusCode == HttpStatusCode.NoContent;
+#if ENABLE_DEBUGGING
+                Log.Debug("RESTConnector", "DELETE Request COMPLETE: {0}", URL);
+#endif
+                IsComplete = true;
+            }
+        };
+#endif
+    #endregion
+  }
+}

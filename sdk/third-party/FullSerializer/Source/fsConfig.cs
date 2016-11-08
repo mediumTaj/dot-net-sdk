@@ -9,9 +9,9 @@ namespace FullSerializer {
         /// The attributes that will force a field or property to be serialized.
         /// </summary>
         public static Type[] SerializeAttributes = {
-#if !NO_UNITY
-            typeof(UnityEngine.SerializeField),
-#endif
+//#if !NO_UNITY
+//            typeof(UnityEngine.SerializeField),
+//#endif
             typeof(fsPropertyAttribute)
         };
 

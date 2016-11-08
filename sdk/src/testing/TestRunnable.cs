@@ -1,4 +1,8 @@
-﻿/**
+﻿
+
+using System;
+using IBM.Watson.DeveloperCloud.Logging;
+/**
 * Copyright 2015 IBM Corp. All Rights Reserved.
 *
 * Licensed under the Apache License, Version 2.0 (the "License");
@@ -14,23 +18,13 @@
 * limitations under the License.
 *
 */
-
-using IBM.Watson.DeveloperCloud.Logging;
-
-namespace IBM.Watson.DeveloperCloud.Utilities
+namespace IBM.Watson.DeveloperCloud.Testing
 {
-  /// <summary>
-  /// Watson exception class.
-  /// </summary>
-  class WatsonException : System.Exception
+  public class TestRunnable : UnitTest
   {
-    public WatsonException(string message) : base(message)
+    public override int RunTest()
     {
-      Log.Critical("Exception", "Exception: {0}", message);
-    }
-    public WatsonException(string message, WatsonException innerException) : base(message, innerException)
-    {
-      Log.Critical("Exception", "Exception: {0}", message);
+      throw new NotImplementedException();
     }
   }
 }

@@ -9,9 +9,10 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>sdk</RootNamespace>
     <AssemblyName>sdk</AssemblyName>
-    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -33,9 +34,17 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="HtmlAgilityPack, Version=1.4.6.0, Culture=neutral, PublicKeyToken=bd319b19eaf3b43a, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\DocumentationBuilder\ConsoleApplication1\LinkedFiles\HtmlAgilityPack.dll</HintPath>
+    <Reference Include="HtmlAgilityPack, Version=1.4.9.5, Culture=neutral, PublicKeyToken=bd319b19eaf3b43a, processorArchitecture=MSIL">
+      <HintPath>packages\HtmlAgilityPack.1.4.9.5\lib\Net40\HtmlAgilityPack.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>packages\Newtonsoft.Json.9.0.2-beta1\lib\net40\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="RestSharp, Version=105.2.3.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>packages\RestSharp.105.2.3\lib\net4\RestSharp.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -43,46 +52,28 @@
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
-    <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
+    <Reference Include="websocket-sharp, Version=1.0.2.59611, Culture=neutral, PublicKeyToken=5660b08a1845a91e, processorArchitecture=MSIL">
+      <HintPath>packages\WebSocketSharp.1.0.3-rc11\lib\websocket-sharp.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="src\connection\RESTConnector.cs" />
-    <Compile Include="src\connection\WSConnector.cs" />
     <Compile Include="src\logging\FileReactor.cs" />
     <Compile Include="src\logging\ILogReactor.cs" />
     <Compile Include="src\logging\Logger.cs" />
     <Compile Include="src\services\AlchemyAPI\AlchemyAPI.cs" />
     <Compile Include="src\services\AlchemyAPI\DataModels.cs" />
-    <Compile Include="src\services\Conversation-Experimental\Conversation-Experimental.cs" />
-    <Compile Include="src\services\Conversation-Experimental\DataModels.cs" />
-    <Compile Include="src\services\Conversation\Conversation.cs" />
-    <Compile Include="src\services\Conversation\DataModels.cs" />
-    <Compile Include="src\services\DeepQA\DataModels.cs" />
-    <Compile Include="src\services\DeepQA\DeepQA.cs" />
-    <Compile Include="src\services\DocumentConversion\DataModels.cs" />
-    <Compile Include="src\services\DocumentConversion\DocumentConversion.cs" />
     <Compile Include="src\services\IWatsonService.cs" />
-    <Compile Include="src\services\LanguageTranslation\DataModels.cs" />
-    <Compile Include="src\services\LanguageTranslation\LanguageTranslation.cs" />
-    <Compile Include="src\services\LanguageTranslator\DataModels.cs" />
-    <Compile Include="src\services\LanguageTranslator\LanguageTranslator.cs" />
-    <Compile Include="src\services\NaturalLanguageClassifier\DataModels.cs" />
-    <Compile Include="src\services\NaturalLanguageClassifier\NaturalLanguageClassifier.cs" />
-    <Compile Include="src\services\PersonalityInsights\DataModels.cs" />
-    <Compile Include="src\services\PersonalityInsights\PersonalityInsights.cs" />
     <Compile Include="src\services\RetrieveAndRank\DataModels.cs" />
     <Compile Include="src\services\RetrieveAndRank\RetrieveAndRank.cs" />
-    <Compile Include="src\services\SpeechToText\DataModels.cs" />
-    <Compile Include="src\services\SpeechToText\SpeechToText.cs" />
-    <Compile Include="src\services\TextToSpeech\DataModels.cs" />
-    <Compile Include="src\services\TextToSpeech\TextToSpeech.cs" />
     <Compile Include="src\services\ToneAnalyzer\DataModels.cs" />
     <Compile Include="src\services\ToneAnalyzer\ToneAnalyzer.cs" />
-    <Compile Include="src\services\TradeoffAnalytics\DataModels.cs" />
-    <Compile Include="src\services\TradeoffAnalytics\TradeoffAnalytics.cs" />
     <Compile Include="src\services\VisualRecognition\DataModels.cs" />
     <Compile Include="src\services\VisualRecognition\VisualRecognition.cs" />
+    <Compile Include="src\testing\UnitTest.cs" />
+    <Compile Include="src\testing\TestRunnable.cs" />
     <Compile Include="src\utilities\AudioClipUtil.cs" />
     <Compile Include="src\utilities\Config.cs" />
     <Compile Include="src\utilities\Constants.cs" />
@@ -96,9 +87,6 @@
     <Compile Include="src\utilities\WatsonException.cs" />
     <Compile Include="src\utilities\WaveFile.cs" />
     <Compile Include="test\HelloWorld.cs" />
-    <Compile Include="obj\Debug\TemporaryGeneratedFile_036C0B5B-1481-4323-8D20-8F5ADCB23D92.cs" />
-    <Compile Include="obj\Debug\TemporaryGeneratedFile_5937a670-0e60-4077-877b-f7221da3dda1.cs" />
-    <Compile Include="obj\Debug\TemporaryGeneratedFile_E7A71F73-0F8D-4B9B-B56E-8E70B10BC5D3.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="third-party\FullSerializer\Source\Converters\fsArrayConverter.cs" />
     <Compile Include="third-party\FullSerializer\Source\Converters\fsDateConverter.cs" />
@@ -113,13 +101,6 @@
     <Compile Include="third-party\FullSerializer\Source\Converters\fsReflectedConverter.cs" />
     <Compile Include="third-party\FullSerializer\Source\Converters\fsTypeConverter.cs" />
     <Compile Include="third-party\FullSerializer\Source\Converters\fsWeakReferenceConverter.cs" />
-    <Compile Include="third-party\FullSerializer\Source\Converters\Unity\AnimationCurve_DirectConverter.cs" />
-    <Compile Include="third-party\FullSerializer\Source\Converters\Unity\Bounds_DirectConverter.cs" />
-    <Compile Include="third-party\FullSerializer\Source\Converters\Unity\Gradient_DirectConverter.cs" />
-    <Compile Include="third-party\FullSerializer\Source\Converters\Unity\Keyframe_DirectConverter.cs" />
-    <Compile Include="third-party\FullSerializer\Source\Converters\Unity\LayerMask_DirectConverter.cs" />
-    <Compile Include="third-party\FullSerializer\Source\Converters\Unity\Rect_DirectConverter.cs" />
-    <Compile Include="third-party\FullSerializer\Source\Editor\AotHelpers.cs" />
     <Compile Include="third-party\FullSerializer\Source\fsAotCompilationManager.cs" />
     <Compile Include="third-party\FullSerializer\Source\fsBaseConverter.cs" />
     <Compile Include="third-party\FullSerializer\Source\fsConfig.cs" />
@@ -150,128 +131,27 @@
     <Compile Include="third-party\FullSerializer\Source\Reflection\fsReflectionUtility.cs" />
     <Compile Include="third-party\FullSerializer\Source\Reflection\fsTypeLookup.cs" />
     <Compile Include="third-party\MiniJSON\MiniJSON.cs" />
-    <Compile Include="third-party\WebSocketSharp\AssemblyInfo.cs" />
-    <Compile Include="third-party\WebSocketSharp\ByteOrder.cs" />
-    <Compile Include="third-party\WebSocketSharp\CloseEventArgs.cs" />
-    <Compile Include="third-party\WebSocketSharp\CloseStatusCode.cs" />
-    <Compile Include="third-party\WebSocketSharp\CompressionMethod.cs" />
-    <Compile Include="third-party\WebSocketSharp\ErrorEventArgs.cs" />
-    <Compile Include="third-party\WebSocketSharp\Ext.cs" />
-    <Compile Include="third-party\WebSocketSharp\Fin.cs" />
-    <Compile Include="third-party\WebSocketSharp\HttpBase.cs" />
-    <Compile Include="third-party\WebSocketSharp\HttpRequest.cs" />
-    <Compile Include="third-party\WebSocketSharp\HttpResponse.cs" />
-    <Compile Include="third-party\WebSocketSharp\LogData.cs" />
-    <Compile Include="third-party\WebSocketSharp\Logger.cs" />
-    <Compile Include="third-party\WebSocketSharp\LogLevel.cs" />
-    <Compile Include="third-party\WebSocketSharp\Mask.cs" />
-    <Compile Include="third-party\WebSocketSharp\MessageEventArgs.cs" />
-    <Compile Include="third-party\WebSocketSharp\Net\AuthenticationBase.cs" />
-    <Compile Include="third-party\WebSocketSharp\Net\AuthenticationChallenge.cs" />
-    <Compile Include="third-party\WebSocketSharp\Net\AuthenticationResponse.cs" />
-    <Compile Include="third-party\WebSocketSharp\Net\AuthenticationSchemes.cs" />
-    <Compile Include="third-party\WebSocketSharp\Net\Chunk.cs" />
-    <Compile Include="third-party\WebSocketSharp\Net\ChunkedRequestStream.cs" />
-    <Compile Include="third-party\WebSocketSharp\Net\ChunkStream.cs" />
-    <Compile Include="third-party\WebSocketSharp\Net\ClientSslConfiguration.cs" />
-    <Compile Include="third-party\WebSocketSharp\Net\Cookie.cs" />
-    <Compile Include="third-party\WebSocketSharp\Net\CookieCollection.cs" />
-    <Compile Include="third-party\WebSocketSharp\Net\CookieException.cs" />
-    <Compile Include="third-party\WebSocketSharp\Net\EndPointListener.cs" />
-    <Compile Include="third-party\WebSocketSharp\Net\EndPointManager.cs" />
-    <Compile Include="third-party\WebSocketSharp\Net\HttpBasicIdentity.cs" />
-    <Compile Include="third-party\WebSocketSharp\Net\HttpConnection.cs" />
-    <Compile Include="third-party\WebSocketSharp\Net\HttpDigestIdentity.cs" />
-    <Compile Include="third-party\WebSocketSharp\Net\HttpHeaderInfo.cs" />
-    <Compile Include="third-party\WebSocketSharp\Net\HttpHeaderType.cs" />
-    <Compile Include="third-party\WebSocketSharp\Net\HttpListener.cs" />
-    <Compile Include="third-party\WebSocketSharp\Net\HttpListenerAsyncResult.cs" />
-    <Compile Include="third-party\WebSocketSharp\Net\HttpListenerContext.cs" />
-    <Compile Include="third-party\WebSocketSharp\Net\HttpListenerException.cs" />
-    <Compile Include="third-party\WebSocketSharp\Net\HttpListenerPrefix.cs" />
-    <Compile Include="third-party\WebSocketSharp\Net\HttpListenerPrefixCollection.cs" />
-    <Compile Include="third-party\WebSocketSharp\Net\HttpListenerRequest.cs" />
-    <Compile Include="third-party\WebSocketSharp\Net\HttpListenerResponse.cs" />
-    <Compile Include="third-party\WebSocketSharp\Net\HttpRequestHeader.cs" />
-    <Compile Include="third-party\WebSocketSharp\Net\HttpResponseHeader.cs" />
-    <Compile Include="third-party\WebSocketSharp\Net\HttpStatusCode.cs" />
-    <Compile Include="third-party\WebSocketSharp\Net\HttpStreamAsyncResult.cs" />
-    <Compile Include="third-party\WebSocketSharp\Net\HttpUtility.cs" />
-    <Compile Include="third-party\WebSocketSharp\Net\HttpVersion.cs" />
-    <Compile Include="third-party\WebSocketSharp\Net\InputChunkState.cs" />
-    <Compile Include="third-party\WebSocketSharp\Net\InputState.cs" />
-    <Compile Include="third-party\WebSocketSharp\Net\LineState.cs" />
-    <Compile Include="third-party\WebSocketSharp\Net\NetworkCredential.cs" />
-    <Compile Include="third-party\WebSocketSharp\Net\QueryStringCollection.cs" />
-    <Compile Include="third-party\WebSocketSharp\Net\ReadBufferState.cs" />
-    <Compile Include="third-party\WebSocketSharp\Net\RequestStream.cs" />
-    <Compile Include="third-party\WebSocketSharp\Net\ResponseStream.cs" />
-    <Compile Include="third-party\WebSocketSharp\Net\ServerSslConfiguration.cs" />
-    <Compile Include="third-party\WebSocketSharp\Net\SslConfiguration.cs" />
-    <Compile Include="third-party\WebSocketSharp\Net\WebHeaderCollection.cs" />
-    <Compile Include="third-party\WebSocketSharp\Net\WebSockets\HttpListenerWebSocketContext.cs" />
-    <Compile Include="third-party\WebSocketSharp\Net\WebSockets\TcpListenerWebSocketContext.cs" />
-    <Compile Include="third-party\WebSocketSharp\Net\WebSockets\WebSocketContext.cs" />
-    <Compile Include="third-party\WebSocketSharp\Opcode.cs" />
-    <Compile Include="third-party\WebSocketSharp\PayloadData.cs" />
-    <Compile Include="third-party\WebSocketSharp\Rsv.cs" />
-    <Compile Include="third-party\WebSocketSharp\Server\HttpRequestEventArgs.cs" />
-    <Compile Include="third-party\WebSocketSharp\Server\HttpServer.cs" />
-    <Compile Include="third-party\WebSocketSharp\Server\IWebSocketSession.cs" />
-    <Compile Include="third-party\WebSocketSharp\Server\ServerState.cs" />
-    <Compile Include="third-party\WebSocketSharp\Server\WebSocketBehavior.cs" />
-    <Compile Include="third-party\WebSocketSharp\Server\WebSocketServer.cs" />
-    <Compile Include="third-party\WebSocketSharp\Server\WebSocketServiceHost.cs" />
-    <Compile Include="third-party\WebSocketSharp\Server\WebSocketServiceHost`1.cs" />
-    <Compile Include="third-party\WebSocketSharp\Server\WebSocketServiceManager.cs" />
-    <Compile Include="third-party\WebSocketSharp\Server\WebSocketSessionManager.cs" />
-    <Compile Include="third-party\WebSocketSharp\WebSocket.cs" />
-    <Compile Include="third-party\WebSocketSharp\WebSocketException.cs" />
-    <Compile Include="third-party\WebSocketSharp\WebSocketFrame.cs" />
-    <Compile Include="third-party\WebSocketSharp\WebSocketState.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-    <None Include="bin\Debug\sdk.exe.config" />
-    <None Include="bin\Debug\sdk.vshost.exe.config" />
-    <None Include="obj\Debug\DesignTimeResolveAssemblyReferencesInput.cache" />
-    <None Include="obj\Debug\sdk.csprojResolveAssemblyReference.cache" />
+    <None Include="packages.config" />
     <None Include="src\services\.github\CONTRIBUTING.md" />
     <None Include="src\services\.github\issue_template.md" />
     <None Include="src\services\.github\pull_request_template.md" />
+    <None Include="src\services\.gitignore" />
     <None Include="src\services\CHANGELOG.md" />
+    <None Include="src\services\LICENSE" />
     <None Include="src\services\README.md" />
-    <None Include="third-party\FullSerializer\LICENSE.md" />
-    <None Include="third-party\FullSerializer\LIMITATIONS.md" />
-    <None Include="third-party\FullSerializer\README.md" />
-    <None Include="third-party\WebSocketSharp\doc\doc.sh" />
-    <None Include="third-party\WebSocketSharp\README.md" />
-    <None Include="third-party\WebSocketSharp\websocket-sharp.snk" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="bin\Debug\sdk.exe" />
-    <Content Include="bin\Debug\sdk.pdb" />
-    <Content Include="bin\Debug\sdk.vshost.exe" />
-    <Content Include="obj\Debug\sdk.csproj.FileListAbsolute.txt" />
-    <Content Include="obj\Debug\sdk.exe" />
-    <Content Include="obj\Debug\sdk.pdb" />
-    <Content Include="src\services\.gitignore" />
-    <Content Include="third-party\HtmlAgilityPack\HtmlAgilityPack.dll" />
-    <Content Include="third-party\HtmlAgilityPack\HtmlAgilityPack.dll.mdb">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="third-party\HtmlAgilityPack\HtmlAgilityPack.pdb" />
-    <Content Include="third-party\HtmlAgilityPack\HtmlAgilityPack.xml" />
-    <Content Include="third-party\WebSocketSharp\doc\.gitignore" />
-    <Content Include="third-party\WebSocketSharp\LICENSE.txt" />
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="bin\Release\" />
-    <Folder Include="code-analysis\" />
-    <Folder Include="obj\Debug\TempPE\" />
+    <Folder Include="obj\Debug\" />
+    <Folder Include="src\services\TradeoffAnalytics\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
   </Target>

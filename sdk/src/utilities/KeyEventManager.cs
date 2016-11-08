@@ -56,7 +56,7 @@ namespace IBM.Watson.DeveloperCloud.Utilities
   //      #region Private Data
   //      private bool m_Active = true;
   //      private bool m_UpdateActivate = true;
-		//private Dictionary<int, string> m_KeyEvents = new Dictionary<int, string>();
+  //private Dictionary<int, string> m_KeyEvents = new Dictionary<int, string>();
   //      #endregion
 
   //      #region Public Properties
@@ -81,10 +81,10 @@ namespace IBM.Watson.DeveloperCloud.Utilities
 
   //      private void OnDisable()
   //      {
-		//	KeyEventManager.Instance.UnregisterKeyEvent(KeyCode.Tab, KeyModifiers.NONE, "OnKeyboardTab" );
-		//	KeyEventManager.Instance.UnregisterKeyEvent(KeyCode.Return, KeyModifiers.NONE, "OnKeyboardReturn");
-		//	KeyEventManager.Instance.UnregisterKeyEvent(KeyCode.Escape, KeyModifiers.NONE, "OnKeyboardEscape");
-		//	KeyEventManager.Instance.UnregisterKeyEvent(KeyCode.BackQuote, KeyModifiers.NONE, "OnKeyboardBackquote");
+  //	KeyEventManager.Instance.UnregisterKeyEvent(KeyCode.Tab, KeyModifiers.NONE, "OnKeyboardTab" );
+  //	KeyEventManager.Instance.UnregisterKeyEvent(KeyCode.Return, KeyModifiers.NONE, "OnKeyboardReturn");
+  //	KeyEventManager.Instance.UnregisterKeyEvent(KeyCode.Escape, KeyModifiers.NONE, "OnKeyboardEscape");
+  //	KeyEventManager.Instance.UnregisterKeyEvent(KeyCode.BackQuote, KeyModifiers.NONE, "OnKeyboardBackquote");
   //      }
   //      #endregion
 
@@ -96,7 +96,7 @@ namespace IBM.Watson.DeveloperCloud.Utilities
   //      /// <param name="modifiers">KeyCode modifiers</param>
   //      /// <param name="eventType">The event to send.</param>
   //      /// <returns>True is returned on success.</returns>
-		//public bool RegisterKeyEvent(KeyCode key, KeyModifiers modifiers, string eventType)
+  //public bool RegisterKeyEvent(KeyCode key, KeyModifiers modifiers, string eventType)
   //      {
   //          int code = ((int)key) | (((int)modifiers) << MODIFIER_SHIFT_BITS);
   //          m_KeyEvents[code] = eventType;
@@ -109,7 +109,7 @@ namespace IBM.Watson.DeveloperCloud.Utilities
   //      /// <param name="modifiers">Additional keys that must be down as well to fire the event.</param>
   //      /// <param name="eventType">If provided, then the key will be unregistered only the event matches the existing registration.</param>
   //      /// <returns>True is returned on success.</returns>
-		//public bool UnregisterKeyEvent(KeyCode key, KeyModifiers modifiers = KeyModifiers.NONE, string eventType = "" )
+  //public bool UnregisterKeyEvent(KeyCode key, KeyModifiers modifiers = KeyModifiers.NONE, string eventType = "" )
   //      {
   //          int code = ((int)key) | (((int)modifiers) << MODIFIER_SHIFT_BITS);
   //          if ( eventType != "" && m_KeyEvents.ContainsKey(code) && m_KeyEvents[code] == eventType )
@@ -124,11 +124,11 @@ namespace IBM.Watson.DeveloperCloud.Utilities
   //      {
   //          if (m_Active)
   //          {
-		//		List<string> fire = new List<string>();
+  //		List<string> fire = new List<string>();
   //              foreach (var kp in m_KeyEvents)
   //              {
   //                  KeyCode key = (KeyCode)(kp.Key & KEYCODE_MASK);
-				
+
   //                  if (Input.GetKeyDown(key))
   //                  {
   //                      bool bFireEvent = true;
@@ -158,9 +158,9 @@ namespace IBM.Watson.DeveloperCloud.Utilities
   //                  }
 
   //                  if(Input.anyKeyDown && !string.IsNullOrEmpty(Input.inputString))
-		//			{
+  //			{
   //                      EventManager.Instance.SendEvent("OnKeyboardAnyKeyDown", Input.inputString);
-		//			}
+  //			}
   //              }
 
   //              // now fire the events outside of the dictionary loop so we don't throw an exception..
