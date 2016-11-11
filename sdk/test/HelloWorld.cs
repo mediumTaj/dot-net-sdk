@@ -1,7 +1,6 @@
 ﻿using IBM.Watson.DeveloperCloud.Logging;
 using IBM.Watson.DeveloperCloud.Services.AlchemyAPI.v1;
 using IBM.Watson.DeveloperCloud.Services.RetrieveAndRank.v1;
-using IBM.Watson.DeveloperCloud.Services.SpeechToText.v1;
 using IBM.Watson.DeveloperCloud.Services.ToneAnalyzer.v3;
 using IBM.Watson.DeveloperCloud.Services.VisualRecognition.v3;
 using NAudio.Wave;
@@ -34,7 +33,8 @@ namespace IBM.Watson.DeveloperCloud.Test
 
       SpeechToTextTest speechToTextTest = new SpeechToTextTest();
       speechToTextTest.TestSpeechToText();
-
+      //Task t = Task.Factory.StartNew(() => speechToTextTest.TestSpeechToText());
+      //t.Wait();
       Console.ReadKey();
     }
   }
@@ -102,7 +102,7 @@ namespace IBM.Watson.DeveloperCloud.Test
       if (!m_AlchemyAPI.GetCombinedData(OnGetCombinedData, m_TestString))
         Console.WriteLine("Failed to get combined call!");
     }
-    
+
     public void OnGetCombinedData(CombinedCallData combinedData, string data)
     {
       if (combinedData != null)
@@ -193,11 +193,11 @@ namespace IBM.Watson.DeveloperCloud.Test
 
     private void OnCreateCollection(CreateCollection collection, string data)
     {
-      if(collection != null)
+      if (collection != null)
       {
-        Log.Debug("VisualRecognitionTest", "Collection: name: {0} | id: {1} | status: {2}, created: {3}, images: {4}", 
-          collection.name, 
-          collection.collection_id, 
+        Log.Debug("VisualRecognitionTest", "Collection: name: {0} | id: {1} | status: {2}, created: {3}, images: {4}",
+          collection.name,
+          collection.collection_id,
           collection.status,
           collection.created,
           collection.images
@@ -218,7 +218,7 @@ namespace IBM.Watson.DeveloperCloud.Test
         Log.Debug("VisualRecognitonTest", "Collection creation failed! Collection is null!");
       }
     }
-  #endregion
+    #endregion
 
     #region Delete Collection
     private void DeleteCollection(string collectionID)
@@ -231,7 +231,7 @@ namespace IBM.Watson.DeveloperCloud.Test
 
     private void OnDeleteCollection(bool success, string data)
     {
-      if(success)
+      if (success)
       {
         Log.Debug("VisualRecognitonTest", "Collection '{0}' deletion succeeded!", m_CollectionID);
 
@@ -255,7 +255,7 @@ namespace IBM.Watson.DeveloperCloud.Test
 
     private void OnGetCollection(CreateCollection collection, string data)
     {
-      if(!string.IsNullOrEmpty(collection.collection_id))
+      if (!string.IsNullOrEmpty(collection.collection_id))
       {
         Log.Debug("VisualRecognitionTest", "This is not expected: Collection found!: name: {0} | id: {1} | status: {2}, created: {3}, images: {4}",
           collection.name,
@@ -365,13 +365,13 @@ namespace IBM.Watson.DeveloperCloud.Test
       {
         if (resp.disk_usage != null)
         {
-          foreach(DiskUsageResults result in  resp.disk_usage)
+          foreach (DiskUsageResults result in resp.disk_usage)
             Log.Debug("RetrieveAndRankTest", "Disk Usage: bytes: {0}/{1} | Used: {2}/{3} | Percentage used: {4}", result.used_bytes, result.total_bytes, result.used, result.total, result.percent_used);
         }
 
-        if(resp.memory_usage != null)
+        if (resp.memory_usage != null)
         {
-          foreach(MemUsageResults result in resp.memory_usage)
+          foreach (MemUsageResults result in resp.memory_usage)
             Log.Debug("RetrieveAndRankTest", "Memory Usage: bytes: {0}/{1} | Used: {2}/{3} | Percentage used: {4}", result.used_bytes, result.total_bytes, result.used, result.total, result.percent_used);
         }
 
@@ -386,7 +386,7 @@ namespace IBM.Watson.DeveloperCloud.Test
     private void ResizeCluster(string clusterID, int clusterSize)
     {
       Log.Debug("RetrieveAndRankTest", "Attempting to resize cluster {0} to {1}!", clusterID, clusterSize.ToString());
-      if(!m_RetrieveAndRank.ResizeCluster(OnResizeCluster, clusterID, clusterSize))
+      if (!m_RetrieveAndRank.ResizeCluster(OnResizeCluster, clusterID, clusterSize))
         Log.Debug("RetrieveAndRankTest", "Resize cluster {0} to {1} failed!", clusterID, clusterSize.ToString());
     }
 
@@ -414,22 +414,22 @@ namespace IBM.Watson.DeveloperCloud.Test
     private void GetResizeStatus(string clusterID)
     {
       Log.Debug("RetrieveAndRankTest", "Attempting to get cluster resize status {0}", clusterID);
-      if(!m_RetrieveAndRank.GetClusterResizeStatus(OnGetResizeStatus, clusterID))
+      if (!m_RetrieveAndRank.GetClusterResizeStatus(OnGetResizeStatus, clusterID))
         Log.Debug("RetrieveAndRankTest", "Failed to get cluster resize status {0}!", clusterID);
     }
 
     private void OnGetResizeStatus(ResizeResponse resp, string data)
     {
-      if(resp != null)
+      if (resp != null)
       {
-        Log.Debug("RetrieveAndRankTest", "OnGetResizeStatus: ID: {0} | Cluster size: {1} | Status: {2} | Target cluster size: {3} | Message: {4}", 
-          resp.cluster_id, 
-          resp.cluster_size, 
-          resp.status, 
-          resp.target_cluster_size, 
+        Log.Debug("RetrieveAndRankTest", "OnGetResizeStatus: ID: {0} | Cluster size: {1} | Status: {2} | Target cluster size: {3} | Message: {4}",
+          resp.cluster_id,
+          resp.cluster_size,
+          resp.status,
+          resp.target_cluster_size,
           resp.message);
 
-        if(resp.status == "READY")
+        if (resp.status == "READY")
         {
           Log.Debug("RetrieveAndRankTest", "Cluster is ready!");
           DeleteCluster(m_ClusterID);
@@ -481,9 +481,11 @@ namespace IBM.Watson.DeveloperCloud.Test
   #region Test Speech to Text
   class SpeechToTextTest
   {
-    private SpeechToText m_SpeechToText = new SpeechToText();
-    private int m_SampleRate;
-    privaet int 
+    //private SpeechToText m_SpeechToText = new SpeechToText();
+    public WaveIn waveIn = null;
+    public WaveFileWriter waveFile = null;
+    private int m_SampleRate = 44100;
+    private int m_Channels = 1;
 
     public SpeechToTextTest()
     {
@@ -492,9 +494,53 @@ namespace IBM.Watson.DeveloperCloud.Test
 
     public void TestSpeechToText()
     {
-      WaveIn waveIn = new WaveIn();
-      waveIn.
+      waveIn = new WaveIn(WaveCallbackInfo.FunctionCallback());
+
+      waveIn.WaveFormat = new WaveFormat(m_SampleRate, m_Channels);
+
+      waveIn.DataAvailable += new EventHandler<WaveInEventArgs>(DataAvailable);
+      waveIn.RecordingStopped += new EventHandler<StoppedEventArgs>(RecordingStopped);
+
+      waveFile = new WaveFileWriter(@"C:\Temp\Test0001.wav", waveIn.WaveFormat);
+
+      Log.Debug("SpeechToTextTest", "recording starting!");
       waveIn.StartRecording();
+    }
+
+    void DataAvailable(object sender, WaveInEventArgs e)
+    {
+      if (waveFile != null)
+      {
+        waveFile.Write(e.Buffer, 0, e.BytesRecorded);
+        waveFile.Flush();
+
+        int seconds = (int)(waveFile.Length / waveFile.WaveFormat.AverageBytesPerSecond);
+
+        if(seconds > 5)
+        {
+          Log.Debug("SpeechToTextTest", "recording stopped!");
+          waveIn.StopRecording();
+          waveIn.DataAvailable -= new EventHandler<WaveInEventArgs>(DataAvailable);
+          waveIn.RecordingStopped -= new EventHandler<StoppedEventArgs>(RecordingStopped);
+        }
+      }
+    }
+
+    void RecordingStopped(object sender, StoppedEventArgs e)
+    {
+      Log.Debug("SpeechToTextTest", "recording stopped!");
+
+      if (waveIn != null)
+      {
+        waveIn.Dispose();
+        waveIn = null;
+      }
+
+      if (waveFile != null)
+      {
+        waveFile.Dispose();
+        waveFile = null;
+      }
     }
   }
   #endregion

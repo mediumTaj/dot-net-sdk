@@ -73,8 +73,6 @@
     <Compile Include="src\services\IWatsonService.cs" />
     <Compile Include="src\services\RetrieveAndRank\DataModels.cs" />
     <Compile Include="src\services\RetrieveAndRank\RetrieveAndRank.cs" />
-    <Compile Include="src\services\SpeechToText\DataModels.cs" />
-    <Compile Include="src\services\SpeechToText\SpeechToText.cs" />
     <Compile Include="src\services\ToneAnalyzer\DataModels.cs" />
     <Compile Include="src\services\ToneAnalyzer\ToneAnalyzer.cs" />
     <Compile Include="src\services\VisualRecognition\DataModels.cs" />
@@ -92,7 +90,6 @@
     <Compile Include="src\utilities\Singleton.cs" />
     <Compile Include="src\utilities\Utility.cs" />
     <Compile Include="src\utilities\WatsonException.cs" />
-    <Compile Include="src\utilities\WaveFile.cs" />
     <Compile Include="test\HelloWorld.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="third-party\FullSerializer\Source\Converters\fsArrayConverter.cs" />
