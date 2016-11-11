@@ -1,8 +1,10 @@
 ﻿using IBM.Watson.DeveloperCloud.Logging;
 using IBM.Watson.DeveloperCloud.Services.AlchemyAPI.v1;
 using IBM.Watson.DeveloperCloud.Services.RetrieveAndRank.v1;
+using IBM.Watson.DeveloperCloud.Services.SpeechToText.v1;
 using IBM.Watson.DeveloperCloud.Services.ToneAnalyzer.v3;
 using IBM.Watson.DeveloperCloud.Services.VisualRecognition.v3;
+using NAudio.Wave;
 using System;
 using System.IO;
 using System.Threading.Tasks;
@@ -27,8 +29,11 @@ namespace IBM.Watson.DeveloperCloud.Test
       //VisualRecognitionTest visualRecognitionTest = new VisualRecognitionTest();
       //visualRecognitionTest.TestVisualRecognition();
 
-      RetrieveAndRankTest retrieveAndRankTest = new RetrieveAndRankTest();
-      retrieveAndRankTest.TestRetrieveAndRank();
+      //RetrieveAndRankTest retrieveAndRankTest = new RetrieveAndRankTest();
+      //retrieveAndRankTest.TestRetrieveAndRank();
+
+      SpeechToTextTest speechToTextTest = new SpeechToTextTest();
+      speechToTextTest.TestSpeechToText();
 
       Console.ReadKey();
     }
@@ -473,4 +478,24 @@ namespace IBM.Watson.DeveloperCloud.Test
   }
   #endregion
 
+  #region Test Speech to Text
+  class SpeechToTextTest
+  {
+    private SpeechToText m_SpeechToText = new SpeechToText();
+    private int m_SampleRate;
+    privaet int 
+
+    public SpeechToTextTest()
+    {
+      Log.Debug("SpeechToTextTest", "Constructor!");
+    }
+
+    public void TestSpeechToText()
+    {
+      WaveIn waveIn = new WaveIn();
+      waveIn.
+      waveIn.StartRecording();
+    }
+  }
+  #endregion
 }

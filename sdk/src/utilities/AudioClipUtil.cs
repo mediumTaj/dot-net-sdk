@@ -22,88 +22,117 @@ using System.Media;
 
 namespace IBM.Watson.DeveloperCloud.Utilities
 {
+  //public class AudioClip
+  //{
+  //  public int channels { get; set; }
+  //  public int frequency { get; set; }
+  //  public float length { get; set; }
+  //  public bool loadInBackground { get; set; }
+  //  public AudioDataLoadState loadState { get; set; }
+  //  public AudioClipLoadType loadType { get; }
+  //  public bool preloadAudioData { get; set; }
+  //  public int samples { get; }
+
+
+  //}
+
+  //public enum AudioDataLoadState
+  //{
+  //  Unloaded,
+  //  Loading,
+  //  Loaded,
+  //  Failed
+  //}
+
+  //public enum AudioClipLoadType
+  //{
+  //  DecompressOnLoad,
+  //  CompressedInMemory,
+  //  Streaming
+  //}
+
   /// <summary>
   /// AudioClip helper functions.
   /// </summary>
   public static class AudioClipUtil
   {
-    //        /// <summary>
-    //        /// This function will combine any number of AudioClips into a single AudioClip. The clips must be the same number of channels
-    //        /// and frequency.
-    //        /// </summary>
-    //        /// <param name="clips">Variable number of AudioClip objects may be provided.</param>
-    //        /// <returns>Returns the resulting AudioClip.</returns>
-    //        public static SoundPlayer Combine(params AudioClip[] clips)
-    //        {
-    //            if (clips == null || clips.Length == 0)
-    //                return null;
+    /// <summary>
+    /// This function will combine any number of AudioClips into a single AudioClip. The clips must be the same number of channels
+    /// and frequency.
+    /// </summary>
+    /// <param name="clips">Variable number of AudioClip objects may be provided.</param>
+    /// <returns>Returns the resulting AudioClip.</returns>
+    public static SoundPlayer Combine(params AudioClip[] clips)
+    {
+      if (clips == null || clips.Length == 0)
+        return null;
 
-    //            AudioClip firstClip = null;
+      AudioClip firstClip = null;
 
-    //            int length = 0;
-    //            for (int i = 0; i < clips.Length; i++)
-    //            {
-    //                if (clips[i] == null)
-    //                    continue;
+      int length = 0;
+      for (int i = 0; i < clips.Length; i++)
+      {
+        if (clips[i] == null)
+          continue;
 
-    //                if (firstClip != null)
-    //                {
-    //                    if (firstClip.channels != clips[i].channels
-    //                        || firstClip.frequency != clips[i].frequency)
-    //                    {
-    //                        Log.Error("AudioClipUtil", "Combine() requires clips to have the sample number of channels and same frequency.");
-    //                        return null;
-    //                    }
-    //                }
-    //                else
-    //                    firstClip = clips[i];
+        if (firstClip != null)
+        {
+          if (firstClip.channels != clips[i].channels
+              || firstClip.frequency != clips[i].frequency)
+          {
+            Log.Error("AudioClipUtil", "Combine() requires clips to have the sample number of channels and same frequency.");
+            return null;
+          }
+        }
+        else
+          firstClip = clips[i];
 
-    //                length += clips[i].samples * clips[i].channels;
-    //            }
+        length += clips[i].samples * clips[i].channels;
+      }
 
-    //            float[] data = new float[length];
-    //            length = 0;
-    //            for (int i = 0; i < clips.Length; i++)
-    //            {
-    //                if (clips[i] == null)
-    //                    continue;
+      float[] data = new float[length];
+      length = 0;
+      for (int i = 0; i < clips.Length; i++)
+      {
+        if (clips[i] == null)
+          continue;
 
-    //                float[] buffer = new float[clips[i].samples * clips[i].channels];
-    //                clips[i].GetData(buffer, 0);
-    //                buffer.CopyTo(data, length);
-    //                length += buffer.Length;
-    //            }
+        float[] buffer = new float[clips[i].samples * clips[i].channels];
+        clips[i].GetData(buffer, 0);
+        buffer.CopyTo(data, length);
+        length += buffer.Length;
+      }
 
-    //            if (length == 0)
-    //                return null;
+      if (length == 0)
+        return null;
 
-    //            AudioClip result = AudioClip.Create(firstClip.name, length / firstClip.channels, firstClip.channels, firstClip.frequency, false);
-    //            result.SetData(data, 0);
+      AudioClip result = AudioClip.Create(firstClip.name, length / firstClip.channels, firstClip.channels, firstClip.frequency, false);
+      result.SetData(data, 0);
 
-    //            return result;
-    //        }
+      return result;
+    }
 
-    //        /// <summary>
-    //        /// Returns linear 16-bit audio data for the given AudioClip object.
-    //        /// </summary>
-    //        /// <param name="clip">The AudioClip object.</param>
-    //        /// <returns>A byte array of 16-bit audio data.</returns>
-    //        public static byte[] GetL16(AudioClip clip)
-    //        {
-    //            MemoryStream stream = new MemoryStream();
-    //            BinaryWriter writer = new BinaryWriter(stream);
+    /// <summary>
+    /// Returns linear 16-bit audio data for the given AudioClip object.
+    /// </summary>
+    /// <param name="clip">The AudioClip object.</param>
+    /// <returns>A byte array of 16-bit audio data.</returns>
+    public static byte[] GetL16(AudioClip clip)
+    {
+      MemoryStream stream = new MemoryStream();
+      BinaryWriter writer = new BinaryWriter(stream);
 
-    //            float[] samples = new float[clip.samples * clip.channels];
-    //            clip.GetData(samples, 0);
+      float[] samples = new float[clip.samples * clip.channels];
+      clip.GetData(samples, 0);
 
-    //            float divisor = (1 << 15);
-    //            for (int i = 0; i < samples.Length; ++i)
-    //                writer.Write((short)(samples[i] * divisor));
+      float divisor = (1 << 15);
+      for (int i = 0; i < samples.Length; ++i)
+        writer.Write((short)(samples[i] * divisor));
 
-    //            byte[] data = new byte[samples.Length * 2];
-    //            Array.Copy(stream.GetBuffer(), data, data.Length);
+      byte[] data = new byte[samples.Length * 2];
+      Array.Copy(stream.GetBuffer(), data, data.Length);
 
-    //            return data;
-    //        }
+      return data;
+    }
   }
 }

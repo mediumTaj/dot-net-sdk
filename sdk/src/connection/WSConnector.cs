@@ -284,8 +284,8 @@ namespace IBM.Watson.DeveloperCloud.Connection
         WebSocket ws = null;
 
         ws = new WebSocket(URL);
-        if (Headers != null)
-          ws.Headers = Headers;
+        //if (Headers != null)
+        //  ws.Headers = Headers;
         if (Authentication != null)
           ws.SetCredentials(Authentication.User, Authentication.Password, true);
         ws.OnOpen += OnWSOpen;
