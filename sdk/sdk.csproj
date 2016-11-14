@@ -73,6 +73,8 @@
     <Compile Include="src\services\IWatsonService.cs" />
     <Compile Include="src\services\RetrieveAndRank\DataModels.cs" />
     <Compile Include="src\services\RetrieveAndRank\RetrieveAndRank.cs" />
+    <Compile Include="src\services\SpeechToText\DataModels.cs" />
+    <Compile Include="src\services\SpeechToText\SpeechToText.cs" />
     <Compile Include="src\services\ToneAnalyzer\DataModels.cs" />
     <Compile Include="src\services\ToneAnalyzer\ToneAnalyzer.cs" />
     <Compile Include="src\services\VisualRecognition\DataModels.cs" />
@@ -81,6 +83,7 @@
     <Compile Include="src\testing\TestRunnable.cs" />
     <Compile Include="src\utilities\AudioClip.cs" />
     <Compile Include="src\utilities\AudioClipUtil.cs" />
+    <Compile Include="src\utilities\Class1.cs" />
     <Compile Include="src\utilities\Config.cs" />
     <Compile Include="src\utilities\Constants.cs" />
     <Compile Include="src\utilities\Credentials.cs" />

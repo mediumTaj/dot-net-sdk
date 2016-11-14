@@ -1,6 +1,24 @@
-﻿using IBM.Watson.DeveloperCloud.Logging;
+﻿/**
+* Copyright 2015 IBM Corp. All Rights Reserved.
+*
+* Licensed under the Apache License, Version 2.0 (the "License");
+* you may not use this file except in compliance with the License.
+* You may obtain a copy of the License at
+*
+*      http://www.apache.org/licenses/LICENSE-2.0
+*
+* Unless required by applicable law or agreed to in writing, software
+* distributed under the License is distributed on an "AS IS" BASIS,
+* WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+* See the License for the specific language governing permissions and
+* limitations under the License.
+*
+*/
+
+using IBM.Watson.DeveloperCloud.Logging;
 using IBM.Watson.DeveloperCloud.Services.AlchemyAPI.v1;
 using IBM.Watson.DeveloperCloud.Services.RetrieveAndRank.v1;
+using IBM.Watson.DeveloperCloud.Services.SpeechToText.v1;
 using IBM.Watson.DeveloperCloud.Services.ToneAnalyzer.v3;
 using IBM.Watson.DeveloperCloud.Services.VisualRecognition.v3;
 using NAudio.Wave;
@@ -480,7 +498,8 @@ namespace IBM.Watson.DeveloperCloud.Test
   #region Test Speech to Text
   class SpeechToTextTest
   {
-    //private SpeechToText m_SpeechToText = new SpeechToText();
+    private SpeechToText m_SpeechToText = new SpeechToText();
+
     public WaveIn waveIn = null;
     public WaveFileWriter waveFile = null;
     private int m_SampleRate = 44100;
@@ -493,20 +512,26 @@ namespace IBM.Watson.DeveloperCloud.Test
 
     public void TestSpeechToText()
     {
+      //TestMicrophone();
+      TestPost();
+    }
+    #region Test Microphone
+    private void TestMicrophone()
+    {
       waveIn = new WaveIn(WaveCallbackInfo.FunctionCallback());
 
       waveIn.WaveFormat = new WaveFormat(m_SampleRate, m_Channels);
 
-      waveIn.DataAvailable += new EventHandler<WaveInEventArgs>(DataAvailable);
-      waveIn.RecordingStopped += new EventHandler<StoppedEventArgs>(RecordingStopped);
+      waveIn.DataAvailable += new EventHandler<WaveInEventArgs>(MicrophoneDataAvailable);
+      waveIn.RecordingStopped += new EventHandler<StoppedEventArgs>(MicrophoneRecordingStopped);
 
-      waveFile = new WaveFileWriter(@"C:\Temp\Test0001.wav", waveIn.WaveFormat);
+      waveFile = new WaveFileWriter("Test0001.wav", waveIn.WaveFormat);
 
       Log.Debug("SpeechToTextTest", "recording starting!");
       waveIn.StartRecording();
-    }
+    } 
 
-    void DataAvailable(object sender, WaveInEventArgs e)
+    private void MicrophoneDataAvailable(object sender, WaveInEventArgs e)
     {
       if (waveFile != null)
       {
@@ -517,20 +542,21 @@ namespace IBM.Watson.DeveloperCloud.Test
 
         if(seconds > 5)
         {
-          Log.Debug("SpeechToTextTest", "recording stopped!");
+          Log.Debug("SpeechToTextTest", "mic recording stopped!");
           waveIn.StopRecording();
-          waveIn.DataAvailable -= new EventHandler<WaveInEventArgs>(DataAvailable);
-          waveIn.RecordingStopped -= new EventHandler<StoppedEventArgs>(RecordingStopped);
         }
       }
     }
 
-    void RecordingStopped(object sender, StoppedEventArgs e)
+    private void MicrophoneRecordingStopped(object sender, StoppedEventArgs e)
     {
-      Log.Debug("SpeechToTextTest", "recording stopped!");
+      Log.Debug("SpeechToTextTest", "mic recording stopped!");
 
       if (waveIn != null)
       {
+        waveIn.DataAvailable -= new EventHandler<WaveInEventArgs>(MicrophoneDataAvailable);
+        waveIn.RecordingStopped -= new EventHandler<StoppedEventArgs>(MicrophoneRecordingStopped);
+
         waveIn.Dispose();
         waveIn = null;
       }
@@ -541,6 +567,29 @@ namespace IBM.Watson.DeveloperCloud.Test
         waveFile = null;
       }
     }
-  }
+    #endregion
+
+    #region Test POST
+    private void TestPost()
+    {
+      waveIn = new WaveIn(WaveCallbackInfo.FunctionCallback());
+
+      waveIn.WaveFormat = new WaveFormat(m_SampleRate, m_Channels);
+
+      waveIn.DataAvailable += new EventHandler<WaveInEventArgs>(POSTDataAvailable);
+      waveIn.RecordingStopped += new EventHandler<StoppedEventArgs>(POSTRecordingStopped);
+
+      Log.Debug("SpeechToTextTest", "post recording starting!");
+      waveIn.StartRecording();
+    }
+
+    private void POSTDataAvailable(object sender, WaveInEventArgs e)
+    {
+    }
+    private void POSTRecordingStopped(object sender, StoppedEventArgs e)
+    {
+    }
+      #endregion
+    }
   #endregion
 }

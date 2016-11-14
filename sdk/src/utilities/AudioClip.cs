@@ -1,4 +1,23 @@
-﻿using System;
+﻿
+
+using NAudio.Wave;
+/**
+* Copyright 2015 IBM Corp. All Rights Reserved.
+*
+* Licensed under the Apache License, Version 2.0 (the "License");
+* you may not use this file except in compliance with the License.
+* You may obtain a copy of the License at
+*
+*      http://www.apache.org/licenses/LICENSE-2.0
+*
+* Unless required by applicable law or agreed to in writing, software
+* distributed under the License is distributed on an "AS IS" BASIS,
+* WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+* See the License for the specific language governing permissions and
+* limitations under the License.
+*
+*/
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,38 +29,6 @@ namespace IBM.Watson.DeveloperCloud.Utilities
   /// </summary>
   public class AudioClip
   {
-    public delegate void PCMReaderCallback(float[] data);
-
-    public delegate void PCMSetPositionCallback(int position);
-
-    private event AudioClip.PCMReaderCallback m_PCMReaderCallback
-    {
-      //[MethodImpl(MethodImplOptions.Synchronized)]
-      add
-      {
-        this.m_PCMReaderCallback = (AudioClip.PCMReaderCallback)Delegate.Combine(this.m_PCMReaderCallback, value);
-      }
-      //[MethodImpl(MethodImplOptions.Synchronized)]
-      remove
-      {
-        this.m_PCMReaderCallback = (AudioClip.PCMReaderCallback)Delegate.Remove(this.m_PCMReaderCallback, value);
-      }
-    }
-
-    private event AudioClip.PCMSetPositionCallback m_PCMSetPositionCallback
-    {
-      //[MethodImpl(MethodImplOptions.Synchronized)]
-      add
-      {
-        this.m_PCMSetPositionCallback = (AudioClip.PCMSetPositionCallback)Delegate.Combine(this.m_PCMSetPositionCallback, value);
-      }
-      //[MethodImpl(MethodImplOptions.Synchronized)]
-      remove
-      {
-        this.m_PCMSetPositionCallback = (AudioClip.PCMSetPositionCallback)Delegate.Remove(this.m_PCMSetPositionCallback, value);
-      }
-    }
-
     /// <summary>
     /// The audio clip's name.
     /// </summary>
@@ -58,6 +45,16 @@ namespace IBM.Watson.DeveloperCloud.Utilities
     /// The length of the audio clip in seconds.
     /// </summary>
     public float length { get; set; }
+    /// <summary>
+    /// Weather or not the audio clip is streaming.
+    /// </summary>
+    public bool stream { get; set; }
+    /// <summary>
+    /// The audio clip's WaveIn.
+    /// </summary>
+    public WaveIn waveIn { get; set; }
+    public OnDataAvailable DataAvailableCallback { get; set; }
+    public OnRecordingStopped RecordingStoppedCallback { get; set; }
     ///// <summary>
     ///// Corresponding to the "Load In Background" flag in the inspector, when this flag is set, the loading will happen delayed without blocking the main thread.
     ///// </summary>
@@ -113,15 +110,68 @@ namespace IBM.Watson.DeveloperCloud.Utilities
     /// <param name="frequency">Sample frequency of clip.</param>
     /// <param name="stream">True if clip is streamed, that is if the pcmreadercallback generates data on the fly.</param>
     /// <returns></returns>
-    public static AudioClip Create(string name, int lengthSamples, int channels, int frequency, bool stream)
+    public static AudioClip Create(string name, int lengthSamples, int channels, int frequency, bool stream, OnDataAvailable dataAvailableCallback, OnRecordingStopped recordingStoppedCallback)
     {
       AudioClip clip = new AudioClip();
       clip.name = name;
       clip.length = lengthSamples;
       clip.channels = channels;
       clip.frequency = frequency;
-      clip.st
+      clip.stream = stream;
+      clip.DataAvailableCallback = dataAvailableCallback;
+      clip.RecordingStoppedCallback = recordingStoppedCallback;
+
+      WaveIn waveIn = new WaveIn(WaveCallbackInfo.FunctionCallback());
+      waveIn.WaveFormat = new WaveFormat(frequency, channels);
+
+      waveIn.DataAvailable += new EventHandler<WaveInEventArgs>(clip.DataAvailableCallback);
+      waveIn.RecordingStopped += new EventHandler<StoppedEventArgs>(clip.RecordingStoppedCallback);
+      //waveIn.StartRecording();
+
+      clip.waveIn = waveIn;
+
+      return clip;
     }
+
+    public delegate void OnDataAvailable(object sender, WaveInEventArgs e);
+    public delegate void OnRecordingStopped(object sender, StoppedEventArgs e);
+    //private void OnDataAvailable(object sender, WaveInEventArgs e)
+    //{
+    //  if (waveFile != null)
+    //  {
+    //    waveFile.Write(e.Buffer, 0, e.BytesRecorded);
+    //    waveFile.Flush();
+
+    //    int seconds = (int)(waveFile.Length / waveFile.WaveFormat.AverageBytesPerSecond);
+
+    //    if (seconds > 5)
+    //    {
+    //      Log.Debug("SpeechToTextTest", "mic recording stopped!");
+    //      waveIn.StopRecording();
+    //    }
+    //  }
+    //}
+
+    //private void OnRecordingStopped(object sender, StoppedEventArgs e)
+    //{
+    //  Log.Debug("SpeechToTextTest", "mic recording stopped!");
+
+    //  if (waveIn != null)
+    //  {
+    //    waveIn.DataAvailable -= new EventHandler<WaveInEventArgs>(MicrophoneDataAvailable);
+    //    waveIn.RecordingStopped -= new EventHandler<StoppedEventArgs>(MicrophoneRecordingStopped);
+
+    //    waveIn.Dispose();
+    //    waveIn = null;
+    //  }
+
+    //  if (waveFile != null)
+    //  {
+    //    waveFile.Dispose();
+    //    waveFile = null;
+    //  }
+    //}
+
   }
 
   public enum AudioDataLoadState
@@ -138,4 +188,5 @@ namespace IBM.Watson.DeveloperCloud.Utilities
     CompressedInMemory,
     Streaming
   }
+
 }
