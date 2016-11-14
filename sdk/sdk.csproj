@@ -79,6 +79,7 @@
     <Compile Include="src\services\VisualRecognition\VisualRecognition.cs" />
     <Compile Include="src\testing\UnitTest.cs" />
     <Compile Include="src\testing\TestRunnable.cs" />
+    <Compile Include="src\utilities\AudioClip.cs" />
     <Compile Include="src\utilities\AudioClipUtil.cs" />
     <Compile Include="src\utilities\Config.cs" />
     <Compile Include="src\utilities\Constants.cs" />
@@ -90,6 +91,7 @@
     <Compile Include="src\utilities\Singleton.cs" />
     <Compile Include="src\utilities\Utility.cs" />
     <Compile Include="src\utilities\WatsonException.cs" />
+    <Compile Include="src\utilities\WaveFile.cs" />
     <Compile Include="test\HelloWorld.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="third-party\FullSerializer\Source\Converters\fsArrayConverter.cs" />

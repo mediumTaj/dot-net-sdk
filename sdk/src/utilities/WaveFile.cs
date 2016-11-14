@@ -174,7 +174,7 @@ namespace IBM.Watson.DeveloperCloud.Utilities
           }
 
           AudioClip clip = AudioClip.Create(clipName, samples, channels, (int)header.sample_rate, false);
-          clip.SetData(wf, 0);
+          clip.SetData(ref wf, 0);
 
           return clip;
         }
@@ -225,7 +225,7 @@ namespace IBM.Watson.DeveloperCloud.Utilities
       WriteType(writer, data);
 
       float[] samples = new float[clip.samples * clip.channels];
-      clip.GetData(samples, 0);
+      clip.GetData(ref samples, 0);
 
       if (bps == 16)
       {

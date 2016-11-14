@@ -6,7 +6,6 @@ using IBM.Watson.DeveloperCloud.Services.VisualRecognition.v3;
 using NAudio.Wave;
 using System;
 using System.IO;
-using System.Threading.Tasks;
 
 namespace IBM.Watson.DeveloperCloud.Test
 {
