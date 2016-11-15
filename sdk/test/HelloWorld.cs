@@ -17,6 +17,7 @@
 
 using IBM.Watson.DeveloperCloud.Logging;
 using IBM.Watson.DeveloperCloud.Services.AlchemyAPI.v1;
+using IBM.Watson.DeveloperCloud.Services.DocumentConversion.v1;
 using IBM.Watson.DeveloperCloud.Services.RetrieveAndRank.v1;
 using IBM.Watson.DeveloperCloud.Services.SpeechToText.v1;
 using IBM.Watson.DeveloperCloud.Services.ToneAnalyzer.v3;
@@ -36,7 +37,7 @@ namespace IBM.Watson.DeveloperCloud.Test
 
       Log.Debug("HelloWorld", "Hello, World! {0}", Directory.GetCurrentDirectory());
       Log.Debug("HelloWorld", "Press any key to continue...");
-      
+
       //ToneAnalyzerTest toneAnalyzerTest = new ToneAnalyzerTest();
       //toneAnalyzerTest.TestToneAnalyzer();
 
@@ -49,8 +50,11 @@ namespace IBM.Watson.DeveloperCloud.Test
       //RetrieveAndRankTest retrieveAndRankTest = new RetrieveAndRankTest();
       //retrieveAndRankTest.TestRetrieveAndRank();
 
-      SpeechToTextTest speechToTextTest = new SpeechToTextTest();
-      speechToTextTest.TestSpeechToText();
+      //SpeechToTextTest speechToTextTest = new SpeechToTextTest();
+      //speechToTextTest.TestSpeechToText();
+
+      DocumentConversionTest documentConversionTest = new DocumentConversionTest();
+      documentConversionTest.TestDocumentConversion();
       //Task t = Task.Factory.StartNew(() => speechToTextTest.TestSpeechToText());
       //t.Wait();
       Console.ReadKey();
@@ -514,7 +518,9 @@ namespace IBM.Watson.DeveloperCloud.Test
     public void TestSpeechToText()
     {
       //TestMicrophone();
-      TestPost();
+      //TestPost();
+
+      //Log.Debug("SpeechToTextTest", "directory: {0}", System.Environment.CurrentDirectory);
     }
     #region Test Microphone
     private void TestMicrophone()
@@ -573,70 +579,55 @@ namespace IBM.Watson.DeveloperCloud.Test
     #region Test POST
     private void TestPost()
     {
-      string filePath = Constants.Path.APP_DATA + Path.DirectorySeparatorChar + "testData" + Path.DirectorySeparatorChar + "stt.wav";
+      string filePath = "Test0001.wav";
       byte[] data = File.ReadAllBytes(filePath);
-
-
-      //WaveFileReader fileReader = new WaveFileReader(filePath);
-      //byte[] byteBuffer = new byte[fileReader.Length];
-      //int read = fileReader.Read(byteBuffer, 0, byteBuffer.Length);
-
-
-      ////string clipName = "testClip";
-      ////int channels = fileReader.WaveFormat.Channels;
-      ////int sampleRate = fileReader.WaveFormat.SampleRate;
-
-      ////int samples = (int)fileReader.SampleCount;
-      ////int bps = fileReader.WaveFormat.BitsPerSample;
-      ////float divisor = 1 << (bps - 1);
-      ////int bytesps = bps / 8;
-      ////float[] wf = new float[samples];
-
-      ////if (bps == 16)
-      ////{
-      ////  for (int s = 0; s < samples; ++s)
-      ////    wf[s] = ((float)BitConverter.ToInt16(byteBuffer, s * bytesps)) / divisor;
-      ////}
-      ////else if (bps == 32)
-      ////{
-      ////  for (int s = 0; s < samples; ++s)
-      ////    wf[s] = ((float)BitConverter.ToInt32(byteBuffer, s * bytesps)) / divisor;
-      ////}
-      ////else if (bps == 8)
-      ////{
-      ////  for (int s = 0; s < samples; ++s)
-      ////    wf[s] = ((float)BitConverter.ToChar(byteBuffer, s * bytesps)) / divisor;
-      ////}
-      ////else
-      ////{
-      ////  Log.Error("ParseWAV", "Unspported BPS {0} in WAV data.", bps.ToString());
-      ////}
-
-      ////AudioClip clip = AudioClip.Create(clipName, samples, channels, sampleRate, false);
-      ////clip.SetData(wf, 0);
-
-      ////WaveBuffer waveBuffer = new WaveBuffer(byteBuffer);
-
-
-      ////AudioClip clip = new AudioClip();
-      ////clip.channels = fileReader.WaveFormat.Channels;
-      ////clip.frequency = fileReader.WaveFormat.SampleRate;
-      ////clip.length = fileReader.Length / fileReader.WaveFormat.AverageBytesPerSecond;
-      ////float[] floatBuffer = new float[read / 2];
-      ////Buffer.BlockCopy(byteBuffer, 0, floatBuffer, 0, read);
-      ////clip.SetData(waveBuffer, 16);
-
-      ////Log.Debug("HelloWorld", "test");
-
-      if (!m_SpeechToText.Recognize(data, OnRecognize))
+      
+      if (!m_SpeechToText.Recognize(data, "audio/wav", OnRecognize))
         Log.Debug("TestSpeechToText", "Failed to recognize speech!");
     }
 
     private void OnRecognize(SpeechRecognitionEvent results)
     {
-      Log.Debug("TestSpeechToText", "Result!");
+      if (results != null && results.results.Length > 0)
+      {
+        foreach (var res in results.results)
+        {
+          foreach (var alt in res.alternatives)
+          {
+            string text = alt.transcript;
+            Log.Debug("ExampleSpeechToText", string.Format("{0} ({1}, {2:0.00})\n", text, res.final ? "Final" : "Interim", alt.confidence));
+          }
+        }
+      }
     }
     #endregion
+  }
+  #endregion
+
+  #region Test Document Conversion
+  class DocumentConversionTest
+  {
+    DocumentConversion m_DocumentConversion = new DocumentConversion();
+
+    public DocumentConversionTest()
+    {
+      Log.Debug("DocumentConversionTest", "Constructor!");
+    }
+
+    public void TestDocumentConversion()
+    {
+      GetServiceStatus();
+    }
+
+    public void GetServiceStatus()
+    {
+      m_DocumentConversion.GetServiceStatus(OnGetServiceStatus);
+    }
+
+    private void OnGetServiceStatus(string serviceID, bool active)
+    {
+      Log.Debug("DocumentConversionTest", "Active: {0}", active);
+    }
   }
   #endregion
 }
