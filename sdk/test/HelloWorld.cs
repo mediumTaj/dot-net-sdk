@@ -21,6 +21,7 @@ using IBM.Watson.DeveloperCloud.Services.RetrieveAndRank.v1;
 using IBM.Watson.DeveloperCloud.Services.SpeechToText.v1;
 using IBM.Watson.DeveloperCloud.Services.ToneAnalyzer.v3;
 using IBM.Watson.DeveloperCloud.Services.VisualRecognition.v3;
+using IBM.Watson.DeveloperCloud.Utilities;
 using NAudio.Wave;
 using System;
 using System.IO;
@@ -35,7 +36,7 @@ namespace IBM.Watson.DeveloperCloud.Test
 
       Log.Debug("HelloWorld", "Hello, World! {0}", Directory.GetCurrentDirectory());
       Log.Debug("HelloWorld", "Press any key to continue...");
-
+      
       //ToneAnalyzerTest toneAnalyzerTest = new ToneAnalyzerTest();
       //toneAnalyzerTest.TestToneAnalyzer();
 
@@ -572,24 +573,70 @@ namespace IBM.Watson.DeveloperCloud.Test
     #region Test POST
     private void TestPost()
     {
-      waveIn = new WaveIn(WaveCallbackInfo.FunctionCallback());
+      string filePath = Constants.Path.APP_DATA + Path.DirectorySeparatorChar + "testData" + Path.DirectorySeparatorChar + "stt.wav";
+      byte[] data = File.ReadAllBytes(filePath);
 
-      waveIn.WaveFormat = new WaveFormat(m_SampleRate, m_Channels);
 
-      waveIn.DataAvailable += new EventHandler<WaveInEventArgs>(POSTDataAvailable);
-      waveIn.RecordingStopped += new EventHandler<StoppedEventArgs>(POSTRecordingStopped);
+      //WaveFileReader fileReader = new WaveFileReader(filePath);
+      //byte[] byteBuffer = new byte[fileReader.Length];
+      //int read = fileReader.Read(byteBuffer, 0, byteBuffer.Length);
 
-      Log.Debug("SpeechToTextTest", "post recording starting!");
-      waveIn.StartRecording();
+
+      ////string clipName = "testClip";
+      ////int channels = fileReader.WaveFormat.Channels;
+      ////int sampleRate = fileReader.WaveFormat.SampleRate;
+
+      ////int samples = (int)fileReader.SampleCount;
+      ////int bps = fileReader.WaveFormat.BitsPerSample;
+      ////float divisor = 1 << (bps - 1);
+      ////int bytesps = bps / 8;
+      ////float[] wf = new float[samples];
+
+      ////if (bps == 16)
+      ////{
+      ////  for (int s = 0; s < samples; ++s)
+      ////    wf[s] = ((float)BitConverter.ToInt16(byteBuffer, s * bytesps)) / divisor;
+      ////}
+      ////else if (bps == 32)
+      ////{
+      ////  for (int s = 0; s < samples; ++s)
+      ////    wf[s] = ((float)BitConverter.ToInt32(byteBuffer, s * bytesps)) / divisor;
+      ////}
+      ////else if (bps == 8)
+      ////{
+      ////  for (int s = 0; s < samples; ++s)
+      ////    wf[s] = ((float)BitConverter.ToChar(byteBuffer, s * bytesps)) / divisor;
+      ////}
+      ////else
+      ////{
+      ////  Log.Error("ParseWAV", "Unspported BPS {0} in WAV data.", bps.ToString());
+      ////}
+
+      ////AudioClip clip = AudioClip.Create(clipName, samples, channels, sampleRate, false);
+      ////clip.SetData(wf, 0);
+
+      ////WaveBuffer waveBuffer = new WaveBuffer(byteBuffer);
+
+
+      ////AudioClip clip = new AudioClip();
+      ////clip.channels = fileReader.WaveFormat.Channels;
+      ////clip.frequency = fileReader.WaveFormat.SampleRate;
+      ////clip.length = fileReader.Length / fileReader.WaveFormat.AverageBytesPerSecond;
+      ////float[] floatBuffer = new float[read / 2];
+      ////Buffer.BlockCopy(byteBuffer, 0, floatBuffer, 0, read);
+      ////clip.SetData(waveBuffer, 16);
+
+      ////Log.Debug("HelloWorld", "test");
+
+      if (!m_SpeechToText.Recognize(data, OnRecognize))
+        Log.Debug("TestSpeechToText", "Failed to recognize speech!");
     }
 
-    private void POSTDataAvailable(object sender, WaveInEventArgs e)
+    private void OnRecognize(SpeechRecognitionEvent results)
     {
+      Log.Debug("TestSpeechToText", "Result!");
     }
-    private void POSTRecordingStopped(object sender, StoppedEventArgs e)
-    {
-    }
-      #endregion
-    }
+    #endregion
+  }
   #endregion
 }

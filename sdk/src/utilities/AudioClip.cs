@@ -49,12 +49,26 @@ namespace IBM.Watson.DeveloperCloud.Utilities
     /// Weather or not the audio clip is streaming.
     /// </summary>
     public bool stream { get; set; }
+    ///// <summary>
+    ///// The audio clip's WaveIn.
+    ///// </summary>
+    //public WaveIn waveIn { get; set; }
     /// <summary>
-    /// The audio clip's WaveIn.
+    /// Audio Bytes for the clip.
     /// </summary>
-    public WaveIn waveIn { get; set; }
-    public OnDataAvailable DataAvailableCallback { get; set; }
-    public OnRecordingStopped RecordingStoppedCallback { get; set; }
+    public byte[] audioBytes { get; set; }
+    /// <summary>
+    /// Audio data for the clip.
+    /// </summary>
+    public float[] audioData { get; set; }
+    ///// <summary>
+    ///// Callback for 
+    ///// </summary>
+    //public OnDataAvailable DataAvailableCallback { get; set; }
+    ///// <summary>
+    ///// Callback for recording stopped
+    ///// </summary>
+    //public OnRecordingStopped RecordingStoppedCallback { get; set; }
     ///// <summary>
     ///// Corresponding to the "Load In Background" flag in the inspector, when this flag is set, the loading will happen delayed without blocking the main thread.
     ///// </summary>
@@ -85,7 +99,7 @@ namespace IBM.Watson.DeveloperCloud.Utilities
     /// <param name="offsetSamples">The offset.</param>
     public void GetData(ref float[] data, int offsetSamples)
     {
-      throw new NotImplementedException("AudioClip.GetData() is not implemented!");
+      data = audioData;
     }
 
     /// <summary>
@@ -95,9 +109,9 @@ namespace IBM.Watson.DeveloperCloud.Utilities
     /// </summary>
     /// <param name="data">Sample data.</param>
     /// <param name="offsetSamples">The offset.</param>
-    public void SetData(ref float[] data, int offsetSamples)
+    public void SetData(float[] data, int offsetSamples)
     {
-      throw new NotImplementedException("AudioClip.SetData() is not implemented!");
+      audioData = data;
     }
 
     /// <summary>
@@ -110,31 +124,31 @@ namespace IBM.Watson.DeveloperCloud.Utilities
     /// <param name="frequency">Sample frequency of clip.</param>
     /// <param name="stream">True if clip is streamed, that is if the pcmreadercallback generates data on the fly.</param>
     /// <returns></returns>
-    public static AudioClip Create(string name, int lengthSamples, int channels, int frequency, bool stream, OnDataAvailable dataAvailableCallback, OnRecordingStopped recordingStoppedCallback)
+    public static AudioClip Create(string name, int lengthSamples, int channels, int frequency, bool stream)//, OnDataAvailable dataAvailableCallback = null, OnRecordingStopped recordingStoppedCallback = null)
     {
       AudioClip clip = new AudioClip();
       clip.name = name;
       clip.length = lengthSamples;
       clip.channels = channels;
       clip.frequency = frequency;
-      clip.stream = stream;
-      clip.DataAvailableCallback = dataAvailableCallback;
-      clip.RecordingStoppedCallback = recordingStoppedCallback;
+      //clip.stream = stream;
+      //clip.DataAvailableCallback = dataAvailableCallback;
+      //clip.RecordingStoppedCallback = recordingStoppedCallback;
 
-      WaveIn waveIn = new WaveIn(WaveCallbackInfo.FunctionCallback());
-      waveIn.WaveFormat = new WaveFormat(frequency, channels);
+      //WaveIn waveIn = new WaveIn(WaveCallbackInfo.FunctionCallback());
+      //waveIn.WaveFormat = new WaveFormat(frequency, channels);
 
-      waveIn.DataAvailable += new EventHandler<WaveInEventArgs>(clip.DataAvailableCallback);
-      waveIn.RecordingStopped += new EventHandler<StoppedEventArgs>(clip.RecordingStoppedCallback);
-      //waveIn.StartRecording();
+      //waveIn.DataAvailable += new EventHandler<WaveInEventArgs>(clip.DataAvailableCallback);
+      //waveIn.RecordingStopped += new EventHandler<StoppedEventArgs>(clip.RecordingStoppedCallback);
+      ////waveIn.StartRecording();
 
-      clip.waveIn = waveIn;
+      //clip.waveIn = waveIn;
 
       return clip;
     }
 
-    public delegate void OnDataAvailable(object sender, WaveInEventArgs e);
-    public delegate void OnRecordingStopped(object sender, StoppedEventArgs e);
+    //public delegate void OnDataAvailable(object sender, WaveInEventArgs e);
+    //public delegate void OnRecordingStopped(object sender, StoppedEventArgs e);
     //private void OnDataAvailable(object sender, WaveInEventArgs e)
     //{
     //  if (waveFile != null)

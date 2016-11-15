@@ -421,14 +421,20 @@ namespace IBM.Watson.DeveloperCloud.Connection
             fsData data = null;
             fsResult r = fsJsonParser.Parse(Encoding.UTF8.GetString(req.Send), out data);
             if (!r.Succeeded)
-              throw new WatsonException(r.FormattedMessages);
+            {
+              //throw new WatsonException(r.FormattedMessages);
+              restRequest.AddParameter("audio/wav", req.Send, ParameterType.RequestBody);
+            }
+            else
+            {
 
-            object obj = new object();
-            r = sm_Serializer.TryDeserialize(data, obj.GetType(), ref obj);
-            if (!r.Succeeded)
-              throw new WatsonException(r.FormattedMessages);
-            
-            restRequest.AddParameter("application/json", data, ParameterType.RequestBody);
+              object obj = new object();
+              r = sm_Serializer.TryDeserialize(data, obj.GetType(), ref obj);
+              if (!r.Succeeded)
+                throw new WatsonException(r.FormattedMessages);
+
+              restRequest.AddParameter("application/json", data, ParameterType.RequestBody);
+            }
           }
 
 #if ENABLE_DEBUGGING

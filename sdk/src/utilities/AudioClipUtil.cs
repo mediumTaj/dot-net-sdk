@@ -78,7 +78,7 @@ namespace IBM.Watson.DeveloperCloud.Utilities
         return null;
 
       AudioClip result = AudioClip.Create(firstClip.name, length / firstClip.channels, firstClip.channels, firstClip.frequency, false);
-      result.SetData(ref data, 0);
+      result.SetData(data, 0);
 
       return result;
     }

@@ -30,7 +30,7 @@ namespace IBM.Watson.DeveloperCloud.Utilities
   {
     #region Private Types
     [StructLayout(LayoutKind.Sequential, Pack = 1)]
-    struct IFF_FORM_CHUNK
+    public struct IFF_FORM_CHUNK
     {
       public uint form_id;
       public uint form_length;
@@ -38,7 +38,7 @@ namespace IBM.Watson.DeveloperCloud.Utilities
     };
 
     [StructLayout(LayoutKind.Sequential, Pack = 1)]
-    struct IFF_CHUNK
+    public struct IFF_CHUNK
     {
       public uint id;
       public uint length;
@@ -57,7 +57,7 @@ namespace IBM.Watson.DeveloperCloud.Utilities
     #endregion
 
     #region Private Functions
-    private static T ReadType<T>(BinaryReader reader)
+    public static T ReadType<T>(BinaryReader reader)
     {
       byte[] bytes = reader.ReadBytes(Marshal.SizeOf(typeof(T)));
 
@@ -174,7 +174,7 @@ namespace IBM.Watson.DeveloperCloud.Utilities
           }
 
           AudioClip clip = AudioClip.Create(clipName, samples, channels, (int)header.sample_rate, false);
-          clip.SetData(ref wf, 0);
+          clip.SetData(wf, 0);
 
           return clip;
         }

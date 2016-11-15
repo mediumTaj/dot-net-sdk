@@ -83,11 +83,11 @@
     <Compile Include="src\testing\TestRunnable.cs" />
     <Compile Include="src\utilities\AudioClip.cs" />
     <Compile Include="src\utilities\AudioClipUtil.cs" />
-    <Compile Include="src\utilities\Class1.cs" />
     <Compile Include="src\utilities\Config.cs" />
     <Compile Include="src\utilities\Constants.cs" />
     <Compile Include="src\utilities\Credentials.cs" />
     <Compile Include="src\utilities\DataCache.cs" />
+    <Compile Include="src\utilities\DataTypes.cs" />
     <Compile Include="src\utilities\EventManager.cs" />
     <Compile Include="src\utilities\KeyEventManager.cs" />
     <Compile Include="src\utilities\Runnable.cs" />
@@ -158,6 +158,9 @@
   <ItemGroup>
     <Folder Include="obj\Debug\" />
     <Folder Include="src\services\TradeoffAnalytics\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="test\testData\stt.wav" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
