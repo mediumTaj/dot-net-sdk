@@ -577,10 +577,6 @@ namespace IBM.Watson.DeveloperCloud.Connection
           //if (req.OnResponse != null)
           //  req.OnResponse(req, resp);
         }
-        else if(req.Put)
-        {
-          //  put call
-        }
       }
 
 

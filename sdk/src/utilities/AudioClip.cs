@@ -92,8 +92,13 @@ namespace IBM.Watson.DeveloperCloud.Utilities
 
     /// <summary>
     /// Fills an array with sample data from the clip.
-    /// The samples are floats ranging from -1.0f to 1.0f. The sample count is determined by the length of the float array.Use the offsetSamples parameter to start the read from a specific position in the clip. If the read length from the offset is longer than the clip length, the read will wrap around and read the remaining samples from the start of the clip.
-    /// Note that with compressed audio files, the sample data can only be retrieved when the Load Type is set to Decompress on Load in the audio importer.If this is not the case then the array will be returned with zeroes for all the sample values.
+    /// The samples are floats ranging from -1.0f to 1.0f. The sample count is determined by the length of 
+    /// the float array.Use the offsetSamples parameter to start the read from a specific position in the 
+    /// clip. If the read length from the offset is longer than the clip length, the read will wrap around 
+    /// and read the remaining samples from the start of the clip.
+    /// Note that with compressed audio files, the sample data can only be retrieved when the Load Type 
+    /// is set to Decompress on Load in the audio importer.If this is not the case then the array will be 
+    /// returned with zeroes for all the sample values.
     /// </summary>
     /// <param name="data">Sample data.</param>
     /// <param name="offsetSamples">The offset.</param>
@@ -131,7 +136,9 @@ namespace IBM.Watson.DeveloperCloud.Utilities
       clip.length = lengthSamples;
       clip.channels = channels;
       clip.frequency = frequency;
-      //clip.stream = stream;
+      clip.stream = stream;
+
+      //clip.SetData()
       //clip.DataAvailableCallback = dataAvailableCallback;
       //clip.RecordingStoppedCallback = recordingStoppedCallback;
 

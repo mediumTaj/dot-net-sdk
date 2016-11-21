@@ -50,11 +50,11 @@ namespace IBM.Watson.DeveloperCloud.Test
       //RetrieveAndRankTest retrieveAndRankTest = new RetrieveAndRankTest();
       //retrieveAndRankTest.TestRetrieveAndRank();
 
-      //SpeechToTextTest speechToTextTest = new SpeechToTextTest();
-      //speechToTextTest.TestSpeechToText();
+      SpeechToTextTest speechToTextTest = new SpeechToTextTest();
+      speechToTextTest.TestSpeechToText();
 
-      DocumentConversionTest documentConversionTest = new DocumentConversionTest();
-      documentConversionTest.TestDocumentConversion();
+      //DocumentConversionTest documentConversionTest = new DocumentConversionTest();
+      //documentConversionTest.TestDocumentConversion();
       //Task t = Task.Factory.StartNew(() => speechToTextTest.TestSpeechToText());
       //t.Wait();
       Console.ReadKey();
@@ -518,7 +518,7 @@ namespace IBM.Watson.DeveloperCloud.Test
     public void TestSpeechToText()
     {
       //TestMicrophone();
-      //TestPost();
+      TestPost();
 
       //Log.Debug("SpeechToTextTest", "directory: {0}", System.Environment.CurrentDirectory);
     }
@@ -580,10 +580,71 @@ namespace IBM.Watson.DeveloperCloud.Test
     private void TestPost()
     {
       string filePath = "Test0001.wav";
-      byte[] data = File.ReadAllBytes(filePath);
-      
-      if (!m_SpeechToText.Recognize(data, "audio/wav", OnRecognize))
-        Log.Debug("TestSpeechToText", "Failed to recognize speech!");
+      try
+      {
+        //using (AudioFileReader fileReader = new AudioFileReader(filePath))
+        //{
+        //  byte[] data = new byte[fileReader.Length];
+
+        //  fileReader.Write(data, 0, 1);
+        //}
+        //AudioFileReader fileReader = new AudioFileReader(filePath);
+        //byte[] buffer = new byte[fileReader.Length];
+        //fileReader.Read(buffer, 0, (int)fileReader.Length);
+        //AudioClip clip = AudioClip.Create("clip", (int)fileReader.Length, fileReader.WaveFormat.Channels, fileReader.WaveFormat.SampleRate, false);
+        //clip.SetData(Convert16BitToFloat(buffer), 0);
+
+        //WaveFileWriter.CreateWaveFile16("Test0002.wav", fileReader);
+
+
+        //  TODO use AudioFileReader so we can get all audio files not wav files
+        using (WaveFileReader fileReader = new WaveFileReader(filePath))
+        {
+          //WaveFileWriter.CreateWaveFile("Test0002.wav", fileReader);
+
+          byte[] buffer = new byte[fileReader.Length];
+          fileReader.Read(buffer, 0, (int)fileReader.Length);
+
+          //WaveFormat waveFormat = new WaveFormat(44100, 16, 1);
+          //using (WaveFileWriter writer = new WaveFileWriter("Test002.wav", waveFormat))
+          //{
+          //  //writer.Write(buffer, 0, buffer.Length);
+
+          //}
+
+          AudioClip clip = AudioClip.Create("audioClip", (int)fileReader.SampleCount, fileReader.WaveFormat.Channels, fileReader.WaveFormat.SampleRate, false);
+          clip.SetData(Convert16BitToFloat(buffer), 0);
+
+          if (!m_SpeechToText.Recognize(clip, OnRecognize))
+            Log.Debug("TestSpeechToText", "Failed to recognize speech!");
+        }
+
+
+        //if (!m_SpeechToText.Recognize(clip, OnRecognize))
+        //  Log.Debug("TestSpeechToText", "Failed to recognize speech!");
+
+        //byte[] data = File.ReadAllBytes(filePath);
+
+        //if (!m_SpeechToText.Recognize(data, "audio/wav", OnRecognize))
+        //  Log.Debug("TestSpeechToText", "Failed to recognize speech!");
+      }
+      catch(Exception e)
+      {
+        Log.Debug("TestSpeechToText", "Error: {0}", e.Message);
+      }
+    }
+
+    public float[] Convert16BitToFloat(byte[] input)
+    {
+      int inputSamples = input.Length / 2; // 16 bit input, so 2 bytes per sample
+      float[] output = new float[inputSamples];
+      int outputIndex = 0;
+      for (int n = 0; n < inputSamples; n++)
+      {
+        short sample = BitConverter.ToInt16(input, n * 2);
+        output[outputIndex++] = sample / 32768f;
+      }
+      return output;
     }
 
     private void OnRecognize(SpeechRecognitionEvent results)
