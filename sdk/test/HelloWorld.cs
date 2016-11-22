@@ -14,7 +14,6 @@
 * limitations under the License.
 *
 */
-
 using IBM.Watson.DeveloperCloud.Logging;
 using IBM.Watson.DeveloperCloud.Services.AlchemyAPI.v1;
 using IBM.Watson.DeveloperCloud.Services.DocumentConversion.v1;
@@ -23,9 +22,12 @@ using IBM.Watson.DeveloperCloud.Services.SpeechToText.v1;
 using IBM.Watson.DeveloperCloud.Services.ToneAnalyzer.v3;
 using IBM.Watson.DeveloperCloud.Services.VisualRecognition.v3;
 using IBM.Watson.DeveloperCloud.Utilities;
+using IBM.Watson.DeveloperCloud.DataTypes;
 using NAudio.Wave;
 using System;
 using System.IO;
+using System.Linq;
+using System.Collections.Generic;
 
 namespace IBM.Watson.DeveloperCloud.Test
 {
@@ -518,7 +520,8 @@ namespace IBM.Watson.DeveloperCloud.Test
     public void TestSpeechToText()
     {
       //TestMicrophone();
-      TestPost();
+      //TestPost();
+      TestStream();
 
       //Log.Debug("SpeechToTextTest", "directory: {0}", System.Environment.CurrentDirectory);
     }
@@ -536,7 +539,7 @@ namespace IBM.Watson.DeveloperCloud.Test
 
       Log.Debug("SpeechToTextTest", "recording starting!");
       waveIn.StartRecording();
-    } 
+    }
 
     private void MicrophoneDataAvailable(object sender, WaveInEventArgs e)
     {
@@ -547,7 +550,7 @@ namespace IBM.Watson.DeveloperCloud.Test
 
         int seconds = (int)(waveFile.Length / waveFile.WaveFormat.AverageBytesPerSecond);
 
-        if(seconds > 5)
+        if (seconds > 5)
         {
           Log.Debug("SpeechToTextTest", "mic recording stopped!");
           waveIn.StopRecording();
@@ -582,35 +585,10 @@ namespace IBM.Watson.DeveloperCloud.Test
       string filePath = "Test0001.wav";
       try
       {
-        //using (AudioFileReader fileReader = new AudioFileReader(filePath))
-        //{
-        //  byte[] data = new byte[fileReader.Length];
-
-        //  fileReader.Write(data, 0, 1);
-        //}
-        //AudioFileReader fileReader = new AudioFileReader(filePath);
-        //byte[] buffer = new byte[fileReader.Length];
-        //fileReader.Read(buffer, 0, (int)fileReader.Length);
-        //AudioClip clip = AudioClip.Create("clip", (int)fileReader.Length, fileReader.WaveFormat.Channels, fileReader.WaveFormat.SampleRate, false);
-        //clip.SetData(Convert16BitToFloat(buffer), 0);
-
-        //WaveFileWriter.CreateWaveFile16("Test0002.wav", fileReader);
-
-
-        //  TODO use AudioFileReader so we can get all audio files not wav files
         using (WaveFileReader fileReader = new WaveFileReader(filePath))
         {
-          //WaveFileWriter.CreateWaveFile("Test0002.wav", fileReader);
-
           byte[] buffer = new byte[fileReader.Length];
           fileReader.Read(buffer, 0, (int)fileReader.Length);
-
-          //WaveFormat waveFormat = new WaveFormat(44100, 16, 1);
-          //using (WaveFileWriter writer = new WaveFileWriter("Test002.wav", waveFormat))
-          //{
-          //  //writer.Write(buffer, 0, buffer.Length);
-
-          //}
 
           AudioClip clip = AudioClip.Create("audioClip", (int)fileReader.SampleCount, fileReader.WaveFormat.Channels, fileReader.WaveFormat.SampleRate, false);
           clip.SetData(Convert16BitToFloat(buffer), 0);
@@ -618,17 +596,8 @@ namespace IBM.Watson.DeveloperCloud.Test
           if (!m_SpeechToText.Recognize(clip, OnRecognize))
             Log.Debug("TestSpeechToText", "Failed to recognize speech!");
         }
-
-
-        //if (!m_SpeechToText.Recognize(clip, OnRecognize))
-        //  Log.Debug("TestSpeechToText", "Failed to recognize speech!");
-
-        //byte[] data = File.ReadAllBytes(filePath);
-
-        //if (!m_SpeechToText.Recognize(data, "audio/wav", OnRecognize))
-        //  Log.Debug("TestSpeechToText", "Failed to recognize speech!");
       }
-      catch(Exception e)
+      catch (Exception e)
       {
         Log.Debug("TestSpeechToText", "Error: {0}", e.Message);
       }
@@ -647,6 +616,7 @@ namespace IBM.Watson.DeveloperCloud.Test
       return output;
     }
 
+
     private void OnRecognize(SpeechRecognitionEvent results)
     {
       if (results != null && results.results.Length > 0)
@@ -661,6 +631,188 @@ namespace IBM.Watson.DeveloperCloud.Test
         }
       }
     }
+    #endregion
+
+    #region Test Stream
+    AudioClip clip = null;
+    AudioData audioData = null;
+    DateTime startTime;
+    List<byte> byteList = new List<byte>();
+
+    private void TestStream()
+    {
+      waveIn = new WaveIn(WaveCallbackInfo.FunctionCallback());
+      waveIn.WaveFormat = new WaveFormat(m_SampleRate, m_Channels);
+
+      waveIn.DataAvailable += new EventHandler<WaveInEventArgs>(StreamDataAvailable);
+      waveIn.RecordingStopped += new EventHandler<StoppedEventArgs>(StreamRecordingStopped);
+
+
+      //  create AudioClip
+      //clip = AudioClip.Create("clip", 2 * m_SampleRate, m_Channels, m_SampleRate, true);
+
+      //  create AudioData
+      audioData = new AudioData();
+
+      //  set clip in AudioData
+      //audioData.Clip = clip;
+
+      //  set maxLevel in audioData
+      //audioData.MaxLevel = 1;
+
+      Log.Debug("SpeechToTextTest", "streaming starting!");
+
+      m_SpeechToText.StartListening(OnRecognize);
+
+      startTime = DateTime.Now;
+      waveIn.StartRecording();
+    }
+
+    private void StreamDataAvailable(object sender, WaveInEventArgs e)
+    {
+      foreach (byte b in e.Buffer)
+        byteList.Add(b);
+
+      if((DateTime.Now - startTime).TotalSeconds > 2)
+      {
+        Log.Debug("TestSpeechToText", "two seconds have passed! {0}", DateTime.Now);
+
+        List<float> floatList = new List<float>();
+        for(int i =0; i < byteList.Count; i +=2)
+        {
+          short sample = (short)((byteList[i + 1] << 8) | byteList[i]);
+          float sample32 = sample / 32767f;
+          floatList.Add(sample32);
+        }
+
+        AudioClip clip = AudioClip.Create("clip", floatList.Count, m_Channels, m_SampleRate, true);
+        clip.SetData(floatList.ToArray(), 0);
+
+        audioData.Clip = clip;
+        audioData.MaxLevel = floatList.Max();
+
+        m_SpeechToText.OnListen(audioData);
+
+        startTime = DateTime.Now;
+      }
+      //Log.Debug("TestSpeechToText", "time difference: {0}", DateTime.Now - startTime > DateTime.grea);
+
+      //if (waveIn == null)
+      //  return;
+      //try
+      //{
+      //  short[] audioBytes = new short[e.Buffer.Length / 2]; //this is your data! by default is in the short format
+      //  Buffer.BlockCopy(e.Buffer, 0, audioBytes, 0, e.Buffer.Length);
+      //  float[] audioFloat = Array.ConvertAll(audioBytes, x => (float)x); //I typically like to convert it to float for graphical purpose
+      //                                                                    //Do something with audioData (short) or audioFloat (float)
+      //  audioData.Clip = AudioClip.Create("clip", e.BytesRecorded, m_Channels, m_SampleRate, true);
+      //  audioData.Clip.SetData(audioFloat, 0);
+      //  audioData.MaxLevel = audioFloat.Max();
+      //  m_SpeechToText.OnListen(audioData);
+      //}
+      //catch (Exception er)
+      //{ //if some happens along the way...
+      //  Log.Debug("TestSpeechToText", "error: {0}", er.Message);
+      //}
+
+
+
+      //AudioClip clip = AudioClip.Create("clip", 2 * m_SampleRate, m_Channels, m_SampleRate, true);
+
+
+
+      //AudioData audioData = new AudioData();
+      //audioData.Clip = AudioClip.Create("clip", 0, m_Channels, m_SampleRate, true);
+      //audioData.Clip.
+
+      //m_SpeechToText.StartListening(OnRecognize);
+      //m_SpeechToText.OnListen(audioData);
+
+      //if (waveFile != null)
+      //{
+      //  waveFile.Write(e.Buffer, 0, e.BytesRecorded);
+      //  waveFile.Flush();
+
+      //  int seconds = (int)(waveFile.Length / waveFile.WaveFormat.AverageBytesPerSecond);
+
+      //  if (seconds > 5)
+      //  {
+      //    Log.Debug("SpeechToTextTest", "mic recording stopped!");
+      //    waveIn.StopRecording();
+      //  }
+      //}
+    }
+
+    private void StreamRecordingStopped(object sender, StoppedEventArgs e)
+    {
+      Log.Debug("SpeechToTextTest", "streaming recording stopped!");
+
+      if (waveIn != null)
+      {
+        waveIn.DataAvailable -= new EventHandler<WaveInEventArgs>(StreamDataAvailable);
+        waveIn.RecordingStopped -= new EventHandler<StoppedEventArgs>(StreamRecordingStopped);
+
+        waveIn.Dispose();
+        waveIn = null;
+      }
+    }
+
+    //private IEnumerator RecordingHandler()
+    //{
+    //  m_Recording = Microphone.Start(m_MicrophoneID, true, m_RecordingBufferSize, m_RecordingHZ);
+    //  yield return null;      // let m_RecordingRoutine get set..
+
+    //  if (m_Recording == null)
+    //  {
+    //    StopRecording();
+    //    yield break;
+    //  }
+
+    //  bool bFirstBlock = true;
+    //  int midPoint = m_Recording.samples / 2;
+    //  float[] samples = null;
+
+    //  while (m_RecordingRoutine != 0 && m_Recording != null)
+    //  {
+    //    int writePos = Microphone.GetPosition(m_MicrophoneID);
+    //    if (writePos > m_Recording.samples || !Microphone.IsRecording(m_MicrophoneID))
+    //    {
+    //      Log.Error("MicrophoneWidget", "Microphone disconnected.");
+
+    //      StopRecording();
+    //      yield break;
+    //    }
+
+    //    if ((bFirstBlock && writePos >= midPoint)
+    //        || (!bFirstBlock && writePos < midPoint))
+    //    {
+    //      // front block is recorded, make a RecordClip and pass it onto our callback.
+    //      samples = new float[midPoint];
+    //      m_Recording.GetData(samples, bFirstBlock ? 0 : midPoint);
+
+    //      AudioData record = new AudioData();
+    //      record.MaxLevel = Mathf.Max(samples);
+    //      record.Clip = AudioClip.Create("Recording", midPoint, m_Recording.channels, m_RecordingHZ, false);
+    //      record.Clip.SetData(samples, 0);
+
+    //      m_SpeechToText.OnListen(record);
+
+    //      bFirstBlock = !bFirstBlock;
+    //    }
+    //    else
+    //    {
+    //      // calculate the number of samples remaining until we ready for a block of audio, 
+    //      // and wait that amount of time it will take to record.
+    //      int remaining = bFirstBlock ? (midPoint - writePos) : (m_Recording.samples - writePos);
+    //      float timeRemaining = (float)remaining / (float)m_RecordingHZ;
+
+    //      yield return new WaitForSeconds(timeRemaining);
+    //    }
+
+    //  }
+
+    //  yield break;
+    //}
     #endregion
   }
   #endregion
