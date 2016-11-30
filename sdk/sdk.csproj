@@ -42,12 +42,21 @@
       <HintPath>packages\Newtonsoft.Json.9.0.2-beta1\lib\net40\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="nunit.framework, Version=3.5.0.0, Culture=neutral, PublicKeyToken=2638cd05610744eb, processorArchitecture=MSIL">
+      <HintPath>packages\NUnit.3.5.0\lib\net40\nunit.framework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="RestSharp, Version=105.2.3.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>packages\RestSharp.105.2.3\lib\net4\RestSharp.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Caching" />
+    <Reference Include="System.Runtime.DurableInstancing" />
+    <Reference Include="System.Runtime.Remoting" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Runtime.Serialization.Formatters.Soap" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -88,6 +97,7 @@
     <Compile Include="src\utilities\WaveFile.cs" />
     <Compile Include="test\HelloWorld.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="test\TestAlchemyLanguage.cs" />
     <Compile Include="third-party\FullSerializer\Source\Converters\fsArrayConverter.cs" />
     <Compile Include="third-party\FullSerializer\Source\Converters\fsDateConverter.cs" />
     <Compile Include="third-party\FullSerializer\Source\Converters\fsDictionaryConverter.cs" />
@@ -134,7 +144,17 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="bin\Debug\sdk.exe.config" />
+    <None Include="bin\Debug\sdk.vshost.exe.config" />
+    <None Include="bin\Debug\sdk.vshost.exe.manifest" />
     <None Include="packages.config" />
+    <None Include="packages\HtmlAgilityPack.1.4.9.5\HtmlAgilityPack.1.4.9.5.nupkg" />
+    <None Include="packages\HtmlAgilityPack.1.4.9.5\lib\NetCore45\HtmlAgilityPack.pri" />
+    <None Include="packages\Newtonsoft.Json.9.0.2-beta1\Newtonsoft.Json.9.0.2-beta1.nupkg" />
+    <None Include="packages\Newtonsoft.Json.9.0.2-beta1\tools\install.ps1" />
+    <None Include="packages\NUnit.3.5.0\NUnit.3.5.0.nupkg" />
+    <None Include="packages\RestSharp.105.2.3\RestSharp.105.2.3.nupkg" />
+    <None Include="packages\WebSocketSharp.1.0.3-rc11\WebSocketSharp.1.0.3-rc11.nupkg" />
     <None Include="src\services\.github\CONTRIBUTING.md" />
     <None Include="src\services\.github\issue_template.md" />
     <None Include="src\services\.github\pull_request_template.md" />
@@ -147,8 +167,98 @@
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="bin\Release\" />
     <Folder Include="obj\Debug\" />
     <Folder Include="src\services\TradeoffAnalytics\" />
+    <Folder Include="test\testData\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="bin\Debug\sdk.vshost.exe" />
+    <Content Include="packages\HtmlAgilityPack.1.4.9.5\HAPIcon.png" />
+    <Content Include="packages\HtmlAgilityPack.1.4.9.5\lib\Net20\HtmlAgilityPack.dll" />
+    <Content Include="packages\HtmlAgilityPack.1.4.9.5\lib\Net20\HtmlAgilityPack.pdb" />
+    <Content Include="packages\HtmlAgilityPack.1.4.9.5\lib\Net20\HtmlAgilityPack.xml" />
+    <Content Include="packages\HtmlAgilityPack.1.4.9.5\lib\Net40-client\HtmlAgilityPack.dll" />
+    <Content Include="packages\HtmlAgilityPack.1.4.9.5\lib\Net40-client\HtmlAgilityPack.pdb" />
+    <Content Include="packages\HtmlAgilityPack.1.4.9.5\lib\Net40-client\HtmlAgilityPack.xml" />
+    <Content Include="packages\HtmlAgilityPack.1.4.9.5\lib\Net40\HtmlAgilityPack.dll" />
+    <Content Include="packages\HtmlAgilityPack.1.4.9.5\lib\Net40\HtmlAgilityPack.pdb" />
+    <Content Include="packages\HtmlAgilityPack.1.4.9.5\lib\Net40\HtmlAgilityPack.XML" />
+    <Content Include="packages\HtmlAgilityPack.1.4.9.5\lib\Net45\HtmlAgilityPack.dll" />
+    <Content Include="packages\HtmlAgilityPack.1.4.9.5\lib\Net45\HtmlAgilityPack.pdb" />
+    <Content Include="packages\HtmlAgilityPack.1.4.9.5\lib\Net45\HtmlAgilityPack.XML" />
+    <Content Include="packages\HtmlAgilityPack.1.4.9.5\lib\NetCore45\HtmlAgilityPack.dll" />
+    <Content Include="packages\HtmlAgilityPack.1.4.9.5\lib\NetCore45\HtmlAgilityPack.pdb" />
+    <Content Include="packages\HtmlAgilityPack.1.4.9.5\lib\NetCore45\HtmlAgilityPack.xml" />
+    <Content Include="packages\HtmlAgilityPack.1.4.9.5\lib\portable-net45+netcore45+wp8+MonoAndroid+MonoTouch\HtmlAgilityPack.dll" />
+    <Content Include="packages\HtmlAgilityPack.1.4.9.5\lib\portable-net45+netcore45+wp8+MonoAndroid+MonoTouch\HtmlAgilityPack.pdb" />
+    <Content Include="packages\HtmlAgilityPack.1.4.9.5\lib\portable-net45+netcore45+wpa81+wp8+MonoAndroid+MonoTouch\HtmlAgilityPack.dll" />
+    <Content Include="packages\HtmlAgilityPack.1.4.9.5\lib\portable-net45+netcore45+wpa81+wp8+MonoAndroid+MonoTouch\HtmlAgilityPack.pdb" />
+    <Content Include="packages\HtmlAgilityPack.1.4.9.5\lib\sl5\HtmlAgilityPack.dll" />
+    <Content Include="packages\HtmlAgilityPack.1.4.9.5\lib\sl5\HtmlAgilityPack.pdb" />
+    <Content Include="packages\HtmlAgilityPack.1.4.9.5\lib\sl5\HtmlAgilityPack.XML" />
+    <Content Include="packages\HtmlAgilityPack.1.4.9.5\readme.txt" />
+    <Content Include="packages\Newtonsoft.Json.9.0.2-beta1\lib\net20\Newtonsoft.Json.dll" />
+    <Content Include="packages\Newtonsoft.Json.9.0.2-beta1\lib\net20\Newtonsoft.Json.xml" />
+    <Content Include="packages\Newtonsoft.Json.9.0.2-beta1\lib\net35\Newtonsoft.Json.dll" />
+    <Content Include="packages\Newtonsoft.Json.9.0.2-beta1\lib\net35\Newtonsoft.Json.xml" />
+    <Content Include="packages\Newtonsoft.Json.9.0.2-beta1\lib\net40\Newtonsoft.Json.dll" />
+    <Content Include="packages\Newtonsoft.Json.9.0.2-beta1\lib\net40\Newtonsoft.Json.xml" />
+    <Content Include="packages\Newtonsoft.Json.9.0.2-beta1\lib\net45\Newtonsoft.Json.dll" />
+    <Content Include="packages\Newtonsoft.Json.9.0.2-beta1\lib\net45\Newtonsoft.Json.xml" />
+    <Content Include="packages\Newtonsoft.Json.9.0.2-beta1\lib\netstandard1.0\Newtonsoft.Json.dll" />
+    <Content Include="packages\Newtonsoft.Json.9.0.2-beta1\lib\netstandard1.0\Newtonsoft.Json.xml" />
+    <Content Include="packages\Newtonsoft.Json.9.0.2-beta1\lib\netstandard1.1\Newtonsoft.Json.dll" />
+    <Content Include="packages\Newtonsoft.Json.9.0.2-beta1\lib\netstandard1.1\Newtonsoft.Json.xml" />
+    <Content Include="packages\Newtonsoft.Json.9.0.2-beta1\lib\portable-net40+sl5+wp80+win8+wpa81\Newtonsoft.Json.dll" />
+    <Content Include="packages\Newtonsoft.Json.9.0.2-beta1\lib\portable-net40+sl5+wp80+win8+wpa81\Newtonsoft.Json.xml" />
+    <Content Include="packages\Newtonsoft.Json.9.0.2-beta1\lib\portable-net45+wp80+win8+wpa81\Newtonsoft.Json.dll" />
+    <Content Include="packages\Newtonsoft.Json.9.0.2-beta1\lib\portable-net45+wp80+win8+wpa81\Newtonsoft.Json.xml" />
+    <Content Include="packages\NUnit.3.5.0\CHANGES.txt" />
+    <Content Include="packages\NUnit.3.5.0\lib\dotnet\nunit.framework.dll" />
+    <Content Include="packages\NUnit.3.5.0\lib\dotnet\nunit.framework.xml" />
+    <Content Include="packages\NUnit.3.5.0\lib\net20\nunit.framework.dll" />
+    <Content Include="packages\NUnit.3.5.0\lib\net20\nunit.framework.xml" />
+    <Content Include="packages\NUnit.3.5.0\lib\net20\NUnit.System.Linq.dll" />
+    <Content Include="packages\NUnit.3.5.0\lib\net35\nunit.framework.dll" />
+    <Content Include="packages\NUnit.3.5.0\lib\net35\nunit.framework.xml" />
+    <Content Include="packages\NUnit.3.5.0\lib\net40\nunit.framework.dll" />
+    <Content Include="packages\NUnit.3.5.0\lib\net40\nunit.framework.xml" />
+    <Content Include="packages\NUnit.3.5.0\lib\net45\nunit.framework.dll" />
+    <Content Include="packages\NUnit.3.5.0\lib\net45\nunit.framework.xml" />
+    <Content Include="packages\NUnit.3.5.0\lib\portable-net45+win8+wp8+wpa81+Xamarin.Mac+MonoAndroid10+MonoTouch10+Xamarin.iOS10\nunit.framework.dll" />
+    <Content Include="packages\NUnit.3.5.0\lib\portable-net45+win8+wp8+wpa81+Xamarin.Mac+MonoAndroid10+MonoTouch10+Xamarin.iOS10\nunit.framework.xml" />
+    <Content Include="packages\NUnit.3.5.0\LICENSE.txt" />
+    <Content Include="packages\NUnit.3.5.0\NOTICES.txt" />
+    <Content Include="packages\RestSharp.105.2.3\lib\MonoAndroid10\RestSharp.dll" />
+    <Content Include="packages\RestSharp.105.2.3\lib\MonoAndroid10\RestSharp.xml" />
+    <Content Include="packages\RestSharp.105.2.3\lib\MonoTouch10\RestSharp.dll" />
+    <Content Include="packages\RestSharp.105.2.3\lib\MonoTouch10\RestSharp.xml" />
+    <Content Include="packages\RestSharp.105.2.3\lib\net35\RestSharp.dll" />
+    <Content Include="packages\RestSharp.105.2.3\lib\net35\RestSharp.xml" />
+    <Content Include="packages\RestSharp.105.2.3\lib\net4-client\RestSharp.dll" />
+    <Content Include="packages\RestSharp.105.2.3\lib\net4-client\RestSharp.xml" />
+    <Content Include="packages\RestSharp.105.2.3\lib\net451\RestSharp.dll" />
+    <Content Include="packages\RestSharp.105.2.3\lib\net451\RestSharp.xml" />
+    <Content Include="packages\RestSharp.105.2.3\lib\net452\RestSharp.dll" />
+    <Content Include="packages\RestSharp.105.2.3\lib\net452\RestSharp.xml" />
+    <Content Include="packages\RestSharp.105.2.3\lib\net45\RestSharp.dll" />
+    <Content Include="packages\RestSharp.105.2.3\lib\net45\RestSharp.xml" />
+    <Content Include="packages\RestSharp.105.2.3\lib\net46\RestSharp.dll" />
+    <Content Include="packages\RestSharp.105.2.3\lib\net46\RestSharp.xml" />
+    <Content Include="packages\RestSharp.105.2.3\lib\net4\RestSharp.dll" />
+    <Content Include="packages\RestSharp.105.2.3\lib\net4\RestSharp.xml" />
+    <Content Include="packages\RestSharp.105.2.3\lib\sl5\RestSharp.dll" />
+    <Content Include="packages\RestSharp.105.2.3\lib\sl5\RestSharp.xml" />
+    <Content Include="packages\RestSharp.105.2.3\lib\windowsphone81\RestSharp.dll" />
+    <Content Include="packages\RestSharp.105.2.3\lib\windowsphone81\RestSharp.xml" />
+    <Content Include="packages\RestSharp.105.2.3\lib\windowsphone8\RestSharp.dll" />
+    <Content Include="packages\RestSharp.105.2.3\lib\windowsphone8\RestSharp.xml" />
+    <Content Include="packages\RestSharp.105.2.3\lib\Xamarin.iOS10\RestSharp.dll" />
+    <Content Include="packages\RestSharp.105.2.3\lib\Xamarin.iOS10\RestSharp.xml" />
+    <Content Include="packages\RestSharp.105.2.3\readme.txt" />
+    <Content Include="packages\WebSocketSharp.1.0.3-rc11\lib\websocket-sharp.dll" />
+    <Content Include="packages\WebSocketSharp.1.0.3-rc11\lib\websocket-sharp.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
