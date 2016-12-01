@@ -11,27 +11,27 @@ namespace IBM.Watson.DeveloperCloud.Test
 {
   class HelloWorld
   {
-    public static void Main()
-    {
-      LogSystem.InstallDefaultReactors();
+    //public static void Main()
+    //{
+    //  LogSystem.InstallDefaultReactors();
 
-      Log.Debug("HelloWorld", "Hello, World! {0}", Directory.GetCurrentDirectory());
-      Log.Debug("HelloWorld", "Press any key to continue...");
+    //  Log.Debug("HelloWorld", "Hello, World! {0}", Directory.GetCurrentDirectory());
+    //  Log.Debug("HelloWorld", "Press any key to continue...");
 
-      //ToneAnalyzerTest toneAnalyzerTest = new ToneAnalyzerTest();
-      //toneAnalyzerTest.TestToneAnalyzer();
+    //  //ToneAnalyzerTest toneAnalyzerTest = new ToneAnalyzerTest();
+    //  //toneAnalyzerTest.TestToneAnalyzer();
 
-      //AlchemyAPITest alchemyAPITest = new AlchemyAPITest();
-      //alchemyAPITest.TestAlchemyAPI();
+    //  //AlchemyAPITest alchemyAPITest = new AlchemyAPITest();
+    //  //alchemyAPITest.TestAlchemyAPI();
 
-      //VisualRecognitionTest visualRecognitionTest = new VisualRecognitionTest();
-      //visualRecognitionTest.TestVisualRecognition();
+    //  //VisualRecognitionTest visualRecognitionTest = new VisualRecognitionTest();
+    //  //visualRecognitionTest.TestVisualRecognition();
 
-      RetrieveAndRankTest retrieveAndRankTest = new RetrieveAndRankTest();
-      retrieveAndRankTest.TestRetrieveAndRank();
+    //  RetrieveAndRankTest retrieveAndRankTest = new RetrieveAndRankTest();
+    //  retrieveAndRankTest.TestRetrieveAndRank();
 
-      Console.ReadKey();
-    }
+    //  Console.ReadKey();
+    //}
   }
 
   #region Test Tone Analyzer
