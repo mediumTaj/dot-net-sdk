@@ -17,6 +17,8 @@ before_script:
  - chmod +x Travis/installSubmodule.sh
 script:
   - Travis/installSubmodule.sh
+  - nuget restore Test/Test.sln
   - xbuild /p:Configuration=Release sdk/sdk.sln
-  - mono ./testrunner/NUnit.Runners.2.6.4/tools/nunit-console.exe /home/travis/build/mediumTaj/dot-net-sdk/Test/Test/bin/Release/Test.dll
+  - xbuild /p:Configuration=Release Test/Test.sln
+  - mono ./testrunner/NUnit.Runners.2.6.4/tools/nunit-console.exe Test/Test/bin/Release/Test.dll
 #  - dotnet restore && dotnet build **/project.json
