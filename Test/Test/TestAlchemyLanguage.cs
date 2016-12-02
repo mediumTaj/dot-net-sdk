@@ -14,10 +14,9 @@
 * limitations under the License.
 *
 */
+
 using NUnit.Framework;
-using IBM.Watson.DeveloperCloud.Logging;
 using IBM.Watson.DeveloperCloud.Services.AlchemyAPI.v1;
-using System;
 using IBM.Watson.DeveloperCloud.Utilities;
 
 namespace sdk.test

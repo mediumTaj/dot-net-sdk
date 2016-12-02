@@ -5,11 +5,11 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{7F8A56CB-84FA-4914-A057-D3A6DAB1C059}</ProjectGuid>
-    <OutputType>Exe</OutputType>
+    <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>sdk</RootNamespace>
     <AssemblyName>sdk</AssemblyName>
-    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <TargetFrameworkProfile />
@@ -35,21 +35,20 @@
     <WarningLevel>4</WarningLevel>
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="HtmlAgilityPack, Version=1.4.9.5, Culture=neutral, PublicKeyToken=bd319b19eaf3b43a, processorArchitecture=MSIL">
-      <HintPath>packages\HtmlAgilityPack.1.4.9.5\lib\Net40\HtmlAgilityPack.dll</HintPath>
+      <HintPath>packages\HtmlAgilityPack.1.4.9.5\lib\Net45\HtmlAgilityPack.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>packages\Newtonsoft.Json.9.0.2-beta1\lib\net40\Newtonsoft.Json.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="nunit.framework, Version=3.5.0.0, Culture=neutral, PublicKeyToken=2638cd05610744eb, processorArchitecture=MSIL">
-      <HintPath>packages\NUnit.3.5.0\lib\net40\nunit.framework.dll</HintPath>
+      <HintPath>packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="RestSharp, Version=105.2.3.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>packages\RestSharp.105.2.3\lib\net4\RestSharp.dll</HintPath>
+      <HintPath>packages\RestSharp.105.2.3\lib\net452\RestSharp.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
@@ -92,9 +91,7 @@
     <Compile Include="src\utilities\Utility.cs" />
     <Compile Include="src\utilities\WatsonException.cs" />
     <Compile Include="src\utilities\WaveFile.cs" />
-    <Compile Include="test\HelloWorld.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="test\TestAlchemyLanguage.cs" />
     <Compile Include="third-party\FullSerializer\Source\Converters\fsArrayConverter.cs" />
     <Compile Include="third-party\FullSerializer\Source\Converters\fsDateConverter.cs" />
     <Compile Include="third-party\FullSerializer\Source\Converters\fsDictionaryConverter.cs" />
@@ -167,7 +164,6 @@
     <Folder Include="bin\Release\" />
     <Folder Include="obj\Debug\" />
     <Folder Include="src\services\TradeoffAnalytics\" />
-    <Folder Include="test\testData\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="bin\Debug\sdk.vshost.exe" />
