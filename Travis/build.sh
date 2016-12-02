@@ -1,50 +1,25 @@
 #! /bin/sh
-project="unity-sdk-travis"
-
-ERROR_CODE=0
-
-echo "Attempting to build $project for Windows..."
-/Applications/Unity/Unity.app/Contents/MacOS/Unity \
-  -batchmode \
-  -nographics \
-  -silent-crashes \
-  -logFile $(pwd)/Travis/UnityTestProject/windowsBuild.log \
-  -projectPath $(pwd)/Travis/UnityTestProject \
-  -executemethod RunTravisBuild.Windows \
-  -quit
+echo "Attempting to restore packages!"
+nuget restore Test/Test.sln
 if [ $? = 0 ] ; then
-  echo "Build Windows COMPLETED! Exited with $?"
+  echo "Attempting to build sdk!"
+  xbuild /p:Configuration=Release sdk/sdk.sln
+  if [ $? = 0 ] ; then
+    echo "SDK build succeeded!"
+    echo "Attempting to build Tests"
+    xbuild /p:Configuration=Release Test/Test.sln
+    if [ $? = 0 ] ; then
+      echo "Test build succeeded!"
+      exit 0
+    else
+      echo "Failed to build Test"
+      exit 1
+    fi
+  else
+    echo "Failed to build sdk!"
+    exit 1
+  fi
 else
-  echo "Build Windows FAILED! Exited with $?"
-  ERROR_CODE=$?
-fi
-
-echo 'Logs from build'
-cat $(pwd)/Travis/UnityTestProject/windowsBuild.log
-
-echo "Attempting to build $project for OS X..."
-/Applications/Unity/Unity.app/Contents/MacOS/Unity \
-  -batchmode \
-  -nographics \
-  -silent-crashes \
-  -logFile $(pwd)/Travis/UnityTestProject/osxBuild.log \
-  -projectPath $(pwd)/Travis/UnityTestProject \
-  -executemethod RunTravisBuild.OSX \
-  -quit
-if [ $? = 0 ] ; then
-  echo "Build Mac COMPLETED! Exited with $?"
-else
-  echo "Build Mac FAILED! Exited with $?"
-  ERROR_CODE=$?
-fi
-
-echo 'Logs from build'
-cat $(pwd)/Travis/UnityTestProject/osxBuild.log
-
-if [ $ERROR_CODE = 0 ] ; then
-  echo "BUILDS SUCCEEDED! Exited with $ERROR_CODE"
-  exit 0
-else
-  echo "BUILDS FAILED! Exited with $ERROR_CODE"
+  echo "Failed to restore packages!"
   exit 1
 fi
