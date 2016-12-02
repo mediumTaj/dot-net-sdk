@@ -20,5 +20,7 @@ script:
 - xbuild /p:Configuration=Release sdk/sdk.sln
 - xbuild /p:Configuration=Release Test/Test.sln
 - openssl aes-256-cbc -K $encrypted_89fb597d004e_key -iv $encrypted_89fb597d004e_iv
-  -in Config.json.enc -out Test/Test/bin/Release/Config.json -d
+  -in Config.json.enc -out Config.json -d
+- mkdir -p Test/Test/bin/Release/appdata/
+- mv Config.json Test/Test/bin/Release/appdata/Config.json
 - mono ./testrunner/NUnit.Runners.2.6.4/tools/nunit-console.exe Test/Test/bin/Release/Test.dll
