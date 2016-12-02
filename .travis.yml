@@ -18,5 +18,5 @@ before_script:
 script:
   - Travis/installSubmodule.sh
   - xbuild /p:Configuration=Release sdk/sdk.sln
-  - mono ./testrunner/NUnit.Runners.2.6.4/tools/nunit-console.exe ./Test/Test/bin/Release/Test.dll
+  - mono ./testrunner/NUnit.Runners.2.6.4/tools/nunit-console.exe ./Test/bin/Release/Test.dll
 #  - dotnet restore && dotnet build **/project.json
