@@ -11,7 +11,7 @@ os:
   - osx
 osx_image: xcode7.3
 install:
-  - nuget restore solution-name.sln
+  - nuget restore sln.sln
   - nuget install NUnit.Runners -Version 2.6.4 -OutputDirectory testrunner
 script:
   - Travis/installSubmodule.sh
