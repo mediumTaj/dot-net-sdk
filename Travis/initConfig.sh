@@ -1,7 +1,7 @@
 if [ "${TRAVIS_PULL_REQUEST}" = "false" ]; then
   echo '$TRAVIS_PULL_REQUEST is false, running tests'
   echo "Attempting to move appdata directory..."
-  mv Test/Test/appdata Test/Test/bin/Release/appdata/
+  mv Test/Test/appdata/ Test/Test/bin/Release/appdata/
   if [ $? = 0 ] ; then
     echo "Move appdata directory COMPLETED! Exited with $?"
     echo "Attempting to decrypt config..."
