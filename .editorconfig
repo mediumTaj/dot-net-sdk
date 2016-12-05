@@ -1,0 +1,14 @@
+; Top-most EditorConfig file
+root = true
+
+; Unix-style newlines
+[*]
+end_of_line = LF
+
+; 2-column space indentation
+[*.cs]
+indent_style = space
+indent_size = 2
+
+curly_bracket_next_line = true
+indent_brace_style = Allman
