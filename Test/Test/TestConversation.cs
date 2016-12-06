@@ -1,7 +1,4 @@
-﻿
-
-
-/**
+﻿/**
 * Copyright 2015 IBM Corp. All Rights Reserved.
 *
 * Licensed under the Apache License, Version 2.0 (the "License");
@@ -42,8 +39,6 @@ namespace sdk.test
     [Test]
     public void TestMessageObject()
     {
-      
-
       if (!conversation.Message((MessageResponse resp, string data) =>
       {
         Assert.AreNotEqual(resp, null);
@@ -56,9 +51,6 @@ namespace sdk.test
     {
       MessageRequest messageRequest = new MessageRequest();
       messageRequest.InputText = input;
-
-      if (Config.Instance.FindCredentials(conversation.GetServiceID()) == null)
-        Assert.Fail("Failed to find credentials");
 
       if (!conversation.Message((MessageResponse resp, string data) =>
       {

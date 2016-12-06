@@ -344,7 +344,7 @@ namespace IBM.Watson.DeveloperCloud.Utilities
     }
     #endregion
 
-    #region
+    #region Is Local File
     /// <summary>
     /// Determines if a string is a file path.
     /// </summary>
@@ -360,6 +360,13 @@ namespace IBM.Watson.DeveloperCloud.Utilities
       {
         return false;
       }
+    }
+    #endregion
+
+    #region Has Invalid Characters
+    public static bool FilePathHasInvalidChars(string path)
+    {
+      return (!string.IsNullOrEmpty(path) && path.IndexOfAny(System.IO.Path.GetInvalidPathChars()) >= 0);
     }
     #endregion
   }
