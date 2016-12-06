@@ -40,7 +40,7 @@ namespace sdk.test
     }
 
     [Test]
-    private void TestMessageObject()
+    public void TestMessageObject()
     {
       
 
@@ -52,7 +52,7 @@ namespace sdk.test
     }
 
     [Test]
-    private void TestMessageInput()
+    public void TestMessageInput()
     {
       MessageRequest messageRequest = new MessageRequest();
       messageRequest.InputText = input;
