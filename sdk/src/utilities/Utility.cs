@@ -25,6 +25,7 @@ using System.Text;
 using System.Net.NetworkInformation;
 using System.Text.RegularExpressions;
 using System.Runtime.InteropServices;
+using System.IO;
 
 namespace IBM.Watson.DeveloperCloud.Utilities
 {
@@ -367,6 +368,35 @@ namespace IBM.Watson.DeveloperCloud.Utilities
     public static bool FilePathHasInvalidChars(string path)
     {
       return (!string.IsNullOrEmpty(path) && path.IndexOfAny(System.IO.Path.GetInvalidPathChars()) >= 0);
+    }
+    #endregion
+
+    #region Get Source Type
+    public static SourceType GetSourceType(string source)
+    {
+      if (source.StartsWith("http://") || source.StartsWith("https://"))
+      {
+        Log.Debug("Utility", "source type: {0}, source: {1}", SourceType.URL, source);
+        return SourceType.URL;
+      }
+      else
+      {
+        try
+        {
+          bool extension = Path.HasExtension(source);
+          return SourceType.PATH;
+        }
+        catch
+        {
+          return SourceType.TEXT;
+        }
+      }
+    }
+    public enum SourceType
+    {
+      URL,
+      PATH,
+      TEXT
     }
     #endregion
   }
