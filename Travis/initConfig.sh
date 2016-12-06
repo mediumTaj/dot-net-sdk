@@ -14,7 +14,7 @@ if [ "${TRAVIS_PULL_REQUEST}" = "false" ]; then
         echo "Integration tests COMPLETED! Exited with $?"
         exit 0
       else
-        echo "Integration tests! Exited with $?"
+        echo "Integration tests FAILED! Exited with $?"
         exit 1
       fi
     else

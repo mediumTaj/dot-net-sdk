@@ -29,11 +29,20 @@ namespace sdk.test
     private string workspaceID;
     private string input = "Can you unlock the door?";
 
-    [Test]
-    private void TestMessageObject()
+    public TestConversation()
     {
       if (Config.Instance.FindCredentials(conversation.GetServiceID()) == null)
         Assert.Fail("Failed to find credentials");
+
+      workspaceID = Config.Instance.GetVariableValue("ConversationV1_ID");
+      if (string.IsNullOrEmpty(workspaceID))
+        Assert.Fail("Failed to find workspaceID");
+    }
+
+    [Test]
+    private void TestMessageObject()
+    {
+      
 
       if (!conversation.Message((MessageResponse resp, string data) =>
       {
