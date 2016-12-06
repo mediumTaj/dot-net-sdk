@@ -74,6 +74,8 @@
     <Compile Include="src\logging\Logger.cs" />
     <Compile Include="src\services\AlchemyAPI\AlchemyAPI.cs" />
     <Compile Include="src\services\AlchemyAPI\DataModels.cs" />
+    <Compile Include="src\services\Conversation\Conversation.cs" />
+    <Compile Include="src\services\Conversation\DataModels.cs" />
     <Compile Include="src\services\IWatsonService.cs" />
     <Compile Include="src\services\RetrieveAndRank\DataModels.cs" />
     <Compile Include="src\services\RetrieveAndRank\RetrieveAndRank.cs" />
