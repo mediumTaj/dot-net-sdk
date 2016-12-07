@@ -428,7 +428,7 @@ namespace IBM.Watson.DeveloperCloud.Connection
             if (!r.Succeeded)
               throw new WatsonException(r.FormattedMessages);
             
-            restRequest.AddParameter("application/json", data, ParameterType.RequestBody);
+            restRequest.AddParameter(string.IsNullOrEmpty(req.Parameters["Content-Type"].ToString()) ? "application/json" : req.Parameters["Content-Type"].ToString(), data, ParameterType.RequestBody);
           }
 
 #if ENABLE_DEBUGGING
