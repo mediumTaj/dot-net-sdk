@@ -36,11 +36,11 @@ namespace IBM.Watson.DeveloperCloud.Utilities
       /// <summary>
       /// Cache folder to customize a parent folder for cache directory
       /// </summary>
-      public static string CACHE_FOLDER = System.IO.Path.Combine(APP_DATA, "/wdc/cache/");   //It needs to start with /
+      public static string CACHE_FOLDER = System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "/wdc/cache/");   //It needs to start with /
                                                       /// <summary>
                                                       /// Log folder to customize a parent folder for logs
                                                       /// </summary>
-      public static string LOG_FOLDER = System.IO.Path.Combine(APP_DATA, "/wdc/logs/");    //It needs to start with /
+      public static string LOG_FOLDER = System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),"/wdc/logs/");    //It needs to start with /
                                                /// <summary>
                                                /// Directory name where all application data is stored
                                                /// </summary>

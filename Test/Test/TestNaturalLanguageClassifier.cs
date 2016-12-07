@@ -43,7 +43,7 @@ namespace Test
     [SetUp]
     public void Init()
     {
-      LogSystem.InstallDefaultReactors();
+      naturalLanguageClassifier.DisableCache = true;
       data.Load(trainingDataPath);
     }
 
