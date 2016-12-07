@@ -17,6 +17,8 @@
 using IBM.Watson.DeveloperCloud.Services.Conversation.v1;
 using IBM.Watson.DeveloperCloud.Utilities;
 using NUnit.Framework;
+using System.Threading;
+
 namespace sdk.test
 {
   [TestFixture]
@@ -25,8 +27,10 @@ namespace sdk.test
     Conversation conversation = new Conversation();
     private string workspaceID;
     private string input = "Can you unlock the door?";
+    private AutoResetEvent autoEvent = new AutoResetEvent(false);
 
-    public TestConversation()
+    [SetUp]
+    public void Init()
     {
       if (Config.Instance.FindCredentials(conversation.GetServiceID()) == null)
         Assert.Fail("Failed to find credentials");
@@ -39,24 +43,36 @@ namespace sdk.test
     [Test]
     public void TestMessageObject()
     {
+      MessageResponse messageResponse = null;
+
       if (!conversation.Message((MessageResponse resp, string data) =>
       {
-        Assert.AreNotEqual(resp, null);
+        messageResponse = resp;
+        autoEvent.Set();
       }, workspaceID, input))
         Assert.Fail("Failed to send message! {0}", input);
+
+      autoEvent.WaitOne();
+      Assert.AreNotEqual(messageResponse, null);
     }
 
     [Test]
     public void TestMessageInput()
     {
+      MessageResponse messageResponse = null;
+
       MessageRequest messageRequest = new MessageRequest();
       messageRequest.InputText = input;
 
       if (!conversation.Message((MessageResponse resp, string data) =>
       {
-        Assert.AreNotEqual(resp, null);
+        messageResponse = resp;
+        autoEvent.Set();
       }, workspaceID, messageRequest))
         Assert.Fail("Failed to send message! {0}", messageRequest.input);
+
+      autoEvent.WaitOne();
+      Assert.AreNotEqual(messageResponse, null);
     }
   }
 }

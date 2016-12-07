@@ -399,5 +399,97 @@ namespace IBM.Watson.DeveloperCloud.Utilities
       TEXT
     }
     #endregion
+
+    #region ClassifierData
+    public class ClassifierData
+    {
+      [fsIgnore]
+      public string FileName { get; set; }
+      public bool Expanded { get; set; }
+      public bool InstancesExpanded { get; set; }
+      public bool ClassesExpanded { get; set; }
+      public string Name { get; set; }
+      public string Language { get; set; }
+      public Dictionary<string, List<string>> Data { get; set; }
+      public Dictionary<string, bool> DataExpanded { get; set; }
+
+      public void Import(string filename)
+      {
+        if (Data == null)
+          Data = new Dictionary<string, List<string>>();
+
+        string[] lines = File.ReadAllLines(filename);
+        foreach (var line in lines)
+        {
+          int nSeperator = line.LastIndexOf(',');
+          if (nSeperator < 0)
+            continue;
+
+          string c = line.Substring(nSeperator + 1);
+          string phrase = line.Substring(0, nSeperator);
+
+          if (!Data.ContainsKey(c))
+            Data[c] = new List<string>();
+          Data[c].Add(phrase);
+        }
+      }
+
+      public string Export()
+      {
+        StringBuilder sb = new StringBuilder();
+        foreach (var kp in Data)
+        {
+          foreach (var p in kp.Value)
+          {
+            sb.Append(p + "," + kp.Key + "\n");
+          }
+        }
+
+        return sb.ToString();
+      }
+
+      public void Save(string filename)
+      {
+        fsData data = null;
+        fsResult r = sm_Serializer.TrySerialize(typeof(ClassifierData), this, out data);
+        if (!r.Succeeded)
+          throw new Exception("Failed to serialize ClassifierData: " + r.FormattedMessages);
+
+        File.WriteAllText(filename, fsJsonPrinter.PrettyJson(data));
+        FileName = filename;
+      }
+
+      public void Save()
+      {
+        Save(FileName);
+      }
+
+      public bool Load(string filename)
+      {
+        try
+        {
+          string json = File.ReadAllText(filename);
+
+          fsData data = null;
+          fsResult r = fsJsonParser.Parse(json, out data);
+          if (!r.Succeeded)
+            throw new Exception(r.FormattedMessages);
+
+          object obj = this;
+          r = sm_Serializer.TryDeserialize(data, obj.GetType(), ref obj);
+          if (!r.Succeeded)
+            throw new Exception(r.FormattedMessages);
+        }
+        catch (Exception e)
+        {
+          Log.Error("NaturalLanguageClassifierEditor", "Failed to load classifier data {1}: {0}", e.ToString(), filename);
+          return false;
+        }
+
+        FileName = filename;
+        return true;
+      }
+    };
+    #endregion
   }
 }

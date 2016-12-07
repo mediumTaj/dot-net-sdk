@@ -18,6 +18,7 @@
 using NUnit.Framework;
 using IBM.Watson.DeveloperCloud.Services.DocumentConversion.v1;
 using IBM.Watson.DeveloperCloud.Utilities;
+using System.Threading;
 
 namespace sdk.test
 {
@@ -26,6 +27,7 @@ namespace sdk.test
   {
     private DocumentConversion documentConversion = new DocumentConversion();
     private string examplePath = Constants.Path.APP_DATA + "/watson_beats_jeopardy.html";
+    AutoResetEvent autoEvent = new AutoResetEvent(false);
 
     [Test]
     public void TestConvertDocumentAnswerUnit()
@@ -33,8 +35,11 @@ namespace sdk.test
       if (!documentConversion.ConvertDocument((ConvertedDocument documentConversionResponse, string data) =>
       {
         Assert.AreNotEqual(documentConversionResponse, null);
+         autoEvent.Set();
       }, examplePath, ConversionTarget.ANSWER_UNITS))
         Assert.Fail();
+
+      autoEvent.WaitOne();
     }
 
     [Test]
@@ -43,8 +48,11 @@ namespace sdk.test
       if (!documentConversion.ConvertDocument((ConvertedDocument documentConversionResponse, string data) =>
       {
         Assert.AreNotEqual(documentConversionResponse, null);
+         autoEvent.Set();
       }, examplePath, ConversionTarget.NORMALIZED_TEXT))
         Assert.Fail();
+
+      autoEvent.WaitOne();
     }
 
     [Test]
@@ -53,8 +61,11 @@ namespace sdk.test
       if (!documentConversion.ConvertDocument((ConvertedDocument documentConversionResponse, string data) =>
       {
         Assert.AreNotEqual(documentConversionResponse, null);
+         autoEvent.Set();
       }, examplePath, ConversionTarget.NORMALIZED_HTML))
         Assert.Fail();
+
+      autoEvent.WaitOne();
     }
   }
 }

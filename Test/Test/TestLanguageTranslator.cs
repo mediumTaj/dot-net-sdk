@@ -17,6 +17,7 @@
 
 using NUnit.Framework;
 using IBM.Watson.DeveloperCloud.Services.LanguageTranslator.v1;
+using System.Threading;
 
 namespace sdk.test
 {
@@ -28,6 +29,7 @@ namespace sdk.test
     private string query = "Where is the library?";
     private string fromLanguage = "en";
     private string toLanguage = "es";
+    AutoResetEvent autoEvent = new AutoResetEvent(false);
 
     [Test]
     public void TestGetModel()
@@ -35,8 +37,11 @@ namespace sdk.test
       if (!languageTranslator.GetModel(languageModel, (TranslationModel model) =>
        {
          Assert.AreNotEqual(model, null);
+         autoEvent.Set();
        }))
         Assert.Fail();
+
+      autoEvent.WaitOne();
     }
 
     [Test]
@@ -45,8 +50,11 @@ namespace sdk.test
       if (!languageTranslator.GetModels((TranslationModels models) =>
        {
          Assert.AreNotEqual(models, null);
+         autoEvent.Set();
        }))
         Assert.Fail();
+
+      autoEvent.WaitOne();
     }
 
     [Test]
@@ -55,8 +63,11 @@ namespace sdk.test
       if (!languageTranslator.GetLanguages((Languages languages) =>
       {
         Assert.AreNotEqual(languages, null);
+        autoEvent.Set();
       }))
         Assert.Fail();
+
+      autoEvent.WaitOne();
     }
 
     [Test]
@@ -65,8 +76,11 @@ namespace sdk.test
       if (!languageTranslator.Identify(query, (string lang) =>
       {
         Assert.AreNotEqual(true, string.IsNullOrEmpty(lang));
+        autoEvent.Set();
       }))
         Assert.Fail();
+
+      autoEvent.WaitOne();
     }
 
     [Test]
@@ -75,8 +89,11 @@ namespace sdk.test
       if (!languageTranslator.GetTranslation(query, toLanguage, fromLanguage, (Translations translation) =>
       {
         Assert.AreNotEqual(translation, null);
+        autoEvent.Set();
       }))
         Assert.Fail();
+
+      autoEvent.WaitOne();
     }
   }
 }

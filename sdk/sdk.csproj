@@ -81,6 +81,8 @@
     <Compile Include="src\services\IWatsonService.cs" />
     <Compile Include="src\services\LanguageTranslator\DataModels.cs" />
     <Compile Include="src\services\LanguageTranslator\LanguageTranslator.cs" />
+    <Compile Include="src\services\NaturalLanguageClassifier\DataModels.cs" />
+    <Compile Include="src\services\NaturalLanguageClassifier\NaturalLanguageClassifier.cs" />
     <Compile Include="src\services\RetrieveAndRank\DataModels.cs" />
     <Compile Include="src\services\RetrieveAndRank\RetrieveAndRank.cs" />
     <Compile Include="src\services\ToneAnalyzer\DataModels.cs" />

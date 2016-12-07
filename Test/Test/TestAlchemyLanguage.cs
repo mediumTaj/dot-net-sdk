@@ -18,6 +18,7 @@
 using IBM.Watson.DeveloperCloud.Services.AlchemyAPI.v1;
 using IBM.Watson.DeveloperCloud.Utilities;
 using NUnit.Framework;
+using System.Threading;
 
 namespace sdk.test
 {
@@ -30,15 +31,19 @@ namespace sdk.test
     private string example_html_article = Constants.Path.APP_DATA + "/watson_beats_jeopardy.html";
     private string exampleURL_feed = "https://news.ycombinator.com/";
     private string exampleURL_microformats = "http://microformats.org/wiki/hcard";
+    AutoResetEvent autoEvent = new AutoResetEvent(false);
 
     [Test]
     public void TestGetAuthorsURL()
     {
       if (!alchemyLanguage.GetAuthors((AuthorsData authors, string data) =>
        {
-         Assert.AreNotEqual(authors, null);
+         Assert.AreNotEqual(authors, null); 
+         autoEvent.Set();
        }, exampleURL_article))
         Assert.Fail();
+
+      autoEvent.WaitOne();
     }
 
     [Test]
@@ -47,8 +52,11 @@ namespace sdk.test
       if (!alchemyLanguage.GetAuthors((AuthorsData authors, string data) =>
       {
         Assert.AreNotEqual(authors, null);
+        autoEvent.Set();
       }, example_html_article))
         Assert.Fail();
+
+      autoEvent.WaitOne();
     }
 
     [Test]
@@ -57,8 +65,11 @@ namespace sdk.test
       if (!alchemyLanguage.GetRankedConcepts((ConceptsData concepts, string data) =>
       {
         Assert.AreNotEqual(concepts, null);
+        autoEvent.Set();
       }, example_html_article, 8, true, true, true))
         Assert.Fail();
+
+      autoEvent.WaitOne();
     }
 
     [Test]
@@ -67,8 +78,11 @@ namespace sdk.test
       if (!alchemyLanguage.GetRankedConcepts((ConceptsData concepts, string data) =>
       {
         Assert.AreNotEqual(concepts, null);
+        autoEvent.Set();
       }, exampleURL_article, 8, true, true, true))
         Assert.Fail();
+
+      autoEvent.WaitOne();
     }
 
     [Test]
@@ -77,8 +91,11 @@ namespace sdk.test
       if (!alchemyLanguage.GetRankedConcepts((ConceptsData concepts, string data) =>
       {
         Assert.AreNotEqual(concepts, null);
+        autoEvent.Set();
       }, exampleText_article, 8, true, true, true))
         Assert.Fail();
+
+      autoEvent.WaitOne();
     }
 
     [Test]
@@ -87,8 +104,11 @@ namespace sdk.test
       if (!alchemyLanguage.GetDates((DateData dates, string data) =>
       {
         Assert.AreNotEqual(dates, null);
+        autoEvent.Set();
       }, exampleURL_article, null, true))
         Assert.Fail();
+
+      autoEvent.WaitOne();
     }
 
     [Test]
@@ -97,8 +117,11 @@ namespace sdk.test
       if (!alchemyLanguage.GetDates((DateData dates, string data) =>
       {
         Assert.AreNotEqual(dates, null);
+        autoEvent.Set();
       }, exampleText_article, null, true))
         Assert.Fail();
+
+      autoEvent.WaitOne();
     }
 
     [Test]
@@ -107,8 +130,11 @@ namespace sdk.test
       if (!alchemyLanguage.GetDates((DateData dates, string data) =>
       {
         Assert.AreNotEqual(dates, null);
+        autoEvent.Set();
       }, example_html_article, null, true))
         Assert.Fail();
+
+      autoEvent.WaitOne();
     }
 
     [Test]
@@ -117,8 +143,11 @@ namespace sdk.test
       if (!alchemyLanguage.GetEmotions((EmotionData emotions, string data) =>
       {
         Assert.AreNotEqual(emotions, null);
+        autoEvent.Set();
       }, exampleURL_article, true))
         Assert.Fail();
+
+      autoEvent.WaitOne();
     }
 
     [Test]
@@ -127,8 +156,11 @@ namespace sdk.test
       if (!alchemyLanguage.GetEmotions((EmotionData emotions, string data) =>
       {
         Assert.AreNotEqual(emotions, null);
+        autoEvent.Set();
       }, exampleText_article, true))
         Assert.Fail();
+
+      autoEvent.WaitOne();
     }
 
     [Test]
@@ -137,8 +169,11 @@ namespace sdk.test
       if (!alchemyLanguage.GetEmotions((EmotionData emotions, string data) =>
       {
         Assert.AreNotEqual(emotions, null);
+        autoEvent.Set();
       }, example_html_article, true))
         Assert.Fail();
+
+      autoEvent.WaitOne();
     }
 
     [Test]
@@ -147,8 +182,11 @@ namespace sdk.test
       if (!alchemyLanguage.ExtractEntities((EntityData entityData, string data) =>
       {
         Assert.AreNotEqual(entityData, null);
+        autoEvent.Set();
       }, exampleURL_article, 50, true, true, true, true, true, true, true, true))
         Assert.Fail();
+
+      autoEvent.WaitOne();
     }
 
     [Test]
@@ -157,8 +195,11 @@ namespace sdk.test
       if (!alchemyLanguage.ExtractEntities((EntityData entityData, string data) =>
       {
         Assert.AreNotEqual(entityData, null);
+        autoEvent.Set();
       }, exampleText_article, 50, true, true, true, true, true, true, true, true))
         Assert.Fail();
+
+      autoEvent.WaitOne();
     }
 
     [Test]
@@ -167,8 +208,11 @@ namespace sdk.test
       if (!alchemyLanguage.ExtractEntities((EntityData entityData, string data) =>
       {
         Assert.AreNotEqual(entityData, null);
+        autoEvent.Set();
       }, example_html_article, 50, true, true, true, true, true, true, true, true))
         Assert.Fail();
+
+      autoEvent.WaitOne();
     }
 
     [Test]
@@ -177,8 +221,11 @@ namespace sdk.test
       if (!alchemyLanguage.DetectFeeds((FeedData feedData, string data) =>
       {
         Assert.AreNotEqual(feedData, null);
+        autoEvent.Set();
       }, exampleURL_feed))
         Assert.Fail();
+
+      autoEvent.WaitOne();
     }
 
     [Test]
@@ -187,8 +234,11 @@ namespace sdk.test
       if (!alchemyLanguage.ExtractKeywords((KeywordData keywordData, string data) =>
       {
         Assert.AreNotEqual(keywordData, null);
+        autoEvent.Set();
       }, exampleURL_article, 50, true, true, true))
         Assert.Fail();
+
+      autoEvent.WaitOne();
     }
 
     [Test]
@@ -197,8 +247,11 @@ namespace sdk.test
       if (!alchemyLanguage.ExtractKeywords((KeywordData keywordData, string data) =>
       {
         Assert.AreNotEqual(keywordData, null);
+        autoEvent.Set();
       }, exampleText_article, 50, true, true, true))
         Assert.Fail();
+
+      autoEvent.WaitOne();
     }
 
     [Test]
@@ -207,8 +260,11 @@ namespace sdk.test
       if (!alchemyLanguage.ExtractKeywords((KeywordData keywordData, string data) =>
       {
         Assert.AreNotEqual(keywordData, null);
+        autoEvent.Set();
       }, example_html_article, 50, true, true, true))
         Assert.Fail();
+
+      autoEvent.WaitOne();
     }
 
     [Test]
@@ -217,8 +273,11 @@ namespace sdk.test
       if (!alchemyLanguage.GetLanguages((LanguageData languages, string data) =>
       {
         Assert.AreNotEqual(languages, null);
+        autoEvent.Set();
       }, exampleURL_article, true))
         Assert.Fail();
+
+      autoEvent.WaitOne();
     }
 
     [Test]
@@ -227,8 +286,11 @@ namespace sdk.test
       if (!alchemyLanguage.GetLanguages((LanguageData languages, string data) =>
       {
         Assert.AreNotEqual(languages, null);
+        autoEvent.Set();
       }, exampleText_article, true))
         Assert.Fail();
+
+      autoEvent.WaitOne();
     }
 
     [Test]
@@ -237,8 +299,11 @@ namespace sdk.test
       if (!alchemyLanguage.GetLanguages((LanguageData languages, string data) =>
       {
         Assert.AreNotEqual(languages, null);
+        autoEvent.Set();
       }, example_html_article, true))
         Assert.Fail();
+
+      autoEvent.WaitOne();
     }
 
     [Test]
@@ -247,8 +312,11 @@ namespace sdk.test
       if (!alchemyLanguage.GetMicroformats((MicroformatData microformats, string data) =>
       {
         Assert.AreNotEqual(microformats, null);
+        autoEvent.Set();
       }, exampleURL_microformats))
         Assert.Fail();
+
+      autoEvent.WaitOne();
     }
 
     [Test]
@@ -257,8 +325,11 @@ namespace sdk.test
       if (!alchemyLanguage.GetPublicationDate((PubDateData pubDates, string data) =>
       {
         Assert.AreNotEqual(pubDates, null);
+        autoEvent.Set();
       }, exampleURL_article))
         Assert.Fail();
+
+      autoEvent.WaitOne();
     }
 
     [Test]
@@ -267,8 +338,11 @@ namespace sdk.test
       if (!alchemyLanguage.GetPublicationDate((PubDateData pubDates, string data) =>
       {
         Assert.AreNotEqual(pubDates, null);
+        autoEvent.Set();
       }, example_html_article))
         Assert.Fail();
+
+      autoEvent.WaitOne();
     }
 
     [Test]
@@ -277,8 +351,11 @@ namespace sdk.test
       if (!alchemyLanguage.GetRelations((RelationsData relationsData, string data) =>
       {
         Assert.AreNotEqual(relationsData, null);
+        autoEvent.Set();
       }, exampleURL_article, 50, true, true, true, true, true, true, true, true, true, true))
         Assert.Fail();
+
+      autoEvent.WaitOne();
     }
 
     [Test]
@@ -287,8 +364,11 @@ namespace sdk.test
       if (!alchemyLanguage.GetRelations((RelationsData relationsData, string data) =>
       {
         Assert.AreNotEqual(relationsData, null);
+        autoEvent.Set();
       }, exampleText_article, 50, true, true, true, true, true, true, true, true, true, true))
         Assert.Fail();
+
+      autoEvent.WaitOne();
     }
 
     [Test]
@@ -297,8 +377,11 @@ namespace sdk.test
       if (!alchemyLanguage.GetRelations((RelationsData relationsData, string data) =>
       {
         Assert.AreNotEqual(relationsData, null);
+        autoEvent.Set();
       }, example_html_article, 50, true, true, true, true, true, true, true, true, true, true))
         Assert.Fail();
+
+      autoEvent.WaitOne();
     }
 
     [Test]
@@ -307,8 +390,11 @@ namespace sdk.test
       if (!alchemyLanguage.GetTextSentiment((SentimentData sentimentData, string data) =>
       {
         Assert.AreNotEqual(sentimentData, null);
+        autoEvent.Set();
       }, exampleURL_article, true))
         Assert.Fail();
+
+      autoEvent.WaitOne();
     }
 
     [Test]
@@ -317,8 +403,11 @@ namespace sdk.test
       if (!alchemyLanguage.GetTextSentiment((SentimentData sentimentData, string data) =>
       {
         Assert.AreNotEqual(sentimentData, null);
+        autoEvent.Set();
       }, exampleText_article, true))
         Assert.Fail();
+
+      autoEvent.WaitOne();
     }
 
     [Test]
@@ -327,8 +416,11 @@ namespace sdk.test
       if (!alchemyLanguage.GetTextSentiment((SentimentData sentimentData, string data) =>
       {
         Assert.AreNotEqual(sentimentData, null);
+        autoEvent.Set();
       }, example_html_article, true))
         Assert.Fail();
+
+      autoEvent.WaitOne();
     }
 
     [Test]
@@ -337,8 +429,11 @@ namespace sdk.test
       if (!alchemyLanguage.GetTargetedSentiment((TargetedSentimentData sentimentData, string data) =>
       {
         Assert.AreNotEqual(sentimentData, null);
+        autoEvent.Set();
       }, exampleURL_article, "Jeopardy|Jennings|Watson", true))
         Assert.Fail();
+
+      autoEvent.WaitOne();
     }
 
     [Test]
@@ -347,8 +442,11 @@ namespace sdk.test
       if (!alchemyLanguage.GetTargetedSentiment((TargetedSentimentData sentimentData, string data) =>
       {
         Assert.AreNotEqual(sentimentData, null);
+        autoEvent.Set();
       }, exampleText_article, "Jeopardy|Jennings|Watson", true))
         Assert.Fail();
+
+      autoEvent.WaitOne();
     }
 
     [Test]
@@ -357,8 +455,11 @@ namespace sdk.test
       if (!alchemyLanguage.GetTargetedSentiment((TargetedSentimentData sentimentData, string data) =>
       {
         Assert.AreNotEqual(sentimentData, null);
+        autoEvent.Set();
       }, example_html_article, "Jeopardy|Jennings|Watson", true))
         Assert.Fail();
+
+      autoEvent.WaitOne();
     }
 
     [Test]
@@ -367,8 +468,11 @@ namespace sdk.test
       if (!alchemyLanguage.GetRankedTaxonomy((TaxonomyData taxonomyData, string data) =>
       {
         Assert.AreNotEqual(taxonomyData, null);
+        autoEvent.Set();
       }, exampleURL_article, true))
         Assert.Fail();
+
+      autoEvent.WaitOne();
     }
 
     [Test]
@@ -377,8 +481,11 @@ namespace sdk.test
       if (!alchemyLanguage.GetRankedTaxonomy((TaxonomyData taxonomyData, string data) =>
       {
         Assert.AreNotEqual(taxonomyData, null);
+        autoEvent.Set();
       }, exampleText_article, true))
         Assert.Fail();
+
+      autoEvent.WaitOne();
     }
 
     [Test]
@@ -387,8 +494,11 @@ namespace sdk.test
       if (!alchemyLanguage.GetRankedTaxonomy((TaxonomyData taxonomyData, string data) =>
       {
         Assert.AreNotEqual(taxonomyData, null);
+        autoEvent.Set();
       }, example_html_article, true))
         Assert.Fail();
+
+      autoEvent.WaitOne();
     }
 
     [Test]
@@ -397,8 +507,11 @@ namespace sdk.test
       if (!alchemyLanguage.GetText((TextData textData, string data) =>
       {
         Assert.AreNotEqual(textData, null);
+        autoEvent.Set();
       }, exampleURL_article, true, true))
         Assert.Fail();
+
+      autoEvent.WaitOne();
     }
 
     [Test]
@@ -407,8 +520,11 @@ namespace sdk.test
       if (!alchemyLanguage.GetText((TextData textData, string data) =>
       {
         Assert.AreNotEqual(textData, null);
+        autoEvent.Set();
       }, example_html_article, true, true))
         Assert.Fail();
+
+      autoEvent.WaitOne();
     }
 
     [Test]
@@ -417,8 +533,11 @@ namespace sdk.test
       if (!alchemyLanguage.GetRawText((TextData textData, string data) =>
       {
         Assert.AreNotEqual(textData, null);
+        autoEvent.Set();
       }, exampleURL_article))
         Assert.Fail();
+
+      autoEvent.WaitOne();
     }
 
     [Test]
@@ -427,8 +546,11 @@ namespace sdk.test
       if (!alchemyLanguage.GetRawText((TextData textData, string data) =>
       {
         Assert.AreNotEqual(textData, null);
+        autoEvent.Set();
       }, example_html_article))
         Assert.Fail();
+
+      autoEvent.WaitOne();
     }
 
     [Test]
@@ -437,8 +559,11 @@ namespace sdk.test
       if (!alchemyLanguage.GetTitle((Title titleData, string data) =>
       {
         Assert.AreNotEqual(titleData, null);
+        autoEvent.Set();
       }, exampleURL_article, true))
         Assert.Fail();
+
+      autoEvent.WaitOne();
     }
 
     [Test]
@@ -447,8 +572,11 @@ namespace sdk.test
       if (!alchemyLanguage.GetTitle((Title titleData, string data) =>
       {
         Assert.AreNotEqual(titleData, null);
+        autoEvent.Set();
       }, example_html_article, true))
         Assert.Fail();
+
+      autoEvent.WaitOne();
     }
 
     [Test]
@@ -457,8 +585,11 @@ namespace sdk.test
       if (!alchemyLanguage.GetCombinedData((CombinedCallData combinedData, string data) =>
       {
         Assert.AreNotEqual(combinedData, null);
+        autoEvent.Set();
       }, exampleURL_article, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true))
         Assert.Fail();
+
+      autoEvent.WaitOne();
     }
 
     [Test]
@@ -467,8 +598,11 @@ namespace sdk.test
       if (!alchemyLanguage.GetCombinedData((CombinedCallData combinedData, string data) =>
       {
         Assert.AreNotEqual(combinedData, null);
+        autoEvent.Set();
       }, exampleText_article, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true))
         Assert.Fail();
+
+      autoEvent.WaitOne();
     }
 
     [Test]
@@ -477,8 +611,11 @@ namespace sdk.test
       if (!alchemyLanguage.GetCombinedData((CombinedCallData combinedData, string data) =>
       {
         Assert.AreNotEqual(combinedData, null);
+        autoEvent.Set();
       }, example_html_article, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true))
         Assert.Fail();
+
+      autoEvent.WaitOne();
     }
   }
 }
