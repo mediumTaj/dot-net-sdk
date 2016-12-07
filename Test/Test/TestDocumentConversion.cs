@@ -1,7 +1,4 @@
-﻿
-
-using NUnit.Framework;
-/**
+﻿/**
 * Copyright 2015 IBM Corp. All Rights Reserved.
 *
 * Licensed under the Apache License, Version 2.0 (the "License");
@@ -18,6 +15,7 @@ using NUnit.Framework;
 *
 */
 
+using NUnit.Framework;
 using IBM.Watson.DeveloperCloud.Services.DocumentConversion.v1;
 using IBM.Watson.DeveloperCloud.Utilities;
 
