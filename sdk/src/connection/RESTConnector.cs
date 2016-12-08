@@ -417,18 +417,7 @@ namespace IBM.Watson.DeveloperCloud.Connection
           else
           {
             restRequest.Method = req.Put ? Method.PUT : Method.POST;
-            
-            fsData data = null;
-            fsResult r = fsJsonParser.Parse(Encoding.UTF8.GetString(req.Send), out data);
-            if (!r.Succeeded)
-              throw new WatsonException(r.FormattedMessages);
-
-            object obj = new object();
-            r = sm_Serializer.TryDeserialize(data, obj.GetType(), ref obj);
-            if (!r.Succeeded)
-              throw new WatsonException(r.FormattedMessages);
-            
-            restRequest.AddParameter(string.IsNullOrEmpty(req.Parameters["Content-Type"].ToString()) ? "application/json" : req.Parameters["Content-Type"].ToString(), data, ParameterType.RequestBody);
+            restRequest.AddParameter("application/json", req.Send, ParameterType.RequestBody);
           }
 
 #if ENABLE_DEBUGGING

@@ -23,7 +23,7 @@ using System.Threading;
 namespace sdk.test
 {
   [TestFixture]
-  class TestAlchemyLanguage
+  public class TestAlchemyLanguage
   {
     private AlchemyAPI alchemyLanguage = new AlchemyAPI();
     private string exampleURL_article = "http://www.nytimes.com/2011/02/17/science/17jeopardy-watson.html?_r=0";

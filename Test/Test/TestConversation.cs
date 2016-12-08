@@ -22,7 +22,7 @@ using System.Threading;
 namespace sdk.test
 {
   [TestFixture]
-  class TestConversation
+  public class TestConversation
   {
     Conversation conversation = new Conversation();
     private string workspaceID;

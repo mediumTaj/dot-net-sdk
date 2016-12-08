@@ -23,7 +23,7 @@ using IBM.Watson.DeveloperCloud.Logging;
 namespace sdk.test
 {
   [TestFixture]
-  class TestPersonalityInsights_v3
+  public class TestPersonalityInsights_v3
   {
     PersonalityInsights personalityInsights = new PersonalityInsights();
     private string testString = "test";

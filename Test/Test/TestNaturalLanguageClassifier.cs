@@ -27,7 +27,7 @@ using System.Threading;
 namespace Test
 {
   [TestFixture]
-  class TestNaturalLanguageClassifier
+  public class TestNaturalLanguageClassifier
   {
     private NaturalLanguageClassifier naturalLanguageClassifier = new NaturalLanguageClassifier();
     private string classifierID = "d6898dx142-nlc-268";

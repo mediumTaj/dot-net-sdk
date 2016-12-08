@@ -22,7 +22,7 @@ using System.Threading;
 namespace sdk.test
 {
   [TestFixture]
-  class TestLanguageTranslator
+  public class TestLanguageTranslator
   {
     LanguageTranslator languageTranslator = new LanguageTranslator();
     private string languageModel = "en-es";

@@ -23,7 +23,7 @@ using System.Threading;
 namespace sdk.test
 {
   [TestFixture]
-  class TestDocumentConversion
+  public class TestDocumentConversion
   {
     private DocumentConversion documentConversion = new DocumentConversion();
     private string examplePath = Constants.Path.APP_DATA + "/watson_beats_jeopardy.html";
