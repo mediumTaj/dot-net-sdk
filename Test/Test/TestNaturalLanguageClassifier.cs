@@ -47,9 +47,10 @@ namespace Test
       data.Load(trainingDataPath);
     }
 
-    [Test]
-    public void TestNLC_a_TrainClassifier()
+    [TestCase(TestName = "NLC 00 Train Classifier")]
+    public void TestTrainClassifier()
     {
+      Log.Debug("TestNaturalLanguageClassifier", "Testing train classifier");
       createdClassifierName = createdClassifierName + DateTime.Now;
 
       if (!naturalLanguageClassifier.TrainClassifier(createdClassifierName, createdClassifierLanguage, data.Export(), (Classifier classifier) =>
@@ -64,13 +65,16 @@ namespace Test
           Assert.AreEqual(classifier.name, createdClassifierName);
           autoEvent.Set();
         }))
+      {
         Assert.Fail();
+        autoEvent.Set();
+      }
 
       autoEvent.WaitOne();
     }
 
-    [Test]
-    public void TestNLC_b_FindClassifier()
+    [TestCase(TestName = "NLC 01 Find Classifier")]
+    public void TestNLCFindClassifier()
     {
       string classifierToFind = "";
 
@@ -99,8 +103,8 @@ namespace Test
       autoEvent.WaitOne();
     }
 
-    [Test]
-    public void TestNLC_c_GetClassifier()
+    [TestCase(TestName = "NLC 02 Get Classifier")]
+    public void TestGetClassifier()
     {
       string classifierToGet = "";
 
@@ -125,7 +129,10 @@ namespace Test
          //Assert.AreEqual(classifier.classifier_id, classifierToGet == createdClassifierID ? createdClassifierID : classifierID);
          autoEvent.Set();
        }))
+      {
         Assert.Fail();
+        autoEvent.Set();
+      }
 
       autoEvent.WaitOne();
     }
@@ -148,7 +155,10 @@ namespace Test
         Assert.AreNotEqual(classifiers, null);
         autoEvent.Set();
       }))
+      {
         Assert.Fail();
+        autoEvent.Set();
+      }
 
       autoEvent.WaitOne();
     }
@@ -166,14 +176,18 @@ namespace Test
         Assert.AreNotEqual(result, null);
         autoEvent.Set();
       }))
+      {
         Assert.Fail();
+        autoEvent.Set();
+      }
 
       autoEvent.WaitOne();
     }
 
-    [Test]
-    public void TestNLC_d_DeleteClassifier()
+    [TestCase(TestName = "NLC 03 Delete Classifier")]
+    public void TestDeleteClassifier()
     {
+      Log.Debug("TestNaturalLanguageClassifier", "Testing delete classifier");
       if (string.IsNullOrEmpty(createdClassifierID))
       {
         Assert.Fail("createdClassifierID is null. Cannot test delete.");
@@ -184,7 +198,10 @@ namespace Test
         Assert.AreEqual(success, true);
         autoEvent.Set();
       }))
+      {
         Assert.Fail();
+        autoEvent.Set();
+      }
 
       autoEvent.WaitOne();
     }

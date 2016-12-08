@@ -255,7 +255,7 @@ namespace IBM.Watson.DeveloperCloud.Connection
     public static RESTConnector GetConnector(string serviceID, string function, bool useCache = true)
     {
       RESTConnector connector = null;
-
+      
       string connectorID = serviceID + function;
       if (useCache && sm_Connectors.TryGetValue(connectorID, out connector))
         return connector;

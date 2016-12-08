@@ -23,7 +23,7 @@ using IBM.Watson.DeveloperCloud.Logging;
 namespace sdk.test
 {
   [TestFixture]
-  public class TestPersonalityInsights_v3
+  public class TestPersonalityInsights
   {
     PersonalityInsights personalityInsights = new PersonalityInsights();
     private string testString = "test";
@@ -33,12 +33,15 @@ namespace sdk.test
     [Test]
     public void TestGetProfileText()
     {
-      personalityInsights.GetProfile((Profile profile, string data) =>
+      if(!personalityInsights.GetProfile((Profile profile, string data) =>
       {
-        Log.Debug("Program", profile.ToString());
         Assert.AreNotEqual(profile, null);
         autoEvent.Set();
-      }, testString);
+      }, testString))
+      {
+        Assert.Fail("Failed to invoke GetProfile with text.");
+        autoEvent.Set();
+      }
 
       autoEvent.WaitOne();
     }
@@ -46,12 +49,15 @@ namespace sdk.test
     [Test]
     public void TestGetProfileJson()
     {
-      Log.Debug("TestPersonalityInsights", "{0}", System.IO.Path.GetFullPath(dataPath));
-      personalityInsights.GetProfile((Profile profile, string data) =>
+      if(!personalityInsights.GetProfile((Profile profile, string data) =>
       {
         Assert.AreNotEqual(profile, null);
         autoEvent.Set();
-      }, System.IO.Path.GetFullPath(dataPath), "application/json");
+      }, System.IO.Path.GetFullPath(dataPath), "application/json"))
+      {
+        Assert.Fail("Failed to invoke GetProfile with json.");
+        autoEvent.Set();
+      }
 
       autoEvent.WaitOne();
     }

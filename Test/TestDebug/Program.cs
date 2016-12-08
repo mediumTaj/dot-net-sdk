@@ -1,4 +1,7 @@
-﻿/**
+﻿
+
+using IBM.Watson.DeveloperCloud.Logging;
+/**
 * Copyright 2015 IBM Corp. All Rights Reserved.
 *
 * Licensed under the Apache License, Version 2.0 (the "License");
@@ -14,7 +17,6 @@
 * limitations under the License.
 *
 */
-
 using sdk.test;
 using System;
 
@@ -25,6 +27,7 @@ namespace TestDebug
 
     static void Main(string[] args)
     {
+      LogSystem.InstallDefaultReactors();
       TestConversation testConversation = new TestConversation();
       testConversation.Init();
       testConversation.TestMessageObject();

@@ -35,9 +35,12 @@ namespace sdk.test
       if (!documentConversion.ConvertDocument((ConvertedDocument documentConversionResponse, string data) =>
       {
         Assert.AreNotEqual(documentConversionResponse, null);
-         autoEvent.Set();
+        autoEvent.Set();
       }, examplePath, ConversionTarget.ANSWER_UNITS))
+      {
         Assert.Fail();
+        autoEvent.Set();
+      }
 
       autoEvent.WaitOne();
     }
@@ -48,9 +51,12 @@ namespace sdk.test
       if (!documentConversion.ConvertDocument((ConvertedDocument documentConversionResponse, string data) =>
       {
         Assert.AreNotEqual(documentConversionResponse, null);
-         autoEvent.Set();
+        autoEvent.Set();
       }, examplePath, ConversionTarget.NORMALIZED_TEXT))
+      {
         Assert.Fail();
+        autoEvent.Set();
+      }
 
       autoEvent.WaitOne();
     }
@@ -61,9 +67,12 @@ namespace sdk.test
       if (!documentConversion.ConvertDocument((ConvertedDocument documentConversionResponse, string data) =>
       {
         Assert.AreNotEqual(documentConversionResponse, null);
-         autoEvent.Set();
+        autoEvent.Set();
       }, examplePath, ConversionTarget.NORMALIZED_HTML))
+      {
         Assert.Fail();
+        autoEvent.Set();
+      }
 
       autoEvent.WaitOne();
     }

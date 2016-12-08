@@ -1,4 +1,7 @@
-﻿/**
+﻿
+
+using IBM.Watson.DeveloperCloud.Logging;
+/**
 * Copyright 2015 IBM Corp. All Rights Reserved.
 *
 * Licensed under the Apache License, Version 2.0 (the "License");
@@ -14,10 +17,10 @@
 * limitations under the License.
 *
 */
-
 using IBM.Watson.DeveloperCloud.Services.AlchemyAPI.v1;
 using IBM.Watson.DeveloperCloud.Utilities;
 using NUnit.Framework;
+using System.IO;
 using System.Threading;
 
 namespace sdk.test
@@ -33,15 +36,24 @@ namespace sdk.test
     private string exampleURL_microformats = "http://microformats.org/wiki/hcard";
     AutoResetEvent autoEvent = new AutoResetEvent(false);
 
+    [SetUp]
+    public void Init()
+    {
+      Config.Instance.LoadConfig();
+    }
+
     [Test]
     public void TestGetAuthorsURL()
     {
       if (!alchemyLanguage.GetAuthors((AuthorsData authors, string data) =>
        {
-         Assert.AreNotEqual(authors, null); 
+         Assert.AreNotEqual(authors, null);
          autoEvent.Set();
        }, exampleURL_article))
+      {
         Assert.Fail();
+        autoEvent.Set();
+      }
 
       autoEvent.WaitOne();
     }
@@ -54,7 +66,10 @@ namespace sdk.test
         Assert.AreNotEqual(authors, null);
         autoEvent.Set();
       }, example_html_article))
+      {
         Assert.Fail();
+        autoEvent.Set();
+      }
 
       autoEvent.WaitOne();
     }
@@ -67,7 +82,10 @@ namespace sdk.test
         Assert.AreNotEqual(concepts, null);
         autoEvent.Set();
       }, example_html_article, 8, true, true, true))
+      {
         Assert.Fail();
+        autoEvent.Set();
+      }
 
       autoEvent.WaitOne();
     }
@@ -80,7 +98,10 @@ namespace sdk.test
         Assert.AreNotEqual(concepts, null);
         autoEvent.Set();
       }, exampleURL_article, 8, true, true, true))
+      {
         Assert.Fail();
+        autoEvent.Set();
+      }
 
       autoEvent.WaitOne();
     }
@@ -93,7 +114,10 @@ namespace sdk.test
         Assert.AreNotEqual(concepts, null);
         autoEvent.Set();
       }, exampleText_article, 8, true, true, true))
+      {
         Assert.Fail();
+        autoEvent.Set();
+      }
 
       autoEvent.WaitOne();
     }
@@ -106,7 +130,10 @@ namespace sdk.test
         Assert.AreNotEqual(dates, null);
         autoEvent.Set();
       }, exampleURL_article, null, true))
+      {
         Assert.Fail();
+        autoEvent.Set();
+      }
 
       autoEvent.WaitOne();
     }
@@ -119,7 +146,10 @@ namespace sdk.test
         Assert.AreNotEqual(dates, null);
         autoEvent.Set();
       }, exampleText_article, null, true))
+      {
         Assert.Fail();
+        autoEvent.Set();
+      }
 
       autoEvent.WaitOne();
     }
@@ -132,7 +162,10 @@ namespace sdk.test
         Assert.AreNotEqual(dates, null);
         autoEvent.Set();
       }, example_html_article, null, true))
+      {
         Assert.Fail();
+        autoEvent.Set();
+      }
 
       autoEvent.WaitOne();
     }
@@ -145,7 +178,10 @@ namespace sdk.test
         Assert.AreNotEqual(emotions, null);
         autoEvent.Set();
       }, exampleURL_article, true))
+      {
         Assert.Fail();
+        autoEvent.Set();
+      }
 
       autoEvent.WaitOne();
     }
@@ -158,7 +194,10 @@ namespace sdk.test
         Assert.AreNotEqual(emotions, null);
         autoEvent.Set();
       }, exampleText_article, true))
+      {
         Assert.Fail();
+        autoEvent.Set();
+      }
 
       autoEvent.WaitOne();
     }
@@ -171,7 +210,10 @@ namespace sdk.test
         Assert.AreNotEqual(emotions, null);
         autoEvent.Set();
       }, example_html_article, true))
+      {
         Assert.Fail();
+        autoEvent.Set();
+      }
 
       autoEvent.WaitOne();
     }
@@ -184,7 +226,10 @@ namespace sdk.test
         Assert.AreNotEqual(entityData, null);
         autoEvent.Set();
       }, exampleURL_article, 50, true, true, true, true, true, true, true, true))
+      {
         Assert.Fail();
+        autoEvent.Set();
+      }
 
       autoEvent.WaitOne();
     }
@@ -197,7 +242,10 @@ namespace sdk.test
         Assert.AreNotEqual(entityData, null);
         autoEvent.Set();
       }, exampleText_article, 50, true, true, true, true, true, true, true, true))
+      {
         Assert.Fail();
+        autoEvent.Set();
+      }
 
       autoEvent.WaitOne();
     }
@@ -210,7 +258,10 @@ namespace sdk.test
         Assert.AreNotEqual(entityData, null);
         autoEvent.Set();
       }, example_html_article, 50, true, true, true, true, true, true, true, true))
+      {
         Assert.Fail();
+        autoEvent.Set();
+      }
 
       autoEvent.WaitOne();
     }
@@ -223,7 +274,10 @@ namespace sdk.test
         Assert.AreNotEqual(feedData, null);
         autoEvent.Set();
       }, exampleURL_feed))
+      {
         Assert.Fail();
+        autoEvent.Set();
+      }
 
       autoEvent.WaitOne();
     }
@@ -236,7 +290,10 @@ namespace sdk.test
         Assert.AreNotEqual(keywordData, null);
         autoEvent.Set();
       }, exampleURL_article, 50, true, true, true))
+      {
         Assert.Fail();
+        autoEvent.Set();
+      }
 
       autoEvent.WaitOne();
     }
@@ -249,7 +306,10 @@ namespace sdk.test
         Assert.AreNotEqual(keywordData, null);
         autoEvent.Set();
       }, exampleText_article, 50, true, true, true))
+      {
         Assert.Fail();
+        autoEvent.Set();
+      }
 
       autoEvent.WaitOne();
     }
@@ -262,7 +322,10 @@ namespace sdk.test
         Assert.AreNotEqual(keywordData, null);
         autoEvent.Set();
       }, example_html_article, 50, true, true, true))
+      {
         Assert.Fail();
+        autoEvent.Set();
+      }
 
       autoEvent.WaitOne();
     }
@@ -275,7 +338,10 @@ namespace sdk.test
         Assert.AreNotEqual(languages, null);
         autoEvent.Set();
       }, exampleURL_article, true))
+      {
         Assert.Fail();
+        autoEvent.Set();
+      }
 
       autoEvent.WaitOne();
     }
@@ -288,7 +354,10 @@ namespace sdk.test
         Assert.AreNotEqual(languages, null);
         autoEvent.Set();
       }, exampleText_article, true))
+      {
         Assert.Fail();
+        autoEvent.Set();
+      }
 
       autoEvent.WaitOne();
     }
@@ -301,7 +370,10 @@ namespace sdk.test
         Assert.AreNotEqual(languages, null);
         autoEvent.Set();
       }, example_html_article, true))
+      {
         Assert.Fail();
+        autoEvent.Set();
+      }
 
       autoEvent.WaitOne();
     }
@@ -314,7 +386,10 @@ namespace sdk.test
         Assert.AreNotEqual(microformats, null);
         autoEvent.Set();
       }, exampleURL_microformats))
+      {
         Assert.Fail();
+        autoEvent.Set();
+      }
 
       autoEvent.WaitOne();
     }
@@ -327,7 +402,10 @@ namespace sdk.test
         Assert.AreNotEqual(pubDates, null);
         autoEvent.Set();
       }, exampleURL_article))
+      {
         Assert.Fail();
+        autoEvent.Set();
+      }
 
       autoEvent.WaitOne();
     }
@@ -340,7 +418,10 @@ namespace sdk.test
         Assert.AreNotEqual(pubDates, null);
         autoEvent.Set();
       }, example_html_article))
+      {
         Assert.Fail();
+        autoEvent.Set();
+      }
 
       autoEvent.WaitOne();
     }
@@ -353,7 +434,10 @@ namespace sdk.test
         Assert.AreNotEqual(relationsData, null);
         autoEvent.Set();
       }, exampleURL_article, 50, true, true, true, true, true, true, true, true, true, true))
+      {
         Assert.Fail();
+        autoEvent.Set();
+      }
 
       autoEvent.WaitOne();
     }
@@ -366,7 +450,10 @@ namespace sdk.test
         Assert.AreNotEqual(relationsData, null);
         autoEvent.Set();
       }, exampleText_article, 50, true, true, true, true, true, true, true, true, true, true))
+      {
         Assert.Fail();
+        autoEvent.Set();
+      }
 
       autoEvent.WaitOne();
     }
@@ -379,7 +466,10 @@ namespace sdk.test
         Assert.AreNotEqual(relationsData, null);
         autoEvent.Set();
       }, example_html_article, 50, true, true, true, true, true, true, true, true, true, true))
+      {
         Assert.Fail();
+        autoEvent.Set();
+      }
 
       autoEvent.WaitOne();
     }
@@ -392,7 +482,10 @@ namespace sdk.test
         Assert.AreNotEqual(sentimentData, null);
         autoEvent.Set();
       }, exampleURL_article, true))
+      {
         Assert.Fail();
+        autoEvent.Set();
+      }
 
       autoEvent.WaitOne();
     }
@@ -405,7 +498,10 @@ namespace sdk.test
         Assert.AreNotEqual(sentimentData, null);
         autoEvent.Set();
       }, exampleText_article, true))
+      {
         Assert.Fail();
+        autoEvent.Set();
+      }
 
       autoEvent.WaitOne();
     }
@@ -418,7 +514,10 @@ namespace sdk.test
         Assert.AreNotEqual(sentimentData, null);
         autoEvent.Set();
       }, example_html_article, true))
+      {
         Assert.Fail();
+        autoEvent.Set();
+      }
 
       autoEvent.WaitOne();
     }
@@ -431,7 +530,10 @@ namespace sdk.test
         Assert.AreNotEqual(sentimentData, null);
         autoEvent.Set();
       }, exampleURL_article, "Jeopardy|Jennings|Watson", true))
+      {
         Assert.Fail();
+        autoEvent.Set();
+      }
 
       autoEvent.WaitOne();
     }
@@ -444,7 +546,10 @@ namespace sdk.test
         Assert.AreNotEqual(sentimentData, null);
         autoEvent.Set();
       }, exampleText_article, "Jeopardy|Jennings|Watson", true))
+      {
         Assert.Fail();
+        autoEvent.Set();
+      }
 
       autoEvent.WaitOne();
     }
@@ -457,7 +562,10 @@ namespace sdk.test
         Assert.AreNotEqual(sentimentData, null);
         autoEvent.Set();
       }, example_html_article, "Jeopardy|Jennings|Watson", true))
+      {
         Assert.Fail();
+        autoEvent.Set();
+      }
 
       autoEvent.WaitOne();
     }
@@ -470,7 +578,10 @@ namespace sdk.test
         Assert.AreNotEqual(taxonomyData, null);
         autoEvent.Set();
       }, exampleURL_article, true))
+      {
         Assert.Fail();
+        autoEvent.Set();
+      }
 
       autoEvent.WaitOne();
     }
@@ -483,7 +594,10 @@ namespace sdk.test
         Assert.AreNotEqual(taxonomyData, null);
         autoEvent.Set();
       }, exampleText_article, true))
+      {
         Assert.Fail();
+        autoEvent.Set();
+      }
 
       autoEvent.WaitOne();
     }
@@ -496,7 +610,10 @@ namespace sdk.test
         Assert.AreNotEqual(taxonomyData, null);
         autoEvent.Set();
       }, example_html_article, true))
+      {
         Assert.Fail();
+        autoEvent.Set();
+      }
 
       autoEvent.WaitOne();
     }
@@ -509,7 +626,10 @@ namespace sdk.test
         Assert.AreNotEqual(textData, null);
         autoEvent.Set();
       }, exampleURL_article, true, true))
+      {
         Assert.Fail();
+        autoEvent.Set();
+      }
 
       autoEvent.WaitOne();
     }
@@ -522,7 +642,10 @@ namespace sdk.test
         Assert.AreNotEqual(textData, null);
         autoEvent.Set();
       }, example_html_article, true, true))
+      {
         Assert.Fail();
+        autoEvent.Set();
+      }
 
       autoEvent.WaitOne();
     }
@@ -535,7 +658,10 @@ namespace sdk.test
         Assert.AreNotEqual(textData, null);
         autoEvent.Set();
       }, exampleURL_article))
+      {
         Assert.Fail();
+        autoEvent.Set();
+      }
 
       autoEvent.WaitOne();
     }
@@ -548,7 +674,10 @@ namespace sdk.test
         Assert.AreNotEqual(textData, null);
         autoEvent.Set();
       }, example_html_article))
+      {
         Assert.Fail();
+        autoEvent.Set();
+      }
 
       autoEvent.WaitOne();
     }
@@ -561,7 +690,10 @@ namespace sdk.test
         Assert.AreNotEqual(titleData, null);
         autoEvent.Set();
       }, exampleURL_article, true))
+      {
         Assert.Fail();
+        autoEvent.Set();
+      }
 
       autoEvent.WaitOne();
     }
@@ -574,7 +706,10 @@ namespace sdk.test
         Assert.AreNotEqual(titleData, null);
         autoEvent.Set();
       }, example_html_article, true))
+      {
         Assert.Fail();
+        autoEvent.Set();
+      }
 
       autoEvent.WaitOne();
     }
@@ -587,7 +722,10 @@ namespace sdk.test
         Assert.AreNotEqual(combinedData, null);
         autoEvent.Set();
       }, exampleURL_article, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true))
+      {
         Assert.Fail();
+        autoEvent.Set();
+      }
 
       autoEvent.WaitOne();
     }
@@ -600,7 +738,10 @@ namespace sdk.test
         Assert.AreNotEqual(combinedData, null);
         autoEvent.Set();
       }, exampleText_article, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true))
+      {
         Assert.Fail();
+        autoEvent.Set();
+      }
 
       autoEvent.WaitOne();
     }
@@ -613,7 +754,10 @@ namespace sdk.test
         Assert.AreNotEqual(combinedData, null);
         autoEvent.Set();
       }, example_html_article, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true))
+      {
         Assert.Fail();
+        autoEvent.Set();
+      }
 
       autoEvent.WaitOne();
     }

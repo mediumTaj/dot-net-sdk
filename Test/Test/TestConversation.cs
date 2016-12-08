@@ -1,4 +1,6 @@
-﻿/**
+﻿
+using IBM.Watson.DeveloperCloud.Logging;
+/**
 * Copyright 2015 IBM Corp. All Rights Reserved.
 *
 * Licensed under the Apache License, Version 2.0 (the "License");
@@ -48,9 +50,13 @@ namespace sdk.test
       if (!conversation.Message((MessageResponse resp, string data) =>
       {
         messageResponse = resp;
+        Log.Debug("test", "resp {0}", resp.intents);
         autoEvent.Set();
       }, workspaceID, input))
+      {
         Assert.Fail("Failed to send message! {0}", input);
+        autoEvent.Set();
+      }
 
       autoEvent.WaitOne();
       Assert.AreNotEqual(messageResponse, null);
@@ -69,7 +75,10 @@ namespace sdk.test
         messageResponse = resp;
         autoEvent.Set();
       }, workspaceID, messageRequest))
+      {
         Assert.Fail("Failed to send message! {0}", messageRequest.input);
+        autoEvent.Set();
+      }
 
       autoEvent.WaitOne();
       Assert.AreNotEqual(messageResponse, null);

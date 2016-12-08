@@ -39,7 +39,10 @@ namespace sdk.test
          Assert.AreNotEqual(model, null);
          autoEvent.Set();
        }))
+      {
         Assert.Fail();
+        autoEvent.Set();
+      }
 
       autoEvent.WaitOne();
     }
@@ -52,7 +55,10 @@ namespace sdk.test
          Assert.AreNotEqual(models, null);
          autoEvent.Set();
        }))
+      {
         Assert.Fail();
+        autoEvent.Set();
+      }
 
       autoEvent.WaitOne();
     }
@@ -65,7 +71,10 @@ namespace sdk.test
         Assert.AreNotEqual(languages, null);
         autoEvent.Set();
       }))
+      {
         Assert.Fail();
+        autoEvent.Set();
+      }
 
       autoEvent.WaitOne();
     }
@@ -78,7 +87,10 @@ namespace sdk.test
         Assert.AreNotEqual(true, string.IsNullOrEmpty(lang));
         autoEvent.Set();
       }))
+      {
         Assert.Fail();
+        autoEvent.Set();
+      }
 
       autoEvent.WaitOne();
     }
@@ -91,7 +103,10 @@ namespace sdk.test
         Assert.AreNotEqual(translation, null);
         autoEvent.Set();
       }))
+      {
         Assert.Fail();
+        autoEvent.Set();
+      }
 
       autoEvent.WaitOne();
     }

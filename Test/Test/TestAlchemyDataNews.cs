@@ -43,7 +43,10 @@ namespace sdk.test
          Assert.AreNotEqual(newsData, null);
          autoEvent.Set();
        }, returnFields, queryFields))
+      {
         Assert.Fail();
+        autoEvent.Set();
+      }
 
       autoEvent.WaitOne();
     }
