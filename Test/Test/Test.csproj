@@ -44,8 +44,7 @@
       <HintPath>..\packages\NUnit.3.5.0\lib\net45\nunit.framework.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="sdk, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="sdk">
       <HintPath>..\..\sdk\bin\Release\sdk.dll</HintPath>
     </Reference>
     <Reference Include="System" />

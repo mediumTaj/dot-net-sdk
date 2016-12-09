@@ -122,7 +122,7 @@ namespace sdk.test
       autoEvent.WaitOne();
     }
 
-    [Test, Order(1)]
+    [Test, Order(2)]
     public void TestDeleteCluster()
     {
       if (!string.IsNullOrEmpty(m_CreatedClusterID))
@@ -148,11 +148,30 @@ namespace sdk.test
       autoEvent.WaitOne();
     }
 
-    //[Test]
-    //public void TestGetCluster()
-    //{
-    //  autoEvent.WaitOne();
-    //}
+    [Test, Order(1)]
+    public void TestGetCluster()
+    {
+      if (!string.IsNullOrEmpty(m_CreatedClusterID))
+      {
+        Log.Debug("TestRetrieveAndRank", "Attempting to get cluster {0}...", m_CreatedClusterID);
+        if (!retrieveAndRank.GetCluster((SolrClusterResponse resp, string data) =>
+         {
+           Assert.NotNull(resp);
+           autoEvent.Set();
+         }, m_CreatedClusterID))
+        {
+          Assert.Fail("Failed to invoke GetCluster();");
+          autoEvent.Set();
+        }
+      }
+      else
+      {
+        Assert.Fail("createdClusterID is empty. GetCluster failed.");
+        autoEvent.Set();
+      }
+
+      autoEvent.WaitOne();
+    }
 
     //[Test]
     //public void TestListClusterConfigs()
