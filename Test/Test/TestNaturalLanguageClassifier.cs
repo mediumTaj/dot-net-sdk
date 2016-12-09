@@ -46,7 +46,6 @@ namespace Test
     {
       Constants.Path.dataPath = TestContext.CurrentContext.TestDirectory + Path.DirectorySeparatorChar;
       string testDataPath = Constants.Path.dataPath + Constants.Path.APP_DATA + Path.DirectorySeparatorChar;
-      Log.Debug("TestNaturalLanguageClassifier", "Test data path: {0}", testDataPath);
 
       if (!Config.Instance.ConfigLoaded)
       {
