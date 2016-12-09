@@ -223,7 +223,7 @@ namespace IBM.Watson.DeveloperCloud.Utilities
     {
       try
       {
-        LoadConfig(File.ReadAllText(Constants.Path.dataPath + System.IO.Path.DirectorySeparatorChar + Constants.Path.APP_DATA + Constants.Path.CONFIG_FILE));
+        LoadConfig(File.ReadAllText(Constants.Path.dataPath + Path.DirectorySeparatorChar + Constants.Path.APP_DATA + Path.DirectorySeparatorChar + Constants.Path.CONFIG_FILE));
       }
       catch (FileNotFoundException)
       {
