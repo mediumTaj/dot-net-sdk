@@ -231,7 +231,7 @@ namespace IBM.Watson.DeveloperCloud.Utilities
       {
         // mark as loaded anyway, so we don't keep retrying..
         Log.Error("Config", "Failed to load config file.");
-        ConfigLoaded = true;
+        ConfigLoaded = false;
       }
     }
 

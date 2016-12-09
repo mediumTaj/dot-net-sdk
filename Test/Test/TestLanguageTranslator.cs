@@ -18,6 +18,8 @@
 using NUnit.Framework;
 using IBM.Watson.DeveloperCloud.Services.LanguageTranslator.v1;
 using System.Threading;
+using IBM.Watson.DeveloperCloud.Utilities;
+using System.IO;
 
 namespace sdk.test
 {
@@ -30,6 +32,22 @@ namespace sdk.test
     private string fromLanguage = "en";
     private string toLanguage = "es";
     AutoResetEvent autoEvent = new AutoResetEvent(false);
+
+    [SetUp]
+    public void Init()
+    {
+      string testDataPath = TestContext.CurrentContext.TestDirectory + Path.DirectorySeparatorChar + Constants.Path.APP_DATA + Path.DirectorySeparatorChar;
+
+      if (!Config.Instance.ConfigLoaded)
+      {
+        string configPath = testDataPath + Constants.Path.CONFIG_FILE;
+        string configJson = File.ReadAllText(configPath);
+        Config.Instance.LoadConfig(configJson);
+      }
+
+      if (!Config.Instance.ConfigLoaded)
+        Assert.Fail("Failed to load Config.");
+    }
 
     [Test]
     public void TestGetModel()

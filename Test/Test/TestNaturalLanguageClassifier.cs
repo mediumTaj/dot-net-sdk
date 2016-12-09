@@ -30,12 +30,13 @@ namespace Test
   public class TestNaturalLanguageClassifier
   {
     private NaturalLanguageClassifier naturalLanguageClassifier = new NaturalLanguageClassifier();
-    private string classifierID = "d6898dx142-nlc-268";
-    private string classifierName = "Test Natural Language Classifier/12/7/2016 10:41:19 AM";
+    private string classifierID = "d67c63x141-nlc-1055";
+    private string classifierName = "dot-net-integration-test-classifier12/9/2016 10:44:30 AM";
     private string createdClassifierID;
-    private string createdClassifierName = "dot-net-integration-test-classifier";
+    private string createdClassifierNameBase = "dot-net-integration-test-classifier";
+    private string createdClassifierName;
     private string createdClassifierLanguage = "en";
-    private string trainingDataPath = Constants.Path.APP_DATA + "/naturalLanguageClassifierTrainingData.json";
+    private string trainingDataPath = Constants.Path.APP_DATA + Path.DirectorySeparatorChar + "naturalLanguageClassifierTrainingData.json";
     private string classifyText = "Will it rain today?";
     private ClassifierData data = new ClassifierData();
     AutoResetEvent autoEvent = new AutoResetEvent(false);
@@ -43,15 +44,27 @@ namespace Test
     [SetUp]
     public void Init()
     {
-      naturalLanguageClassifier.DisableCache = true;
-      data.Load(trainingDataPath);
-    }
+      string testDataPath = TestContext.CurrentContext.TestDirectory + Path.DirectorySeparatorChar + Constants.Path.APP_DATA + Path.DirectorySeparatorChar;
 
-    [TestCase(TestName = "NLC 00 Train Classifier")]
+      if (!Config.Instance.ConfigLoaded)
+      {
+        string configPath = testDataPath + Constants.Path.CONFIG_FILE;
+        string configJson = File.ReadAllText(configPath);
+        Config.Instance.LoadConfig(configJson);
+      }
+
+      if (!Config.Instance.ConfigLoaded)
+        Assert.Fail("Failed to load Config.");
+
+      naturalLanguageClassifier.DisableCache = true;
+      data.Load(TestContext.CurrentContext.TestDirectory + Path.DirectorySeparatorChar + trainingDataPath);
+  }
+
+    [Test, Order(0)]
     public void TestTrainClassifier()
     {
       Log.Debug("TestNaturalLanguageClassifier", "Testing train classifier");
-      createdClassifierName = createdClassifierName + DateTime.Now;
+      createdClassifierName = createdClassifierNameBase + DateTime.Now;
 
       if (!naturalLanguageClassifier.TrainClassifier(createdClassifierName, createdClassifierLanguage, data.Export(), (Classifier classifier) =>
         {
@@ -73,37 +86,19 @@ namespace Test
       autoEvent.WaitOne();
     }
 
-    [TestCase(TestName = "NLC 01 Find Classifier")]
-    public void TestNLCFindClassifier()
+    [Test, Order(1)]
+    public void TestFindClassifier()
     {
-      string classifierToFind = "";
-
-      if (!string.IsNullOrEmpty(createdClassifierID))
-      {
-        classifierToFind = createdClassifierName;
-      }
-      else if (!string.IsNullOrEmpty(classifierName))
-      {
-        classifierToFind = classifierName;
-      }
-
-      if (string.IsNullOrEmpty(classifierToFind))
-      {
-        Assert.Fail("FindClassifier(); createdClassifierID and classifierName are null. We need a classifier name to find the classifier.");
-        return;
-      }
-
-      naturalLanguageClassifier.FindClassifier(classifierName, (Classifier classifier) =>
+      naturalLanguageClassifier.FindClassifier(createdClassifierNameBase, (Classifier classifier) =>
       {
         Assert.AreNotEqual(classifier, null);
-        //Assert.AreEqual(classifier.classifier_id, classifierToFind == createdClassifierName ? createdClassifierID : classifierID);
         autoEvent.Set();
       });
 
       autoEvent.WaitOne();
     }
 
-    [TestCase(TestName = "NLC 02 Get Classifier")]
+    [Test, Order(2)]
     public void TestGetClassifier()
     {
       string classifierToGet = "";
@@ -126,7 +121,6 @@ namespace Test
       if (!naturalLanguageClassifier.GetClassifier(classifierToGet, (Classifier classifier) =>
        {
          Assert.AreNotEqual(classifier, null);
-         //Assert.AreEqual(classifier.classifier_id, classifierToGet == createdClassifierID ? createdClassifierID : classifierID);
          autoEvent.Set();
        }))
       {
@@ -184,7 +178,7 @@ namespace Test
       autoEvent.WaitOne();
     }
 
-    [TestCase(TestName = "NLC 03 Delete Classifier")]
+    [Test, Order(3)]
     public void TestDeleteClassifier()
     {
       Log.Debug("TestNaturalLanguageClassifier", "Testing delete classifier");

@@ -20,6 +20,7 @@ using IBM.Watson.DeveloperCloud.Services.Conversation.v1;
 using IBM.Watson.DeveloperCloud.Utilities;
 using NUnit.Framework;
 using System.Threading;
+using System.IO;
 
 namespace sdk.test
 {
@@ -34,6 +35,18 @@ namespace sdk.test
     [SetUp]
     public void Init()
     {
+      string testDataPath = TestContext.CurrentContext.TestDirectory + Path.DirectorySeparatorChar + Constants.Path.APP_DATA + Path.DirectorySeparatorChar;
+
+      if (!Config.Instance.ConfigLoaded)
+      {
+        string configPath = testDataPath + Constants.Path.CONFIG_FILE;
+        string configJson = File.ReadAllText(configPath);
+        Config.Instance.LoadConfig(configJson);
+      }
+
+      if (!Config.Instance.ConfigLoaded)
+        Assert.Fail("Failed to load Config.");
+
       if (Config.Instance.FindCredentials(conversation.GetServiceID()) == null)
         Assert.Fail("Failed to find credentials");
 

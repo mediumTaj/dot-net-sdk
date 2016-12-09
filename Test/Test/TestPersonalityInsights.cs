@@ -19,6 +19,7 @@ using IBM.Watson.DeveloperCloud.Services.PersonalityInsights.v3;
 using IBM.Watson.DeveloperCloud.Utilities;
 using System.Threading;
 using IBM.Watson.DeveloperCloud.Logging;
+using System.IO;
 
 namespace sdk.test
 {
@@ -29,6 +30,22 @@ namespace sdk.test
     private string testString = "test";
     string dataPath = Constants.Path.APP_DATA + "/personalityInsights.json";
     AutoResetEvent autoEvent = new AutoResetEvent(false);
+
+    [SetUp]
+    public void Init()
+    {
+      string testDataPath = TestContext.CurrentContext.TestDirectory + Path.DirectorySeparatorChar + Constants.Path.APP_DATA + Path.DirectorySeparatorChar;
+
+      if (!Config.Instance.ConfigLoaded)
+      {
+        string configPath = testDataPath + Constants.Path.CONFIG_FILE;
+        string configJson = File.ReadAllText(configPath);
+        Config.Instance.LoadConfig(configJson);
+      }
+
+      if (!Config.Instance.ConfigLoaded)
+        Assert.Fail("Failed to load Config.");
+    }
 
     [Test]
     public void TestGetProfileText()

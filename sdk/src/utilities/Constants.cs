@@ -31,7 +31,7 @@ namespace IBM.Watson.DeveloperCloud.Utilities
       /// <summary>
       /// Configuration file name.
       /// </summary>
-      public const string CONFIG_FILE = "/Config.json";
+      public const string CONFIG_FILE = "Config.json";
       /// <summary>
       /// Cache folder to customize a parent folder for cache directory
       /// </summary>

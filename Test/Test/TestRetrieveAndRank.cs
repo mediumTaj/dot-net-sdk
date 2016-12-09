@@ -1,4 +1,7 @@
-﻿/**
+﻿
+
+using IBM.Watson.DeveloperCloud.Logging;
+/**
 * Copyright 2015 IBM Corp. All Rights Reserved.
 *
 * Licensed under the Apache License, Version 2.0 (the "License");
@@ -14,10 +17,10 @@
 * limitations under the License.
 *
 */
-
 using IBM.Watson.DeveloperCloud.Services.RetrieveAndRank.v1;
 using IBM.Watson.DeveloperCloud.Utilities;
 using NUnit.Framework;
+using System.IO;
 using System.Threading;
 
 namespace sdk.test
@@ -59,17 +62,31 @@ namespace sdk.test
     [SetUp]
     public void Init()
     {
-      m_IntegrationTestClusterConfigPath = Constants.Path.APP_DATA + "/Watson/Examples/ServiceExamples/TestData/RetrieveAndRank/cranfield_solr_config.zip";
-      m_IntegrationTestRankerTrainingPath = Constants.Path.APP_DATA + "/Watson/Examples/ServiceExamples/TestData/RetrieveAndRank/ranker_training_data.csv";
-      m_IntegrationTestRankerAnswerDataPath = Constants.Path.APP_DATA + "/Watson/Examples/ServiceExamples/TestData/RetrieveAndRank/ranker_answer_data.csv";
-      m_IntegrationTestIndexDataPath = Constants.Path.APP_DATA + "/Watson/Examples/ServiceExamples/TestData/RetrieveAndRank/cranfield_data.json";
+      LogSystem.InstallDefaultReactors();
+      string testDataPath = TestContext.CurrentContext.TestDirectory + Path.DirectorySeparatorChar + Constants.Path.APP_DATA + Path.DirectorySeparatorChar;
+
+      if (!Config.Instance.ConfigLoaded)
+      {
+        string configPath = testDataPath + Constants.Path.CONFIG_FILE;
+        string configJson = File.ReadAllText(configPath);
+        Config.Instance.LoadConfig(configJson);
+      }
+
+      if (!Config.Instance.ConfigLoaded)
+        Assert.Fail("Failed to load Config.");
+
+      string retrieveAndRankDataPath = testDataPath + Path.DirectorySeparatorChar + "RetrieveAndRank" + Path.DirectorySeparatorChar;
+      m_IntegrationTestClusterConfigPath = retrieveAndRankDataPath + "cranfield_solr_config.zip";
+      m_IntegrationTestRankerTrainingPath = retrieveAndRankDataPath + "ranker_training_data.csv";
+      m_IntegrationTestRankerAnswerDataPath = retrieveAndRankDataPath + "ranker_answer_data.csv";
+      m_IntegrationTestIndexDataPath = retrieveAndRankDataPath + "cranfield_data.json";
 
       m_ExampleClusterID = Config.Instance.GetVariableValue("RetrieveAndRank_IntegrationTestClusterID");
       m_ExampleConfigName = Config.Instance.GetVariableValue("RetrieveAndRank_IntegrationTestConfigName");
       m_ExampleRankerID = Config.Instance.GetVariableValue("RetrieveAndRank_IntegrationTestRankerID");
       m_ExampleCollectionName = Config.Instance.GetVariableValue("RetrieveAndRank_IntegrationTestCollectionName");
     }
-    
+
     [Test]
     public void TestGetClusters()
     {
@@ -86,7 +103,7 @@ namespace sdk.test
       autoEvent.WaitOne();
     }
 
-    [TestCase(TestName = "R&R 00 CreateCluster")]
+    [Test, Order(0)]
     public void TestCreateCluster()
     {
       if (!retrieveAndRank.CreateCluster((SolrClusterResponse resp, string data) =>
@@ -99,13 +116,14 @@ namespace sdk.test
         Assert.Fail("Failed to invoke CreateCluster();");
         autoEvent.Set();
       }
+
       autoEvent.WaitOne();
     }
 
-    [TestCase(TestName = "R&R 01 DeleteCluster")]
+    [Test, Order(1)]
     public void TestDeleteCluster()
     {
-      if(!string.IsNullOrEmpty(m_CreatedClusterID))
+      if (!string.IsNullOrEmpty(m_CreatedClusterID))
       {
         if (!retrieveAndRank.DeleteCluster((bool success, string data) =>
         {

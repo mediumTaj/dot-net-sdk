@@ -18,8 +18,10 @@ using IBM.Watson.DeveloperCloud.Logging;
 *
 */
 using IBM.Watson.DeveloperCloud.Services.AlchemyAPI.v1;
+using IBM.Watson.DeveloperCloud.Utilities;
 using NUnit.Framework;
 using System.Collections.Generic;
+using System.IO;
 using System.Threading;
 
 namespace sdk.test
@@ -31,6 +33,22 @@ namespace sdk.test
     private string[] returnFields = { Fields.ENRICHED_URL_ENTITIES, Fields.ENRICHED_URL_KEYWORDS };
     private Dictionary<string, string> queryFields = new Dictionary<string, string>();
     AutoResetEvent autoEvent = new AutoResetEvent(false);
+
+    [SetUp]
+    public void Init()
+    {
+      string testDataPath = TestContext.CurrentContext.TestDirectory + Path.DirectorySeparatorChar + Constants.Path.APP_DATA + Path.DirectorySeparatorChar;
+
+      if (!Config.Instance.ConfigLoaded)
+      {
+        string configPath = testDataPath + Constants.Path.CONFIG_FILE;
+        string configJson = File.ReadAllText(configPath);
+        Config.Instance.LoadConfig(configJson);
+      }
+
+      if (!Config.Instance.ConfigLoaded)
+        Assert.Fail("Failed to load Config.");
+    }
 
     [Test]
     public void TestDataNews()

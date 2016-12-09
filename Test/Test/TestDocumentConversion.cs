@@ -19,6 +19,7 @@ using NUnit.Framework;
 using IBM.Watson.DeveloperCloud.Services.DocumentConversion.v1;
 using IBM.Watson.DeveloperCloud.Utilities;
 using System.Threading;
+using System.IO;
 
 namespace sdk.test
 {
@@ -26,8 +27,26 @@ namespace sdk.test
   public class TestDocumentConversion
   {
     private DocumentConversion documentConversion = new DocumentConversion();
-    private string examplePath = Constants.Path.APP_DATA + "/watson_beats_jeopardy.html";
+    private string examplePath;
     AutoResetEvent autoEvent = new AutoResetEvent(false);
+
+    [SetUp]
+    public void Init()
+    {
+      string testDataPath = TestContext.CurrentContext.TestDirectory + Path.DirectorySeparatorChar + Constants.Path.APP_DATA + Path.DirectorySeparatorChar;
+
+      if (!Config.Instance.ConfigLoaded)
+      {
+        string configPath = testDataPath + Constants.Path.CONFIG_FILE;
+        string configJson = File.ReadAllText(configPath);
+        Config.Instance.LoadConfig(configJson);
+      }
+
+      if (!Config.Instance.ConfigLoaded)
+        Assert.Fail("Failed to load Config.");
+
+      examplePath = testDataPath + "watson_beats_jeopardy.html";
+    }
 
     [Test]
     public void TestConvertDocumentAnswerUnit()
