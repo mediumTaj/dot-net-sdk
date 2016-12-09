@@ -20,6 +20,7 @@ using IBM.Watson.DeveloperCloud.Services.LanguageTranslator.v1;
 using System.Threading;
 using IBM.Watson.DeveloperCloud.Utilities;
 using System.IO;
+using IBM.Watson.DeveloperCloud.Logging;
 
 namespace sdk.test
 {
@@ -38,6 +39,7 @@ namespace sdk.test
     {
       Constants.Path.dataPath = TestContext.CurrentContext.TestDirectory + Path.DirectorySeparatorChar;
       string testDataPath = Constants.Path.dataPath + Constants.Path.APP_DATA + Path.DirectorySeparatorChar;
+      Log.Debug("TestLanguageTranslator", "Test data path: {0}", testDataPath);
 
       if (!Config.Instance.ConfigLoaded)
       {

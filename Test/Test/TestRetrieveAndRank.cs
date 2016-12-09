@@ -64,6 +64,7 @@ namespace sdk.test
     {
       Constants.Path.dataPath = TestContext.CurrentContext.TestDirectory + Path.DirectorySeparatorChar;
       string testDataPath = Constants.Path.dataPath + Constants.Path.APP_DATA + Path.DirectorySeparatorChar;
+      Log.Debug("TestRetrieveAndRank", "Test data path: {0}", testDataPath);
 
       if (!Config.Instance.ConfigLoaded)
       {
@@ -106,12 +107,14 @@ namespace sdk.test
     [Test, Order(0)]
     public void TestCreateCluster()
     {
+      Log.Debug("TestRetrieveAndRank", "Attempting to create cluster...");
       if (!retrieveAndRank.CreateCluster((SolrClusterResponse resp, string data) =>
-       {
-         m_CreatedClusterID = resp.solr_cluster_id;
-         Assert.NotNull(resp);
-         autoEvent.Set();
-       }, m_ClusterToCreateName, m_ClusterToCreateSize))
+      {
+        m_CreatedClusterID = resp.solr_cluster_id;
+        Log.Debug("TestRetrieveAndRank", "Created cluster {0}.", m_CreatedClusterID);
+        Assert.NotNull(resp);
+        autoEvent.Set();
+      }, m_ClusterToCreateName, m_ClusterToCreateSize))
       {
         Assert.Fail("Failed to invoke CreateCluster();");
         autoEvent.Set();
@@ -125,8 +128,10 @@ namespace sdk.test
     {
       if (!string.IsNullOrEmpty(m_CreatedClusterID))
       {
+      Log.Debug("TestRetrieveAndRank", "Attempting to delete cluster {0}...", m_CreatedClusterID);
         if (!retrieveAndRank.DeleteCluster((bool success, string data) =>
         {
+        Log.Debug("TestRetrieveAndRank", "Deleted cluster {0}.", m_CreatedClusterID);
           Assert.True(success);
           autoEvent.Set();
         }, m_CreatedClusterID))

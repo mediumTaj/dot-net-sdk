@@ -46,6 +46,7 @@ namespace Test
     {
       Constants.Path.dataPath = TestContext.CurrentContext.TestDirectory + Path.DirectorySeparatorChar;
       string testDataPath = Constants.Path.dataPath + Constants.Path.APP_DATA + Path.DirectorySeparatorChar;
+      Log.Debug("TestNaturalLanguageClassifier", "Test data path: {0}", testDataPath);
 
       if (!Config.Instance.ConfigLoaded)
       {
@@ -59,17 +60,17 @@ namespace Test
 
       naturalLanguageClassifier.DisableCache = true;
       data.Load(TestContext.CurrentContext.TestDirectory + Path.DirectorySeparatorChar + trainingDataPath);
-  }
+    }
 
     [Test, Order(0)]
     public void TestTrainClassifier()
     {
-      Log.Debug("TestNaturalLanguageClassifier", "Testing train classifier");
+      Log.Debug("TestNaturalLanguageClassifier", "Attempting to train classifier...");
       createdClassifierName = createdClassifierNameBase + DateTime.Now;
 
       if (!naturalLanguageClassifier.TrainClassifier(createdClassifierName, createdClassifierLanguage, data.Export(), (Classifier classifier) =>
         {
-          Log.Debug("TestNaturalLanguageClassifier", "created classifier id: {0}", classifier.classifier_id);
+          Log.Debug("TestNaturalLanguageClassifier", "Created classifier id: {0}.", classifier.classifier_id);
 
           if (classifier != null)
           {
@@ -90,8 +91,10 @@ namespace Test
     [Test, Order(1)]
     public void TestFindClassifier()
     {
+      Log.Debug("TestNaturalLanguageClassifier", "Attempting to find classifier {0}...", createdClassifierNameBase);
       naturalLanguageClassifier.FindClassifier(createdClassifierNameBase, (Classifier classifier) =>
       {
+        Log.Debug("TestNaturalLanguageClassifier", "Found classifier {0}, {1}.", classifier.name, classifier.classifier_id);
         Assert.AreNotEqual(classifier, null);
         autoEvent.Set();
       });
@@ -102,25 +105,17 @@ namespace Test
     [Test, Order(2)]
     public void TestGetClassifier()
     {
-      string classifierToGet = "";
+      Log.Debug("TestNaturalLanguageClassifier", "Attempting to get classifier {0}...", createdClassifierID);
 
-      if (!string.IsNullOrEmpty(createdClassifierID))
-      {
-        classifierToGet = createdClassifierID;
-      }
-      else if (!string.IsNullOrEmpty(classifierName))
-      {
-        classifierToGet = classifierID;
-      }
-
-      if (string.IsNullOrEmpty(classifierToGet))
+      if (string.IsNullOrEmpty(createdClassifierID))
       {
         Assert.Fail("GetClassifier(); createdClassifierID and classifierName are null. We need a classifier name to find the classifier.");
         return;
       }
 
-      if (!naturalLanguageClassifier.GetClassifier(classifierToGet, (Classifier classifier) =>
+      if (!naturalLanguageClassifier.GetClassifier(createdClassifierID, (Classifier classifier) =>
        {
+         Log.Debug("TestNaturalLanguageClassifier", "Got classifier {0}.", classifier.classifier_id);
          Assert.AreNotEqual(classifier, null);
          autoEvent.Set();
        }))
@@ -182,14 +177,19 @@ namespace Test
     [Test, Order(3)]
     public void TestDeleteClassifier()
     {
-      Log.Debug("TestNaturalLanguageClassifier", "Testing delete classifier");
+
       if (string.IsNullOrEmpty(createdClassifierID))
       {
         Assert.Fail("createdClassifierID is null. Cannot test delete.");
       }
+      else
+      {
+        Log.Debug("TestNaturalLanguageClassifier", "Attempting to delete classifier {0}...", createdClassifierID);
+      }
 
       if (!naturalLanguageClassifier.DeleteClassifer(createdClassifierID, (bool success) =>
       {
+        Log.Debug("TestNaturalLanguageClassifier", "Deleted classifier {0}.", createdClassifierID);
         Assert.AreEqual(success, true);
         autoEvent.Set();
       }))

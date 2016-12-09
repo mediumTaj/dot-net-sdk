@@ -22,4 +22,4 @@ script:
   - Travis/build.sh
   - Travis/initConfig.sh
 after_script:
-  - nunit-console Tests/bin/Release/Tests.dll
+  - nunit-console Test/Test/bin/Release/Tests.dll

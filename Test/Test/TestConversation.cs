@@ -37,6 +37,7 @@ namespace sdk.test
     {
       Constants.Path.dataPath = TestContext.CurrentContext.TestDirectory + Path.DirectorySeparatorChar;
       string testDataPath = Constants.Path.dataPath + Constants.Path.APP_DATA + Path.DirectorySeparatorChar;
+      Log.Debug("TestConversation", "Test data path: {0}", testDataPath);
 
       if (!Config.Instance.ConfigLoaded)
       {
@@ -64,7 +65,6 @@ namespace sdk.test
       if (!conversation.Message((MessageResponse resp, string data) =>
       {
         messageResponse = resp;
-        Log.Debug("test", "resp {0}", resp.intents);
         autoEvent.Set();
       }, workspaceID, input))
       {
