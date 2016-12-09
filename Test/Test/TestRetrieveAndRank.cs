@@ -62,8 +62,8 @@ namespace sdk.test
     [SetUp]
     public void Init()
     {
-      LogSystem.InstallDefaultReactors();
-      string testDataPath = TestContext.CurrentContext.TestDirectory + Path.DirectorySeparatorChar + Constants.Path.APP_DATA + Path.DirectorySeparatorChar;
+      Constants.Path.dataPath = TestContext.CurrentContext.TestDirectory + Path.DirectorySeparatorChar;
+      string testDataPath = Constants.Path.dataPath + Constants.Path.APP_DATA + Path.DirectorySeparatorChar;
 
       if (!Config.Instance.ConfigLoaded)
       {

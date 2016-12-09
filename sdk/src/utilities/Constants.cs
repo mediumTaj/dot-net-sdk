@@ -44,6 +44,7 @@ namespace IBM.Watson.DeveloperCloud.Utilities
                                                /// Directory name where all application data is stored
                                                /// </summary>
       public const string APP_DATA = "appdata";
+      public static string dataPath = "";
     }
 
     /// <summary>
