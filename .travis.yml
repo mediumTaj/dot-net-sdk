@@ -9,13 +9,17 @@ mono:
 os:
 - linux
 osx_image: xcode7.3
+before_install:
+  - sudo apt-get install nunit-console
 install:
-- nuget restore sdk/sdk.sln
-- nuget restore Test/Test.sln
-- nuget install NUnit.Runners -Version 2.6.4 -OutputDirectory testrunner
+  - nuget restore sdk/sdk.sln
+  - nuget restore Test/Test.sln
+  - nuget install NUnit.ConsoleRunner
 before_script:
-- chmod +x Travis/installSubmodule.sh
+  - chmod +x Travis/installSubmodule.sh
 script:
-- Travis/installSubmodule.sh
-- Travis/build.sh
-- Travis/initConfig.sh
+  - Travis/installSubmodule.sh
+  - Travis/build.sh
+  - Travis/initConfig.sh
+after_script:
+  - nunit-console Tests/bin/Release/Tests.dll
