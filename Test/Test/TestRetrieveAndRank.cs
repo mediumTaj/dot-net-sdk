@@ -59,6 +59,8 @@ namespace sdk.test
     private bool m_IsClusterReady = false;
     private bool m_IsRankerReady = false;
 
+    private string retrieveAndRankDataPath;
+
     [SetUp]
     public void Init()
     {
@@ -75,7 +77,7 @@ namespace sdk.test
       if (!Config.Instance.ConfigLoaded)
         Assert.Fail("Failed to load Config.");
 
-      string retrieveAndRankDataPath = testDataPath + Path.DirectorySeparatorChar + "RetrieveAndRank" + Path.DirectorySeparatorChar;
+      retrieveAndRankDataPath = testDataPath + "RetrieveAndRank" + Path.DirectorySeparatorChar;
       m_IntegrationTestClusterConfigPath = retrieveAndRankDataPath + "cranfield_solr_config.zip";
       m_IntegrationTestRankerTrainingPath = retrieveAndRankDataPath + "ranker_training_data.csv";
       m_IntegrationTestRankerAnswerDataPath = retrieveAndRankDataPath + "ranker_answer_data.csv";
@@ -122,7 +124,7 @@ namespace sdk.test
       autoEvent.WaitOne();
     }
 
-    [Test, Order(2)]
+    [Test, Order(99)]
     public void TestDeleteCluster()
     {
       if (!string.IsNullOrEmpty(m_CreatedClusterID))
@@ -173,11 +175,41 @@ namespace sdk.test
       autoEvent.WaitOne();
     }
 
-    //[Test]
-    //public void TestListClusterConfigs()
-    //{
-    //  autoEvent.WaitOne();
-    //}
+    [Test, Order(3)]
+    public void TestListClusterConfigs()
+    {
+      Log.Debug("TestRetrieveAndRank", "Attempting to list cluster configs for {0}...", m_CreatedClusterID);
+      if(!retrieveAndRank.GetClusterConfigs((SolrConfigList resp, string data) =>
+      {
+        Log.Debug("TestRetrieveAndRank", "Listed cluster configs for {0}...", m_CreatedClusterID);
+        Assert.NotNull(resp);
+        autoEvent.Set();
+      }, m_CreatedClusterID))
+      {
+        Assert.Fail("Failed to invoke GetClusterConfigs.");
+        autoEvent.Set();
+      }
+
+      autoEvent.WaitOne();
+    }
+
+    [Test, Order(2)]
+    public void TestUploadClusterConfig()
+    {
+      Log.Debug("TestRetrieveAndRank", "Attempting to upload cluster configs for {0}...", m_CreatedClusterID);
+
+      if(!retrieveAndRank.UploadClusterConfig((UploadResponse resp, string data)=>
+        {
+          Assert.NotNull(resp);
+          autoEvent.Set();
+        }, m_CreatedClusterID, m_ConfigToCreateName, m_IntegrationTestClusterConfigPath))
+      {
+        Assert.Fail("Failed to invoke UploadClusterConfig();");
+        autoEvent.Set();
+      }
+
+      autoEvent.WaitOne();
+    }
 
     //[Test]
     //public void TestDeleteClusterConfig()
@@ -191,11 +223,7 @@ namespace sdk.test
     //  autoEvent.WaitOne();
     //}
 
-    //[Test]
-    //public void TestUploadClusterConfig()
-    //{
-    //  autoEvent.WaitOne();
-    //}
+
 
     //[Test]
     //public void TestForwardCollectionRequest()
