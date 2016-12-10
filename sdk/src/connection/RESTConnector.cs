@@ -417,7 +417,7 @@ namespace IBM.Watson.DeveloperCloud.Connection
           else
           {
             restRequest.Method = req.Put ? Method.PUT : Method.POST;
-            restRequest.AddParameter("application/json", req.Send, ParameterType.RequestBody);
+            restRequest.AddParameter(req.Headers["Content-Type"], req.Send, ParameterType.RequestBody);
           }
 
 #if ENABLE_DEBUGGING
