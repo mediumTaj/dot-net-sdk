@@ -25,31 +25,16 @@ using System.IO;
 namespace sdk.test
 {
   [TestFixture]
-  public class TestConversation
+  public class TestConversation : IntegrationTest
   {
     Conversation conversation = new Conversation();
     private string workspaceID;
     private string input = "Can you unlock the door?";
     private AutoResetEvent autoEvent = new AutoResetEvent(false);
 
-    [SetUp]
-    public void Init()
+    override public void Init()
     {
-      Constants.Path.dataPath = TestContext.CurrentContext.TestDirectory + Path.DirectorySeparatorChar;
-      string testDataPath = Constants.Path.dataPath + Constants.Path.APP_DATA + Path.DirectorySeparatorChar;
-
-      if (!Config.Instance.ConfigLoaded)
-      {
-        string configPath = testDataPath + Constants.Path.CONFIG_FILE;
-        string configJson = File.ReadAllText(configPath);
-        Config.Instance.LoadConfig(configJson);
-      }
-
-      if (!Config.Instance.ConfigLoaded)
-        Assert.Fail("Failed to load Config.");
-
-      if (Config.Instance.FindCredentials(conversation.GetServiceID()) == null)
-        Assert.Fail("Failed to find credentials");
+      base.Init();
 
       workspaceID = Config.Instance.GetVariableValue("ConversationV1_ID");
       if (string.IsNullOrEmpty(workspaceID))

@@ -27,29 +27,12 @@ using System.Threading;
 namespace sdk.test
 {
   [TestFixture]
-  public class TestAlchemyDataNews
+  public class TestAlchemyDataNews : IntegrationTest
   {
     private AlchemyAPI alchemyDataNews = new AlchemyAPI();
     private string[] returnFields = { Fields.ENRICHED_URL_ENTITIES, Fields.ENRICHED_URL_KEYWORDS };
     private Dictionary<string, string> queryFields = new Dictionary<string, string>();
     AutoResetEvent autoEvent = new AutoResetEvent(false);
-
-    [SetUp]
-    public void Init()
-    {
-      Constants.Path.dataPath = TestContext.CurrentContext.TestDirectory + Path.DirectorySeparatorChar;
-      string testDataPath = Constants.Path.dataPath + Constants.Path.APP_DATA + Path.DirectorySeparatorChar;
-
-      if (!Config.Instance.ConfigLoaded)
-      {
-        string configPath = testDataPath + Constants.Path.CONFIG_FILE;
-        string configJson = File.ReadAllText(configPath);
-        Config.Instance.LoadConfig(configJson);
-      }
-
-      if (!Config.Instance.ConfigLoaded)
-        Assert.Fail("Failed to load Config.");
-    }
 
     [Test]
     public void TestDataNews()

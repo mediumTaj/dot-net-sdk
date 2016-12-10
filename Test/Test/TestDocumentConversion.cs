@@ -25,27 +25,15 @@ using IBM.Watson.DeveloperCloud.Logging;
 namespace sdk.test
 {
   [TestFixture]
-  public class TestDocumentConversion
+  public class TestDocumentConversion : IntegrationTest
   {
     private DocumentConversion documentConversion = new DocumentConversion();
     private string examplePath;
     AutoResetEvent autoEvent = new AutoResetEvent(false);
 
-    [SetUp]
-    public void Init()
+    override public void Init()
     {
-      Constants.Path.dataPath = TestContext.CurrentContext.TestDirectory + Path.DirectorySeparatorChar;
-      string testDataPath = Constants.Path.dataPath + Constants.Path.APP_DATA + Path.DirectorySeparatorChar;
-
-      if (!Config.Instance.ConfigLoaded)
-      {
-        string configPath = testDataPath + Constants.Path.CONFIG_FILE;
-        string configJson = File.ReadAllText(configPath);
-        Config.Instance.LoadConfig(configJson);
-      }
-
-      if (!Config.Instance.ConfigLoaded)
-        Assert.Fail("Failed to load Config.");
+      base.Init();
 
       examplePath = testDataPath + "watson_beats_jeopardy.html";
     }

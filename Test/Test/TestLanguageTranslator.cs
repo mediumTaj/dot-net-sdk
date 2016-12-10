@@ -25,7 +25,7 @@ using IBM.Watson.DeveloperCloud.Logging;
 namespace sdk.test
 {
   [TestFixture]
-  public class TestLanguageTranslator
+  public class TestLanguageTranslator : IntegrationTest
   {
     LanguageTranslator languageTranslator = new LanguageTranslator();
     private string languageModel = "en-es";
@@ -33,23 +33,6 @@ namespace sdk.test
     private string fromLanguage = "en";
     private string toLanguage = "es";
     AutoResetEvent autoEvent = new AutoResetEvent(false);
-
-    [SetUp]
-    public void Init()
-    {
-      Constants.Path.dataPath = TestContext.CurrentContext.TestDirectory + Path.DirectorySeparatorChar;
-      string testDataPath = Constants.Path.dataPath + Constants.Path.APP_DATA + Path.DirectorySeparatorChar;
-
-      if (!Config.Instance.ConfigLoaded)
-      {
-        string configPath = testDataPath + Constants.Path.CONFIG_FILE;
-        string configJson = File.ReadAllText(configPath);
-        Config.Instance.LoadConfig(configJson);
-      }
-
-      if (!Config.Instance.ConfigLoaded)
-        Assert.Fail("Failed to load Config.");
-    }
 
     [Test]
     public void TestGetModel()

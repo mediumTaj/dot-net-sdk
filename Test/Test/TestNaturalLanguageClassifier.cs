@@ -24,10 +24,10 @@ using IBM.Watson.DeveloperCloud.Logging;
 using System;
 using System.Threading;
 
-namespace Test
+namespace sdk.test
 {
   [TestFixture]
-  public class TestNaturalLanguageClassifier
+  public class TestNaturalLanguageClassifier : IntegrationTest
   {
     private NaturalLanguageClassifier naturalLanguageClassifier = new NaturalLanguageClassifier();
     private string classifierID = "d67c63x141-nlc-1055";
@@ -41,21 +41,9 @@ namespace Test
     private ClassifierData data = new ClassifierData();
     AutoResetEvent autoEvent = new AutoResetEvent(false);
 
-    [SetUp]
-    public void Init()
+    override public void Init()
     {
-      Constants.Path.dataPath = TestContext.CurrentContext.TestDirectory + Path.DirectorySeparatorChar;
-      string testDataPath = Constants.Path.dataPath + Constants.Path.APP_DATA + Path.DirectorySeparatorChar;
-
-      if (!Config.Instance.ConfigLoaded)
-      {
-        string configPath = testDataPath + Constants.Path.CONFIG_FILE;
-        string configJson = File.ReadAllText(configPath);
-        Config.Instance.LoadConfig(configJson);
-      }
-
-      if (!Config.Instance.ConfigLoaded)
-        Assert.Fail("Failed to load Config.");
+      base.Init();
 
       naturalLanguageClassifier.DisableCache = true;
       data.Load(TestContext.CurrentContext.TestDirectory + Path.DirectorySeparatorChar + trainingDataPath);

@@ -1,7 +1,4 @@
-﻿
-
-using IBM.Watson.DeveloperCloud.Logging;
-/**
+﻿/**
 * Copyright 2015 IBM Corp. All Rights Reserved.
 *
 * Licensed under the Apache License, Version 2.0 (the "License");
@@ -17,6 +14,8 @@ using IBM.Watson.DeveloperCloud.Logging;
 * limitations under the License.
 *
 */
+
+using IBM.Watson.DeveloperCloud.Logging;
 using IBM.Watson.DeveloperCloud.Services.RetrieveAndRank.v1;
 using IBM.Watson.DeveloperCloud.Utilities;
 using NUnit.Framework;
@@ -26,7 +25,7 @@ using System.Threading;
 namespace sdk.test
 {
   [TestFixture]
-  public class TestRetrieveAndRank
+  public class TestRetrieveAndRank : IntegrationTest
   {
     private RetrieveAndRank retrieveAndRank = new RetrieveAndRank();
     private AutoResetEvent autoEvent = new AutoResetEvent(false);
@@ -59,21 +58,9 @@ namespace sdk.test
     private bool m_IsClusterReady = false;
     private bool m_IsRankerReady = false;
 
-    [SetUp]
-    public void Init()
+    override public void Init()
     {
-      Constants.Path.dataPath = TestContext.CurrentContext.TestDirectory + Path.DirectorySeparatorChar;
-      string testDataPath = Constants.Path.dataPath + Constants.Path.APP_DATA + Path.DirectorySeparatorChar;
-
-      if (!Config.Instance.ConfigLoaded)
-      {
-        string configPath = testDataPath + Constants.Path.CONFIG_FILE;
-        string configJson = File.ReadAllText(configPath);
-        Config.Instance.LoadConfig(configJson);
-      }
-
-      if (!Config.Instance.ConfigLoaded)
-        Assert.Fail("Failed to load Config.");
+      base.Init();
 
       string retrieveAndRankDataPath = testDataPath + Path.DirectorySeparatorChar + "RetrieveAndRank" + Path.DirectorySeparatorChar;
       m_IntegrationTestClusterConfigPath = retrieveAndRankDataPath + "cranfield_solr_config.zip";
