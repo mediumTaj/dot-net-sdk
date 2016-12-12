@@ -233,11 +233,59 @@ namespace sdk.test
       autoEvent.WaitOne();
     }
 
-    //[Test]
-    //public void TestForwardCollectionRequest()
-    //{
-    //  autoEvent.WaitOne();
-    //}
+    [Test]
+    public void TestForwardCollectionRequestCreate()
+    {
+      Log.Debug("TestRetrieveAndRank", "Attempting to forward collection request: Create {0}...", m_CollectionToCreateName);
+
+      if(!retrieveAndRank.ForwardCollectionRequest((CollectionsResponse resp, string data) =>
+      {
+        Assert.NotNull(resp);
+        autoEvent.Set();
+      }, m_CreatedClusterID, CollectionsAction.CREATE, m_CollectionToCreateName, m_ConfigToCreateName))
+      {
+        Assert.Fail("Failed to invoke ForwardCollectionRequest: Create.");
+        autoEvent.Set();
+      }
+
+      autoEvent.WaitOne();
+    }
+
+    [Test]
+    public void TestForwardCollectionRequestList()
+    {
+      Log.Debug("TestRetrieveAndRank", "Attempting to forward collection request: List {0}...", m_CollectionToCreateName);
+
+      if (!retrieveAndRank.ForwardCollectionRequest((CollectionsResponse resp, string data) =>
+      {
+        Assert.NotNull(resp);
+        autoEvent.Set();
+      }, m_CreatedClusterID, CollectionsAction.LIST, m_CollectionToCreateName, m_ConfigToCreateName))
+      {
+        Assert.Fail("Failed to invoke ForwardCollectionRequest: List.");
+        autoEvent.Set();
+      }
+
+      autoEvent.WaitOne();
+    }
+
+    [Test]
+    public void TestForwardCollectionRequestDelete()
+    {
+      Log.Debug("TestRetrieveAndRank", "Attempting to forward collection request: Delete {0}...", m_CollectionToCreateName);
+
+      if (!retrieveAndRank.ForwardCollectionRequest((CollectionsResponse resp, string data) =>
+      {
+        Assert.NotNull(resp);
+        autoEvent.Set();
+      }, m_CreatedClusterID, CollectionsAction.DELETE, m_CollectionToCreateName, m_ConfigToCreateName))
+      {
+        Assert.Fail("Failed to invoke ForwardCollectionRequest: Delete.");
+        autoEvent.Set();
+      }
+
+      autoEvent.WaitOne();
+    }
 
     //[Test]
     //public void TestIndexDocuments()
