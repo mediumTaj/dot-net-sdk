@@ -47,6 +47,7 @@ namespace sdk.test
 
     private string m_ClusterToCreateName = "dotnet-integration-test-cluster";
     private string m_ClusterToCreateSize = "3";
+    private int m_SizeToResizeCluster = 4;
     private string m_CreatedClusterID;
 
     private string m_ConfigToCreateName = "dotnet-integration-test-config";
@@ -118,7 +119,6 @@ namespace sdk.test
         Log.Debug("TestRetrieveAndRank", "Attempting to delete cluster {0}...", m_CreatedClusterID);
         if (!retrieveAndRank.DeleteCluster((bool success, string data) =>
         {
-          Log.Debug("TestRetrieveAndRank", "Deleted cluster {0}.", m_CreatedClusterID);
           Assert.True(success);
           autoEvent.Set();
         }, m_CreatedClusterID))
@@ -238,11 +238,11 @@ namespace sdk.test
     {
       Log.Debug("TestRetrieveAndRank", "Attempting to forward collection request: Create {0}...", m_CollectionToCreateName);
 
-      if(!retrieveAndRank.ForwardCollectionRequest((CollectionsResponse resp, string data) =>
-      {
-        Assert.NotNull(resp);
-        autoEvent.Set();
-      }, m_CreatedClusterID, CollectionsAction.CREATE, m_CollectionToCreateName, m_ConfigToCreateName))
+      if (!retrieveAndRank.ForwardCollectionRequest((CollectionsResponse resp, string data) =>
+       {
+         Assert.NotNull(resp);
+         autoEvent.Set();
+       }, m_CreatedClusterID, CollectionsAction.CREATE, m_CollectionToCreateName, m_ConfigToCreateName))
       {
         Assert.Fail("Failed to invoke ForwardCollectionRequest: Create.");
         autoEvent.Set();
@@ -341,52 +341,149 @@ namespace sdk.test
       autoEvent.WaitOne();
     }
 
-    //[Test]
-    //public void TestGetClusterStatistics()
-    //{
-    //  autoEvent.WaitOne();
-    //}
+    [Test]
+    public void TestGetClusterStatistics()
+    {
+      Log.Debug("TestRetrieveAndRank", "Attempting to get cluster statistics...");
 
-    //[Test]
-    //public void TestGetClusterResizeStatus()
-    //{
-    //  autoEvent.WaitOne();
-    //}
+      if (!retrieveAndRank.GetClusterStats((StatsResponse resp, string data) =>
+      {
+        Assert.NotNull(resp);
+        autoEvent.Set();
+      }, m_CreatedClusterID))
+      {
+        Assert.Fail("Failed to invoke GetClusterStats();");
+        autoEvent.Set();
+      }
 
-    //[Test]
-    //public void TestResizeSOLRCluster()
-    //{
-    //  autoEvent.WaitOne();
-    //}
+      autoEvent.WaitOne();
+    }
 
-    //[Test]
-    //public void TestGetRankers()
-    //{
-    //  autoEvent.WaitOne();
-    //}
+    [Test]
+    public void TestGetClusterResizeStatus()
+    {
+      Log.Debug("TestRetrieveAndRank", "Attempting to get cluster resize status...");
 
-    //[Test]
-    //public void TestCreateRanker()
-    //{
-    //  autoEvent.WaitOne();
-    //}
+      if (!retrieveAndRank.GetClusterResizeStatus((ResizeResponse resp, string data) =>
+      {
+        Assert.NotNull(resp);
+        autoEvent.Set();
+      }, m_CreatedClusterID))
+      {
+        Assert.Fail("Failed to invoke GetClusterResizeStatus();");
+        autoEvent.Set();
+      }
 
-    //[Test]
-    //public void TestRank()
-    //{
-    //  autoEvent.WaitOne();
-    //}
+      autoEvent.WaitOne();
+    }
 
-    //[Test]
-    //public void TestDeleteRanker()
-    //{
-    //  autoEvent.WaitOne();
-    //}
+    [Test]
+    public void TestResizeSOLRCluster()
+    {
+      Log.Debug("TestRetrieveAndRank", "Attempting to resize SOLR Cluster...");
 
-    //[Test]
-    //public void TestGetRankerInfo()
-    //{
-    //  autoEvent.WaitOne();
-    //}
+      if (!retrieveAndRank.ResizeCluster((ResizeResponse resp, string data) =>
+      {
+        Assert.NotNull(resp);
+        autoEvent.Set();
+      }, m_CreatedClusterID, m_SizeToResizeCluster))
+      {
+        Assert.Fail("Failed to invoke ResizeCluster();");
+        autoEvent.Set();
+      }
+
+      autoEvent.WaitOne();
+    }
+
+    [Test]
+    public void TestGetRankers()
+    {
+      Log.Debug("TestRetrieveAndRank", "Attempting to get rankers...");
+
+      if (!retrieveAndRank.GetRankers((ListRankersPayload resp, string data) =>
+      {
+        Assert.NotNull(resp);
+        autoEvent.Set();
+      }))
+      {
+        Assert.Fail("Failed to invoke GetRankers();");
+        autoEvent.Set();
+      }
+
+      autoEvent.WaitOne();
+    }
+
+    [Test]
+    public void TestCreateRanker()
+    {
+      Log.Debug("TestRetrieveAndRank", "Attempting to create ranker...");
+
+      if (!retrieveAndRank.CreateRanker((RankerStatusPayload resp, string data) =>
+      {
+        m_CreatedRankerID = resp.ranker_id;
+        Assert.NotNull(resp);
+        autoEvent.Set();
+      }, m_IntegrationTestRankerTrainingPath, m_RankerToCreateName))
+      {
+        Assert.Fail("Failed to invoke CreateRanker();");
+        autoEvent.Set();
+      }
+
+      autoEvent.WaitOne();
+    }
+
+    [Test]
+    public void TestRank()
+    {
+      Log.Debug("TestRetrieveAndRank", "Attempting to rank...");
+
+      if (!retrieveAndRank.Rank((RankerOutputPayload resp, string data) =>
+      {
+        Assert.NotNull(resp);
+        autoEvent.Set();
+      }, m_CreatedRankerID, m_IntegrationTestRankerAnswerDataPath))
+      {
+        Assert.Fail("Failed to invoke Rank();");
+        autoEvent.Set();
+      }
+
+      autoEvent.WaitOne();
+    }
+
+    [Test]
+    public void TestDeleteRanker()
+    {
+      Log.Debug("TestRetrieveAndRank", "Attempting to delete ranker {0}...", m_CreatedRankerID);
+
+      if (!retrieveAndRank.DeleteRanker((bool success, string data) =>
+      {
+        Assert.True(success);
+        autoEvent.Set();
+      }, m_CreatedRankerID))
+      {
+        Assert.Fail("Failed to invoke DeleteRanker();");
+        autoEvent.Set();
+      }
+
+      autoEvent.WaitOne();
+    }
+
+    [Test]
+    public void TestGetRankerInfo()
+    {
+      Log.Debug("TestRetrieveAndRank", "Attempting to get ranker info...");
+
+      if (!retrieveAndRank.GetRanker((RankerStatusPayload resp, string data) =>
+      {
+        Assert.NotNull(resp);
+        autoEvent.Set();
+      }, m_CreatedRankerID))
+      {
+        Assert.Fail("Failed to invoke GetRanker();");
+        autoEvent.Set();
+      }
+
+      autoEvent.WaitOne();
+    }
   }
 }
