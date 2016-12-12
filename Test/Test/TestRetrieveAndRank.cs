@@ -76,7 +76,7 @@ namespace sdk.test
       m_ExampleCollectionName = Config.Instance.GetVariableValue("RetrieveAndRank_IntegrationTestCollectionName");
     }
 
-    [Test]
+    [Test, Order(0)]
     public void TestGetClusters()
     {
       if (!retrieveAndRank.GetClusters((SolrClusterListResponse resp, string data) =>
@@ -92,7 +92,61 @@ namespace sdk.test
       autoEvent.WaitOne();
     }
 
-    [Test, Order(0)]
+    [Test, Order(1)]
+    public void TestGetClusterConfigs()
+    {
+      Log.Debug("TestRetrieveAndRank", "Attempting to list cluster configs for {0}...", m_CreatedClusterID);
+      if (!retrieveAndRank.GetClusterConfigs((SolrConfigList resp, string data) =>
+       {
+         Log.Debug("TestRetrieveAndRank", "Listed cluster configs for {0}...", m_CreatedClusterID);
+         Assert.NotNull(resp);
+         autoEvent.Set();
+       }, m_CreatedClusterID))
+      {
+        Assert.Fail("Failed to invoke GetClusterConfigs.");
+        autoEvent.Set();
+      }
+
+      autoEvent.WaitOne();
+    }
+
+    [Test,Order(2)]
+    public void TestForwardCollectionRequestList()
+    {
+      Log.Debug("TestRetrieveAndRank", "Attempting to forward collection request: List {0}...", m_CollectionToCreateName);
+
+      if (!retrieveAndRank.ForwardCollectionRequest((CollectionsResponse resp, string data) =>
+      {
+        Assert.NotNull(resp);
+        autoEvent.Set();
+      }, m_CreatedClusterID, CollectionsAction.LIST, m_CollectionToCreateName, m_ConfigToCreateName))
+      {
+        Assert.Fail("Failed to invoke ForwardCollectionRequest: List.");
+        autoEvent.Set();
+      }
+
+      autoEvent.WaitOne();
+    }
+
+    [Test, Order(3)]
+    public void TestGetRankers()
+    {
+      Log.Debug("TestRetrieveAndRank", "Attempting to get rankers...");
+
+      if (!retrieveAndRank.GetRankers((ListRankersPayload resp, string data) =>
+      {
+        Assert.NotNull(resp);
+        autoEvent.Set();
+      }))
+      {
+        Assert.Fail("Failed to invoke GetRankers();");
+        autoEvent.Set();
+      }
+
+      autoEvent.WaitOne();
+    }
+
+    [Test, Order(4)]
     public void TestCreateCluster()
     {
       Log.Debug("TestRetrieveAndRank", "Attempting to create cluster...");
@@ -111,32 +165,7 @@ namespace sdk.test
       autoEvent.WaitOne();
     }
 
-    [Test, Order(99)]
-    public void TestDeleteCluster()
-    {
-      if (!string.IsNullOrEmpty(m_CreatedClusterID))
-      {
-        Log.Debug("TestRetrieveAndRank", "Attempting to delete cluster {0}...", m_CreatedClusterID);
-        if (!retrieveAndRank.DeleteCluster((bool success, string data) =>
-        {
-          Assert.True(success);
-          autoEvent.Set();
-        }, m_CreatedClusterID))
-        {
-          Assert.Fail("Failed to invoke DeleteCluster();");
-          autoEvent.Set();
-        }
-      }
-      else
-      {
-        Assert.Fail("createdClusterID is empty. Delete failed.");
-        autoEvent.Set();
-      }
-
-      autoEvent.WaitOne();
-    }
-
-    [Test, Order(1)]
+    [Test, Order(5)]
     public void TestGetCluster()
     {
       if (!string.IsNullOrEmpty(m_CreatedClusterID))
@@ -161,25 +190,7 @@ namespace sdk.test
       autoEvent.WaitOne();
     }
 
-    [Test, Order(3)]
-    public void TestGetClusterConfigs()
-    {
-      Log.Debug("TestRetrieveAndRank", "Attempting to list cluster configs for {0}...", m_CreatedClusterID);
-      if (!retrieveAndRank.GetClusterConfigs((SolrConfigList resp, string data) =>
-       {
-         Log.Debug("TestRetrieveAndRank", "Listed cluster configs for {0}...", m_CreatedClusterID);
-         Assert.NotNull(resp);
-         autoEvent.Set();
-       }, m_CreatedClusterID))
-      {
-        Assert.Fail("Failed to invoke GetClusterConfigs.");
-        autoEvent.Set();
-      }
-
-      autoEvent.WaitOne();
-    }
-
-    [Test, Order(2)]
+    [Test, Order(6)]
     public void TestUploadClusterConfig()
     {
       Log.Debug("TestRetrieveAndRank", "Attempting to upload cluster configs for {0}...", m_CreatedClusterID);
@@ -197,7 +208,7 @@ namespace sdk.test
       autoEvent.WaitOne();
     }
 
-    [Test, Order(3)]
+    [Test, Order(7)]
     public void TestGetClusterConfig()
     {
       Log.Debug("TestRetrieveAndRank", "Attempting to get cluster config {0} for {1}...", m_ClusterToCreateName, m_CreatedClusterID);
@@ -215,25 +226,7 @@ namespace sdk.test
       autoEvent.WaitOne();
     }
 
-    [Test, Order(4)]
-    public void TestDeleteClusterConfig()
-    {
-      Log.Debug("TestRetrieveAndRank", "Attempting to delete cluster config {0} for {1}...", m_ClusterToCreateName, m_CreatedClusterID);
-
-      if (!retrieveAndRank.DeleteClusterConfig((bool success, string data) =>
-      {
-        Assert.True(success);
-        autoEvent.Set();
-      }, m_CreatedClusterID, m_ConfigToCreateName))
-      {
-        Assert.Fail("Failed to invoke DeleteClusterConfig();");
-        autoEvent.Set();
-      }
-
-      autoEvent.WaitOne();
-    }
-
-    [Test]
+    [Test, Order(8)]
     public void TestForwardCollectionRequestCreate()
     {
       Log.Debug("TestRetrieveAndRank", "Attempting to forward collection request: Create {0}...", m_CollectionToCreateName);
@@ -251,43 +244,7 @@ namespace sdk.test
       autoEvent.WaitOne();
     }
 
-    [Test]
-    public void TestForwardCollectionRequestList()
-    {
-      Log.Debug("TestRetrieveAndRank", "Attempting to forward collection request: List {0}...", m_CollectionToCreateName);
-
-      if (!retrieveAndRank.ForwardCollectionRequest((CollectionsResponse resp, string data) =>
-      {
-        Assert.NotNull(resp);
-        autoEvent.Set();
-      }, m_CreatedClusterID, CollectionsAction.LIST, m_CollectionToCreateName, m_ConfigToCreateName))
-      {
-        Assert.Fail("Failed to invoke ForwardCollectionRequest: List.");
-        autoEvent.Set();
-      }
-
-      autoEvent.WaitOne();
-    }
-
-    [Test]
-    public void TestForwardCollectionRequestDelete()
-    {
-      Log.Debug("TestRetrieveAndRank", "Attempting to forward collection request: Delete {0}...", m_CollectionToCreateName);
-
-      if (!retrieveAndRank.ForwardCollectionRequest((CollectionsResponse resp, string data) =>
-      {
-        Assert.NotNull(resp);
-        autoEvent.Set();
-      }, m_CreatedClusterID, CollectionsAction.DELETE, m_CollectionToCreateName, m_ConfigToCreateName))
-      {
-        Assert.Fail("Failed to invoke ForwardCollectionRequest: Delete.");
-        autoEvent.Set();
-      }
-
-      autoEvent.WaitOne();
-    }
-
-    [Test]
+    [Test, Order(9)]
     public void TestIndexDocuments()
     {
       Log.Debug("TestRetrieveAndRank", "Attempting to get index documents...");
@@ -305,7 +262,7 @@ namespace sdk.test
       autoEvent.WaitOne();
     }
 
-    [Test]
+    [Test, Order(10)]
     public void TestStandardSearch()
     {
       Log.Debug("TestRetrieveAndRank", "Attempting standard search...");
@@ -323,7 +280,7 @@ namespace sdk.test
       autoEvent.WaitOne();
     }
 
-    [Test]
+    [Test, Order(11)]
     public void TestRankedSearch()
     {
       Log.Debug("TestRetrieveAndRank", "Attempting ranked search...");
@@ -341,7 +298,7 @@ namespace sdk.test
       autoEvent.WaitOne();
     }
 
-    [Test]
+    [Test, Order(12)]
     public void TestGetClusterStatistics()
     {
       Log.Debug("TestRetrieveAndRank", "Attempting to get cluster statistics...");
@@ -359,25 +316,7 @@ namespace sdk.test
       autoEvent.WaitOne();
     }
 
-    [Test]
-    public void TestGetClusterResizeStatus()
-    {
-      Log.Debug("TestRetrieveAndRank", "Attempting to get cluster resize status...");
-
-      if (!retrieveAndRank.GetClusterResizeStatus((ResizeResponse resp, string data) =>
-      {
-        Assert.NotNull(resp);
-        autoEvent.Set();
-      }, m_CreatedClusterID))
-      {
-        Assert.Fail("Failed to invoke GetClusterResizeStatus();");
-        autoEvent.Set();
-      }
-
-      autoEvent.WaitOne();
-    }
-
-    [Test]
+    [Test, Order(13)]
     public void TestResizeSOLRCluster()
     {
       Log.Debug("TestRetrieveAndRank", "Attempting to resize SOLR Cluster...");
@@ -395,25 +334,25 @@ namespace sdk.test
       autoEvent.WaitOne();
     }
 
-    [Test]
-    public void TestGetRankers()
+    [Test, Order(14)]
+    public void TestGetClusterResizeStatus()
     {
-      Log.Debug("TestRetrieveAndRank", "Attempting to get rankers...");
+      Log.Debug("TestRetrieveAndRank", "Attempting to get cluster resize status...");
 
-      if (!retrieveAndRank.GetRankers((ListRankersPayload resp, string data) =>
+      if (!retrieveAndRank.GetClusterResizeStatus((ResizeResponse resp, string data) =>
       {
         Assert.NotNull(resp);
         autoEvent.Set();
-      }))
+      }, m_CreatedClusterID))
       {
-        Assert.Fail("Failed to invoke GetRankers();");
+        Assert.Fail("Failed to invoke GetClusterResizeStatus();");
         autoEvent.Set();
       }
 
       autoEvent.WaitOne();
     }
 
-    [Test]
+    [Test, Order(15)]
     public void TestCreateRanker()
     {
       Log.Debug("TestRetrieveAndRank", "Attempting to create ranker...");
@@ -432,7 +371,7 @@ namespace sdk.test
       autoEvent.WaitOne();
     }
 
-    [Test]
+    [Test, Order(16)]
     public void TestRank()
     {
       Log.Debug("TestRetrieveAndRank", "Attempting to rank...");
@@ -450,7 +389,61 @@ namespace sdk.test
       autoEvent.WaitOne();
     }
 
-    [Test]
+    [Test, Order(17)]
+    public void TestGetRankerInfo()
+    {
+      Log.Debug("TestRetrieveAndRank", "Attempting to get ranker info...");
+
+      if (!retrieveAndRank.GetRanker((RankerStatusPayload resp, string data) =>
+      {
+        Assert.NotNull(resp);
+        autoEvent.Set();
+      }, m_CreatedRankerID))
+      {
+        Assert.Fail("Failed to invoke GetRanker();");
+        autoEvent.Set();
+      }
+
+      autoEvent.WaitOne();
+    }
+
+    [Test, Order(18)]
+    public void TestForwardCollectionRequestDelete()
+    {
+      Log.Debug("TestRetrieveAndRank", "Attempting to forward collection request: Delete {0}...", m_CollectionToCreateName);
+
+      if (!retrieveAndRank.ForwardCollectionRequest((CollectionsResponse resp, string data) =>
+      {
+        Assert.NotNull(resp);
+        autoEvent.Set();
+      }, m_CreatedClusterID, CollectionsAction.DELETE, m_CollectionToCreateName, m_ConfigToCreateName))
+      {
+        Assert.Fail("Failed to invoke ForwardCollectionRequest: Delete.");
+        autoEvent.Set();
+      }
+
+      autoEvent.WaitOne();
+    }
+
+    [Test, Order(19)]
+    public void TestDeleteClusterConfig()
+    {
+      Log.Debug("TestRetrieveAndRank", "Attempting to delete cluster config {0} for {1}...", m_ClusterToCreateName, m_CreatedClusterID);
+
+      if (!retrieveAndRank.DeleteClusterConfig((bool success, string data) =>
+      {
+        Assert.True(success);
+        autoEvent.Set();
+      }, m_CreatedClusterID, m_ConfigToCreateName))
+      {
+        Assert.Fail("Failed to invoke DeleteClusterConfig();");
+        autoEvent.Set();
+      }
+
+      autoEvent.WaitOne();
+    }
+
+    [Test, Order(20)]
     public void TestDeleteRanker()
     {
       Log.Debug("TestRetrieveAndRank", "Attempting to delete ranker {0}...", m_CreatedRankerID);
@@ -468,18 +461,25 @@ namespace sdk.test
       autoEvent.WaitOne();
     }
 
-    [Test]
-    public void TestGetRankerInfo()
+    [Test, Order(21)]
+    public void TestDeleteCluster()
     {
-      Log.Debug("TestRetrieveAndRank", "Attempting to get ranker info...");
-
-      if (!retrieveAndRank.GetRanker((RankerStatusPayload resp, string data) =>
+      if (!string.IsNullOrEmpty(m_CreatedClusterID))
       {
-        Assert.NotNull(resp);
-        autoEvent.Set();
-      }, m_CreatedRankerID))
+        Log.Debug("TestRetrieveAndRank", "Attempting to delete cluster {0}...", m_CreatedClusterID);
+        if (!retrieveAndRank.DeleteCluster((bool success, string data) =>
+        {
+          Assert.True(success);
+          autoEvent.Set();
+        }, m_CreatedClusterID))
+        {
+          Assert.Fail("Failed to invoke DeleteCluster();");
+          autoEvent.Set();
+        }
+      }
+      else
       {
-        Assert.Fail("Failed to invoke GetRanker();");
+        Assert.Fail("createdClusterID is empty. Delete failed.");
         autoEvent.Set();
       }
 
