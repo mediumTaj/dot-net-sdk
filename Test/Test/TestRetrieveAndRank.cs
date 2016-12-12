@@ -287,23 +287,59 @@ namespace sdk.test
       autoEvent.WaitOne();
     }
 
-    //[Test]
-    //public void TestIndexDocuments()
-    //{
-    //  autoEvent.WaitOne();
-    //}
+    [Test]
+    public void TestIndexDocuments()
+    {
+      Log.Debug("TestRetrieveAndRank", "Attempting to get index documents...");
 
-    //[Test]
-    //public void TestStandardSearch()
-    //{
-    //  autoEvent.WaitOne();
-    //}
+      if (!retrieveAndRank.IndexDocuments((IndexResponse resp, string data) =>
+      {
+        Assert.NotNull(resp);
+        autoEvent.Set();
+      }, m_IntegrationTestIndexDataPath, m_CreatedClusterID, m_CollectionToCreateName))
+      {
+        Assert.Fail("Failed to invoke IndexDocuments();");
+        autoEvent.Set();
+      }
 
-    //[Test]
-    //public void TestRankedSearch()
-    //{
-    //  autoEvent.WaitOne();
-    //}
+      autoEvent.WaitOne();
+    }
+
+    [Test]
+    public void TestStandardSearch()
+    {
+      Log.Debug("TestRetrieveAndRank", "Attempting standard search...");
+
+      if (!retrieveAndRank.Search((SearchResponse resp, string data) =>
+      {
+        Assert.NotNull(resp);
+        autoEvent.Set();
+      }, m_CreatedClusterID, m_CollectionToCreateName, m_IntegrationTestQuery, m_Fl))
+      {
+        Assert.Fail("Failed to invoke Search(); Standard");
+        autoEvent.Set();
+      }
+
+      autoEvent.WaitOne();
+    }
+
+    [Test]
+    public void TestRankedSearch()
+    {
+      Log.Debug("TestRetrieveAndRank", "Attempting ranked search...");
+
+      if (!retrieveAndRank.Search((SearchResponse resp, string data) =>
+      {
+        Assert.NotNull(resp);
+        autoEvent.Set();
+      }, m_CreatedClusterID, m_CollectionToCreateName, m_IntegrationTestQuery, m_Fl, true, m_CreatedRankerID))
+      {
+        Assert.Fail("Failed to invoke Search(); Ranked");
+        autoEvent.Set();
+      }
+
+      autoEvent.WaitOne();
+    }
 
     //[Test]
     //public void TestGetClusterStatistics()
