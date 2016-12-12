@@ -115,10 +115,10 @@ namespace sdk.test
     {
       if (!string.IsNullOrEmpty(m_CreatedClusterID))
       {
-      Log.Debug("TestRetrieveAndRank", "Attempting to delete cluster {0}...", m_CreatedClusterID);
+        Log.Debug("TestRetrieveAndRank", "Attempting to delete cluster {0}...", m_CreatedClusterID);
         if (!retrieveAndRank.DeleteCluster((bool success, string data) =>
         {
-        Log.Debug("TestRetrieveAndRank", "Deleted cluster {0}.", m_CreatedClusterID);
+          Log.Debug("TestRetrieveAndRank", "Deleted cluster {0}.", m_CreatedClusterID);
           Assert.True(success);
           autoEvent.Set();
         }, m_CreatedClusterID))
@@ -162,15 +162,15 @@ namespace sdk.test
     }
 
     [Test, Order(3)]
-    public void TestListClusterConfigs()
+    public void TestGetClusterConfigs()
     {
       Log.Debug("TestRetrieveAndRank", "Attempting to list cluster configs for {0}...", m_CreatedClusterID);
-      if(!retrieveAndRank.GetClusterConfigs((SolrConfigList resp, string data) =>
-      {
-        Log.Debug("TestRetrieveAndRank", "Listed cluster configs for {0}...", m_CreatedClusterID);
-        Assert.NotNull(resp);
-        autoEvent.Set();
-      }, m_CreatedClusterID))
+      if (!retrieveAndRank.GetClusterConfigs((SolrConfigList resp, string data) =>
+       {
+         Log.Debug("TestRetrieveAndRank", "Listed cluster configs for {0}...", m_CreatedClusterID);
+         Assert.NotNull(resp);
+         autoEvent.Set();
+       }, m_CreatedClusterID))
       {
         Assert.Fail("Failed to invoke GetClusterConfigs.");
         autoEvent.Set();
@@ -184,11 +184,11 @@ namespace sdk.test
     {
       Log.Debug("TestRetrieveAndRank", "Attempting to upload cluster configs for {0}...", m_CreatedClusterID);
 
-      if(!retrieveAndRank.UploadClusterConfig((UploadResponse resp, string data)=>
-        {
-          Assert.NotNull(resp);
-          autoEvent.Set();
-        }, m_CreatedClusterID, m_ConfigToCreateName, m_IntegrationTestClusterConfigPath))
+      if (!retrieveAndRank.UploadClusterConfig((UploadResponse resp, string data) =>
+         {
+           Assert.NotNull(resp);
+           autoEvent.Set();
+         }, m_CreatedClusterID, m_ConfigToCreateName, m_IntegrationTestClusterConfigPath))
       {
         Assert.Fail("Failed to invoke UploadClusterConfig();");
         autoEvent.Set();
@@ -197,19 +197,41 @@ namespace sdk.test
       autoEvent.WaitOne();
     }
 
-    //[Test]
-    //public void TestDeleteClusterConfig()
-    //{
-    //  autoEvent.WaitOne();
-    //}
+    [Test, Order(3)]
+    public void TestGetClusterConfig()
+    {
+      Log.Debug("TestRetrieveAndRank", "Attempting to get cluster config {0} for {1}...", m_ClusterToCreateName, m_CreatedClusterID);
 
-    //[Test]
-    //public void TestGetClusterConfig()
-    //{
-    //  autoEvent.WaitOne();
-    //}
+      if (!retrieveAndRank.GetClusterConfig((byte[] resp, string data) =>
+       {
+         Assert.NotNull(resp);
+         autoEvent.Set();
+       }, m_CreatedClusterID, m_ConfigToCreateName))
+      {
+        Assert.Fail("Failed to invoke GetClusterConfig();");
+        autoEvent.Set();
+      }
 
+      autoEvent.WaitOne();
+    }
 
+    [Test, Order(4)]
+    public void TestDeleteClusterConfig()
+    {
+      Log.Debug("TestRetrieveAndRank", "Attempting to delete cluster config {0} for {1}...", m_ClusterToCreateName, m_CreatedClusterID);
+
+      if (!retrieveAndRank.DeleteClusterConfig((bool success, string data) =>
+      {
+        Assert.True(success);
+        autoEvent.Set();
+      }, m_CreatedClusterID, m_ConfigToCreateName))
+      {
+        Assert.Fail("Failed to invoke DeleteClusterConfig();");
+        autoEvent.Set();
+      }
+
+      autoEvent.WaitOne();
+    }
 
     //[Test]
     //public void TestForwardCollectionRequest()
