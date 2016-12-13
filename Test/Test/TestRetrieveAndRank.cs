@@ -92,7 +92,7 @@ namespace sdk.test
       autoEvent.WaitOne();
     }
 
-    [Test, Order(1)]
+    [Test, Order(15)]
     public void TestGetClusterConfigs()
     {
       Log.Debug("TestRetrieveAndRank", "Attempting to list cluster configs for {0}...", m_CreatedClusterID);
@@ -110,7 +110,7 @@ namespace sdk.test
       autoEvent.WaitOne();
     }
 
-    [Test,Order(2)]
+    [Test,Order(16)]
     public void TestForwardCollectionRequestList()
     {
       Log.Debug("TestRetrieveAndRank", "Attempting to forward collection request: List {0}...", m_CollectionToCreateName);
@@ -352,7 +352,7 @@ namespace sdk.test
       autoEvent.WaitOne();
     }
 
-    [Test, Order(15)]
+    [Test, Order(17)]
     public void TestCreateRanker()
     {
       Log.Debug("TestRetrieveAndRank", "Attempting to create ranker...");
@@ -371,7 +371,7 @@ namespace sdk.test
       autoEvent.WaitOne();
     }
 
-    [Test, Order(16)]
+    [Test, Order(18)]
     public void TestRank()
     {
       Log.Debug("TestRetrieveAndRank", "Attempting to rank...");
@@ -389,7 +389,7 @@ namespace sdk.test
       autoEvent.WaitOne();
     }
 
-    [Test, Order(17)]
+    [Test, Order(19)]
     public void TestGetRankerInfo()
     {
       Log.Debug("TestRetrieveAndRank", "Attempting to get ranker info...");
@@ -407,7 +407,7 @@ namespace sdk.test
       autoEvent.WaitOne();
     }
 
-    [Test, Order(18)]
+    [Test, Order(20)]
     public void TestForwardCollectionRequestDelete()
     {
       Log.Debug("TestRetrieveAndRank", "Attempting to forward collection request: Delete {0}...", m_CollectionToCreateName);
@@ -425,7 +425,7 @@ namespace sdk.test
       autoEvent.WaitOne();
     }
 
-    [Test, Order(19)]
+    [Test, Order(21)]
     public void TestDeleteClusterConfig()
     {
       Log.Debug("TestRetrieveAndRank", "Attempting to delete cluster config {0} for {1}...", m_ClusterToCreateName, m_CreatedClusterID);
@@ -443,7 +443,7 @@ namespace sdk.test
       autoEvent.WaitOne();
     }
 
-    [Test, Order(20)]
+    [Test, Order(22)]
     public void TestDeleteRanker()
     {
       Log.Debug("TestRetrieveAndRank", "Attempting to delete ranker {0}...", m_CreatedRankerID);
@@ -461,7 +461,7 @@ namespace sdk.test
       autoEvent.WaitOne();
     }
 
-    [Test, Order(21)]
+    [Test, Order(23)]
     public void TestDeleteCluster()
     {
       if (!string.IsNullOrEmpty(m_CreatedClusterID))

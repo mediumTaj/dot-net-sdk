@@ -71,7 +71,7 @@ namespace sdk.test
     }
 
     [Test]
-    public void ConvertDocumentHTML()
+    public void TestConvertDocumentHTML()
     {
       if (!documentConversion.ConvertDocument((ConvertedDocument documentConversionResponse, string data) =>
       {
