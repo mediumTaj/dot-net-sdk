@@ -417,28 +417,7 @@ namespace IBM.Watson.DeveloperCloud.Connection
           else
           {
             restRequest.Method = req.Put ? Method.PUT : Method.POST;
-<<<<<<< HEAD
             restRequest.AddParameter(req.Headers["Content-Type"], req.Send, ParameterType.RequestBody);
-=======
-            
-            fsData data = null;
-            fsResult r = fsJsonParser.Parse(Encoding.UTF8.GetString(req.Send), out data);
-            if (!r.Succeeded)
-            {
-              //throw new WatsonException(r.FormattedMessages);
-              restRequest.AddParameter("audio/wav", req.Send, ParameterType.RequestBody);
-            }
-            else
-            {
-
-              object obj = new object();
-              r = sm_Serializer.TryDeserialize(data, obj.GetType(), ref obj);
-              if (!r.Succeeded)
-                throw new WatsonException(r.FormattedMessages);
-
-              restRequest.AddParameter("application/json", data, ParameterType.RequestBody);
-            }
->>>>>>> feature-streaming
           }
 
 #if ENABLE_DEBUGGING

@@ -21,7 +21,6 @@ using IBM.Watson.DeveloperCloud.Utilities;
 using NUnit.Framework;
 using System;
 using System.IO;
-using System.Threading;
 using static IBM.Watson.DeveloperCloud.Utilities.Utility;
 
 namespace sdk.test
@@ -39,7 +38,6 @@ namespace sdk.test
     private string trainingDataPath = Constants.Path.APP_DATA + Path.DirectorySeparatorChar + "naturalLanguageClassifierTrainingData.json";
     private string classifyText = "Will it rain today?";
     private ClassifierData data = new ClassifierData();
-    AutoResetEvent autoEvent = new AutoResetEvent(false);
 
     override public void Init()
     {
@@ -50,7 +48,7 @@ namespace sdk.test
     }
 
     [Test, Order(0)]
-    public void TestTrainClassifier()
+    public void NaturalLanguageClassifier_TestTrainClassifier()
     {
       Log.Debug("TestNaturalLanguageClassifier", "Attempting to train classifier...");
       createdClassifierName = createdClassifierNameBase + DateTime.Now;
@@ -76,7 +74,7 @@ namespace sdk.test
     }
 
     [Test, Order(1)]
-    public void TestFindClassifier()
+    public void NaturalLanguageClassifier_TestFindClassifier()
     {
       Log.Debug("TestNaturalLanguageClassifier", "Attempting to find classifier {0}...", createdClassifierNameBase);
       naturalLanguageClassifier.FindClassifier(createdClassifierNameBase, (Classifier classifier) =>
@@ -90,7 +88,7 @@ namespace sdk.test
     }
 
     [Test, Order(2)]
-    public void TestGetClassifier()
+    public void NaturalLanguageClassifier_TestGetClassifier()
     {
       Log.Debug("TestNaturalLanguageClassifier", "Attempting to get classifier {0}...", createdClassifierID);
 
@@ -115,7 +113,7 @@ namespace sdk.test
     }
 
     [Test]
-    public void TestGetClassifiers()
+    public void NaturalLanguageClassifier_TestGetClassifiers()
     {
       if (!naturalLanguageClassifier.GetClassifiers((Classifiers classifiers) =>
       {
@@ -141,7 +139,7 @@ namespace sdk.test
     }
 
     [Test]
-    public void TestClassify()
+    public void NaturalLanguageClassifier_TestClassify()
     {
       if (string.IsNullOrEmpty(classifierID))
       {
@@ -162,7 +160,7 @@ namespace sdk.test
     }
 
     [Test, Order(3)]
-    public void TestDeleteClassifier()
+    public void NaturalLanguageClassifier_TestDeleteClassifier()
     {
 
       if (string.IsNullOrEmpty(createdClassifierID))

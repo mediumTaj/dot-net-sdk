@@ -18,7 +18,6 @@
 using IBM.Watson.DeveloperCloud.Services.PersonalityInsights.v3;
 using IBM.Watson.DeveloperCloud.Utilities;
 using NUnit.Framework;
-using System.Threading;
 
 namespace sdk.test
 {
@@ -28,10 +27,9 @@ namespace sdk.test
     PersonalityInsights personalityInsights = new PersonalityInsights();
     private string testString = "test";
     string dataPath = Constants.Path.APP_DATA + "/personalityInsights.json";
-    AutoResetEvent autoEvent = new AutoResetEvent(false);
 
     [Test]
-    public void TestGetProfileText()
+    public void PersonalityInsights_TestGetProfileText()
     {
       if(!personalityInsights.GetProfile((Profile profile, string data) =>
       {
@@ -47,7 +45,7 @@ namespace sdk.test
     }
 
     [Test]
-    public void TestGetProfileJson()
+    public void PersonalityInsights_TestGetProfileJson()
     {
       if(!personalityInsights.GetProfile((Profile profile, string data) =>
       {

@@ -17,7 +17,6 @@
 
 using NUnit.Framework;
 using IBM.Watson.DeveloperCloud.Services.DocumentConversion.v1;
-using System.Threading;
 
 namespace sdk.test
 {
@@ -26,7 +25,6 @@ namespace sdk.test
   {
     private DocumentConversion documentConversion = new DocumentConversion();
     private string examplePath;
-    AutoResetEvent autoEvent = new AutoResetEvent(false);
 
     override public void Init()
     {
@@ -36,7 +34,7 @@ namespace sdk.test
     }
 
     [Test]
-    public void TestConvertDocumentAnswerUnit()
+    public void DocumentConversion_TestConvertDocumentAnswerUnit()
     {
       if (!documentConversion.ConvertDocument((ConvertedDocument documentConversionResponse, string data) =>
       {
@@ -52,7 +50,7 @@ namespace sdk.test
     }
 
     [Test]
-    public void TestConvertDocumentText()
+    public void DocumentConversion_TestConvertDocumentText()
     {
       if (!documentConversion.ConvertDocument((ConvertedDocument documentConversionResponse, string data) =>
       {
@@ -68,7 +66,7 @@ namespace sdk.test
     }
 
     [Test]
-    public void TestConvertDocumentHTML()
+    public void DocumentConversion_TestConvertDocumentHTML()
     {
       if (!documentConversion.ConvertDocument((ConvertedDocument documentConversionResponse, string data) =>
       {

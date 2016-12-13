@@ -42,100 +42,106 @@ namespace sdk.test
     }
 
     [Test]
-    public void TestGetModels()
+    public void SpeechToText_TestGetModels()
     {
       Log.Debug("TestSpeechToText", "Attempting to get models...");
 
+      if (!speechToText.GetModels((Model[] models) =>
+      {
+        Assert.NotNull(models);
+        autoEvent.Set();
+      }))
+        Assert.Fail("Failed to invoke GetModels.");
     }
 
-    [Test]
-    public void TestGetModel()
-    {
+    //[Test]
+    //public void SpeechToText_TestGetModel()
+    //{
 
-    }
+    //}
 
-    [Test]
-    public void TestGetCustomizations()
-    {
+    //[Test]
+    //public void SpeechToText_TestGetCustomizations()
+    //{
 
-    }
+    //}
 
-    [Test]
-    public void TestCreateCustomizations()
-    {
+    //[Test]
+    //public void SpeechToText_TestCreateCustomizations()
+    //{
 
-    }
+    //}
 
-    [Test]
-    public void TestGetCustomization()
-    {
+    //[Test]
+    //public void SpeechToText_TestGetCustomization()
+    //{
 
-    }
+    //}
 
-    [Test]
-    public void TestGetCustomCorpora()
-    {
+    //[Test]
+    //public void SpeechToText_TestGetCustomCorpora()
+    //{
 
-    }
+    //}
 
-    [Test]
-    public void TestAddCustomCorpus()
-    {
+    //[Test]
+    //public void SpeechToText_TestAddCustomCorpus()
+    //{
 
-    }
+    //}
 
-    [Test]
-    public void TestGetCustomWords()
-    {
+    //[Test]
+    //public void SpeechToText_TestGetCustomWords()
+    //{
 
-    }
+    //}
 
-    [Test]
-    public void TestAddCustomWordsUsingFile()
-    {
+    //[Test]
+    //public void SpeechToText_TestAddCustomWordsUsingFile()
+    //{
 
-    }
+    //}
 
-    [Test]
-    public void TestAddCustomWordsUsingObject()
-    {
+    //[Test]
+    //public void SpeechToText_TestAddCustomWordsUsingObject()
+    //{
 
-    }
+    //}
 
-    [Test]
-    public void TestGetCustomWord()
-    {
+    //[Test]
+    //public void SpeechToText_TestGetCustomWord()
+    //{
 
-    }
+    //}
 
-    [Test]
-    public void TestTrainCustomization()
-    {
+    //[Test]
+    //public void SpeechToText_TestTrainCustomization()
+    //{
 
-    }
+    //}
 
-    [Test]
-    public void TestDeleteCustomCorpus()
-    {
+    //[Test]
+    //public void SpeechToText_TestDeleteCustomCorpus()
+    //{
 
-    }
+    //}
 
-    [Test]
-    public void TestDeleteCustomWord()
-    {
+    //[Test]
+    //public void SpeechToText_TestDeleteCustomWord()
+    //{
 
-    }
+    //}
 
-    [Test]
-    public void TestResetCustomization()
-    {
+    //[Test]
+    //public void SpeechToText_TestResetCustomization()
+    //{
 
-    }
+    //}
 
-    [Test]
-    public void TestDeleteCustomization()
-    {
+    //[Test]
+    //public void SpeechToText_TestDeleteCustomization()
+    //{
 
-    }
+    //}
   }
 }

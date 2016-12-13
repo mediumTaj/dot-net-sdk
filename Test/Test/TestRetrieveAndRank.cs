@@ -20,7 +20,6 @@ using IBM.Watson.DeveloperCloud.Services.RetrieveAndRank.v1;
 using IBM.Watson.DeveloperCloud.Utilities;
 using NUnit.Framework;
 using System.IO;
-using System.Threading;
 
 namespace sdk.test
 {
@@ -28,7 +27,6 @@ namespace sdk.test
   public class TestRetrieveAndRank : IntegrationTest
   {
     private RetrieveAndRank retrieveAndRank = new RetrieveAndRank();
-    private AutoResetEvent autoEvent = new AutoResetEvent(false);
 
     //  from config variables
     private string exampleClusterID;
@@ -75,7 +73,7 @@ namespace sdk.test
     }
 
     [Test, Order(0)]
-    public void TestGetClusters()
+    public void RetrieveAndRank_TestGetClusters()
     {
       Log.Debug("TestRetrieveAndRank", "Attempting to get clusters...");
       if (!retrieveAndRank.GetClusters((SolrClusterListResponse resp, string data) =>
@@ -92,7 +90,7 @@ namespace sdk.test
     }
 
     [Test, Order(15)]
-    public void TestGetClusterConfigs()
+    public void RetrieveAndRank_TestGetClusterConfigs()
     {
       Log.Debug("TestRetrieveAndRank", "Attempting to list cluster configs for {0}...", createdClusterID);
       if (!retrieveAndRank.GetClusterConfigs((SolrConfigList resp, string data) =>
@@ -110,7 +108,7 @@ namespace sdk.test
     }
 
     [Test,Order(16)]
-    public void TestForwardCollectionRequestList()
+    public void RetrieveAndRank_TestForwardCollectionRequestList()
     {
       Log.Debug("TestRetrieveAndRank", "Attempting to forward collection request: List {0}...", collectionToCreateName);
 
@@ -128,7 +126,7 @@ namespace sdk.test
     }
 
     [Test, Order(3)]
-    public void TestGetRankers()
+    public void RetrieveAndRank_TestGetRankers()
     {
       Log.Debug("TestRetrieveAndRank", "Attempting to get rankers...");
 
@@ -146,7 +144,7 @@ namespace sdk.test
     }
 
     [Test, Order(4)]
-    public void TestCreateCluster()
+    public void RetrieveAndRank_TestCreateCluster()
     {
       Log.Debug("TestRetrieveAndRank", "Attempting to create cluster...");
       if (!retrieveAndRank.CreateCluster((SolrClusterResponse resp, string data) =>
@@ -165,7 +163,7 @@ namespace sdk.test
     }
 
     [Test, Order(5)]
-    public void TestGetCluster()
+    public void RetrieveAndRank_TestGetCluster()
     {
       if (!string.IsNullOrEmpty(createdClusterID))
       {
@@ -190,7 +188,7 @@ namespace sdk.test
     }
 
     [Test, Order(6)]
-    public void TestUploadClusterConfig()
+    public void RetrieveAndRank_TestUploadClusterConfig()
     {
       Log.Debug("TestRetrieveAndRank", "Attempting to upload cluster configs for {0}...", createdClusterID);
 
@@ -208,7 +206,7 @@ namespace sdk.test
     }
 
     [Test, Order(7)]
-    public void TestGetClusterConfig()
+    public void RetrieveAndRank_TestGetClusterConfig()
     {
       Log.Debug("TestRetrieveAndRank", "Attempting to get cluster config {0} for {1}...", clusterToCreateName, createdClusterID);
 
@@ -226,7 +224,7 @@ namespace sdk.test
     }
 
     [Test, Order(8)]
-    public void TestForwardCollectionRequestCreate()
+    public void RetrieveAndRank_TestForwardCollectionRequestCreate()
     {
       Log.Debug("TestRetrieveAndRank", "Attempting to forward collection request: Create {0}...", collectionToCreateName);
 
@@ -244,7 +242,7 @@ namespace sdk.test
     }
 
     [Test, Order(9)]
-    public void TestIndexDocuments()
+    public void RetrieveAndRank_TestIndexDocuments()
     {
       Log.Debug("TestRetrieveAndRank", "Attempting to get index documents...");
 
@@ -262,7 +260,7 @@ namespace sdk.test
     }
 
     [Test, Order(10)]
-    public void TestStandardSearch()
+    public void RetrieveAndRank_TestStandardSearch()
     {
       Log.Debug("TestRetrieveAndRank", "Attempting standard search...");
 
@@ -280,7 +278,7 @@ namespace sdk.test
     }
 
     [Test, Order(11)]
-    public void TestRankedSearch()
+    public void RetrieveAndRank_TestRankedSearch()
     {
       Log.Debug("TestRetrieveAndRank", "Attempting ranked search...");
 
@@ -298,7 +296,7 @@ namespace sdk.test
     }
 
     [Test, Order(12)]
-    public void TestGetClusterStatistics()
+    public void RetrieveAndRank_TestGetClusterStatistics()
     {
       Log.Debug("TestRetrieveAndRank", "Attempting to get cluster statistics...");
 
@@ -316,7 +314,7 @@ namespace sdk.test
     }
 
     [Test, Order(13)]
-    public void TestResizeSOLRCluster()
+    public void RetrieveAndRank_TestResizeSOLRCluster()
     {
       Log.Debug("TestRetrieveAndRank", "Attempting to resize SOLR Cluster...");
 
@@ -334,7 +332,7 @@ namespace sdk.test
     }
 
     [Test, Order(14)]
-    public void TestGetClusterResizeStatus()
+    public void RetrieveAndRank_TestGetClusterResizeStatus()
     {
       Log.Debug("TestRetrieveAndRank", "Attempting to get cluster resize status...");
 
@@ -352,7 +350,7 @@ namespace sdk.test
     }
 
     [Test, Order(17)]
-    public void TestCreateRanker()
+    public void RetrieveAndRank_TestCreateRanker()
     {
       Log.Debug("TestRetrieveAndRank", "Attempting to create ranker...");
 
@@ -371,7 +369,7 @@ namespace sdk.test
     }
 
     [Test, Order(18)]
-    public void TestRank()
+    public void RetrieveAndRank_TestRank()
     {
       Log.Debug("TestRetrieveAndRank", "Attempting to rank...");
 
@@ -389,7 +387,7 @@ namespace sdk.test
     }
 
     [Test, Order(19)]
-    public void TestGetRankerInfo()
+    public void RetrieveAndRank_TestGetRankerInfo()
     {
       Log.Debug("TestRetrieveAndRank", "Attempting to get ranker info...");
 
@@ -407,7 +405,7 @@ namespace sdk.test
     }
 
     [Test, Order(20)]
-    public void TestForwardCollectionRequestDelete()
+    public void RetrieveAndRank_TestForwardCollectionRequestDelete()
     {
       Log.Debug("TestRetrieveAndRank", "Attempting to forward collection request: Delete {0}...", collectionToCreateName);
 
@@ -425,7 +423,7 @@ namespace sdk.test
     }
 
     [Test, Order(21)]
-    public void TestDeleteClusterConfig()
+    public void RetrieveAndRank_TestDeleteClusterConfig()
     {
       Log.Debug("TestRetrieveAndRank", "Attempting to delete cluster config {0} for {1}...", clusterToCreateName, createdClusterID);
 
@@ -443,7 +441,7 @@ namespace sdk.test
     }
 
     [Test, Order(22)]
-    public void TestDeleteRanker()
+    public void RetrieveAndRank_TestDeleteRanker()
     {
       Log.Debug("TestRetrieveAndRank", "Attempting to delete ranker {0}...", createdRankerID);
 
@@ -461,7 +459,7 @@ namespace sdk.test
     }
 
     [Test, Order(23)]
-    public void TestDeleteCluster()
+    public void RetrieveAndRank_TestDeleteCluster()
     {
       if (!string.IsNullOrEmpty(createdClusterID))
       {

@@ -17,7 +17,6 @@
 using IBM.Watson.DeveloperCloud.Services.AlchemyAPI.v1;
 using NUnit.Framework;
 using System.Collections.Generic;
-using System.Threading;
 
 namespace sdk.test
 {
@@ -27,10 +26,9 @@ namespace sdk.test
     private AlchemyAPI alchemyDataNews = new AlchemyAPI();
     private string[] returnFields = { Fields.ENRICHED_URL_ENTITIES, Fields.ENRICHED_URL_KEYWORDS };
     private Dictionary<string, string> queryFields = new Dictionary<string, string>();
-    AutoResetEvent autoEvent = new AutoResetEvent(false);
 
     [Test]
-    public void TestDataNews()
+    public void AlchemyAPI_TestDataNews()
     {
       queryFields.Add(Fields.ENRICHED_URL_RELATIONS_RELATION_SUBJECT_TEXT, "Obama");
       queryFields.Add(Fields.ENRICHED_URL_CLEANEDTITLE, "Washington");

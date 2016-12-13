@@ -17,7 +17,6 @@
 using IBM.Watson.DeveloperCloud.Services.Conversation.v1;
 using IBM.Watson.DeveloperCloud.Utilities;
 using NUnit.Framework;
-using System.Threading;
 
 namespace sdk.test
 {
@@ -27,7 +26,6 @@ namespace sdk.test
     Conversation conversation = new Conversation();
     private string workspaceID;
     private string input = "Can you unlock the door?";
-    private AutoResetEvent autoEvent = new AutoResetEvent(false);
 
     override public void Init()
     {
@@ -39,7 +37,7 @@ namespace sdk.test
     }
 
     [Test]
-    public void TestMessageObject()
+    public void Conversation_TestMessageObject()
     {
       MessageResponse messageResponse = null;
 
@@ -58,7 +56,7 @@ namespace sdk.test
     }
 
     [Test]
-    public void TestMessageInput()
+    public void Conversation_TestMessageInput()
     {
       MessageResponse messageResponse = null;
 

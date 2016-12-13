@@ -19,13 +19,15 @@ using IBM.Watson.DeveloperCloud.Logging;
 using IBM.Watson.DeveloperCloud.Utilities;
 using NUnit.Framework;
 using System.IO;
+using System.Threading;
 
 namespace sdk.test
 {
   public class IntegrationTest
   {
-    public bool isInitalized = false;
-    public string testDataPath;
+    protected AutoResetEvent autoEvent = new AutoResetEvent(false);
+    protected bool isInitalized = false;
+    protected string testDataPath;
 
     [SetUp]
     public virtual void Init()

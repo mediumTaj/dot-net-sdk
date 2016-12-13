@@ -16,7 +16,6 @@
 */
 using IBM.Watson.DeveloperCloud.Services.AlchemyAPI.v1;
 using NUnit.Framework;
-using System.Threading;
 
 namespace sdk.test
 {
@@ -29,7 +28,6 @@ namespace sdk.test
     private string example_html_article;
     private string exampleURL_feed = "https://news.ycombinator.com/";
     private string exampleURL_microformats = "http://microformats.org/wiki/hcard";
-    AutoResetEvent autoEvent = new AutoResetEvent(false);
 
     override public void Init()
     {
@@ -39,7 +37,7 @@ namespace sdk.test
     }
 
     [Test]
-    public void TestGetAuthorsURL()
+    public void AlchemyAPI_TestGetAuthorsURL()
     {
       if (!alchemyLanguage.GetAuthors((AuthorsData authors, string data) =>
        {
@@ -55,7 +53,7 @@ namespace sdk.test
     }
 
     [Test]
-    public void TestGetAuthorsHTML()
+    public void AlchemyAPI_TestGetAuthorsHTML()
     {
       if (!alchemyLanguage.GetAuthors((AuthorsData authors, string data) =>
       {
@@ -71,7 +69,7 @@ namespace sdk.test
     }
 
     [Test]
-    public void TestGetRankedConceptsHTML()
+    public void AlchemyAPI_TestGetRankedConceptsHTML()
     {
       if (!alchemyLanguage.GetRankedConcepts((ConceptsData concepts, string data) =>
       {
@@ -87,7 +85,7 @@ namespace sdk.test
     }
 
     [Test]
-    public void TestGetRankConceptsURL()
+    public void AlchemyAPI_TestGetRankConceptsURL()
     {
       if (!alchemyLanguage.GetRankedConcepts((ConceptsData concepts, string data) =>
       {
@@ -103,7 +101,7 @@ namespace sdk.test
     }
 
     [Test]
-    public void TestGetRankedConceptsText()
+    public void AlchemyAPI_TestGetRankedConceptsText()
     {
       if (!alchemyLanguage.GetRankedConcepts((ConceptsData concepts, string data) =>
       {
@@ -119,7 +117,7 @@ namespace sdk.test
     }
 
     [Test]
-    public void TestGetDatesURL()
+    public void AlchemyAPI_TestGetDatesURL()
     {
       if (!alchemyLanguage.GetDates((DateData dates, string data) =>
       {
@@ -135,7 +133,7 @@ namespace sdk.test
     }
 
     [Test]
-    public void TestGetDatesText()
+    public void AlchemyAPI_TestGetDatesText()
     {
       if (!alchemyLanguage.GetDates((DateData dates, string data) =>
       {
@@ -151,7 +149,7 @@ namespace sdk.test
     }
 
     [Test]
-    public void TestGetDatesHTML()
+    public void AlchemyAPI_TestGetDatesHTML()
     {
       if (!alchemyLanguage.GetDates((DateData dates, string data) =>
       {
@@ -167,7 +165,7 @@ namespace sdk.test
     }
 
     [Test]
-    public void TestGetEmotionsURL()
+    public void AlchemyAPI_TestGetEmotionsURL()
     {
       if (!alchemyLanguage.GetEmotions((EmotionData emotions, string data) =>
       {
@@ -183,7 +181,7 @@ namespace sdk.test
     }
 
     [Test]
-    public void TestGetEmotionsText()
+    public void AlchemyAPI_TestGetEmotionsText()
     {
       if (!alchemyLanguage.GetEmotions((EmotionData emotions, string data) =>
       {
@@ -199,7 +197,7 @@ namespace sdk.test
     }
 
     [Test]
-    public void TestGetEmotionsHTML()
+    public void AlchemyAPI_TestGetEmotionsHTML()
     {
       if (!alchemyLanguage.GetEmotions((EmotionData emotions, string data) =>
       {
@@ -215,7 +213,7 @@ namespace sdk.test
     }
 
     [Test]
-    public void TestExtractEntitiesURL()
+    public void AlchemyAPI_TestExtractEntitiesURL()
     {
       if (!alchemyLanguage.ExtractEntities((EntityData entityData, string data) =>
       {
@@ -231,7 +229,7 @@ namespace sdk.test
     }
 
     [Test]
-    public void TestExtractEntitiesText()
+    public void AlchemyAPI_TestExtractEntitiesText()
     {
       if (!alchemyLanguage.ExtractEntities((EntityData entityData, string data) =>
       {
@@ -247,7 +245,7 @@ namespace sdk.test
     }
 
     [Test]
-    public void TestExtractEntitiesHTML()
+    public void AlchemyAPI_TestExtractEntitiesHTML()
     {
       if (!alchemyLanguage.ExtractEntities((EntityData entityData, string data) =>
       {
@@ -263,7 +261,7 @@ namespace sdk.test
     }
 
     [Test]
-    public void TestDetectFeeds()
+    public void AlchemyAPI_TestDetectFeeds()
     {
       if (!alchemyLanguage.DetectFeeds((FeedData feedData, string data) =>
       {
@@ -279,7 +277,7 @@ namespace sdk.test
     }
 
     [Test]
-    public void TestExtractKeywordsURL()
+    public void AlchemyAPI_TestExtractKeywordsURL()
     {
       if (!alchemyLanguage.ExtractKeywords((KeywordData keywordData, string data) =>
       {
@@ -295,7 +293,7 @@ namespace sdk.test
     }
 
     [Test]
-    public void TestExtractKeywordsText()
+    public void AlchemyAPI_TestExtractKeywordsText()
     {
       if (!alchemyLanguage.ExtractKeywords((KeywordData keywordData, string data) =>
       {
@@ -311,7 +309,7 @@ namespace sdk.test
     }
 
     [Test]
-    public void TestExtractKeywordsHTML()
+    public void AlchemyAPI_TestExtractKeywordsHTML()
     {
       if (!alchemyLanguage.ExtractKeywords((KeywordData keywordData, string data) =>
       {
@@ -327,7 +325,7 @@ namespace sdk.test
     }
 
     [Test]
-    public void TestGetLanguagesURL()
+    public void AlchemyAPI_TestGetLanguagesURL()
     {
       if (!alchemyLanguage.GetLanguages((LanguageData languages, string data) =>
       {
@@ -343,7 +341,7 @@ namespace sdk.test
     }
 
     [Test]
-    public void TestGetLanguagesText()
+    public void AlchemyAPI_TestGetLanguagesText()
     {
       if (!alchemyLanguage.GetLanguages((LanguageData languages, string data) =>
       {
@@ -359,7 +357,7 @@ namespace sdk.test
     }
 
     [Test]
-    public void TestGetLanguagesHTML()
+    public void AlchemyAPI_TestGetLanguagesHTML()
     {
       if (!alchemyLanguage.GetLanguages((LanguageData languages, string data) =>
       {
@@ -375,7 +373,7 @@ namespace sdk.test
     }
 
     [Test]
-    public void TestGetMicroformatsURL()
+    public void AlchemyAPI_TestGetMicroformatsURL()
     {
       if (!alchemyLanguage.GetMicroformats((MicroformatData microformats, string data) =>
       {
@@ -391,7 +389,7 @@ namespace sdk.test
     }
 
     [Test]
-    public void TestGetPublicationDateURL()
+    public void AlchemyAPI_TestGetPublicationDateURL()
     {
       if (!alchemyLanguage.GetPublicationDate((PubDateData pubDates, string data) =>
       {
@@ -407,7 +405,7 @@ namespace sdk.test
     }
 
     [Test]
-    public void TestGetPublicationDateHTML()
+    public void AlchemyAPI_TestGetPublicationDateHTML()
     {
       if (!alchemyLanguage.GetPublicationDate((PubDateData pubDates, string data) =>
       {
@@ -423,7 +421,7 @@ namespace sdk.test
     }
 
     [Test]
-    public void TestGetRelationsURL()
+    public void AlchemyAPI_TestGetRelationsURL()
     {
       if (!alchemyLanguage.GetRelations((RelationsData relationsData, string data) =>
       {
@@ -439,7 +437,7 @@ namespace sdk.test
     }
 
     [Test]
-    public void TestGetRelationsText()
+    public void AlchemyAPI_TestGetRelationsText()
     {
       if (!alchemyLanguage.GetRelations((RelationsData relationsData, string data) =>
       {
@@ -455,7 +453,7 @@ namespace sdk.test
     }
 
     [Test]
-    public void TestGetRelationsHTML()
+    public void AlchemyAPI_TestGetRelationsHTML()
     {
       if (!alchemyLanguage.GetRelations((RelationsData relationsData, string data) =>
       {
@@ -471,7 +469,7 @@ namespace sdk.test
     }
 
     [Test]
-    public void TestGetTextSentimentURL()
+    public void AlchemyAPI_TestGetTextSentimentURL()
     {
       if (!alchemyLanguage.GetTextSentiment((SentimentData sentimentData, string data) =>
       {
@@ -487,7 +485,7 @@ namespace sdk.test
     }
 
     [Test]
-    public void TestGetTextSentimentText()
+    public void AlchemyAPI_TestGetTextSentimentText()
     {
       if (!alchemyLanguage.GetTextSentiment((SentimentData sentimentData, string data) =>
       {
@@ -503,7 +501,7 @@ namespace sdk.test
     }
 
     [Test]
-    public void TestGetTextSentimentHTML()
+    public void AlchemyAPI_TestGetTextSentimentHTML()
     {
       if (!alchemyLanguage.GetTextSentiment((SentimentData sentimentData, string data) =>
       {
@@ -519,7 +517,7 @@ namespace sdk.test
     }
 
     [Test]
-    public void TestGetTargetedSentimentURL()
+    public void AlchemyAPI_TestGetTargetedSentimentURL()
     {
       if (!alchemyLanguage.GetTargetedSentiment((TargetedSentimentData sentimentData, string data) =>
       {
@@ -535,7 +533,7 @@ namespace sdk.test
     }
 
     [Test]
-    public void TestGetTargetedSentimentText()
+    public void AlchemyAPI_TestGetTargetedSentimentText()
     {
       if (!alchemyLanguage.GetTargetedSentiment((TargetedSentimentData sentimentData, string data) =>
       {
@@ -551,7 +549,7 @@ namespace sdk.test
     }
 
     [Test]
-    public void TestGetTargetedSentimentHTML()
+    public void AlchemyAPI_TestGetTargetedSentimentHTML()
     {
       if (!alchemyLanguage.GetTargetedSentiment((TargetedSentimentData sentimentData, string data) =>
       {
@@ -567,7 +565,7 @@ namespace sdk.test
     }
 
     [Test]
-    public void TestGetRankedTaxonomyURL()
+    public void AlchemyAPI_TestGetRankedTaxonomyURL()
     {
       if (!alchemyLanguage.GetRankedTaxonomy((TaxonomyData taxonomyData, string data) =>
       {
@@ -583,7 +581,7 @@ namespace sdk.test
     }
 
     [Test]
-    public void TestGetRankedTaxonomyText()
+    public void AlchemyAPI_TestGetRankedTaxonomyText()
     {
       if (!alchemyLanguage.GetRankedTaxonomy((TaxonomyData taxonomyData, string data) =>
       {
@@ -599,7 +597,7 @@ namespace sdk.test
     }
 
     [Test]
-    public void TestGetRankedTaxonomyHTML()
+    public void AlchemyAPI_TestGetRankedTaxonomyHTML()
     {
       if (!alchemyLanguage.GetRankedTaxonomy((TaxonomyData taxonomyData, string data) =>
       {
@@ -615,7 +613,7 @@ namespace sdk.test
     }
 
     [Test]
-    public void TestGetTextURL()
+    public void AlchemyAPI_TestGetTextURL()
     {
       if (!alchemyLanguage.GetText((TextData textData, string data) =>
       {
@@ -631,7 +629,7 @@ namespace sdk.test
     }
 
     [Test]
-    public void TestGetTextHTML()
+    public void AlchemyAPI_TestGetTextHTML()
     {
       if (!alchemyLanguage.GetText((TextData textData, string data) =>
       {
@@ -647,7 +645,7 @@ namespace sdk.test
     }
 
     [Test]
-    public void TestGetRawTextURL()
+    public void AlchemyAPI_TestGetRawTextURL()
     {
       if (!alchemyLanguage.GetRawText((TextData textData, string data) =>
       {
@@ -663,7 +661,7 @@ namespace sdk.test
     }
 
     [Test]
-    public void TestGetRawTextHTML()
+    public void AlchemyAPI_TestGetRawTextHTML()
     {
       if (!alchemyLanguage.GetRawText((TextData textData, string data) =>
       {
@@ -679,7 +677,7 @@ namespace sdk.test
     }
 
     [Test]
-    public void TestGetTitleURL()
+    public void AlchemyAPI_TestGetTitleURL()
     {
       if (!alchemyLanguage.GetTitle((Title titleData, string data) =>
       {
@@ -695,7 +693,7 @@ namespace sdk.test
     }
 
     [Test]
-    public void TestGetTitleHTML()
+    public void AlchemyAPI_TestGetTitleHTML()
     {
       if (!alchemyLanguage.GetTitle((Title titleData, string data) =>
       {
@@ -711,7 +709,7 @@ namespace sdk.test
     }
 
     [Test]
-    public void TestGetCombinedDataURL()
+    public void AlchemyAPI_TestGetCombinedDataURL()
     {
       if (!alchemyLanguage.GetCombinedData((CombinedCallData combinedData, string data) =>
       {
@@ -727,7 +725,7 @@ namespace sdk.test
     }
 
     [Test]
-    public void TestGetCombinedDataText()
+    public void AlchemyAPI_TestGetCombinedDataText()
     {
       if (!alchemyLanguage.GetCombinedData((CombinedCallData combinedData, string data) =>
       {
@@ -743,7 +741,7 @@ namespace sdk.test
     }
 
     [Test]
-    public void TestGetCombinedDataHTML()
+    public void AlchemyAPI_TestGetCombinedDataHTML()
     {
       if (!alchemyLanguage.GetCombinedData((CombinedCallData combinedData, string data) =>
       {

@@ -17,7 +17,6 @@
 
 using NUnit.Framework;
 using IBM.Watson.DeveloperCloud.Services.LanguageTranslator.v1;
-using System.Threading;
 
 namespace sdk.test
 {
@@ -29,10 +28,9 @@ namespace sdk.test
     private string query = "Where is the library?";
     private string fromLanguage = "en";
     private string toLanguage = "es";
-    AutoResetEvent autoEvent = new AutoResetEvent(false);
 
     [Test]
-    public void TestGetModel()
+    public void LanguageTranslator_TestGetModel()
     {
       if (!languageTranslator.GetModel(languageModel, (TranslationModel model) =>
        {
@@ -48,7 +46,7 @@ namespace sdk.test
     }
 
     [Test]
-    public void TestGetModels()
+    public void LanguageTranslator_TestGetModels()
     {
       if (!languageTranslator.GetModels((TranslationModels models) =>
        {
@@ -64,7 +62,7 @@ namespace sdk.test
     }
 
     [Test]
-    public void TestGetLanguages()
+    public void LanguageTranslator_TestGetLanguages()
     {
       if (!languageTranslator.GetLanguages((Languages languages) =>
       {
@@ -80,7 +78,7 @@ namespace sdk.test
     }
 
     [Test]
-    public void TestIdentify()
+    public void LanguageTranslator_TestIdentify()
     {
       if (!languageTranslator.Identify(query, (string lang) =>
       {
@@ -96,7 +94,7 @@ namespace sdk.test
     }
 
     [Test]
-    public void TestTranslate()
+    public void LanguageTranslator_TestTranslate()
     {
       if (!languageTranslator.GetTranslation(query, toLanguage, fromLanguage, (Translations translation) =>
       {
