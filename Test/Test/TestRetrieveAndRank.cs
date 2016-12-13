@@ -31,33 +31,31 @@ namespace sdk.test
     private AutoResetEvent autoEvent = new AutoResetEvent(false);
 
     //  from config variables
-    private string m_ExampleClusterID;
-    private string m_ExampleConfigName;
-    private string m_ExampleRankerID;
-    private string m_ExampleCollectionName;
+    private string exampleClusterID;
+    private string exampleConfigName;
+    private string exampleRankerID;
+    private string exampleCollectionName;
 
-    private string m_IntegrationTestQuery = "What is the basic mechanisim of the transonic aileron buzz";
-    private string[] m_Fl = { "title", "id", "body", "author", "bibliography" };
+    private string integrationTestQuery = "What is the basic mechanisim of the transonic aileron buzz";
+    private string[] fl = { "title", "id", "body", "author", "bibliography" };
 
     //  data paths to local files
-    private string m_IntegrationTestClusterConfigPath;
-    private string m_IntegrationTestRankerTrainingPath;
-    private string m_IntegrationTestRankerAnswerDataPath;
-    private string m_IntegrationTestIndexDataPath;
+    private string integrationTestClusterConfigPath;
+    private string integrationTestRankerTrainingPath;
+    private string integrationTestRankerAnswerDataPath;
+    private string integrationTestIndexDataPath;
 
-    private string m_ClusterToCreateName = "dotnet-integration-test-cluster";
-    private string m_ClusterToCreateSize = "3";
-    private int m_SizeToResizeCluster = 4;
-    private string m_CreatedClusterID;
+    private string clusterToCreateName = "dotnet-integration-test-cluster";
+    private string clusterToCreateSize = "3";
+    private int sizeToResizeCluster = 4;
+    private string createdClusterID;
 
-    private string m_ConfigToCreateName = "dotnet-integration-test-config";
-    private string m_CollectionToCreateName = "dotnet-integration-test-collection";
-    private string m_CreatedRankerID;
+    private string configToCreateName = "dotnet-integration-test-config";
+    private string collectionToCreateName = "dotnet-integration-test-collection";
+    private string createdRankerID;
 
-    private string m_RankerToCreateName = "dotnet-integration-test-ranker";
+    private string rankerToCreateName = "dotnet-integration-test-ranker";
 
-    private bool m_IsClusterReady = false;
-    private bool m_IsRankerReady = false;
     private string retrieveAndRankDataPath;
 
     override public void Init()
@@ -65,20 +63,21 @@ namespace sdk.test
       base.Init();
 
       retrieveAndRankDataPath = testDataPath + "RetrieveAndRank" + Path.DirectorySeparatorChar;
-      m_IntegrationTestClusterConfigPath = retrieveAndRankDataPath + "cranfield_solr_config.zip";
-      m_IntegrationTestRankerTrainingPath = retrieveAndRankDataPath + "ranker_training_data.csv";
-      m_IntegrationTestRankerAnswerDataPath = retrieveAndRankDataPath + "ranker_answer_data.csv";
-      m_IntegrationTestIndexDataPath = retrieveAndRankDataPath + "cranfield_data.json";
+      integrationTestClusterConfigPath = retrieveAndRankDataPath + "cranfield_solr_config.zip";
+      integrationTestRankerTrainingPath = retrieveAndRankDataPath + "ranker_training_data.csv";
+      integrationTestRankerAnswerDataPath = retrieveAndRankDataPath + "ranker_answer_data.csv";
+      integrationTestIndexDataPath = retrieveAndRankDataPath + "cranfield_data.json";
 
-      m_ExampleClusterID = Config.Instance.GetVariableValue("RetrieveAndRank_IntegrationTestClusterID");
-      m_ExampleConfigName = Config.Instance.GetVariableValue("RetrieveAndRank_IntegrationTestConfigName");
-      m_ExampleRankerID = Config.Instance.GetVariableValue("RetrieveAndRank_IntegrationTestRankerID");
-      m_ExampleCollectionName = Config.Instance.GetVariableValue("RetrieveAndRank_IntegrationTestCollectionName");
+      exampleClusterID = Config.Instance.GetVariableValue("RetrieveAndRank_IntegrationTestClusterID");
+      exampleConfigName = Config.Instance.GetVariableValue("RetrieveAndRank_IntegrationTestConfigName");
+      exampleRankerID = Config.Instance.GetVariableValue("RetrieveAndRank_IntegrationTestRankerID");
+      exampleCollectionName = Config.Instance.GetVariableValue("RetrieveAndRank_IntegrationTestCollectionName");
     }
 
     [Test, Order(0)]
     public void TestGetClusters()
     {
+      Log.Debug("TestRetrieveAndRank", "Attempting to get clusters...");
       if (!retrieveAndRank.GetClusters((SolrClusterListResponse resp, string data) =>
       {
         Assert.NotNull(resp);
@@ -95,13 +94,13 @@ namespace sdk.test
     [Test, Order(15)]
     public void TestGetClusterConfigs()
     {
-      Log.Debug("TestRetrieveAndRank", "Attempting to list cluster configs for {0}...", m_CreatedClusterID);
+      Log.Debug("TestRetrieveAndRank", "Attempting to list cluster configs for {0}...", createdClusterID);
       if (!retrieveAndRank.GetClusterConfigs((SolrConfigList resp, string data) =>
        {
-         Log.Debug("TestRetrieveAndRank", "Listed cluster configs for {0}...", m_CreatedClusterID);
+         Log.Debug("TestRetrieveAndRank", "Listed cluster configs for {0}...", createdClusterID);
          Assert.NotNull(resp);
          autoEvent.Set();
-       }, m_CreatedClusterID))
+       }, createdClusterID))
       {
         Assert.Fail("Failed to invoke GetClusterConfigs.");
         autoEvent.Set();
@@ -113,13 +112,13 @@ namespace sdk.test
     [Test,Order(16)]
     public void TestForwardCollectionRequestList()
     {
-      Log.Debug("TestRetrieveAndRank", "Attempting to forward collection request: List {0}...", m_CollectionToCreateName);
+      Log.Debug("TestRetrieveAndRank", "Attempting to forward collection request: List {0}...", collectionToCreateName);
 
       if (!retrieveAndRank.ForwardCollectionRequest((CollectionsResponse resp, string data) =>
       {
         Assert.NotNull(resp);
         autoEvent.Set();
-      }, m_CreatedClusterID, CollectionsAction.LIST, m_CollectionToCreateName, m_ConfigToCreateName))
+      }, createdClusterID, CollectionsAction.LIST, collectionToCreateName, configToCreateName))
       {
         Assert.Fail("Failed to invoke ForwardCollectionRequest: List.");
         autoEvent.Set();
@@ -152,11 +151,11 @@ namespace sdk.test
       Log.Debug("TestRetrieveAndRank", "Attempting to create cluster...");
       if (!retrieveAndRank.CreateCluster((SolrClusterResponse resp, string data) =>
       {
-        m_CreatedClusterID = resp.solr_cluster_id;
-        Log.Debug("TestRetrieveAndRank", "Created cluster {0}.", m_CreatedClusterID);
+        createdClusterID = resp.solr_cluster_id;
+        Log.Debug("TestRetrieveAndRank", "Created cluster {0}.", createdClusterID);
         Assert.NotNull(resp);
         autoEvent.Set();
-      }, m_ClusterToCreateName, m_ClusterToCreateSize))
+      }, clusterToCreateName, clusterToCreateSize))
       {
         Assert.Fail("Failed to invoke CreateCluster();");
         autoEvent.Set();
@@ -168,14 +167,14 @@ namespace sdk.test
     [Test, Order(5)]
     public void TestGetCluster()
     {
-      if (!string.IsNullOrEmpty(m_CreatedClusterID))
+      if (!string.IsNullOrEmpty(createdClusterID))
       {
-        Log.Debug("TestRetrieveAndRank", "Attempting to get cluster {0}...", m_CreatedClusterID);
+        Log.Debug("TestRetrieveAndRank", "Attempting to get cluster {0}...", createdClusterID);
         if (!retrieveAndRank.GetCluster((SolrClusterResponse resp, string data) =>
          {
            Assert.NotNull(resp);
            autoEvent.Set();
-         }, m_CreatedClusterID))
+         }, createdClusterID))
         {
           Assert.Fail("Failed to invoke GetCluster();");
           autoEvent.Set();
@@ -193,13 +192,13 @@ namespace sdk.test
     [Test, Order(6)]
     public void TestUploadClusterConfig()
     {
-      Log.Debug("TestRetrieveAndRank", "Attempting to upload cluster configs for {0}...", m_CreatedClusterID);
+      Log.Debug("TestRetrieveAndRank", "Attempting to upload cluster configs for {0}...", createdClusterID);
 
       if (!retrieveAndRank.UploadClusterConfig((UploadResponse resp, string data) =>
          {
            Assert.NotNull(resp);
            autoEvent.Set();
-         }, m_CreatedClusterID, m_ConfigToCreateName, m_IntegrationTestClusterConfigPath))
+         }, createdClusterID, configToCreateName, integrationTestClusterConfigPath))
       {
         Assert.Fail("Failed to invoke UploadClusterConfig();");
         autoEvent.Set();
@@ -211,13 +210,13 @@ namespace sdk.test
     [Test, Order(7)]
     public void TestGetClusterConfig()
     {
-      Log.Debug("TestRetrieveAndRank", "Attempting to get cluster config {0} for {1}...", m_ClusterToCreateName, m_CreatedClusterID);
+      Log.Debug("TestRetrieveAndRank", "Attempting to get cluster config {0} for {1}...", clusterToCreateName, createdClusterID);
 
       if (!retrieveAndRank.GetClusterConfig((byte[] resp, string data) =>
        {
          Assert.NotNull(resp);
          autoEvent.Set();
-       }, m_CreatedClusterID, m_ConfigToCreateName))
+       }, createdClusterID, configToCreateName))
       {
         Assert.Fail("Failed to invoke GetClusterConfig();");
         autoEvent.Set();
@@ -229,13 +228,13 @@ namespace sdk.test
     [Test, Order(8)]
     public void TestForwardCollectionRequestCreate()
     {
-      Log.Debug("TestRetrieveAndRank", "Attempting to forward collection request: Create {0}...", m_CollectionToCreateName);
+      Log.Debug("TestRetrieveAndRank", "Attempting to forward collection request: Create {0}...", collectionToCreateName);
 
       if (!retrieveAndRank.ForwardCollectionRequest((CollectionsResponse resp, string data) =>
        {
          Assert.NotNull(resp);
          autoEvent.Set();
-       }, m_CreatedClusterID, CollectionsAction.CREATE, m_CollectionToCreateName, m_ConfigToCreateName))
+       }, createdClusterID, CollectionsAction.CREATE, collectionToCreateName, configToCreateName))
       {
         Assert.Fail("Failed to invoke ForwardCollectionRequest: Create.");
         autoEvent.Set();
@@ -253,7 +252,7 @@ namespace sdk.test
       {
         Assert.NotNull(resp);
         autoEvent.Set();
-      }, m_IntegrationTestIndexDataPath, m_CreatedClusterID, m_CollectionToCreateName))
+      }, integrationTestIndexDataPath, createdClusterID, collectionToCreateName))
       {
         Assert.Fail("Failed to invoke IndexDocuments();");
         autoEvent.Set();
@@ -271,7 +270,7 @@ namespace sdk.test
       {
         Assert.NotNull(resp);
         autoEvent.Set();
-      }, m_CreatedClusterID, m_CollectionToCreateName, m_IntegrationTestQuery, m_Fl))
+      }, createdClusterID, collectionToCreateName, integrationTestQuery, fl))
       {
         Assert.Fail("Failed to invoke Search(); Standard");
         autoEvent.Set();
@@ -289,7 +288,7 @@ namespace sdk.test
       {
         Assert.NotNull(resp);
         autoEvent.Set();
-      }, m_CreatedClusterID, m_CollectionToCreateName, m_IntegrationTestQuery, m_Fl, true, m_CreatedRankerID))
+      }, createdClusterID, collectionToCreateName, integrationTestQuery, fl, true, createdRankerID))
       {
         Assert.Fail("Failed to invoke Search(); Ranked");
         autoEvent.Set();
@@ -307,7 +306,7 @@ namespace sdk.test
       {
         Assert.NotNull(resp);
         autoEvent.Set();
-      }, m_CreatedClusterID))
+      }, createdClusterID))
       {
         Assert.Fail("Failed to invoke GetClusterStats();");
         autoEvent.Set();
@@ -325,7 +324,7 @@ namespace sdk.test
       {
         Assert.NotNull(resp);
         autoEvent.Set();
-      }, m_CreatedClusterID, m_SizeToResizeCluster))
+      }, createdClusterID, sizeToResizeCluster))
       {
         Assert.Fail("Failed to invoke ResizeCluster();");
         autoEvent.Set();
@@ -343,7 +342,7 @@ namespace sdk.test
       {
         Assert.NotNull(resp);
         autoEvent.Set();
-      }, m_CreatedClusterID))
+      }, createdClusterID))
       {
         Assert.Fail("Failed to invoke GetClusterResizeStatus();");
         autoEvent.Set();
@@ -359,10 +358,10 @@ namespace sdk.test
 
       if (!retrieveAndRank.CreateRanker((RankerStatusPayload resp, string data) =>
       {
-        m_CreatedRankerID = resp.ranker_id;
+        createdRankerID = resp.ranker_id;
         Assert.NotNull(resp);
         autoEvent.Set();
-      }, m_IntegrationTestRankerTrainingPath, m_RankerToCreateName))
+      }, integrationTestRankerTrainingPath, rankerToCreateName))
       {
         Assert.Fail("Failed to invoke CreateRanker();");
         autoEvent.Set();
@@ -380,7 +379,7 @@ namespace sdk.test
       {
         Assert.NotNull(resp);
         autoEvent.Set();
-      }, m_CreatedRankerID, m_IntegrationTestRankerAnswerDataPath))
+      }, createdRankerID, integrationTestRankerAnswerDataPath))
       {
         Assert.Fail("Failed to invoke Rank();");
         autoEvent.Set();
@@ -398,7 +397,7 @@ namespace sdk.test
       {
         Assert.NotNull(resp);
         autoEvent.Set();
-      }, m_CreatedRankerID))
+      }, createdRankerID))
       {
         Assert.Fail("Failed to invoke GetRanker();");
         autoEvent.Set();
@@ -410,13 +409,13 @@ namespace sdk.test
     [Test, Order(20)]
     public void TestForwardCollectionRequestDelete()
     {
-      Log.Debug("TestRetrieveAndRank", "Attempting to forward collection request: Delete {0}...", m_CollectionToCreateName);
+      Log.Debug("TestRetrieveAndRank", "Attempting to forward collection request: Delete {0}...", collectionToCreateName);
 
       if (!retrieveAndRank.ForwardCollectionRequest((CollectionsResponse resp, string data) =>
       {
         Assert.NotNull(resp);
         autoEvent.Set();
-      }, m_CreatedClusterID, CollectionsAction.DELETE, m_CollectionToCreateName, m_ConfigToCreateName))
+      }, createdClusterID, CollectionsAction.DELETE, collectionToCreateName, configToCreateName))
       {
         Assert.Fail("Failed to invoke ForwardCollectionRequest: Delete.");
         autoEvent.Set();
@@ -428,13 +427,13 @@ namespace sdk.test
     [Test, Order(21)]
     public void TestDeleteClusterConfig()
     {
-      Log.Debug("TestRetrieveAndRank", "Attempting to delete cluster config {0} for {1}...", m_ClusterToCreateName, m_CreatedClusterID);
+      Log.Debug("TestRetrieveAndRank", "Attempting to delete cluster config {0} for {1}...", clusterToCreateName, createdClusterID);
 
       if (!retrieveAndRank.DeleteClusterConfig((bool success, string data) =>
       {
         Assert.True(success);
         autoEvent.Set();
-      }, m_CreatedClusterID, m_ConfigToCreateName))
+      }, createdClusterID, configToCreateName))
       {
         Assert.Fail("Failed to invoke DeleteClusterConfig();");
         autoEvent.Set();
@@ -446,13 +445,13 @@ namespace sdk.test
     [Test, Order(22)]
     public void TestDeleteRanker()
     {
-      Log.Debug("TestRetrieveAndRank", "Attempting to delete ranker {0}...", m_CreatedRankerID);
+      Log.Debug("TestRetrieveAndRank", "Attempting to delete ranker {0}...", createdRankerID);
 
       if (!retrieveAndRank.DeleteRanker((bool success, string data) =>
       {
         Assert.True(success);
         autoEvent.Set();
-      }, m_CreatedRankerID))
+      }, createdRankerID))
       {
         Assert.Fail("Failed to invoke DeleteRanker();");
         autoEvent.Set();
@@ -464,14 +463,14 @@ namespace sdk.test
     [Test, Order(23)]
     public void TestDeleteCluster()
     {
-      if (!string.IsNullOrEmpty(m_CreatedClusterID))
+      if (!string.IsNullOrEmpty(createdClusterID))
       {
-        Log.Debug("TestRetrieveAndRank", "Attempting to delete cluster {0}...", m_CreatedClusterID);
+        Log.Debug("TestRetrieveAndRank", "Attempting to delete cluster {0}...", createdClusterID);
         if (!retrieveAndRank.DeleteCluster((bool success, string data) =>
         {
           Assert.True(success);
           autoEvent.Set();
-        }, m_CreatedClusterID))
+        }, createdClusterID))
         {
           Assert.Fail("Failed to invoke DeleteCluster();");
           autoEvent.Set();

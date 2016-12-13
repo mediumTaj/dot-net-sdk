@@ -69,6 +69,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="src\connection\RESTConnector.cs" />
+    <Compile Include="src\connection\WSConnector.cs" />
     <Compile Include="src\logging\FileReactor.cs" />
     <Compile Include="src\logging\ILogReactor.cs" />
     <Compile Include="src\logging\Logger.cs" />
@@ -89,6 +90,10 @@
     <Compile Include="src\services\PersonalityInsights\v3\PersonalityInsights.cs" />
     <Compile Include="src\services\RetrieveAndRank\DataModels.cs" />
     <Compile Include="src\services\RetrieveAndRank\RetrieveAndRank.cs" />
+    <Compile Include="src\services\SpeechToText\DataModels.cs" />
+    <Compile Include="src\services\SpeechToText\SpeechToText.cs" />
+    <Compile Include="src\services\TextToSpeech\DataModels.cs" />
+    <Compile Include="src\services\TextToSpeech\TextToSpeech.cs" />
     <Compile Include="src\services\ToneAnalyzer\DataModels.cs" />
     <Compile Include="src\services\ToneAnalyzer\ToneAnalyzer.cs" />
     <Compile Include="src\services\VisualRecognition\DataModels.cs" />
