@@ -1,7 +1,4 @@
-﻿
-using IBM.Watson.DeveloperCloud.Logging;
-using IBM.Watson.DeveloperCloud.Utilities;
-/**
+﻿/**
 * Copyright 2015 IBM Corp. All Rights Reserved.
 *
 * Licensed under the Apache License, Version 2.0 (the "License");
@@ -17,6 +14,9 @@ using IBM.Watson.DeveloperCloud.Utilities;
 * limitations under the License.
 *
 */
+
+using IBM.Watson.DeveloperCloud.Logging;
+using IBM.Watson.DeveloperCloud.Utilities;
 using NUnit.Framework;
 using System.IO;
 

@@ -62,12 +62,16 @@
     <Compile Include="TestLanguageTranslator.cs" />
     <Compile Include="TestDocumentConversion.cs" />
     <Compile Include="TestConversation.cs" />
-    <Compile Include="HelloWorld.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TestAlchemyDataNews.cs" />
     <Compile Include="TestAlchemyLanguage.cs" />
     <Compile Include="TestPersonalityInsights.cs" />
     <Compile Include="TestRetrieveAndRank.cs" />
+    <Compile Include="TestSpeechToText.cs" />
+    <Compile Include="TestTextToSpeech.cs" />
+    <Compile Include="TestToneAnalyzer.cs" />
+    <Compile Include="TestTradeoffAnalytics.cs" />
+    <Compile Include="TestVisualRecognition.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

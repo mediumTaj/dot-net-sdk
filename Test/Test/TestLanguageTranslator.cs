@@ -18,9 +18,6 @@
 using NUnit.Framework;
 using IBM.Watson.DeveloperCloud.Services.LanguageTranslator.v1;
 using System.Threading;
-using IBM.Watson.DeveloperCloud.Utilities;
-using System.IO;
-using IBM.Watson.DeveloperCloud.Logging;
 
 namespace sdk.test
 {

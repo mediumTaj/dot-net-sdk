@@ -14,12 +14,11 @@
 * limitations under the License.
 *
 */
-using NUnit.Framework;
+
 using IBM.Watson.DeveloperCloud.Services.PersonalityInsights.v3;
 using IBM.Watson.DeveloperCloud.Utilities;
+using NUnit.Framework;
 using System.Threading;
-using IBM.Watson.DeveloperCloud.Logging;
-using System.IO;
 
 namespace sdk.test
 {

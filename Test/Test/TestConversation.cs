@@ -1,6 +1,4 @@
-﻿
-using IBM.Watson.DeveloperCloud.Logging;
-/**
+﻿/**
 * Copyright 2015 IBM Corp. All Rights Reserved.
 *
 * Licensed under the Apache License, Version 2.0 (the "License");
@@ -20,7 +18,6 @@ using IBM.Watson.DeveloperCloud.Services.Conversation.v1;
 using IBM.Watson.DeveloperCloud.Utilities;
 using NUnit.Framework;
 using System.Threading;
-using System.IO;
 
 namespace sdk.test
 {

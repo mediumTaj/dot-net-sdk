@@ -15,14 +15,14 @@
 *
 */
 
-using System.IO;
-using NUnit.Framework;
+using IBM.Watson.DeveloperCloud.Logging;
 using IBM.Watson.DeveloperCloud.Services.NaturalLanguageClassifier.v1;
 using IBM.Watson.DeveloperCloud.Utilities;
-using static IBM.Watson.DeveloperCloud.Utilities.Utility;
-using IBM.Watson.DeveloperCloud.Logging;
+using NUnit.Framework;
 using System;
+using System.IO;
 using System.Threading;
+using static IBM.Watson.DeveloperCloud.Utilities.Utility;
 
 namespace sdk.test
 {

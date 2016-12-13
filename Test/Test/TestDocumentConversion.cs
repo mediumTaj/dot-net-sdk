@@ -17,10 +17,7 @@
 
 using NUnit.Framework;
 using IBM.Watson.DeveloperCloud.Services.DocumentConversion.v1;
-using IBM.Watson.DeveloperCloud.Utilities;
 using System.Threading;
-using System.IO;
-using IBM.Watson.DeveloperCloud.Logging;
 
 namespace sdk.test
 {
