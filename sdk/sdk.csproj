@@ -47,6 +47,10 @@
       <HintPath>packages\HtmlAgilityPack.1.4.9.5\lib\Net45\HtmlAgilityPack.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="NAudio, Version=1.7.3.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>packages\NAudio.1.7.3\lib\net35\NAudio.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
@@ -75,11 +79,21 @@
     <Compile Include="src\logging\Logger.cs" />
     <Compile Include="src\services\AlchemyAPI\AlchemyAPI.cs" />
     <Compile Include="src\services\AlchemyAPI\DataModels.cs" />
+<<<<<<< HEAD
+=======
+    <Compile Include="src\services\Conversation-Experimental\Conversation-Experimental.cs" />
+    <Compile Include="src\services\Conversation-Experimental\DataModels.cs" />
+>>>>>>> feature-streaming
     <Compile Include="src\services\Conversation\Conversation.cs" />
     <Compile Include="src\services\Conversation\DataModels.cs" />
     <Compile Include="src\services\DocumentConversion\DataModels.cs" />
     <Compile Include="src\services\DocumentConversion\DocumentConversion.cs" />
     <Compile Include="src\services\IWatsonService.cs" />
+<<<<<<< HEAD
+=======
+    <Compile Include="src\services\LanguageTranslation\DataModels.cs" />
+    <Compile Include="src\services\LanguageTranslation\LanguageTranslation.cs" />
+>>>>>>> feature-streaming
     <Compile Include="src\services\LanguageTranslator\DataModels.cs" />
     <Compile Include="src\services\LanguageTranslator\LanguageTranslator.cs" />
     <Compile Include="src\services\NaturalLanguageClassifier\DataModels.cs" />
@@ -100,11 +114,13 @@
     <Compile Include="src\services\VisualRecognition\VisualRecognition.cs" />
     <Compile Include="src\testing\UnitTest.cs" />
     <Compile Include="src\testing\TestRunnable.cs" />
+    <Compile Include="src\utilities\AudioClip.cs" />
     <Compile Include="src\utilities\AudioClipUtil.cs" />
     <Compile Include="src\utilities\Config.cs" />
     <Compile Include="src\utilities\Constants.cs" />
     <Compile Include="src\utilities\Credentials.cs" />
     <Compile Include="src\utilities\DataCache.cs" />
+    <Compile Include="src\utilities\DataTypes.cs" />
     <Compile Include="src\utilities\EventManager.cs" />
     <Compile Include="src\utilities\KeyEventManager.cs" />
     <Compile Include="src\utilities\Runnable.cs" />
@@ -187,6 +203,7 @@
     <Folder Include="src\services\TradeoffAnalytics\" />
   </ItemGroup>
   <ItemGroup>
+<<<<<<< HEAD
     <Content Include="bin\Debug\sdk.vshost.exe" />
     <Content Include="packages\HtmlAgilityPack.1.4.9.5\HAPIcon.png" />
     <Content Include="packages\HtmlAgilityPack.1.4.9.5\lib\Net20\HtmlAgilityPack.dll" />
@@ -273,6 +290,9 @@
     <Content Include="packages\RestSharp.105.2.3\readme.txt" />
     <Content Include="packages\WebSocketSharp.1.0.3-rc11\lib\websocket-sharp.dll" />
     <Content Include="packages\WebSocketSharp.1.0.3-rc11\lib\websocket-sharp.xml" />
+=======
+    <Content Include="test\testData\stt.wav" />
+>>>>>>> feature-streaming
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
