@@ -55,7 +55,10 @@ namespace sdk.test
         Assert.NotNull(models);
         autoEvent.Set();
       }))
+      {
         Assert.Fail("Failed to invoke GetModels();");
+        autoEvent.Set();
+      }
 
       autoEvent.WaitOne();
     }
@@ -70,7 +73,10 @@ namespace sdk.test
         Assert.NotNull(model);
         autoEvent.Set();
       }, speechToTextModelEnglish))
+      {
         Assert.Fail("Failed to invoke GetModel();");
+        autoEvent.Set();
+      }
 
       autoEvent.WaitOne();
     }
@@ -85,7 +91,10 @@ namespace sdk.test
         Assert.NotNull(customizations);
         autoEvent.Set();
       }))
+      {
         Assert.Fail("Failed to invoke GetCustomizations();");
+        autoEvent.Set();
+      }
 
       autoEvent.WaitOne();
     }
@@ -101,7 +110,10 @@ namespace sdk.test
         Assert.NotNull(customizationID);
         autoEvent.Set();
       }, createdCustomizationName, speechToTextModelEnglish, createdCustomizationDescription))
+      {
         Assert.Fail("Failed to invoke CreateCustomization();");
+        autoEvent.Set();
+      }
 
       autoEvent.WaitOne();
     }
@@ -116,7 +128,10 @@ namespace sdk.test
         Assert.NotNull(customization);
         autoEvent.Set();
       }, createdCustomizationID))
+      {
         Assert.Fail("Failed to invoke GetCustomization();");
+        autoEvent.Set();
+      }
 
       autoEvent.WaitOne();
     }
@@ -131,7 +146,10 @@ namespace sdk.test
         Assert.NotNull(corpora);
         autoEvent.Set();
       }, createdCustomizationID))
+      {
         Assert.Fail("Failed to invoke GetCustomCorpora();");
+        autoEvent.Set();
+      }
 
       autoEvent.WaitOne();
     }
@@ -146,7 +164,10 @@ namespace sdk.test
         Assert.True(success);
         autoEvent.Set();
       }, createdCustomizationID, createdCorpusName, allowOverwrite, customCorpusFilePath))
+      {
         Assert.Fail("Failed to invoke AddCustomCorpus(); using file");
+        autoEvent.Set();
+      }
 
       autoEvent.WaitOne();
     }
@@ -154,14 +175,14 @@ namespace sdk.test
     [Test, Order(8)]
     public void SpeechToText_TestAddCustomCorpusUsingData()
     {
-      byte[] customCorpusData = null ;
+      byte[] customCorpusData = null;
 
       Log.Debug("TestSpeechToText", "Attempting to add custom corpus using data...");
       try
       {
         customCorpusData = File.ReadAllBytes(customCorpusFilePath);
       }
-      catch(Exception e)
+      catch (Exception e)
       {
         Assert.Fail("Failed to read file. " + e.Message);
         autoEvent.Set();
@@ -174,7 +195,10 @@ namespace sdk.test
           Assert.True(success);
           autoEvent.Set();
         }, createdCustomizationID, createdCorpusName, allowOverwrite, customCorpusData))
+        {
           Assert.Fail("Failed to invoke AddCustomCorpus(); using data");
+          autoEvent.Set();
+        }
       }
 
       autoEvent.WaitOne();
@@ -190,7 +214,10 @@ namespace sdk.test
         Assert.NotNull(wordList);
         autoEvent.Set();
       }, createdCustomizationID))
+      {
         Assert.Fail("Failed to invoke GetCustomWords();");
+        autoEvent.Set();
+      }
 
       autoEvent.WaitOne();
     }
@@ -205,7 +232,10 @@ namespace sdk.test
         Assert.True(success);
         autoEvent.Set();
       }, createdCustomizationID, customWordsFilePath))
+      {
         Assert.Fail("Failed to invoke AddCustomWords(); file");
+        autoEvent.Set();
+      }
 
       autoEvent.WaitOne();
     }
@@ -242,7 +272,10 @@ namespace sdk.test
         Assert.True(success);
         autoEvent.Set();
       }, createdCustomizationID, words))
+      {
         Assert.Fail("Failed to invoke AddCustomWords(); object");
+        autoEvent.Set();
+      }
 
       autoEvent.WaitOne();
     }
@@ -257,7 +290,10 @@ namespace sdk.test
         Assert.NotNull(word);
         autoEvent.Set();
       }, createdCustomizationID, wordToGet))
+      {
         Assert.Fail("Failed to invoke GetCustomWord();");
+        autoEvent.Set();
+      }
 
       autoEvent.WaitOne();
     }
@@ -272,7 +308,10 @@ namespace sdk.test
         Assert.True(success);
         autoEvent.Set();
       }, createdCustomizationID))
+      {
         Assert.Fail("Failed to invoke TrainCustomization();");
+        autoEvent.Set();
+      }
 
       autoEvent.WaitOne();
     }
@@ -287,7 +326,10 @@ namespace sdk.test
         Assert.True(success);
         autoEvent.Set();
       }, createdCustomizationID, createdCorpusName))
+      {
         Assert.Fail("Failed to invoke DeleteCustomCorpus();");
+        autoEvent.Set();
+      }
 
       autoEvent.WaitOne();
     }
@@ -302,7 +344,10 @@ namespace sdk.test
         Assert.True(success);
         autoEvent.Set();
       }, createdCustomizationID, wordToGet))
+      {
         Assert.Fail("Failed to invoke DeleteCustomWord();");
+        autoEvent.Set();
+      }
 
       autoEvent.WaitOne();
     }
@@ -317,7 +362,10 @@ namespace sdk.test
         Assert.True(success);
         autoEvent.Set();
       }, createdCustomizationID))
+      {
         Assert.Fail("Failed to invoke ResetCustomization();");
+        autoEvent.Set();
+      }
 
       autoEvent.WaitOne();
     }
@@ -332,7 +380,10 @@ namespace sdk.test
         Assert.True(success);
         autoEvent.Set();
       }, createdCustomizationID))
+      {
         Assert.Fail("Failed to invoke DeleteCustomization();");
+        autoEvent.Set();
+      }
 
       autoEvent.WaitOne();
     }
