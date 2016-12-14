@@ -171,7 +171,7 @@ namespace sdk.test
 
       if (!textToSpeech.CreateCustomization((CustomizationID customizationID, string data) =>
       {
-        Log.Debug("TestTextToSpeech", "CreateCustomization() invoked: {0}", customizationID);
+        Log.Debug("TestTextToSpeech", "CreateCustomization() invoked: {0}", customizationID.customization_id);
         Assert.NotNull(customizationID);
         customizationIdCreated = customizationID.customization_id;
         autoEvent.Set();
