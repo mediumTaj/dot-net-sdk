@@ -25,6 +25,8 @@ using System.Text;
 using System.Net.NetworkInformation;
 using System.Text.RegularExpressions;
 using System.Runtime.InteropServices;
+using System.IO;
+using NAudio.Wave;
 
 namespace IBM.Watson.DeveloperCloud.Utilities
 {
@@ -344,7 +346,7 @@ namespace IBM.Watson.DeveloperCloud.Utilities
     }
     #endregion
 
-    #region
+    #region Is Local File
     /// <summary>
     /// Determines if a string is a file path.
     /// </summary>
@@ -360,6 +362,174 @@ namespace IBM.Watson.DeveloperCloud.Utilities
       {
         return false;
       }
+    }
+    #endregion
+
+    #region Has Invalid Characters
+    public static bool FilePathHasInvalidChars(string path)
+    {
+      return (!string.IsNullOrEmpty(path) && path.IndexOfAny(System.IO.Path.GetInvalidPathChars()) >= 0);
+    }
+    #endregion
+
+    #region Get Source Type
+    public static SourceType GetSourceType(string source)
+    {
+      if (source.StartsWith("http://") || source.StartsWith("https://"))
+      {
+        Log.Debug("Utility", "source type: {0}, source: {1}", SourceType.URL, source);
+        return SourceType.URL;
+      }
+      else
+      {
+        try
+        {
+          bool extension = Path.HasExtension(source);
+          return SourceType.PATH;
+        }
+        catch
+        {
+          return SourceType.TEXT;
+        }
+      }
+    }
+    public enum SourceType
+    {
+      URL,
+      PATH,
+      TEXT
+    }
+    #endregion
+
+    #region ClassifierData
+    public class ClassifierData
+    {
+      [fsIgnore]
+      public string FileName { get; set; }
+      public bool Expanded { get; set; }
+      public bool InstancesExpanded { get; set; }
+      public bool ClassesExpanded { get; set; }
+      public string Name { get; set; }
+      public string Language { get; set; }
+      public Dictionary<string, List<string>> Data { get; set; }
+      public Dictionary<string, bool> DataExpanded { get; set; }
+
+      public void Import(string filename)
+      {
+        if (Data == null)
+          Data = new Dictionary<string, List<string>>();
+
+        string[] lines = File.ReadAllLines(filename);
+        foreach (var line in lines)
+        {
+          int nSeperator = line.LastIndexOf(',');
+          if (nSeperator < 0)
+            continue;
+
+          string c = line.Substring(nSeperator + 1);
+          string phrase = line.Substring(0, nSeperator);
+
+          if (!Data.ContainsKey(c))
+            Data[c] = new List<string>();
+          Data[c].Add(phrase);
+        }
+      }
+
+      public string Export()
+      {
+        StringBuilder sb = new StringBuilder();
+        foreach (var kp in Data)
+        {
+          foreach (var p in kp.Value)
+          {
+            sb.Append(p + "," + kp.Key + "\n");
+          }
+        }
+
+        return sb.ToString();
+      }
+
+      public void Save(string filename)
+      {
+        fsData data = null;
+        fsResult r = sm_Serializer.TrySerialize(typeof(ClassifierData), this, out data);
+        if (!r.Succeeded)
+          throw new Exception("Failed to serialize ClassifierData: " + r.FormattedMessages);
+
+        File.WriteAllText(filename, fsJsonPrinter.PrettyJson(data));
+        FileName = filename;
+      }
+
+      public void Save()
+      {
+        Save(FileName);
+      }
+
+      public bool Load(string filename)
+      {
+        try
+        {
+          string json = File.ReadAllText(filename);
+
+          fsData data = null;
+          fsResult r = fsJsonParser.Parse(json, out data);
+          if (!r.Succeeded)
+            throw new Exception(r.FormattedMessages);
+
+          object obj = this;
+          r = sm_Serializer.TryDeserialize(data, obj.GetType(), ref obj);
+          if (!r.Succeeded)
+            throw new Exception(r.FormattedMessages);
+        }
+        catch (Exception e)
+        {
+          Log.Error("NaturalLanguageClassifierEditor", "Failed to load classifier data {1}: {0}", e.ToString(), filename);
+          return false;
+        }
+
+        FileName = filename;
+        return true;
+      }
+    };
+    #endregion
+
+    #region 16 bit to float
+    public static float[] Convert16BitToFloat(byte[] input)
+    {
+      int inputSamples = input.Length / 2; // 16 bit input, so 2 bytes per sample
+      float[] output = new float[inputSamples];
+      int outputIndex = 0;
+      for (int n = 0; n < inputSamples; n++)
+      {
+        short sample = BitConverter.ToInt16(input, n * 2);
+        output[outputIndex++] = sample / 32768f;
+      }
+      return output;
+    }
+    #endregion
+
+    #region Read WAVE file
+    public static AudioClip ReadWaveFile(string filePath)
+    {
+      AudioClip clip = null;
+
+      try
+      {
+        using (WaveFileReader fileReader = new WaveFileReader(filePath))
+        {
+          byte[] buffer = new byte[fileReader.Length];
+          fileReader.Read(buffer, 0, (int)fileReader.Length);
+
+          clip = AudioClip.Create("audioClip", (int)fileReader.SampleCount, fileReader.WaveFormat.Channels, fileReader.WaveFormat.SampleRate, false);
+          clip.SetData(Convert16BitToFloat(buffer), 0);
+        }
+      }
+      catch(Exception e)
+      {
+        Log.Debug("Unable to read WavFile: {0}", e.Message);
+      }
+
+      return clip;
     }
     #endregion
   }

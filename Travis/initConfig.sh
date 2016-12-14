@@ -9,12 +9,12 @@ if [ "${TRAVIS_PULL_REQUEST}" = "false" ]; then
     if [ $? = 0 ] ; then
       echo "Decrypting config COMPLETED! Exited with $?"
       echo "Attempting to run dot-net-sdk integration Tests..."
-      mono ./testrunner/NUnit.Runners.2.6.4/tools/nunit-console.exe Test/Test/bin/Release/Test.dll
+      mono ./NUnit.ConsoleRunner.3.5.0/tools/nunit3-console.exe Test/Test/bin/Release/Test.dll
       if [ $? = 0 ] ; then
         echo "Integration tests COMPLETED! Exited with $?"
         exit 0
       else
-        echo "Integration tests! Exited with $?"
+        echo "Integration tests FAILED! Exited with $?"
         exit 1
       fi
     else

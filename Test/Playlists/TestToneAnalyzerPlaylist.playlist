@@ -1,0 +1,1 @@
+<Playlist Version="1.0"><Add Test="sdk.test.TestToneAnalyzer.ToneAnalyzer_TestToneGET" /><Add Test="sdk.test.TestToneAnalyzer.ToneAnalyzer_TestTonePOST" /></Playlist>

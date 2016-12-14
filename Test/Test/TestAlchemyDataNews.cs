@@ -14,7 +14,6 @@
 * limitations under the License.
 *
 */
-
 using IBM.Watson.DeveloperCloud.Services.AlchemyAPI.v1;
 using NUnit.Framework;
 using System.Collections.Generic;
@@ -22,23 +21,29 @@ using System.Collections.Generic;
 namespace sdk.test
 {
   [TestFixture]
-  public class TestAlchemyDataNews
+  public class TestAlchemyDataNews : IntegrationTest
   {
     private AlchemyAPI alchemyDataNews = new AlchemyAPI();
     private string[] returnFields = { Fields.ENRICHED_URL_ENTITIES, Fields.ENRICHED_URL_KEYWORDS };
     private Dictionary<string, string> queryFields = new Dictionary<string, string>();
-    
+
     [Test]
-    public void TestDataNews()
+    public void AlchemyAPI_TestDataNews()
     {
       queryFields.Add(Fields.ENRICHED_URL_RELATIONS_RELATION_SUBJECT_TEXT, "Obama");
       queryFields.Add(Fields.ENRICHED_URL_CLEANEDTITLE, "Washington");
 
       if (!alchemyDataNews.GetNews((NewsResponse newsData, string data) =>
+       {
+         Assert.AreNotEqual(newsData, null);
+         autoEvent.Set();
+       }, returnFields, queryFields))
       {
-        Assert.AreNotEqual(newsData, null);
-      }, returnFields, queryFields))
         Assert.Fail();
+        autoEvent.Set();
+      }
+
+      autoEvent.WaitOne();
     }
   }
 }
