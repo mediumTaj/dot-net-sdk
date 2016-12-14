@@ -25,6 +25,7 @@ using IBM.Watson.DeveloperCloud.Utilities;
 
 namespace sdk.test
 {
+  [TestFixture]
   class TestSpeechToText : IntegrationTest
   {
     private SpeechToText speechToText = new SpeechToText();

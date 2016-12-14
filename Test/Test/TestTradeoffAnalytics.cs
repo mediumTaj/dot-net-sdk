@@ -15,13 +15,14 @@
 *
 */
 
+using IBM.Watson.DeveloperCloud.Logging;
+using IBM.Watson.DeveloperCloud.Services.TradeoffAnalytics.v1;
+using NUnit.Framework;
+using System.Collections.Generic;
+
 namespace sdk.test
 {
-  using IBM.Watson.DeveloperCloud.Logging;
-  using IBM.Watson.DeveloperCloud.Services.TradeoffAnalytics.v1;
-  using NUnit.Framework;
-  using System.Collections.Generic;
-
+  [TestFixture]
   class TestTradeoffAnalytics : IntegrationTest
   {
     private TradeoffAnalytics tradeoffAnalytics = new TradeoffAnalytics();

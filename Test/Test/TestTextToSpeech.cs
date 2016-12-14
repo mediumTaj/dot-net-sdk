@@ -23,6 +23,7 @@ using NUnit.Framework;
 
 namespace sdk.test
 {
+  [TestFixture]
   class TestTextToSpeech : IntegrationTest
   {
     private TextToSpeech textToSpeech = new TextToSpeech();

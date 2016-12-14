@@ -21,6 +21,7 @@ using System.IO;
 
 namespace sdk.test
 {
+  [TestFixture]
   class TestToneAnalyzer : IntegrationTest
   {
     private ToneAnalyzer toneAnalyzer = new ToneAnalyzer();
