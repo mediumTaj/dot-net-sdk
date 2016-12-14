@@ -452,7 +452,7 @@ namespace sdk.test
     }
 
     [Test, Order(21)]
-    public void VisualRecognition_DeleteCollectionImage()
+    public void VisualRecognition_TestDeleteCollectionImage()
     {
       Log.Debug("TestVisualRecognition", "Attempting to delte an image from collection...");
 
