@@ -18,7 +18,6 @@ using IBM.Watson.DeveloperCloud.Logging;
 *
 */
 using IBM.Watson.DeveloperCloud.Services.ToneAnalyzer.v3;
-using IBM.Watson.DeveloperCloud.Utilities;
 using NUnit.Framework;
 using System.IO;
 
@@ -29,7 +28,7 @@ namespace sdk.test
     private ToneAnalyzer toneAnalyzer = new ToneAnalyzer();
     private string toneAnalyzerTestDataPath = "watson_beats_jeopardy.txt";
     private string toneAnalyzerTestDataString;
-    
+
     public override void Init()
     {
       base.Init();

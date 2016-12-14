@@ -100,6 +100,8 @@
     <Compile Include="src\services\TextToSpeech\TextToSpeech.cs" />
     <Compile Include="src\services\ToneAnalyzer\DataModels.cs" />
     <Compile Include="src\services\ToneAnalyzer\ToneAnalyzer.cs" />
+    <Compile Include="src\services\TradeoffAnalytics\DataModels.cs" />
+    <Compile Include="src\services\TradeoffAnalytics\TradeoffAnalytics.cs" />
     <Compile Include="src\services\VisualRecognition\DataModels.cs" />
     <Compile Include="src\services\VisualRecognition\VisualRecognition.cs" />
     <Compile Include="src\testing\UnitTest.cs" />
@@ -190,7 +192,6 @@
   <ItemGroup>
     <Folder Include="bin\Release\" />
     <Folder Include="obj\Debug\" />
-    <Folder Include="src\services\TradeoffAnalytics\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="bin\Debug\sdk.vshost.exe" />
