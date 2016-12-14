@@ -43,8 +43,12 @@ namespace sdk.test
     {
       base.Init();
 
-      naturalLanguageClassifier.DisableCache = true;
-      data.Load(TestContext.CurrentContext.TestDirectory + Path.DirectorySeparatorChar + trainingDataPath);
+      if (!isTestInitalized)
+      {
+        naturalLanguageClassifier.DisableCache = true;
+        data.Load(TestContext.CurrentContext.TestDirectory + Path.DirectorySeparatorChar + trainingDataPath);
+        isTestInitalized = true;
+      }
     }
 
     [Test, Order(0)]

@@ -45,11 +45,15 @@ namespace sdk.test
     {
       base.Init();
 
-      customizationIDToTest = Config.Instance.GetVariableValue("TextToSpeech_DotnetIntegrationTestCustomVoiceModel");
-      updateWordObject0.word = updateWord0;
-      updateWordObject0.translation = updateTranslation0;
-      updateWordObject1.word = updateWord1;
-      updateWordObject1.translation = updateTranslation1;
+      if (!isTestInitalized)
+      {
+        customizationIDToTest = Config.Instance.GetVariableValue("TextToSpeech_DotnetIntegrationTestCustomVoiceModel");
+        updateWordObject0.word = updateWord0;
+        updateWordObject0.translation = updateTranslation0;
+        updateWordObject1.word = updateWord1;
+        updateWordObject1.translation = updateTranslation1;
+        isTestInitalized = true;
+      }
     }
 
     [Test]

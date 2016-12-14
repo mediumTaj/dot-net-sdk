@@ -33,7 +33,11 @@ namespace sdk.test
     {
       base.Init();
 
-      example_html_article = testDataPath + "watson_beats_jeopardy.html";
+      if (!isTestInitalized)
+      {
+        example_html_article = testDataPath + "watson_beats_jeopardy.html";
+        isTestInitalized = true;
+      }
     }
 
     [Test]

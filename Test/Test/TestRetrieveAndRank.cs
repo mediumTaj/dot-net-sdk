@@ -60,16 +60,21 @@ namespace sdk.test
     {
       base.Init();
 
-      retrieveAndRankDataPath = testDataPath + "RetrieveAndRank" + Path.DirectorySeparatorChar;
-      integrationTestClusterConfigPath = retrieveAndRankDataPath + "cranfield_solr_config.zip";
-      integrationTestRankerTrainingPath = retrieveAndRankDataPath + "ranker_training_data.csv";
-      integrationTestRankerAnswerDataPath = retrieveAndRankDataPath + "ranker_answer_data.csv";
-      integrationTestIndexDataPath = retrieveAndRankDataPath + "cranfield_data.json";
+      if (!isTestInitalized)
+      {
+        retrieveAndRankDataPath = testDataPath + "RetrieveAndRank" + Path.DirectorySeparatorChar;
+        integrationTestClusterConfigPath = retrieveAndRankDataPath + "cranfield_solr_config.zip";
+        integrationTestRankerTrainingPath = retrieveAndRankDataPath + "ranker_training_data.csv";
+        integrationTestRankerAnswerDataPath = retrieveAndRankDataPath + "ranker_answer_data.csv";
+        integrationTestIndexDataPath = retrieveAndRankDataPath + "cranfield_data.json";
 
-      exampleClusterID = Config.Instance.GetVariableValue("RetrieveAndRank_IntegrationTestClusterID");
-      exampleConfigName = Config.Instance.GetVariableValue("RetrieveAndRank_IntegrationTestConfigName");
-      exampleRankerID = Config.Instance.GetVariableValue("RetrieveAndRank_IntegrationTestRankerID");
-      exampleCollectionName = Config.Instance.GetVariableValue("RetrieveAndRank_IntegrationTestCollectionName");
+        exampleClusterID = Config.Instance.GetVariableValue("RetrieveAndRank_IntegrationTestClusterID");
+        exampleConfigName = Config.Instance.GetVariableValue("RetrieveAndRank_IntegrationTestConfigName");
+        exampleRankerID = Config.Instance.GetVariableValue("RetrieveAndRank_IntegrationTestRankerID");
+        exampleCollectionName = Config.Instance.GetVariableValue("RetrieveAndRank_IntegrationTestCollectionName");
+
+        isTestInitalized = true;
+      }
     }
 
     [Test, Order(0)]
@@ -107,7 +112,7 @@ namespace sdk.test
       autoEvent.WaitOne();
     }
 
-    [Test,Order(16)]
+    [Test, Order(16)]
     public void RetrieveAndRank_TestForwardCollectionRequestList()
     {
       Log.Debug("TestRetrieveAndRank", "Attempting to forward collection request: List {0}...", collectionToCreateName);

@@ -31,9 +31,14 @@ namespace sdk.test
     {
       base.Init();
 
-      workspaceID = Config.Instance.GetVariableValue("ConversationV1_ID");
-      if (string.IsNullOrEmpty(workspaceID))
-        Assert.Fail("Failed to find workspaceID");
+      if (!isTestInitalized)
+      {
+        workspaceID = Config.Instance.GetVariableValue("ConversationV1_ID");
+        if (string.IsNullOrEmpty(workspaceID))
+          Assert.Fail("Failed to find workspaceID");
+
+        isTestInitalized = true;
+      }
     }
 
     [Test]

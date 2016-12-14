@@ -26,13 +26,14 @@ namespace sdk.test
   public class IntegrationTest
   {
     protected AutoResetEvent autoEvent = new AutoResetEvent(false);
-    protected bool isInitalized = false;
+    protected bool isBaseInitalized = false;
+    protected bool isTestInitalized = false;
     protected string testDataPath;
 
     [SetUp]
     public virtual void Init()
     {
-      if (!isInitalized)
+      if (!isBaseInitalized)
       {
         Constants.Path.dataPath = TestContext.CurrentContext.TestDirectory + Path.DirectorySeparatorChar;
         testDataPath = Constants.Path.dataPath + Constants.Path.APP_DATA + Path.DirectorySeparatorChar;
@@ -47,7 +48,7 @@ namespace sdk.test
           }
           else
           {
-            isInitalized = true;
+            isBaseInitalized = true;
           }
         }
 

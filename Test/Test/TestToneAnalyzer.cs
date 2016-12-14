@@ -1,7 +1,4 @@
-﻿
-
-using IBM.Watson.DeveloperCloud.Logging;
-/**
+﻿/**
 * Copyright 2015 IBM Corp. All Rights Reserved.
 *
 * Licensed under the Apache License, Version 2.0 (the "License");
@@ -18,6 +15,7 @@ using IBM.Watson.DeveloperCloud.Logging;
 *
 */
 using IBM.Watson.DeveloperCloud.Services.ToneAnalyzer.v3;
+using IBM.Watson.DeveloperCloud.Logging;
 using NUnit.Framework;
 using System.IO;
 
@@ -33,7 +31,11 @@ namespace sdk.test
     {
       base.Init();
 
-      toneAnalyzerTestDataString = File.ReadAllText(testDataPath + toneAnalyzerTestDataPath);
+      if (!isTestInitalized)
+      {
+        toneAnalyzerTestDataString = File.ReadAllText(testDataPath + toneAnalyzerTestDataPath);
+        isTestInitalized = true;
+      }
     }
 
     [Test]

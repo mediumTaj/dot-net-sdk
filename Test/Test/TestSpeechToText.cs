@@ -43,8 +43,13 @@ namespace sdk.test
     {
       base.Init();
 
-      customCorpusFilePath = testDataPath + "test-stt-corpus.txt";
-      customWordsFilePath = testDataPath + "test-stt-words.json";
+      if (!isTestInitalized)
+      {
+        customCorpusFilePath = testDataPath + "test-stt-corpus.txt";
+        customWordsFilePath = testDataPath + "test-stt-words.json";
+
+        isTestInitalized = true;
+      }
     }
 
     [Test]
