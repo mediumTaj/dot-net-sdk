@@ -21,6 +21,7 @@ using IBM.Watson.DeveloperCloud.Logging;
 using System.IO;
 using System;
 using System.Collections.Generic;
+using IBM.Watson.DeveloperCloud.Utilities;
 
 namespace sdk.test
 {
@@ -36,6 +37,7 @@ namespace sdk.test
     private string customWordsFilePath;
     private bool allowOverwrite = true;
     private string wordToGet = "watson";
+    private string testFile = "stt.wav";
 
     public override void Init()
     {
@@ -43,6 +45,26 @@ namespace sdk.test
 
       customCorpusFilePath = testDataPath + "test-stt-corpus.txt";
       customWordsFilePath = testDataPath + "test-stt-words.json";
+    }
+
+    [Test]
+    public void SpeechToText_TestRecognize()
+    {
+      Log.Debug("TestSpeechToText", "Attempting to recognize speech...");
+
+      AudioClip clip = Utility.ReadWaveFile(testDataPath + testFile);
+
+      if (!speechToText.Recognize(clip, (SpeechRecognitionEvent results) =>
+      {
+        Assert.NotNull(results);
+        autoEvent.Set();
+      }))
+      {
+        Assert.Fail("Could not invoke Recognize();");
+        autoEvent.Set();
+      }
+
+      autoEvent.WaitOne();
     }
 
     [Test]

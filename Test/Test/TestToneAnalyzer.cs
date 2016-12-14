@@ -51,6 +51,8 @@ namespace sdk.test
         Assert.Fail("Failed to invoke GetToneAnalyze() GET.");
         autoEvent.Set();
       }
+
+      autoEvent.WaitOne();
     }
 
     [Test]
@@ -67,6 +69,8 @@ namespace sdk.test
         Assert.Fail("Failed to invoke GetToneAnalyze() POST.");
         autoEvent.Set();
       }
+
+      autoEvent.WaitOne();
     }
   }
 }

@@ -26,6 +26,7 @@ using System.Net.NetworkInformation;
 using System.Text.RegularExpressions;
 using System.Runtime.InteropServices;
 using System.IO;
+using NAudio.Wave;
 
 namespace IBM.Watson.DeveloperCloud.Utilities
 {
@@ -490,6 +491,46 @@ namespace IBM.Watson.DeveloperCloud.Utilities
         return true;
       }
     };
+    #endregion
+
+    #region 16 bit to float
+    public static float[] Convert16BitToFloat(byte[] input)
+    {
+      int inputSamples = input.Length / 2; // 16 bit input, so 2 bytes per sample
+      float[] output = new float[inputSamples];
+      int outputIndex = 0;
+      for (int n = 0; n < inputSamples; n++)
+      {
+        short sample = BitConverter.ToInt16(input, n * 2);
+        output[outputIndex++] = sample / 32768f;
+      }
+      return output;
+    }
+    #endregion
+
+    #region Read WAVE file
+    public static AudioClip ReadWaveFile(string filePath)
+    {
+      AudioClip clip = null;
+
+      try
+      {
+        using (WaveFileReader fileReader = new WaveFileReader(filePath))
+        {
+          byte[] buffer = new byte[fileReader.Length];
+          fileReader.Read(buffer, 0, (int)fileReader.Length);
+
+          clip = AudioClip.Create("audioClip", (int)fileReader.SampleCount, fileReader.WaveFormat.Channels, fileReader.WaveFormat.SampleRate, false);
+          clip.SetData(Convert16BitToFloat(buffer), 0);
+        }
+      }
+      catch(Exception e)
+      {
+        Log.Debug("Unable to read WavFile: {0}", e.Message);
+      }
+
+      return clip;
+    }
     #endregion
   }
 }
