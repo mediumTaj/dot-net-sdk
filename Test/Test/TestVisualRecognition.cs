@@ -73,7 +73,7 @@ namespace sdk.test
       }
     }
 
-    [Test, Order(1)]
+    [Test, Order(2)]
     public void VisualRecognition_TestGetClassifiers()
     {
       Log.Debug("TestVisualRecognition", "Attempting to get classifiers...");
@@ -91,7 +91,7 @@ namespace sdk.test
       autoEvent.WaitOne();
     }
 
-    [Test, Order(2)]
+    [Test, Order(1)]
     public void VisualRecognition_TestTrainClassifier()
     {
       Log.Debug("TestVisualRecognition", "Attempting to train classifier...");
