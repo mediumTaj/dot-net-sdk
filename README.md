@@ -134,7 +134,7 @@ TextToSpeech m_TextToSpeech = new TextToSpeech();
 string m_TestString = "Hello! This is Text to Speech!";
 string m_ExpressiveText = "<speak version=\"1.0\"><prosody pitch=\"150Hz\">Hello! This is the </prosody><say-as interpret-as=\"letters\">IBM</say-as> Watson <express-as type=\"GoodNews\">dot net</express-as></prosody><say-as interpret-as=\"letters\">SDK</say-as>!</speak>";
 
-void Start ()
+public static void Main(string[] args)
 {
   m_TextToSpeech.Voice = VoiceType.en_GB_Kate;
   m_TextToSpeech.ToSpeech(m_TestString, HandleToSpeechCallback);
@@ -172,7 +172,7 @@ Example: Ask how to get to the disco in Spanish using [Language Translator][lang
 private LanguageTranslator m_Translate = new LanguageTranslator();
 private string m_PhraseToTranslate = "How do I get to the disco?";
 
-void Start ()
+public static void Main(string[] args)
 {
   Debug.Log("English Phrase to translate: " + m_PhraseToTranslate);
   m_Translate.GetTranslation(m_PhraseToTranslate, "en", "es", OnGetTranslation);
@@ -203,7 +203,7 @@ private NaturalLanguageClassifier m_NaturalLanguageClassifier = new NaturalLangu
 private string m_InputString = "Is it hot outside?";
 private string m_ClassifierId = <ClassifierID>;
 
-void Start ()
+public static void Main(string[] args)
 {
   Debug.Log("Input String: " + m_InputString);
   m_NaturalLanguageClassifier.Classify(m_ClassifierId, m_InputString, OnClassify);
@@ -239,7 +239,7 @@ The [Tone Analyzer][tone_analyzer] service detects emotions, social tendencies a
 ToneAnalyzer m_ToneAnalyzer = new ToneAnalyzer();
     string m_StringToTestTone = "This service enables people to discover and understand, and revise the impact of tone in their content. It uses linguistic analysis to detect and interpret emotional, social, and language cues found in text.";
 
-	void Start () {
+	public static void Main(string[] args) {
         m_ToneAnalyzer.GetToneAnalyze( OnGetToneAnalyze, m_StringToTestTone, "TEST");
 	}
 
@@ -253,7 +253,7 @@ ToneAnalyzer m_ToneAnalyzer = new ToneAnalyzer();
 The [Tradeoff Analytics][tradeoff_analytics] service helps people make better decisions when faced with multiple, sometimes conflicting, goals and alternatives.
 
 ```
-void Start () {
+public static void Main(string[] args) {
         Problem problemToSolve = new Problem();
         problemToSolve.subject = "Test Subject";
 
@@ -354,7 +354,7 @@ private Conversation m_Conversation = new Conversation();
 private string m_WorkspaceID = "car_demo_1";
 private string m_Input = "Can you unlock the door?";
 
-void Start () {
+public static void Main(string[] args) {
 	Debug.Log("User: " + m_Input);
 	m_Conversation.Message(OnMessage, m_WorkspaceID, m_Input);
 }
@@ -1597,7 +1597,7 @@ PersonalityInsights m_personalityInsights = new PersonalityInsights();
 	private string testString = "<text-here>"";
   private string dataPath;
 
-	void Start () {
+	public static void Main(string[] args) {
 		LogSystem.InstallDefaultReactors();
 
 		dataPath = Application.dataPath + "/Watson/Examples/ServiceExamples/TestData/personalityInsights.json";
@@ -1753,7 +1753,7 @@ Convert a single document
 ```cs
 private DocumentConversion m_DocumentConversion = new DocumentConversion();
 
-	void Start ()
+	public static void Main(string[] args)
     {
         LogSystem.InstallDefaultReactors(); LogSystem.InstallDefaultReactors();
         string examplePath = Application.dataPath + "/Watson/Examples/ServiceExamples/TestData/watson_beats_jeopardy.html";
