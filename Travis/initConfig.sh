@@ -1,3 +1,4 @@
+#! /bin/sh
 if [ "${TRAVIS_PULL_REQUEST}" = "false" ]; then
   echo '$TRAVIS_PULL_REQUEST is false, running tests'
   echo "Attempting to move appdata directory..."

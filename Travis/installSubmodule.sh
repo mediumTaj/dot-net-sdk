@@ -1,3 +1,4 @@
+#! /bin/sh
 echo "Attempting to install the base .NET SDK into the sdk..."
 git clone --branch=feature-dotNetSDKChanges https://github.com/mediumTaj/csharp-sdk-base.git /home/travis/build/mediumTaj/dot-net-sdk/sdk/src/services
 if [ $? = 0 ] ; then

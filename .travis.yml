@@ -15,11 +15,18 @@ install:
   - nuget restore sdk/sdk.sln
   - nuget restore Test/Test.sln
   - nuget install NUnit.ConsoleRunner
+  - nuget install OpenCover -version 4.6.519 -outputdirectory .\packages
+  - nuget install ReportGenerator -version 2.5.1 -outputdirectory .\packages
 before_script:
   - chmod +x Travis/installSubmodule.sh
+  - chmod +x Travis/build.sh
+  - chmod +x Travis/initConfig.sh
+  - chmod +x Travis/generateCodeCoverageReport.sh
 script:
   - Travis/installSubmodule.sh
   - Travis/build.sh
   - Travis/initConfig.sh
+  - Travis/generateCodeCoverageReport.sh
+
 after_script:
   - nunit-console Test/Test/bin/Release/Tests.dll
