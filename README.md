@@ -7,7 +7,6 @@ Use this SDK to build Watson-powered applications in .NET.
 ## Table of Contents
 * [Before you begin](#before-you-begin)
 * [Getting the Watson SDK and adding it to your Visual Studio Project](#getting-the-watson-sdk-and-adding-it-to-your-project)
-  * [Installing the SDK source into your Unity project](#installing-the-sdk-source-into-your-unity-project)
 * [Configuring your service credentials](#configuring-your-service-credentials)
 * [IBM Watson Services](#ibm-watson-services)
   * [Speech to Text](#speech-to-text)
@@ -100,19 +99,18 @@ Multiple services can be configured in the m_Credentials object and user definie
 
 ## IBM Watson Services
 ### Speech to Text
-Use the [Speech to Text][speech_to_text] service to recognize the text from a .wav file. Assign the .wav file to the script in the Unity Editor. Speech to text can also be used to convert an audio stream into text.
+Use the [Speech to Text][speech_to_text] service to recognize the text from a .wav file. Import the Wave file using the `ReadWaveFile()` utility.
 
 ```cs
-[SerializeField]
-private AudioClip m_AudioClip = new AudioClip();
+private AudioClip clip = Utility.ReadWaveFile([path-to-wave-file]);
 private SpeechToText m_SpeechToText = new SpeechToText();
 
-void Start()
+public static void Main(string[] args)
 {
   m_SpeechToText.Recognize(m_AudioClip, HandleOnRecognize);
 }
 
-void HandleOnRecognize (SpeechResultList result)
+void HandleOnRecognize (SpeechRecognitionEvent result)
 {
   if (result != null && result.Results.Length > 0)
   {
@@ -134,7 +132,7 @@ Use the [Text to Speech][text_to_speech] service to get the available voices to 
 ```cs
 TextToSpeech m_TextToSpeech = new TextToSpeech();
 string m_TestString = "Hello! This is Text to Speech!";
-string m_ExpressiveText = "<speak version=\"1.0\"><prosody pitch=\"150Hz\">Hello! This is the </prosody><say-as interpret-as=\"letters\">IBM</say-as> Watson <express-as type=\"GoodNews\">Unity</express-as></prosody><say-as interpret-as=\"letters\">SDK</say-as>!</speak>";
+string m_ExpressiveText = "<speak version=\"1.0\"><prosody pitch=\"150Hz\">Hello! This is the </prosody><say-as interpret-as=\"letters\">IBM</say-as> Watson <express-as type=\"GoodNews\">dot net</express-as></prosody><say-as interpret-as=\"letters\">SDK</say-as>!</speak>";
 
 void Start ()
 {
@@ -383,7 +381,7 @@ Get a list of all available classifiers
 ```cs
 private VisualRecognition m_VisualRecognition = new VisualRecognition();
 
-void Start()
+public static void Main(string[] args)
 {
 	if(!m_VisualRecognition.GetClassifiers(OnGetClassifiers))
         Log.Debug("ExampleVisualRecognition", "Getting classifiers failed!");
@@ -412,7 +410,7 @@ Find a classifier by name
 private VisualRecognition m_VisualRecognition = new VisualRecognition();
 private string m_classifierName = <Classifier Name>;
 
-void Start()
+public static void Main(string[] args)
 {
 	m_VisualRecognition.FindClassifier(m_classifierName, OnFindClassifier);
 }
@@ -436,7 +434,7 @@ Find a classifier by ID
 private VisualRecognition m_VisualRecognition = new VisualRecognition();
 private string m_classifierID = <Classifier ID>;
 
-void Start()
+public static void Main(string[] args)
 {
 	if(!m_VisualRecognition.GetClassifier(m_classifierID, OnGetClassifier))
             Log.Debug("ExampleVisualRecognition", "Getting classifier failed!");
@@ -461,7 +459,7 @@ Train a new classifier by uploading image data. Two compressed zip files contain
 ```cs
 private VisualRecognition m_VisualRecognition = new VisualRecognition();
 
-void Start()
+public static void Main(string[] args)
 {
 	string m_positiveExamplesPath = Application.dataPath + "/Watson/Examples/ServiceExamples/TestData/<Class Name>_positive_examples.zip";
     string m_negativeExamplesPath = Application.dataPath + "/Watson/Examples/ServiceExamples/TestData/negative_examples.zip";
@@ -491,7 +489,7 @@ The compressed file containing negative examples is not used to create a class w
 ```cs
 private VisualRecognition m_VisualRecognition = new VisualRecognition();
 
-void Start()
+public static void Main(string[] args)
 {
 	string m_positiveExamplesPath = Application.dataPath + "/Watson/Examples/ServiceExamples/TestData/<Class Name>_positive_examples.zip";
    if(!m_VisualRecognition.UpdateClassifier(OnUpdateClassifier, "<ClassifierID>", "<Classifier Name>", "<Class Name>", m_positiveExamplesPath))
@@ -518,7 +516,7 @@ Delete a classifier by Classifier ID
 private VisualRecognition m_VisualRecognition = new VisualRecognition();
 private string m_classifierToDelete = "<Classifier ID>";
 
-void Start()
+public static void Main(string[] args)
 {
 	if(!m_VisualRecognition.DeleteClassifier(m_classifierToDelete, OnDeleteClassifier))
         Log.Debug("ExampleVisualRecognition", "Deleting classifier failed!");
@@ -546,7 +544,7 @@ You can classify an image via URL or by posting an image. You may also define mu
 private VisualRecognition m_VisualRecognition = new VisualRecognition();
 private string m_imageURL = "https://upload.wikimedia.org/wikipedia/commons/e/e9/Official_portrait_of_Barack_Obama.jpg";
 
-void Start()
+public static void Main(string[] args)
 {
 	if(!m_VisualRecognition.Classify(m_imageURL, OnClassify))
     	Log.Debug("ExampleVisualRecognition", "Classify image failed!");
@@ -580,7 +578,7 @@ private void OnClassify(ClassifyTopLevelMultiple classify)
 ```cs
 private VisualRecognition m_VisualRecognition = new VisualRecognition();
 
-void Start()
+public static void Main(string[] args)
 {
 	string m_imagesPath = Application.dataPath + "/Watson/Examples/ServiceExamples/TestData/obama.jpg";
 	    string[] m_owners = {"IBM", "me"};
@@ -621,7 +619,7 @@ You can detect faces via URL or by posting an image. Supported filetypes are .gi
 private VisualRecognition m_VisualRecognition = new VisualRecognition();
 private string m_imageURL = "https://upload.wikimedia.org/wikipedia/commons/e/e9/Official_portrait_of_Barack_Obama.jpg";
 
-void Start()
+public static void Main(string[] args)
 {
 	if(!m_VisualRecognition.DetectFaces(m_imageURL, OnDetectFaces))
         Log.Debug("ExampleVisualRecognition", "Detect faces failed!");
@@ -656,7 +654,7 @@ private void OnDetectFaces(FacesTopLevelMultiple multipleImages)
 ```cs
 private VisualRecognition m_VisualRecognition = new VisualRecognition();
 
-void Start()
+public static void Main(string[] args)
 {
 	string m_faceExamplePath = Application.dataPath + "/Watson/Examples/ServiceExamples/TestData/obama.jpg";
     if(!m_VisualRecognition.DetectFaces(OnDetectFaces, m_faceExamplePath))
@@ -696,7 +694,7 @@ You can recognize text via URL or by posting an image. Supported filetypes are .
 private VisualRecognition m_VisualRecognition = new VisualRecognition();
 private string m_imageTextURL = "http://i.stack.imgur.com/ZS6nH.png";
 
-void Start()
+public static void Main(string[] args)
 {
 	if(!m_VisualRecognition.RecognizeText(m_imageTextURL, OnRecognizeText))
         Log.Debug("ExampleVisualRecognition", "Recognize text failed!");
@@ -731,7 +729,7 @@ private void OnRecognizeText(TextRecogTopLevelMultiple multipleImages)
 ```cs
 private VisualRecognition m_VisualRecognition = new VisualRecognition();
 
-void Start()
+public static void Main(string[] args)
 {
 	string m_textExamplePath = Application.dataPath + "/Watson/Examples/ServiceExamples/TestData/from_platos_apology.png";
         if(!m_VisualRecognition.RecognizeText(OnRecognizeText, m_textExamplePath))
@@ -769,7 +767,7 @@ Beta. You can create and add images to a collection and then search that collect
 Beta. List all custom collections.
 
 ```cs
-void Start()
+public static void Main(string[] args)
 {
   m_VisualRecognition.GetCollections(OnGetCollections);
 }
@@ -794,9 +792,9 @@ private void OnGetCollections(GetCollections collections, string customData)
 Beta. Create a new collection of images to search. You can create a maximum of 5 collections.
 
 ```cs
-void Start()
+public static void Main(string[] args)
 {
-  m_VisualRecognition.CreateCollection(OnCreateCollection, "unity-integration-test-collection");
+  m_VisualRecognition.CreateCollection(OnCreateCollection, "dotnet-integration-test-collection");
 }
 
 private void OnCreateCollection(CreateCollection collection, string customData)
@@ -817,7 +815,7 @@ private void OnCreateCollection(CreateCollection collection, string customData)
 Beta. Retrieve information about a specific collection.
 
 ```cs
-void Start()
+public static void Main(string[] args)
 {
   m_VisualRecognition.GetCollection(OnGetCollection, m_CreatedCollectionID);
 }
@@ -841,7 +839,7 @@ private void OnGetCollection(CreateCollection collection, string customData)
 Beta. Add images to a collection. Each collection can contain 1000000 images.
 
 ```cs
-void Start()
+public static void Main(string[] args)
 {
   string m_collectionImagePath = Application.dataPath + "/Watson/Examples/ServiceExamples/TestData/visual-recognition-classifiers/giraffe_to_classify.jpg";
   Dictionary<string, string> imageMetadata = new Dictionary<string, string>();
@@ -871,7 +869,7 @@ private void OnAddImageToCollection(CollectionsConfig images, string customData)
 Beta. List the first 100 images in a collection. Each collection can contain 1000000 images.
 
 ```cs
-void Start()
+public static void Main(string[] args)
 {
   m_VisualRecognition.GetCollectionImages(OnGetCollectionImages, m_CreatedCollectionID);
 }
@@ -894,7 +892,7 @@ private void OnGetCollectionImages(GetCollectionImages collections, string custo
 ##### List image details
 Beta. List details about a specific image in a collection.
 ```cs
-void Start()
+public static void Main(string[] args)
 {
   m_VisualRecognition.GetImage(OnGetImage, m_CreatedCollectionID, m_CreatedCollectionImage);
 }
@@ -917,7 +915,7 @@ private void OnGetImage(GetCollectionsBrief image, string customData)
 Beta. View the metadata for a specific image in a collection.
 
 ```cs
-void Start()
+public static void Main(string[] args)
 {
   m_VisualRecognition.GetMetadata(OnGetMetadata, m_CreatedCollectionID, m_CreatedCollectionImage);
 }
@@ -933,7 +931,7 @@ private void OnGetMetadata(object responseObject, string customData)
 Beta. Upload an image to find similar images in your custom collection.
 
 ```cs
-void Start()
+public static void Main(string[] args)
 {
   m_VisualRecognition.FindSimilar(OnFindSimilar, m_CreatedCollectionID, m_collectionImagePath);
 }
@@ -958,7 +956,7 @@ private void OnFindSimilar(SimilarImagesConfig images, string customData)
 Beta. Delete all metadata associated with an image.
 
 ```cs
-void Start()
+public static void Main(string[] args)
 {
   m_VisualRecognition.DeleteCollectionImageMetadata(OnDeleteMetadata, m_CreatedCollectionID, m_CreatedCollectionImage);
 }
@@ -976,7 +974,7 @@ private void OnDeleteMetadata(bool success, string customData)
 Beta. Delete an image from a collection.
 
 ```cs
-void Start()
+public static void Main(string[] args)
 {
   m_VisualRecognition.DeleteCollectionImage(OnDeleteCollectionImage, m_CreatedCollectionID, m_CreatedCollectionImage);
 }
@@ -994,7 +992,7 @@ private void OnDeleteCollectionImage(bool success, string customData)
 Beta. Delete a user created collection.
 
 ```cs
-void Start()
+public static void Main(string[] args)
 {
   m_VisualRecognition.DeleteCollection(OnDeleteCollection, m_CreatedCollectionID);
 }
@@ -1015,7 +1013,7 @@ Use the [Alchemy Language][alchemy_language] service to extract semantic meta-da
 You can extract Authors from a URL or HTML source.
 
 ```cs
-void Start()
+public static void Main(string[] args)
 {
 	if(!m_AlchemyLanguage.GetAuthors(OnGetAuthors, "http://www.nytimes.com/2011/02/17/science/17jeopardy-watson.html"))
 		Log.Debug("ExampleAlchemyLanguage", "Failed to get authors URL POST!");
@@ -1045,7 +1043,7 @@ private void OnGetAuthors(AuthorsData authors, string data)
 You can get Concepts from a URL, HTML or Text source.
 
 ```cs
-void Start()
+public static void Main(string[] args)
 {
 	if(!m_AlchemyLanguage.GetRankedConcepts(OnGetConcepts, "http://www.nytimes.com/2011/02/17/science/17jeopardy-watson.html"))
 		Log.Debug("ExampleAlchemyLanguage", "Failed to get concepts HTML POST!");
@@ -1074,7 +1072,7 @@ private void OnGetConcepts(ConceptsData concepts, string data)
 You can extract Dates from a URL, HTML or Text source.
 
 ```cs
-void Start()
+public static void Main(string[] args)
 {
 	if(!m_AlchemyLanguage.GetDates(OnGetDates, "http://www.nytimes.com/2011/02/17/science/17jeopardy-watson.html"))
 	    Log.Debug("ExampleAlchemyLanguage", "Failed to get dates by URL POST");
@@ -1103,7 +1101,7 @@ private void OnGetDates(DateData dates, string data)
 You can get Emotions from a URL, HTML or Text source.
 
 ```cs
-void Start()
+public static void Main(string[] args)
 {
 	if(!m_AlchemyLanguage.GetEmotions(OnGetEmotions, "http://www.nytimes.com/2011/02/17/science/17jeopardy-watson.html"))
 	    Log.Debug("ExampleAlchemyLanguage", "Failed to get emotions by URL POST");
@@ -1138,7 +1136,7 @@ private void OnGetEmotions(EmotionData emotions, string data)
 You can extract Entities from a URL, HTML or Text source.
 
 ```cs
-void Start()
+public static void Main(string[] args)
 {
 	if(!m_AlchemyLanguage.ExtractEntities(OnExtractEntities, "http://www.nytimes.com/2011/02/17/science/17jeopardy-watson.html"))
 		Log.Debug("ExampleAlchemyLanguage", "Failed to get entities by URL POST");
@@ -1168,7 +1166,7 @@ private void OnExtractEntities(EntityData entityData, string data)
 You can detect RSS Feeds from a URL source.
 
 ```cs
-void Start()
+public static void Main(string[] args)
 {
 	if(!m_AlchemyLanguage.DetectFeeds(OnDetectFeeds, "http://time.com/newsfeed/"))
 	    Log.Debug("ExampleAlchemyLanguage", "Failed to get feeds by URL POST");
@@ -1195,7 +1193,7 @@ private void OnDetectFeeds(FeedData feedData, string data)
 You can extract Keywords form a URL, HTML or Text source.
 
 ```cs
-void Start()
+public static void Main(string[] args)
 {
 	if(!m_AlchemyLanguage.ExtractKeywords(OnExtractKeywords, "http://www.nytimes.com/2011/02/17/science/17jeopardy-watson.html"))
 	    Log.Debug("ExampleAlchemyLanguage", "Failed to get keywords by URL POST");
@@ -1225,7 +1223,7 @@ private void OnExtractKeywords(KeywordData keywordData, string data)
 You can extract the language of a URL, HTML or Text source.
 
 ```cs
-void Start()
+public static void Main(string[] args)
 {
 	if(!m_AlchemyLanguage.GetLanguages(OnGetLanguages, "http://www.nytimes.com/2011/02/17/science/17jeopardy-watson.html"))
 	    Log.Debug("ExampleAlchemyLanguage", "Failed to get languages by text POST");
@@ -1260,7 +1258,7 @@ private void OnGetLanguages(LanguageData languages, string data)
 You can get the Microformat of a URL source.
 
 ```cs
-void Start()
+public static void Main(string[] args)
 {
 	if(!m_AlchemyLanguage.GetMicroformats(OnGetMicroformats, "http://microformats.org/wiki/hcard"))
 	    Log.Debug("ExampleAlchemyLanguage", "Failed to get microformats by text POST");
@@ -1290,7 +1288,7 @@ private void OnGetMicroformats(MicroformatData microformats, string data)
 You can extract the publication date from a URL or HTML source.
 
 ```cs
-void Start()
+public static void Main(string[] args)
 {
 	if(!m_AlchemyLanguage.GetPublicationDate(OnGetPublicationDate, "http://www.nytimes.com/2011/02/17/science/17jeopardy-watson.html"))
 	    Log.Debug("ExampleAlchemyLanguage", "Failed to get publication dates by url POST");
@@ -1318,7 +1316,7 @@ private void OnGetPublicationDate(PubDateData pubDates, string data)
 You can extract Relations from a URL, HTML or Text source.
 
 ```cs
-void Start()
+public static void Main(string[] args)
 {
     if(!m_AlchemyLanguage.GetRelations(OnGetRelations, "http://www.nytimes.com/2011/02/17/science/17jeopardy-watson.html"))
         Log.Debug("ExampleAlchemyLanguage", "Failed to get relations by text POST");
@@ -1349,7 +1347,7 @@ private void OnGetRelations(RelationsData relationsData, string data)
 You can extract the Sentiment from a URL, HTML or Text source.
 
 ```cs
-void Start()
+public static void Main(string[] args)
 {
 	if(!m_AlchemyLanguage.GetTextSentiment(OnGetTextSentiment, "http://www.nytimes.com/2011/02/17/science/17jeopardy-watson.html"))
 	    Log.Debug("ExampleAlchemyLanguage", "Failed to get sentiment by text POST");
@@ -1379,7 +1377,7 @@ private void OnGetTextSentiment(SentimentData sentimentData, string data)
 You can extract a Targeted Sentiment from a URL, HTML or Text source.
 
 ```cs
-void Start()
+public static void Main(string[] args)
 {
 	if(!m_AlchemyLanguage.GetTargetedSentiment(OnGetTargetedSentiment, "http://www.nytimes.com/2011/02/17/science/17jeopardy-watson.html", "Jeopardy|Jennings|Watson"))
 	    Log.Debug("ExampleAlchemyLanguage", "Failed to get targeted sentiment by text POST");
@@ -1412,7 +1410,7 @@ private void OnGetTargetedSentiment(TargetedSentimentData sentimentData, string 
 You can get the Taxonomy of entities from a URL, HTML or Text source.
 
 ```cs
-void Start()
+public static void Main(string[] args)
 {
     if(!m_AlchemyLanguage.GetRankedTaxonomy(OnGetRankedTaxonomy, "http://www.nytimes.com/2011/02/17/science/17jeopardy-watson.html"))
         Log.Debug("ExampleAlchemyLanguage", "Failed to get ranked taxonomy by text POST");
@@ -1445,7 +1443,7 @@ private void OnGetRankedTaxonomy(TaxonomyData taxonomyData, string data)
 You can exctract the Text from a URL or HTML source.
 
 ```cs
-void Start()
+public static void Main(string[] args)
 {
 	if(!m_AlchemyLanguage.GetText(OnGetText, "http://www.nytimes.com/2011/02/17/science/17jeopardy-watson.html"))
 	    Log.Debug("ExampleAlchemyLanguage", "Failed to get text by text POST");
@@ -1470,7 +1468,7 @@ private void OnGetText(TextData textData, string data)
 You can exctract the Raw Text from a URL or HTML source.
 
 ```cs
-void Start()
+public static void Main(string[] args)
 {
 	if(!m_AlchemyLanguage.GetRawText(OnGetText, "http://www.nytimes.com/2011/02/17/science/17jeopardy-watson.html"))
 	    Log.Debug("ExampleAlchemyLanguage", "Failed to get raw text by text POST");
@@ -1496,7 +1494,7 @@ private void OnGetText(TextData textData, string data)
 You can extract the Title form a URL or HTML source.
 
 ```cs
-void Start()
+public static void Main(string[] args)
 {
     if(!m_AlchemyLanguage.GetTitle(OnGetTitle, "http://www.nytimes.com/2011/02/17/science/17jeopardy-watson.html"))
         Log.Debug("ExampleAlchemyLanguage", "Failed to get title by text POST");
@@ -1521,7 +1519,7 @@ private void OnGetTitle(Title titleData, string data)
 You can combine multiple requests into one call using a Combined Data call from a URL, HTML or Text source. Allowed services in Combined Call are authors, concepts, dates, doc-emotion, entities, feeds, keywords, pub-dates, releations, doc-sentiment, taxonomy, title, page-image and image-keywords.
 
 ```cs
-void Start()
+public static void Main(string[] args)
 {
     if(!m_AlchemyLanguage.GetCombinedData(OnGetCombinedData, "http://www.nytimes.com/2011/02/17/science/17jeopardy-watson.html"))
         Log.Debug("ExampleAlchemyLanguage", "Failed to get combined data by text POST");
@@ -1810,7 +1808,7 @@ AlchemyData News indexes 250k to 300k English language news and blog articles ev
 ```
 private AlchemyAPI m_AlchemyAPI = new AlchemyAPI();
 
-void Start()
+public static void Main(string[] args)
 {
 	string[] returnFields = {Fields.ENRICHED_URL_ENTITIES, Fields.ENRICHED_URL_KEYWORDS};
 	Dictionary<string, string> queryFields = new Dictionary<string, string>();
@@ -1836,7 +1834,7 @@ The IBM Watson™ [Retrieve and Rank][retrieve_and_rank] service combines two in
 Retrieves the list of Solr clusters for the service instance.
 
 ```cs
-void Start()
+public static void Main(string[] args)
 {
   Log.Debug("ExampleRetrieveAndRank", "Attempting to get clusters!");
   if (!m_RetrieveAndRank.GetClusters(OnGetClusters))
@@ -1861,10 +1859,10 @@ private void OnGetClusters(SolrClusterListResponse resp, string data)
 Provisions a Solr cluster asynchronously. When the operation is successful, the status of the cluster is set to NOT_AVAILABLE. The status must be READY before you can use the cluster.
 
 ```cs
-void Start()
+public static void Main(string[] args)
 {
   Log.Debug("ExampleRetrieveAndRank", "Attempting to create cluster!");
-  if (!m_RetrieveAndRank.CreateCluster(OnCreateCluster, "unity-test-cluster", "1"))
+  if (!m_RetrieveAndRank.CreateCluster(OnCreateCluster, dotnet-test-cluster", "1"))
       Log.Debug("ExampleRetrieveAndRank", "Failed to create cluster!");
 }
 
@@ -1885,7 +1883,7 @@ private void OnCreateCluster(SolrClusterResponse resp, string data)
 Stops and deletes a Solr Cluster asynchronously.
 
 ```cs
-void Start()
+public static void Main(string[] args)
 {
   string clusterToDelete = "<cluster-to-delete>";
   Log.Debug("ExampleRetrieveAndRank", "Attempting to delete cluster {0}!", clusterToDelete);
@@ -1911,7 +1909,7 @@ private void OnDeleteCluster(bool success, string data)
 Returns status and other information about a cluster.
 
 ```cs
-void Start()
+public static void Main(string[] args)
 {
   Log.Debug("ExampleRetrieveAndRank", "Attempting to get cluster {0}!", <testClusterID>);
   if (!m_RetrieveAndRank.GetCluster(OnGetCluster, testClusterID))
@@ -1935,7 +1933,7 @@ private void OnGetCluster(SolrClusterResponse resp, string data)
 Retrieves all configurations for a cluster.
 
 ```cs
-void Start()
+public static void Main(string[] args)
 {
   Log.Debug("ExampleRetrieveAndRank", "Attempting to get cluster configs for {0}!", <testClusterID>);
   if (!m_RetrieveAndRank.GetClusterConfigs(OnGetClusterConfigs, <testClusterID>))
@@ -1963,7 +1961,7 @@ private void OnGetClusterConfigs(SolrConfigList resp, string data)
 Deletes the configuration for a cluster. Before you delete the configuration, delete any collections that point to it.
 
 ```cs
-void Start()
+public static void Main(string[] args)
 {
   string clusterConfigToDelete = "test-config";
   Log.Debug("ExampleRetrieveAndRank", "Attempting to delete cluster {0} config {1}!", <testClusterID>, clusterConfigToDelete);
@@ -1988,7 +1986,7 @@ private void OnDeleteClusterConfig(bool success, string data)
 Retrieves the configuration for a cluster by its name.
 
 ```cs
-void Start()
+public static void Main(string[] args)
 {
   Log.Debug("ExampleRetrieveAndRank", "Attempting to get cluster {0} config {1}!", <testClusterID>, <testClusterConfigName>);
   if (!m_RetrieveAndRank.GetClusterConfig(OnGetClusterConfig, <testClusterID>, <testClusterConfigName>))
@@ -2025,7 +2023,7 @@ private void OnSaveConfig(bool success, string data)
 Uploads a zip file containing the configuration files for your Solr collection. The zip file must include schema.xml, solrconfig.xml, and other files you need for your configuration. Configuration files on the zip file's path are not uploaded. The request fails if a configuration with the same name exists. To update an existing config, use the [Solr configuration API](https://cwiki.apache.org/confluence/display/solr/Config+API).
 
 ```cs
-void Start()
+public static void Main(string[] args)
 {
   Log.Debug("ExampleRetrieveAndRank", "Attempting to upload cluster {0} config {1}!", <testClusterID>, <testClusterConfigName>);
   if (!m_RetrieveAndRank.UploadClusterConfig(OnUploadClusterConfig, <testClusterID>, <testClusterConfigName>, <testClusterConfigPath>))
@@ -2049,7 +2047,7 @@ private void OnUploadClusterConfig(UploadResponse resp, string data)
 An example of a method that forwards to the [Solr Collections API](https://cwiki.apache.org/confluence/display/solr/Collections+API). This Retrieve and Rank resource improves error handling and resiliency of the Solr Collections API.
 
 ```cs
-void Start()
+public static void Main(string[] args)
 {
   Log.Debug("ExampleRetrieveAndRank", "Attempting to list collections!");
   if (!m_RetrieveAndRank.ForwardCollectionRequest(OnGetCollections, <testClusterID>, CollectionsAction.LIST))
@@ -2082,7 +2080,7 @@ private void OnGetCollections(CollectionsResponse resp, string data)
 An example of a method that forwards to the [Solr Collections API](https://cwiki.apache.org/confluence/display/solr/Collections+API). This Retrieve and Rank resource improves error handling and resiliency of the Solr Collections API.
 
 ```cs
-void Start()
+public static void Main(string[] args)
 {
   Log.Debug("ExampleRetrieveAndRank", "Attempting to create collection!");
   if (!m_RetrieveAndRank.ForwardCollectionRequest(OnGetCollections, <testClusterID>, CollectionsAction.CREATE, "TestCollectionToDelete", <testClusterConfigName>))
@@ -2115,7 +2113,7 @@ private void OnGetCollections(CollectionsResponse resp, string data)
 An example of a method that forwards to the [Solr Collections API](https://cwiki.apache.org/confluence/display/solr/Collections+API). This Retrieve and Rank resource improves error handling and resiliency of the Solr Collections API.
 
 ```cs
-void Start()
+public static void Main(string[] args)
 {
   Log.Debug("ExampleRetrieveAndRank", "Attempting to delete collection!");
   if (!m_RetrieveAndRank.ForwardCollectionRequest(OnGetCollections, <testClusterID>, CollectionsAction.DELETE, "TestCollectionToDelete"))
@@ -2152,7 +2150,7 @@ An example of a method that forwards to Solr. For more information about indexin
 You must commit your documents to the index to search for them. For more information about when to commit, see [UpdateHandlers in SolrConfig](https://cwiki.apache.org/confluence/display/solr/UpdateHandlers+in+SolrConfig) in the Solr Reference.
 
 ```cs
-void Start()
+public static void Main(string[] args)
 {
   Log.Debug("ExampleRetrieveAndRank", "Attempting to index documents!");
   if (!m_RetrieveAndRank.IndexDocuments(OnIndexDocuments, <indexDataPath>, <testClusterID>, <testCollectionName>))
@@ -2179,7 +2177,7 @@ private void OnIndexDocuments(IndexResponse resp, string data)
 Forwards to the Solr [standard query parser](https://cwiki.apache.org/confluence/display/solr/The+Standard+Query+Parser).
 
 ```cs
-void Start()
+public static void Main(string[] args)
 {
   Log.Debug("ExampleRetrieveAndRank", "Attempting to search!");
   string[] fl = { "title", "id", "body", "author", "bibliography" };
@@ -2295,7 +2293,7 @@ private void OnSearch(SearchResponse resp, string data)
 Retrieves the list of rankers for the service instance.
 
 ```cs
-void Start()
+public static void Main(string[] args)
 {
   Log.Debug("ExampleRetrieveAndRank", "Attempting to get rankers!");
   if (!m_RetrieveAndRank.GetRankers(OnGetRankers))
@@ -2324,7 +2322,7 @@ Sends data to create and train a ranker and returns information about the new ra
 When the operation is successful, the status of the ranker is set to Training. The status must be Available before you can use the ranker.
 
 ```cs
-void Start()
+public static void Main(string[] args)
 {
   Log.Debug("ExampleRetrieveAndRank", "Attempting to create rankers!");
   if (!m_RetrieveAndRank.CreateRanker(OnCreateRanker, <testRankerTrainingPath>, "testRanker"))
@@ -2350,7 +2348,7 @@ Returns the top answer and a list of ranked answers with their ranked scores and
 Use this method to return answers when you train the ranker with custom features. However, in most cases, you can use the [Search and rank](http://www.ibm.com/watson/developercloud/retrieve-and-rank/api/v1/#query_ranker) method.
 
 ```cs
-void Start()
+public static void Main(string[] args)
 {
   Log.Debug("ExampleRetrieveAndRank", "Attempting to rank!");
   if (!m_RetrieveAndRank.Rank(OnRank, <testRankerID>, <testAnswerDataPath>))
@@ -2384,7 +2382,7 @@ private void OnRank(RankerOutputPayload resp, string data)
 Deletes a ranker.
 
 ```cs
-void Start()
+public static void Main(string[] args)
 {
   Log.Debug("ExampleRetriveAndRank", "Attempting to delete ranker {0}!", <rankerToDelete>);
   if (!m_RetrieveAndRank.DeleteRanker(OnDeleteRanker, <rankerToDelete>))
@@ -2408,7 +2406,7 @@ private void OnDeleteRanker(bool success, string data)
 Returns status and other information about a ranker.
 
 ```cs
-void Start()
+public static void Main(string[] args)
 {
   Log.Debug("ExampleRetrieveAndRank", "Attempting to get Ranker Info!");
   if (!m_RetrieveAndRank.GetRanker(OnGetRanker, <testRankerID>))
