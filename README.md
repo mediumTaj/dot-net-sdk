@@ -23,7 +23,6 @@ Use this SDK to build Watson-powered applications in .NET.
   * [Document Conversion](#document-conversion)
   * [AlchemyData News](#alchemy-data-news)
   * [Retrieve and Rank](#retrieve-and-rank)
-* [Developing a basic application in one minute](#developing-a-basic-application-in-one-minute)
 * [Documentation](#documentation)
 * [License](#license)
 * [Contributing](#contributing)
@@ -2426,8 +2425,10 @@ private void OnGetRanker(RankerStatusPayload resp, string data)
 }
 ```
 
-## Questions
+## Documentation
+[Doucmentation][documentation] can be found in the SDK repository.
 
+## Questions
 If you are having difficulties using the APIs or have a question about the IBM Watson Services, please ask a question on
 [dW Answers](https://developer.ibm.com/answers/questions/ask/?topics=watson)
 or [Stack Overflow](http://stackoverflow.com/questions/ask?tags=ibm-watson).
@@ -2469,3 +2470,5 @@ See [CONTRIBUTING.md](.github/CONTRIBUTING.md).
 [dialog_service]: http://www.ibm.com/watson/developercloud/doc/dialog/
 [dialog_migration]: https://www.ibm.com/watson/developercloud/doc/conversation/migration.shtml
 [conversation_service]: https://www.ibm.com/watson/developercloud/doc/conversation/
+
+[documentation]: https://github.com/mediumTaj/dot-net-sdk/sdk/docs/wdc-dotnet-platform-documentation/index.html
