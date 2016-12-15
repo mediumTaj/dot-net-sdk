@@ -12,7 +12,6 @@ Use this SDK to build Watson-powered applications in .NET.
   * [Speech to Text](#speech-to-text)
   * [Text to Speech](#text-to-speech)
   * [Language Translator](#language-translator)
-  * [Dialog](#dialog)
   * [Natural Language Classifier](#natural-language-classifier)
   * [Tone Analyzer](#tone-analyzer)
   * [Tradeoff Analytics](#tradeoff-analytics)
@@ -183,9 +182,6 @@ private void OnGetTranslation(Translations translation)
     Debug.Log("Spanish Translation: " + translation.translations[0].translation);
 }
 ```
-
-### Dialog
-The [Dialog service][dialog_service] was deprecated on August 15, 2016, existing instances of the service will continue to function until August 9, 2017. Users of the Dialog service should migrate their applications to use the Conversation service. See the [migration documentation][dialog_migration] to learn how to migrate your dialogs to the [Conversation service][conversation_service].
 
 ### Natural Language Classifier
 Use [Natural Language Classifier][natural_language_classifier] service to create a classifier instance by providing a set of representative strings and a set of one or more correct classes for each as training. Then use the trained classifier to classify your new question for best matching answers or to retrieve next actions for your application.

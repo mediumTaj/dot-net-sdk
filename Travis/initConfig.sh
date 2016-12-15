@@ -9,6 +9,7 @@ if [ "${TRAVIS_PULL_REQUEST}" = "false" ]; then
     openssl aes-256-cbc -K $encrypted_89fb597d004e_key -iv $encrypted_89fb597d004e_iv -in Config.json.enc -out Test/Test/bin/Release/appdata/Config.json -d
     if [ $? = 0 ] ; then
       echo "Decrypting config COMPLETED! Exited with $?"
+      #exit 1
       echo "Attempting to run dot-net-sdk integration Tests..."
       mono ./NUnit.ConsoleRunner.3.5.0/tools/nunit3-console.exe Test/Test/bin/Release/Test.dll
       if [ $? = 0 ] ; then
