@@ -36,7 +36,7 @@ Ensure that you have the following prerequisites:
 ## Getting the Watson SDK and adding it to your project
 You can get the latest SDK release using NuGet console in Visual Studio
 ```
-Package-Install [TODO package name here]
+PM> Install-Package [TODO package name here]
 ```
 
 or manually install the package by clicking [here][latest_release].
