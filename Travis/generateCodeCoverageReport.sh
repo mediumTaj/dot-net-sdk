@@ -1,6 +1,6 @@
 #! /bin/sh
 # OpenCover does not work on Linux. Do this locally on build!
-Test/packages/OpenCover.4.6.519/tools/OpenCover.Console.exe -target:Test/packages/NUnit.ConsoleRunner.3.5.0/tools/nunit3-console.exe -targetargs:"Test/Test/bin/Release/Test.dll --out=reports/results.xml" -output:reports/results.xml -excludebyfile:*DataModels.cs -hideskipped:all -filter:"+[*]* -[Test]* -[sdk]FullSerializer.* -[sdk]MiniJSON.*" -register:user
+Test/packages/OpenCover.4.6.519/tools/OpenCover.Console.exe -target:Test/packages/NUnit.ConsoleRunner.3.5.0/tools/nunit3-console.exe -targetargs:"Test/Test/bin/Release/Test.dll --result=reports/TestResults.xml" -output:reports/results.xml -mergebyhash -skipautoprops -excludebyfile:*DataModels.cs -hideskipped:all -filter:"+[*]* -[Test]* -[sdk]FullSerializer.* -[sdk]MiniJSON.*" -register:user
 if [ $? = 0 ] ; then
   echo 'Coverage report was generated.'
   #generate human readable report
