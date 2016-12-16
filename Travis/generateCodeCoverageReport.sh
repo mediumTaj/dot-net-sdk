@@ -4,7 +4,7 @@ Test/packages/OpenCover.4.6.519/tools/OpenCover.Console.exe -target:Test/package
 if [ $? = 0 ] ; then
   echo 'Coverage report was generated.'
   #generate human readable report
-  Test/packages/ReportGenerator.2.5.1/tools/ReportGenerator.exe -reports:reports/results.xml -targetdir:"reports" -reporttype:HtmlSummary
+  Test/packages/ReportGenerator.2.5.1/tools/ReportGenerator.exe --reports:reports/results.xml -targetdir:"reports" -reporttype:HtmlSummary
   if [ $? = 0 ] ; then
     echo 'Human readable report was generated.'
     Test/packages/coveralls.net.0.7.0/tools/csmacnz.Coveralls.exe --opencover -i reports/results.xml --repoToken $COVERALLS_REPO_TOKEN --serviceName "travis-ci"  --useRelativePaths
