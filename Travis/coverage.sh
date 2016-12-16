@@ -18,8 +18,8 @@ if [ "${TRAVIS_PULL_REQUEST}" = "false" ]; then
   nuget install -Verbosity quiet -OutputDirectory Test/packages -Version 4.6.519 OpenCover
   nuget install -Verbosity quiet -OutputDirectory Test/packages -Version 2.4.5.0 ReportGenerator
 
-  OPENCOVER=./Test/packages/OpenCover.4.6.519/tools/OpenCover.Console.exe
-  REPORTGENERATOR=./Test/packages/ReportGenerator.2.4.5.0/tools/ReportGenerator.exe
+  OPENCOVER=Test/packages/OpenCover.4.6.519/tools/OpenCover.Console.exe
+  REPORTGENERATOR=Test/packages/ReportGenerator.2.4.5.0/tools/ReportGenerator.exe
 
   echo "opencover: " + $OPENCOVER
   echo "current directory: " $PWD
