@@ -8,13 +8,15 @@ mono:
 - latest
 os:
 - linux
-osx_image: xcode7.3
+COVERALLS_REPO_TOKEN:
+    secure: T4HU+3zXxONb3hR4a+rJbE0MctjwMjlbHrYVBaU4BRXp9OAWygYlNUnDZZkG7vHk
 before_install:
   - sudo apt-get install nunit-console
 install:
   - nuget restore sdk/sdk.sln
   - nuget restore Test/Test.sln
   - nuget install NUnit.ConsoleRunner
+  - nuget install coveralls.io
 #  - nuget install OpenCover -version 4.6.519 -outputdirectory .\packages
 #  - nuget install ReportGenerator -version 2.5.1 -outputdirectory .\packages
 before_script:

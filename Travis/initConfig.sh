@@ -11,10 +11,18 @@ if [ "${TRAVIS_PULL_REQUEST}" = "false" ]; then
       echo "Decrypting config COMPLETED! Exited with $?"
       #exit 1
       echo "Attempting to run dot-net-sdk integration Tests..."
-      mono ./NUnit.ConsoleRunner.3.5.0/tools/nunit3-console.exe Test/Test/bin/Release/Test.dll
+      mono ./NUnit.ConsoleRunner.3.5.0/tools/nunit3-console.exe -reports:reports/results.xml Test/Test/bin/Release/Test.dll
       if [ $? = 0 ] ; then
         echo "Integration tests COMPLETED! Exited with $?"
-        exit 0
+        echo "Attempting to send code coverage to Coveralls..."
+        - mono Test/packages/coveralls.net.0.7.0/tools/csmacnz.Coveralls.exe --opencover -i results.xml --repoToken $COVERALLS_REPO_TOKEN --serviceName "travis-ci"  --useRelativePaths
+        if [ $? = 0 ] ; then
+          echo "Sending to Coveralls COMPLETED! Exited with $?"
+          exit 0
+        else
+          echo "Sending to Coveralls FAILED! Exited with $?"
+          exit 1
+        fi
       else
         echo "Integration tests FAILED! Exited with $?"
         exit 1

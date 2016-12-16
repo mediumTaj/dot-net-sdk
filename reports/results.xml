@@ -12489,7 +12489,7 @@
               <Name>System.Void IBM.Watson.DeveloperCloud.Services.SpeechToText.v1.Customization::.ctor()</Name>
               <SequencePoints />
               <BranchPoints />
-              <MethodPoint vc="138" uspid="4041" ordinal="0" offset="0" />
+              <MethodPoint vc="142" uspid="4041" ordinal="0" offset="0" />
             </Method>
           </Methods>
         </Class>
@@ -29118,7 +29118,7 @@
               <Name>System.Void IBM.Watson.DeveloperCloud.Services.AlchemyAPI.v1.Keyword::.ctor()</Name>
               <SequencePoints />
               <BranchPoints />
-              <MethodPoint vc="782" uspid="9709" ordinal="0" offset="0" />
+              <MethodPoint vc="1043" uspid="9709" ordinal="0" offset="0" />
             </Method>
           </Methods>
         </Class>
@@ -29286,7 +29286,7 @@
               <Name>System.Void IBM.Watson.DeveloperCloud.Services.AlchemyAPI.v1.KnowledgeGraph::.ctor()</Name>
               <SequencePoints />
               <BranchPoints />
-              <MethodPoint vc="738" uspid="9721" ordinal="0" offset="0" />
+              <MethodPoint vc="1053" uspid="9721" ordinal="0" offset="0" />
             </Method>
           </Methods>
         </Class>
@@ -29300,7 +29300,7 @@
               <Name>System.Void IBM.Watson.DeveloperCloud.Services.AlchemyAPI.v1.Disambiguated::.ctor()</Name>
               <SequencePoints />
               <BranchPoints />
-              <MethodPoint vc="208" uspid="9722" ordinal="0" offset="0" />
+              <MethodPoint vc="262" uspid="9722" ordinal="0" offset="0" />
             </Method>
           </Methods>
         </Class>
@@ -29314,7 +29314,7 @@
               <Name>System.Void IBM.Watson.DeveloperCloud.Services.AlchemyAPI.v1.Quotation::.ctor()</Name>
               <SequencePoints />
               <BranchPoints />
-              <MethodPoint vc="20" uspid="9723" ordinal="0" offset="0" />
+              <MethodPoint vc="25" uspid="9723" ordinal="0" offset="0" />
             </Method>
           </Methods>
         </Class>
@@ -29328,7 +29328,7 @@
               <Name>System.Void IBM.Watson.DeveloperCloud.Services.AlchemyAPI.v1.DocSentiment::.ctor()</Name>
               <SequencePoints />
               <BranchPoints />
-              <MethodPoint vc="843" uspid="9724" ordinal="0" offset="0" />
+              <MethodPoint vc="1158" uspid="9724" ordinal="0" offset="0" />
             </Method>
           </Methods>
         </Class>
