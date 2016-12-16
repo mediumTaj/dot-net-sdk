@@ -2,11 +2,11 @@
 
 set -e
 
-echo "Restoring packages!"
+echo "Restoring packages..."
 nuget restore Test/Test.sln
 
-echo "Building sdk!"
+echo "Building sdk..."
 xbuild /p:Configuration=Release sdk/sdk.sln
 
-echo "Building Tests"
+echo "Building Tests..."
 xbuild /p:Configuration=Release Test/Test.sln

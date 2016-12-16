@@ -8,17 +8,24 @@ mono:
 - latest
 os:
 - linux
-#secure: "CFIiVitux38hYpek6EPGc4BLYdWf6FYF7DkHuL1+nR0CnCMJPHox1BizhuHj9fmgDIxJYxXUy7PMB13ycjBIqYv+w67ZBlJLhdk7QO2mRWxgIXsMKE3jGljU7V+vTpsEsDIEWNaimxJuX9kkrmxxAOFBGBWhzN0jF6wVUAgXCo+ZDDt/6PcLzd6pn9EpUAG38hskBp80i1oXYZThTzaID1VhzR/SmG1/bd2leLw1+Gcg7mG4KhXbRECo5rWZdU5g/VbZjR8o+ifZx/51quDq29v1aIdDlqC9iXx76ngOhxFcW6EkSH6bACguOQRE3rxrpZdUv8McGLKgdQ4taO7Lb+BnLC/r2e0GtXFLTve7vjnMATyD021s/rJEULDDwFvGxqKTbpcmWlypJQSGczda/rT0NRCNVxNJZS/P8BQEzqgHP76rVjHTmVCKFSyDSzph8LsXYz9vBKl/X1odMiYfbA6wig/eVUs2Ipt2+9WWtbTOSyi6YlIEdBnsS6FR9uzPwjJrr34wewSVYHncGyZC0ddtH15a4/jxEK+ElfNSRggIv6kIPMFan6ZhbiVt9yvjp8yiiTa1tJqiOmbjqd/9wk6En6S6vL6w6B/VPuXwgMgswi3/F6eVPxZ6b9R+WUn6RRzWktGD5YBwg59aBn26jrqMOqBUe9qoXB/wlRFoUzo="
-before_install:
-  - sudo apt-get install nunit-console
+
 install:
-  - nuget restore sdk/sdk.sln
-  - nuget restore Test/Test.sln
-  - nuget install NUnit.ConsoleRunner
+- nuget restore sdk/sdk.sln
+- nuget restore Test/Test.sln
+- nuget install NUnit.ConsoleRunner
+
+before_script:
+- chmod a+x Travis/installSubmodule.sh
+- chmod a+x Travis/build.sh
+- chmod a+x Travis/coverage.sh
+# - chmod a+x Travis/coveralls.sh
+
 script:
-  - chmod a+x Travis/installSubmodule.sh
-  - chmod a+x Travis/build.sh
-  - chmod a+x Travis/coverage.sh
-  - chmod a+x Travis/coveralls.sh
-after_success:
-  - coveralls
+- Travis/installSubmodule.sh
+- Travis/build.sh
+- Travis/coverage.sh
+# - Travis/coveralls.sh
+
+env:
+  global:
+    secure: mvVXTl3GjEqSeuOAiVhiQABhQNg/J+U2J8gQO6R9Vu6VCmedJwjzYbOQ03092s8HEjK/eiNnd19XORQ7ZJzNihoIE5MO5Ya2LkMxcu3xjQbIDVYVePmjtybNpPZdZKTp+r+o0ULqAnp0xQv/BEF51sgZX1WGgPfwrbWRd0+r45GjetIumlEhtC5Qn01nDfiJ55B+J4YrvKZGssgw6gXRFrhXNEGgX3NT5ll6x9o+j8jHrRlR7/5hydbaBny+Bq4+fJEtWNuJxAVDODQBZQDSNqYdGG/UejJ4FO5+QFcJ/n5r/HvCGN1bXZMzBYnEvHIs/kOH/0a1fXaI+LDHITlQV0T65/+++bKS9xv36mxVLKk+Cj06KTWm8zCBUYd7/5axs9/leLNuM6NNwjL5WqFb6qMes+5eP+kygfA7qX91tx/50S46dDmHFWBNFXMriTEaacu1gmwYSQlpPTLfoxUBNtKl0NPU9MckTyCuVL3wNgUbw67IzIN8JpF+8rFJD7G2MyTooWNDs24pd5cTDcd8dWLUJS9z4g+MvBZJzOtCVTb9hN5lNA2KfO/CAaGcC3VQ7/Eo5zljLPBVoX/AGWXScdkMkOnXxyL/0YafnoLSl+2UHvovw12xRhdusqGi0csFk0k1EwluCagI/iga6vAR5Fo/w+XrEJt+RhG3rfLaGrk=
