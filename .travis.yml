@@ -15,7 +15,7 @@ install:
   - nuget restore sdk/sdk.sln
   - nuget restore Test/Test.sln
   - nuget install NUnit.ConsoleRunner
-  - nuget install coveralls.io
+  - nuget install coveralls.net
 #  - nuget install OpenCover -version 4.6.519 -outputdirectory .\packages
 #  - nuget install ReportGenerator -version 2.5.1 -outputdirectory .\packages
 before_script:
