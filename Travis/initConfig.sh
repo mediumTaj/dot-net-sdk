@@ -1,3 +1,4 @@
+#! /bin/sh
 if [ "${TRAVIS_PULL_REQUEST}" = "false" ]; then
   echo '$TRAVIS_PULL_REQUEST is false, running tests'
   echo "Attempting to move appdata directory..."
@@ -8,11 +9,20 @@ if [ "${TRAVIS_PULL_REQUEST}" = "false" ]; then
     openssl aes-256-cbc -K $encrypted_89fb597d004e_key -iv $encrypted_89fb597d004e_iv -in Config.json.enc -out Test/Test/bin/Release/appdata/Config.json -d
     if [ $? = 0 ] ; then
       echo "Decrypting config COMPLETED! Exited with $?"
+      #exit 1
       echo "Attempting to run dot-net-sdk integration Tests..."
-      mono ./NUnit.ConsoleRunner.3.5.0/tools/nunit3-console.exe Test/Test/bin/Release/Test.dll
+      mono ./NUnit.ConsoleRunner.3.5.0/tools/nunit3-console.exe Test/Test/bin/Release/Test.dll --result=reports/TestResults.xml
       if [ $? = 0 ] ; then
         echo "Integration tests COMPLETED! Exited with $?"
-        exit 0
+        echo "Attempting to send code coverage to Coveralls..."
+        mono Test/packages/coveralls.net.0.7.0/tools/csmacnz.Coveralls.exe --opencover -i reports/results.xml --serviceName "travis-ci" --useRelativePaths
+        if [ $? = 0 ] ; then
+          echo "Sending to Coveralls COMPLETED! Exited with $?"
+          exit 0
+        else
+          echo "Sending to Coveralls FAILED! Exited with $? - passing test for now!"
+          exit 0
+        fi
       else
         echo "Integration tests FAILED! Exited with $?"
         exit 1

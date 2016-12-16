@@ -25,7 +25,8 @@ using System.IO;
 
 namespace sdk.test
 {
-  [TestFixture, Ignore("Ignoring VisualRecognition because of 500 error.")]
+  //[Ignore("Ignoring VisualRecognition because of 500 error: If you are seeing this message, you are likely making an excessive number of concurrent HTTP connections to this service.  Please check the concurrency limits for your assigned service tier.")]
+  [TestFixture]
   class TestVisualRecognition : IntegrationTest
   {
     private VisualRecognition visualRecognition = new VisualRecognition();
@@ -72,7 +73,7 @@ namespace sdk.test
       }
     }
 
-    [Test, Order(1)]
+    [Test, Order(2)]
     public void VisualRecognition_TestGetClassifiers()
     {
       Log.Debug("TestVisualRecognition", "Attempting to get classifiers...");
@@ -90,7 +91,7 @@ namespace sdk.test
       autoEvent.WaitOne();
     }
 
-    [Test, Order(2)]
+    [Test, Order(1)]
     public void VisualRecognition_TestTrainClassifier()
     {
       Log.Debug("TestVisualRecognition", "Attempting to train classifier...");

@@ -5,10 +5,10 @@ root = true
 [*]
 end_of_line = LF
 
-; 2-column space indentation
+; 4-column space indentation
 [*.cs]
 indent_style = space
-indent_size = 2
+indent_size = 4
 
 curly_bracket_next_line = true
 indent_brace_style = Allman

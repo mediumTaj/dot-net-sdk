@@ -8,18 +8,24 @@ mono:
 - latest
 os:
 - linux
-osx_image: xcode7.3
+COVERALLS_REPO_TOKEN:
+    secure: "CFIiVitux38hYpek6EPGc4BLYdWf6FYF7DkHuL1+nR0CnCMJPHox1BizhuHj9fmgDIxJYxXUy7PMB13ycjBIqYv+w67ZBlJLhdk7QO2mRWxgIXsMKE3jGljU7V+vTpsEsDIEWNaimxJuX9kkrmxxAOFBGBWhzN0jF6wVUAgXCo+ZDDt/6PcLzd6pn9EpUAG38hskBp80i1oXYZThTzaID1VhzR/SmG1/bd2leLw1+Gcg7mG4KhXbRECo5rWZdU5g/VbZjR8o+ifZx/51quDq29v1aIdDlqC9iXx76ngOhxFcW6EkSH6bACguOQRE3rxrpZdUv8McGLKgdQ4taO7Lb+BnLC/r2e0GtXFLTve7vjnMATyD021s/rJEULDDwFvGxqKTbpcmWlypJQSGczda/rT0NRCNVxNJZS/P8BQEzqgHP76rVjHTmVCKFSyDSzph8LsXYz9vBKl/X1odMiYfbA6wig/eVUs2Ipt2+9WWtbTOSyi6YlIEdBnsS6FR9uzPwjJrr34wewSVYHncGyZC0ddtH15a4/jxEK+ElfNSRggIv6kIPMFan6ZhbiVt9yvjp8yiiTa1tJqiOmbjqd/9wk6En6S6vL6w6B/VPuXwgMgswi3/F6eVPxZ6b9R+WUn6RRzWktGD5YBwg59aBn26jrqMOqBUe9qoXB/wlRFoUzo="
 before_install:
   - sudo apt-get install nunit-console
 install:
   - nuget restore sdk/sdk.sln
   - nuget restore Test/Test.sln
   - nuget install NUnit.ConsoleRunner
+  - nuget install coveralls.io
+#  - nuget install OpenCover -version 4.6.519 -outputdirectory .\packages
+#  - nuget install ReportGenerator -version 2.5.1 -outputdirectory .\packages
 before_script:
   - chmod +x Travis/installSubmodule.sh
+  - chmod +x Travis/build.sh
+  - chmod +x Travis/initConfig.sh
+#  - chmod +x Travis/generateCodeCoverageReport.sh
 script:
   - Travis/installSubmodule.sh
   - Travis/build.sh
   - Travis/initConfig.sh
-after_script:
-  - nunit-console Test/Test/bin/Release/Tests.dll
+#  - Travis/generateCodeCoverageReport.sh
