@@ -15,7 +15,7 @@ if [ "${TRAVIS_PULL_REQUEST}" = "false" ]; then
       if [ $? = 0 ] ; then
         echo "Integration tests COMPLETED! Exited with $?"
         echo "Attempting to send code coverage to Coveralls..."
-        - mono Test/packages/coveralls.net.0.7.0/tools/csmacnz.Coveralls.exe --opencover -i reports/results.xml --repoToken $COVERALLS_REPO_TOKEN --serviceName "travis-ci"  --useRelativePaths
+        mono Test/packages/coveralls.net.0.7.0/tools/csmacnz.Coveralls.exe --opencover -i reports/results.xml --repoToken $COVERALLS_REPO_TOKEN --serviceName "travis-ci" --useRelativePaths
         if [ $? = 0 ] ; then
           echo "Sending to Coveralls COMPLETED! Exited with $?"
           exit 0

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <CoverageSession xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-  <Summary numSequencePoints="6783" visitedSequencePoints="4072" numBranchPoints="4265" visitedBranchPoints="2094" sequenceCoverage="60.03" branchCoverage="49.10" maxCyclomaticComplexity="41" minCyclomaticComplexity="1" visitedClasses="132" numClasses="168" visitedMethods="853" numMethods="1253" />
+  <Summary numSequencePoints="6783" visitedSequencePoints="4072" numBranchPoints="4265" visitedBranchPoints="2093" sequenceCoverage="60.03" branchCoverage="49.07" maxCyclomaticComplexity="41" minCyclomaticComplexity="1" visitedClasses="132" numClasses="168" visitedMethods="853" numMethods="1253" />
   <Modules>
     <Module hash="7D-5E-24-F6-CF-70-C9-2E-C5-AF-59-05-A8-A5-AC-1F-03-14-E3-10">
-      <Summary numSequencePoints="6783" visitedSequencePoints="4072" numBranchPoints="4265" visitedBranchPoints="2094" sequenceCoverage="60.03" branchCoverage="49.10" maxCyclomaticComplexity="41" minCyclomaticComplexity="1" visitedClasses="132" numClasses="168" visitedMethods="853" numMethods="1253" />
+      <Summary numSequencePoints="6783" visitedSequencePoints="4072" numBranchPoints="4265" visitedBranchPoints="2093" sequenceCoverage="60.03" branchCoverage="49.07" maxCyclomaticComplexity="41" minCyclomaticComplexity="1" visitedClasses="132" numClasses="168" visitedMethods="853" numMethods="1253" />
       <ModulePath>C:\Users\Ajiemar Santiago\Documents\_Projects\IBM\dot-net-sdk\Test\Test\bin\Release\sdk.dll</ModulePath>
       <ModuleTime>2016-12-15T23:36:04.095539Z</ModuleTime>
       <ModuleName>sdk</ModuleName>
@@ -3571,7 +3571,7 @@
               <Name>System.Void IBM.Watson.DeveloperCloud.Services.VisualRecognition.v3.Class::.ctor()</Name>
               <SequencePoints />
               <BranchPoints />
-              <MethodPoint vc="5" uspid="1162" ordinal="0" offset="0" />
+              <MethodPoint vc="4" uspid="1162" ordinal="0" offset="0" />
             </Method>
           </Methods>
         </Class>
@@ -6737,7 +6737,7 @@
           </Methods>
         </Class>
         <Class>
-          <Summary numSequencePoints="34" visitedSequencePoints="28" numBranchPoints="23" visitedBranchPoints="17" sequenceCoverage="82.35" branchCoverage="73.91" maxCyclomaticComplexity="5" minCyclomaticComplexity="1" visitedClasses="1" numClasses="1" visitedMethods="9" numMethods="9" />
+          <Summary numSequencePoints="34" visitedSequencePoints="28" numBranchPoints="23" visitedBranchPoints="16" sequenceCoverage="82.35" branchCoverage="69.57" maxCyclomaticComplexity="5" minCyclomaticComplexity="1" visitedClasses="1" numClasses="1" visitedMethods="9" numMethods="9" />
           <FullName>IBM.Watson.DeveloperCloud.Services.VisualRecognition.v3.VisualRecognition/FindClassifierReq</FullName>
           <Methods>
             <Method visited="true" cyclomaticComplexity="1" nPathComplexity="0" sequenceCoverage="100" branchCoverage="100" isConstructor="false" isStatic="false" isGetter="true" isSetter="false">
@@ -6768,10 +6768,10 @@
               <Name>System.String IBM.Watson.DeveloperCloud.Services.VisualRecognition.v3.VisualRecognition/FindClassifierReq::get_ClassifierName()</Name>
               <FileRef uid="55" />
               <SequencePoints>
-                <SequencePoint vc="4" uspid="2721" ordinal="0" offset="0" sl="718" sc="38" el="718" ec="42" bec="0" bev="0" fileid="55" />
+                <SequencePoint vc="1" uspid="2721" ordinal="0" offset="0" sl="718" sc="38" el="718" ec="42" bec="0" bev="0" fileid="55" />
               </SequencePoints>
               <BranchPoints />
-              <MethodPoint xsi:type="SequencePoint" vc="4" uspid="2721" ordinal="0" offset="0" sl="718" sc="38" el="718" ec="42" bec="0" bev="0" fileid="55" />
+              <MethodPoint xsi:type="SequencePoint" vc="1" uspid="2721" ordinal="0" offset="0" sl="718" sc="38" el="718" ec="42" bec="0" bev="0" fileid="55" />
             </Method>
             <Method visited="true" cyclomaticComplexity="1" nPathComplexity="0" sequenceCoverage="100" branchCoverage="100" isConstructor="false" isStatic="false" isGetter="false" isSetter="true">
               <Summary numSequencePoints="1" visitedSequencePoints="1" numBranchPoints="1" visitedBranchPoints="1" sequenceCoverage="100" branchCoverage="100" maxCyclomaticComplexity="1" minCyclomaticComplexity="1" visitedClasses="0" numClasses="0" visitedMethods="1" numMethods="1" />
@@ -6839,19 +6839,19 @@
               </BranchPoints>
               <MethodPoint xsi:type="SequencePoint" vc="1" uspid="2725" ordinal="0" offset="0" sl="699" sc="7" el="699" ec="145" bec="0" bev="0" fileid="55" />
             </Method>
-            <Method visited="true" cyclomaticComplexity="4" nPathComplexity="4" sequenceCoverage="81.82" branchCoverage="80" isConstructor="false" isStatic="false" isGetter="false" isSetter="false">
-              <Summary numSequencePoints="11" visitedSequencePoints="9" numBranchPoints="5" visitedBranchPoints="4" sequenceCoverage="81.82" branchCoverage="80" maxCyclomaticComplexity="4" minCyclomaticComplexity="4" visitedClasses="0" numClasses="0" visitedMethods="1" numMethods="1" />
+            <Method visited="true" cyclomaticComplexity="4" nPathComplexity="4" sequenceCoverage="81.82" branchCoverage="60" isConstructor="false" isStatic="false" isGetter="false" isSetter="false">
+              <Summary numSequencePoints="11" visitedSequencePoints="9" numBranchPoints="5" visitedBranchPoints="3" sequenceCoverage="81.82" branchCoverage="60" maxCyclomaticComplexity="4" minCyclomaticComplexity="4" visitedClasses="0" numClasses="0" visitedMethods="1" numMethods="1" />
               <MetadataToken>100666180</MetadataToken>
               <Name>System.Void IBM.Watson.DeveloperCloud.Services.VisualRecognition.v3.VisualRecognition/FindClassifierReq::OnGetClassifiers(IBM.Watson.DeveloperCloud.Services.VisualRecognition.v3.GetClassifiersTopLevelBrief,System.String)</Name>
               <FileRef uid="55" />
               <SequencePoints>
                 <SequencePoint vc="1" uspid="2747" ordinal="0" offset="0" sl="723" sc="9" el="723" ec="29" bec="0" bev="0" fileid="55" />
                 <SequencePoint vc="1" uspid="2748" ordinal="1" offset="2" sl="724" sc="27" el="724" ec="50" bec="0" bev="0" fileid="55" />
-                <SequencePoint vc="4" uspid="2749" ordinal="2" offset="13" sl="724" sc="18" el="724" ec="23" bec="0" bev="0" fileid="55" />
-                <SequencePoint vc="4" uspid="2750" ordinal="3" offset="17" sl="726" sc="11" el="726" ec="69" bec="2" bev="2" fileid="55" />
+                <SequencePoint vc="1" uspid="2749" ordinal="2" offset="13" sl="724" sc="18" el="724" ec="23" bec="0" bev="0" fileid="55" />
+                <SequencePoint vc="1" uspid="2750" ordinal="3" offset="17" sl="726" sc="11" el="726" ec="69" bec="2" bev="1" fileid="55" />
                 <SequencePoint vc="1" uspid="2751" ordinal="4" offset="46" sl="728" sc="13" el="728" ec="78" bec="0" bev="0" fileid="55" />
                 <SequencePoint vc="1" uspid="2752" ordinal="5" offset="77" sl="729" sc="13" el="729" ec="19" bec="0" bev="0" fileid="55" />
-                <SequencePoint vc="4" uspid="2753" ordinal="6" offset="83" sl="724" sc="24" el="724" ec="26" bec="0" bev="0" fileid="55" />
+                <SequencePoint vc="1" uspid="2753" ordinal="6" offset="83" sl="724" sc="24" el="724" ec="26" bec="0" bev="0" fileid="55" />
                 <SequencePoint vc="1" uspid="2754" ordinal="7" offset="89" sl="733" sc="9" el="733" ec="21" bec="2" bev="1" fileid="55" />
                 <SequencePoint vc="0" uspid="2755" ordinal="8" offset="92" sl="735" sc="11" el="735" ec="93" bec="0" bev="0" fileid="55" />
                 <SequencePoint vc="0" uspid="2756" ordinal="9" offset="122" sl="736" sc="11" el="736" ec="38" bec="0" bev="0" fileid="55" />
@@ -6859,7 +6859,7 @@
               </SequencePoints>
               <BranchPoints>
                 <BranchPoint vc="1" uspid="2758" ordinal="0" offset="44" sl="726" path="0" offsetend="46" fileid="55" />
-                <BranchPoint vc="3" uspid="2759" ordinal="1" offset="44" sl="726" path="1" offsetend="79" fileid="55" />
+                <BranchPoint vc="0" uspid="2759" ordinal="1" offset="44" sl="726" path="1" offsetend="79" fileid="55" />
                 <BranchPoint vc="0" uspid="2762" ordinal="4" offset="90" sl="733" path="0" offsetend="92" fileid="55" />
                 <BranchPoint vc="1" uspid="2763" ordinal="5" offset="90" sl="733" path="1" offsetend="135" fileid="55" />
               </BranchPoints>
@@ -12489,7 +12489,7 @@
               <Name>System.Void IBM.Watson.DeveloperCloud.Services.SpeechToText.v1.Customization::.ctor()</Name>
               <SequencePoints />
               <BranchPoints />
-              <MethodPoint vc="142" uspid="4041" ordinal="0" offset="0" />
+              <MethodPoint vc="143" uspid="4041" ordinal="0" offset="0" />
             </Method>
           </Methods>
         </Class>
@@ -29118,7 +29118,7 @@
               <Name>System.Void IBM.Watson.DeveloperCloud.Services.AlchemyAPI.v1.Keyword::.ctor()</Name>
               <SequencePoints />
               <BranchPoints />
-              <MethodPoint vc="1043" uspid="9709" ordinal="0" offset="0" />
+              <MethodPoint vc="1045" uspid="9709" ordinal="0" offset="0" />
             </Method>
           </Methods>
         </Class>
@@ -29286,7 +29286,7 @@
               <Name>System.Void IBM.Watson.DeveloperCloud.Services.AlchemyAPI.v1.KnowledgeGraph::.ctor()</Name>
               <SequencePoints />
               <BranchPoints />
-              <MethodPoint vc="1053" uspid="9721" ordinal="0" offset="0" />
+              <MethodPoint vc="1032" uspid="9721" ordinal="0" offset="0" />
             </Method>
           </Methods>
         </Class>
@@ -29300,7 +29300,7 @@
               <Name>System.Void IBM.Watson.DeveloperCloud.Services.AlchemyAPI.v1.Disambiguated::.ctor()</Name>
               <SequencePoints />
               <BranchPoints />
-              <MethodPoint vc="262" uspid="9722" ordinal="0" offset="0" />
+              <MethodPoint vc="239" uspid="9722" ordinal="0" offset="0" />
             </Method>
           </Methods>
         </Class>
@@ -29314,7 +29314,7 @@
               <Name>System.Void IBM.Watson.DeveloperCloud.Services.AlchemyAPI.v1.Quotation::.ctor()</Name>
               <SequencePoints />
               <BranchPoints />
-              <MethodPoint vc="25" uspid="9723" ordinal="0" offset="0" />
+              <MethodPoint vc="21" uspid="9723" ordinal="0" offset="0" />
             </Method>
           </Methods>
         </Class>
@@ -29328,7 +29328,7 @@
               <Name>System.Void IBM.Watson.DeveloperCloud.Services.AlchemyAPI.v1.DocSentiment::.ctor()</Name>
               <SequencePoints />
               <BranchPoints />
-              <MethodPoint vc="1158" uspid="9724" ordinal="0" offset="0" />
+              <MethodPoint vc="1137" uspid="9724" ordinal="0" offset="0" />
             </Method>
           </Methods>
         </Class>
