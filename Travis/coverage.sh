@@ -21,15 +21,15 @@ if [ "${TRAVIS_PULL_REQUEST}" = "false" ]; then
   OPENCOVER=./Test/packages/OpenCover.4.6.519/tools/OpenCover.Console.exe
   REPORTGENERATOR=./Test/packages/ReportGenerator.2.4.5.0/tools/ReportGenerator.exe
 
-  chmod +x $OPENCOVER
-  chmod +x $REPORTGENERATOR
+
+  echo "current directory: " + pwd
 
   echo "Attempting mono call for opencover"
   mono ./Test/packages/OpenCover.4.6.519/tools/OpenCover.Console.exe -target:"Test/packages/NUnit.ConsoleRunner.3.5.0/tools/nunit3-console.exe" -targetargs:"Test/Test/bin/Release/Test.dll --result=reports/TestResults.xml" -output:reports/results.xml -mergeoutput -hideskipped:File -oldStyle -skipautoprops -excludebyfile:*DataModels.cs -filter:"+[*]* -[Test]* -[sdk]FullSerializer.* -[sdk]MiniJSON.*" -searchdirs:$testdir/bin/$CONFIG/netcoreapp1.0 -register:user
   #
   # echo "Attempting mono call for report generator"
-
-  echo "current directory: " + pwd
+  chmod +x $OPENCOVER
+  chmod +x $REPORTGENERATOR
   echo "Calculating coverage with OpenCover..."
   $OPENCOVER \
     -target:"Test/packages/NUnit.ConsoleRunner.3.5.0/tools/nunit3-console.exe" \
