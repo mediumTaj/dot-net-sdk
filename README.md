@@ -1,7 +1,6 @@
 # Watson Developer Cloud .NET Platform SDK
 
 [![Build Status](https://travis-ci.org/mediumTaj/dot-net-sdk.svg?branch=develop)](https://travis-ci.org/mediumTaj/dot-net-sdk) [![Coveralls](https://img.shields.io/badge/coverage-59%25-green.svg)](https://cdn.rawgit.com/mediumTaj/dot-net-sdk/develop/reports/summary.htm)
-/*[![Coverage Status](https://coveralls.io/repos/github/mediumTaj/dot-net-sdk/badge.svg?branch=develop)](https://coveralls.io/github/mediumTaj/dot-net-sdk?branch=develop)*/
 
 Use this SDK to build Watson-powered applications in .NET.
 
