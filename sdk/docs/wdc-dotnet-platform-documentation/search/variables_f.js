@@ -1,6 +1,0 @@
-var searchData=
-[
-  ['text_5fhtml',['TEXT_HTML',['../class_i_b_m_1_1_watson_1_1_developer_cloud_1_1_services_1_1_personality_insights_1_1v2_1_1_content_type.html#a30103f556bea2ad00ddc4e38fa92a905',1,'IBM.Watson.DeveloperCloud.Services.PersonalityInsights.v2.ContentType.TEXT_HTML()'],['../class_i_b_m_1_1_watson_1_1_developer_cloud_1_1_services_1_1_personality_insights_1_1v3_1_1_content_type.html#a1f667f33bd2e867456f36e3df555fecb',1,'IBM.Watson.DeveloperCloud.Services.PersonalityInsights.v3.ContentType.TEXT_HTML()']]],
-  ['text_5fplain',['TEXT_PLAIN',['../class_i_b_m_1_1_watson_1_1_developer_cloud_1_1_services_1_1_personality_insights_1_1v2_1_1_content_type.html#a8344d34a100f68e0188700da91d076f4',1,'IBM.Watson.DeveloperCloud.Services.PersonalityInsights.v2.ContentType.TEXT_PLAIN()'],['../class_i_b_m_1_1_watson_1_1_developer_cloud_1_1_services_1_1_personality_insights_1_1v3_1_1_content_type.html#a0661f97e0a1341e4d20a1c1ac5308a0b',1,'IBM.Watson.DeveloperCloud.Services.PersonalityInsights.v3.ContentType.TEXT_PLAIN()']]],
-  ['traditional_5fchinese',['TRADITIONAL_CHINESE',['../class_i_b_m_1_1_watson_1_1_developer_cloud_1_1_services_1_1_personality_insights_1_1v3_1_1_accept_language.html#a4d8756c79c22251274ad2dd39b739052',1,'IBM::Watson::DeveloperCloud::Services::PersonalityInsights::v3::AcceptLanguage']]]
-];

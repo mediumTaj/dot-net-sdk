@@ -19,14 +19,14 @@ if [ "${TRAVIS_PULL_REQUEST}" = "false" ]; then
   # nuget install -Verbosity quiet -OutputDirectory Test/packages -Version 2.4.5.0 ReportGenerator
   #
   # OPENCOVER=Test/packages/OpenCover.4.6.519/tools/OpenCover.Console.exe
-  # REPORTGENERATOR=Test/packages/ReportGenerator.2.4.5.0/tools/ReportGenerator.exe
+  # REPORTGENERATOR=Test/packages/ReportGenerator.2.5.1/tools/ReportGenerator.exe
 
   # echo "opencover: " + $OPENCOVER
   # echo "current directory: " $PWD
 
   # echo "Attempting mono call for opencover"
-  # mono ./Test/packages/OpenCover.4.6.519/tools/OpenCover.Console.exe -target:"Test/packages/NUnit.ConsoleRunner.3.5.0/tools/nunit3-console.exe" -targetargs:"Test/Test/bin/Release/Test.dll -result=reports/TestResults.xml" -output:reports/results.xml -mergeoutput -hideskipped:File -oldStyle -skipautoprops -excludebyfile:*DataModels.cs -filter:"+[*]* -[Test]* -[sdk]FullSerializer.* -[sdk]MiniJSON.*" -register:user
-  #
+  # mono ./Test/packages/OpenCover.4.6.519/tools/OpenCover.Console.exe -target:"Test/packages/NUnit.ConsoleRunner.3.5.0/tools/nunit3-console.exe" -targetargs:"Test/Test/bin/Release/Test.dll -result=reports/TestResults.xml" -output:reports/results.xml -mergeoutput -hideskipped:File -skipautoprops -excludebyfile:*DataModels.cs -filter:"+[*]* -[Test]* -[sdk]FullSerializer.* -[sdk]MiniJSON.*" -register:user
+  # mono ./Test/packages/ReportGenerator.2.5.1/tools/ReportGenerator.exe -reports:reports/results.xml -targetdir:"reports" -verbosity:Error -reporttype:HtmlSummary
   # echo "Attempting mono call for report generator"
   # chmod +x $OPENCOVER
   # chmod +x $REPORTGENERATOR
@@ -38,7 +38,6 @@ if [ "${TRAVIS_PULL_REQUEST}" = "false" ]; then
   #   -output:reports/results.xml \
   #   -mergeoutput \
   #   -hideskipped:File \
-  #   -oldStyle \
   #   -skipautoprops \
   #   -excludebyfile:*DataModels.cs \
   #   -filter:"+[*]* -[Test]* -[sdk]FullSerializer.* -[sdk]MiniJSON.*" \

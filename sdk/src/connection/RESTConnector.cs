@@ -19,16 +19,10 @@
 //#define ENABLE_DEBUGGING
 
 using System;
-using System.Net;
-using System.Net.Security;
-using System.Collections;
 using System.Collections.Generic;
-using System.Text;
 using IBM.Watson.DeveloperCloud.Utilities;
 using IBM.Watson.DeveloperCloud.Logging;
-using System.IO;
 using RestSharp;
-using MiniJSON;
 using FullSerializer;
 
 namespace IBM.Watson.DeveloperCloud.Connection
@@ -423,99 +417,13 @@ namespace IBM.Watson.DeveloperCloud.Connection
 #if ENABLE_DEBUGGING
                     Log.Debug("RESTConnector", "URL: {0}", url);
 #endif
-
-
+          
           m_restClient.ExecuteAsync(restRequest, response =>
           {
             resp.Success = true;
             resp.Data = response.RawBytes;
             req.OnResponse?.Invoke(req, resp);
           });
-
-          // wait for the request to complete.
-          float timeout = Math.Max(Config.Instance.TimeOut, req.Timeout);
-          //while (!www.isDone)
-          //{
-          //  if (req.Cancel)
-          //    break;
-          //if ((DateTime.Now - startTime).TotalSeconds > timeout)
-          //  break;
-          //if (req.OnUploadProgress != null)
-          //  req.OnUploadProgress(www.uploadProgress);
-          //if (req.OnDownloadProgress != null)
-          //  req.OnDownloadProgress(www.progress);
-
-          //  yield return null;
-
-          //}
-
-          if (req.Cancel)
-            continue;
-
-          //bool bError = false;
-          //if (!string.IsNullOrEmpty(www.error))
-          //{
-          //  int nErrorCode = -1;
-          //  int nSeperator = www.error.IndexOf(' ');
-          //  if (nSeperator > 0 && int.TryParse(www.error.Substring(0, nSeperator).Trim(), out nErrorCode))
-          //  {
-          //    switch (nErrorCode)
-          //    {
-          //      case 200:
-          //      case 201:
-          //        bError = false;
-          //        break;
-          //      default:
-          //        bError = true;
-          //        break;
-          //    }
-          //  }
-
-          //  if (bError)
-          //    Log.Error("RESTConnector", "URL: {0}, ErrorCode: {1}, Error: {2}, Response: {3}", url, nErrorCode, www.error,
-          //        string.IsNullOrEmpty(www.text) ? "" : www.text);
-          //  else
-          //    Log.Warning("RESTConnector", "URL: {0}, ErrorCode: {1}, Error: {2}, Response: {3}", url, nErrorCode, www.error,
-          //        string.IsNullOrEmpty(www.text) ? "" : www.text);
-          //}
-
-
-          //if (!www.isDone)
-          //{
-          //  Log.Error("RESTConnector", "Request timed out for URL: {0}", url);
-          //  bError = true;
-          //}
-
-
-          /*if (!bError && (www.bytes == null || www.bytes.Length == 0))
-          {
-              Log.Warning("RESTConnector", "No data recevied for URL: {0}", url);
-              bError = true;
-          }*/
-
-          // generate the Response object now..
-          //if (!bError)
-          //{
-          //resp.Success = true;
-          //resp.Data = www.bytes;
-          //}
-          //else
-          //{
-          //  resp.Success = false;
-          //  resp.Error = string.Format("Request Error.\nURL: {0}\nError: {1}",
-          //      url, string.IsNullOrEmpty(www.error) ? "Timeout" : www.error);
-          //}
-
-          resp.ElapsedTime = (float)(DateTime.Now - startTime).TotalSeconds;
-
-          // if the response is over a threshold, then log with status instead of debug
-          //if (resp.ElapsedTime > LogResponseTime)
-          //  Log.Warning("RESTConnector", "Request {0} completed in {1} seconds.", url, resp.ElapsedTime);
-
-          //if (req.OnResponse != null)
-          //  req.OnResponse(req, resp);
-
-          //www = null;
         }
         else if(req.Delete)
         {
@@ -524,28 +432,6 @@ namespace IBM.Watson.DeveloperCloud.Connection
                     Log.Debug("RESTConnector", "Delete Request URL: {0}", url);
 #endif
 
-#if UNITY_EDITOR
-                    float timeout = Mathf.Max(Config.Instance.TimeOut, req.Timeout);
-
-                    DeleteRequest deleteReq = new DeleteRequest();
-                    deleteReq.Send(url, req.Headers);
-                    while (!deleteReq.IsComplete)
-                    {
-                        if (req.Cancel)
-                            break;
-                        if ((DateTime.Now - startTime).TotalSeconds > timeout)
-                            break;
-                        yield return null;
-                    }
-
-                    if (req.Cancel)
-                        continue;
-
-                    resp.Success = deleteReq.Success;
-
-#else
-          //Log.Warning("RESTConnector", "DELETE method is supported in the editor only.");
-          //resp.Success = false;
 
           restRequest.Method = Method.DELETE;
 
@@ -555,25 +441,10 @@ namespace IBM.Watson.DeveloperCloud.Connection
             resp.Data = response.RawBytes;
             req.OnResponse?.Invoke(req, resp);
           });
-#endif
           resp.ElapsedTime = (float)(DateTime.Now - startTime).TotalSeconds;
-          //if (req.OnResponse != null)
-          //  req.OnResponse(req, resp);
         }
       }
-
-
-
-
-
-
-
-
-
-
-
     }
   }
   #endregion
 }
-

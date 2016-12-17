@@ -6608,11 +6608,11 @@
               <SequencePoints>
                 <SequencePoint vc="1" uspid="2651" ordinal="0" offset="0" sl="723" sc="9" el="723" ec="29" bec="0" bev="0" fileid="53" />
                 <SequencePoint vc="1" uspid="2652" ordinal="1" offset="2" sl="724" sc="27" el="724" ec="50" bec="0" bev="0" fileid="53" />
-                <SequencePoint vc="4" uspid="2653" ordinal="2" offset="13" sl="724" sc="18" el="724" ec="23" bec="0" bev="0" fileid="53" />
-                <SequencePoint vc="4" uspid="2654" ordinal="3" offset="17" sl="726" sc="11" el="726" ec="69" bec="2" bev="2" fileid="53" />
+                <SequencePoint vc="9" uspid="2653" ordinal="2" offset="13" sl="724" sc="18" el="724" ec="23" bec="0" bev="0" fileid="53" />
+                <SequencePoint vc="9" uspid="2654" ordinal="3" offset="17" sl="726" sc="11" el="726" ec="69" bec="2" bev="2" fileid="53" />
                 <SequencePoint vc="1" uspid="2655" ordinal="4" offset="46" sl="728" sc="13" el="728" ec="78" bec="0" bev="0" fileid="53" />
                 <SequencePoint vc="1" uspid="2656" ordinal="5" offset="77" sl="729" sc="13" el="729" ec="19" bec="0" bev="0" fileid="53" />
-                <SequencePoint vc="4" uspid="2657" ordinal="6" offset="83" sl="724" sc="24" el="724" ec="26" bec="0" bev="0" fileid="53" />
+                <SequencePoint vc="9" uspid="2657" ordinal="6" offset="83" sl="724" sc="24" el="724" ec="26" bec="0" bev="0" fileid="53" />
                 <SequencePoint vc="1" uspid="2658" ordinal="7" offset="89" sl="733" sc="9" el="733" ec="21" bec="2" bev="1" fileid="53" />
                 <SequencePoint vc="0" uspid="2659" ordinal="8" offset="92" sl="735" sc="11" el="735" ec="93" bec="0" bev="0" fileid="53" />
                 <SequencePoint vc="0" uspid="2660" ordinal="9" offset="122" sl="736" sc="11" el="736" ec="38" bec="0" bev="0" fileid="53" />
@@ -6620,7 +6620,7 @@
               </SequencePoints>
               <BranchPoints>
                 <BranchPoint vc="1" uspid="2662" ordinal="0" offset="44" sl="726" path="0" offsetend="46" fileid="53" />
-                <BranchPoint vc="3" uspid="2663" ordinal="1" offset="44" sl="726" path="1" offsetend="79" fileid="53" />
+                <BranchPoint vc="8" uspid="2663" ordinal="1" offset="44" sl="726" path="1" offsetend="79" fileid="53" />
                 <BranchPoint vc="0" uspid="2666" ordinal="4" offset="90" sl="733" path="0" offsetend="92" fileid="53" />
                 <BranchPoint vc="1" uspid="2667" ordinal="5" offset="90" sl="733" path="1" offsetend="135" fileid="53" />
               </BranchPoints>
@@ -11466,7 +11466,7 @@
               <Name>System.Void IBM.Watson.DeveloperCloud.Services.SpeechToText.v1.Customization::.ctor()</Name>
               <SequencePoints />
               <BranchPoints />
-              <MethodPoint vc="183" uspid="3749" ordinal="0" offset="0" />
+              <MethodPoint vc="182" uspid="3749" ordinal="0" offset="0" />
             </Method>
           </Methods>
         </Class>
@@ -26551,7 +26551,7 @@
               <Name>System.Void IBM.Watson.DeveloperCloud.Services.AlchemyAPI.v1.Keyword::.ctor()</Name>
               <SequencePoints />
               <BranchPoints />
-              <MethodPoint vc="1035" uspid="9031" ordinal="0" offset="0" />
+              <MethodPoint vc="806" uspid="9031" ordinal="0" offset="0" />
             </Method>
           </Methods>
         </Class>
@@ -26719,7 +26719,7 @@
               <Name>System.Void IBM.Watson.DeveloperCloud.Services.AlchemyAPI.v1.KnowledgeGraph::.ctor()</Name>
               <SequencePoints />
               <BranchPoints />
-              <MethodPoint vc="1011" uspid="9043" ordinal="0" offset="0" />
+              <MethodPoint vc="768" uspid="9043" ordinal="0" offset="0" />
             </Method>
           </Methods>
         </Class>
@@ -26733,7 +26733,7 @@
               <Name>System.Void IBM.Watson.DeveloperCloud.Services.AlchemyAPI.v1.Disambiguated::.ctor()</Name>
               <SequencePoints />
               <BranchPoints />
-              <MethodPoint vc="228" uspid="9044" ordinal="0" offset="0" />
+              <MethodPoint vc="214" uspid="9044" ordinal="0" offset="0" />
             </Method>
           </Methods>
         </Class>
@@ -26747,7 +26747,7 @@
               <Name>System.Void IBM.Watson.DeveloperCloud.Services.AlchemyAPI.v1.Quotation::.ctor()</Name>
               <SequencePoints />
               <BranchPoints />
-              <MethodPoint vc="30" uspid="9045" ordinal="0" offset="0" />
+              <MethodPoint vc="25" uspid="9045" ordinal="0" offset="0" />
             </Method>
           </Methods>
         </Class>
@@ -26761,7 +26761,7 @@
               <Name>System.Void IBM.Watson.DeveloperCloud.Services.AlchemyAPI.v1.DocSentiment::.ctor()</Name>
               <SequencePoints />
               <BranchPoints />
-              <MethodPoint vc="1116" uspid="9046" ordinal="0" offset="0" />
+              <MethodPoint vc="873" uspid="9046" ordinal="0" offset="0" />
             </Method>
           </Methods>
         </Class>

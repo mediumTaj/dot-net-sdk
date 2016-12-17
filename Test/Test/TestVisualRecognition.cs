@@ -25,7 +25,7 @@ using System.IO;
 
 namespace sdk.test
 {
-  [Ignore("Ignoring VisualRecognition because of 500 error: If you are seeing this message, you are likely making an excessive number of concurrent HTTP connections to this service.  Please check the concurrency limits for your assigned service tier.")]
+  //[Ignore("Ignoring VisualRecognition because of 500 error: If you are seeing this message, you are likely making an excessive number of concurrent HTTP connections to this service.  Please check the concurrency limits for your assigned service tier.")]
   [TestFixture]
   class TestVisualRecognition : IntegrationTest
   {

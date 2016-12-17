@@ -49,10 +49,6 @@ namespace IBM.Watson.DeveloperCloud.Utilities
     /// Weather or not the audio clip is streaming.
     /// </summary>
     public bool stream { get; set; }
-    ///// <summary>
-    ///// The audio clip's WaveIn.
-    ///// </summary>
-    //public WaveIn waveIn { get; set; }
     /// <summary>
     /// Audio Bytes for the clip.
     /// </summary>
@@ -61,18 +57,6 @@ namespace IBM.Watson.DeveloperCloud.Utilities
     /// Audio data for the clip.
     /// </summary>
     public float[] audioData { get; set; }
-    ///// <summary>
-    ///// Callback for 
-    ///// </summary>
-    //public OnDataAvailable DataAvailableCallback { get; set; }
-    ///// <summary>
-    ///// Callback for recording stopped
-    ///// </summary>
-    //public OnRecordingStopped RecordingStoppedCallback { get; set; }
-    ///// <summary>
-    ///// Corresponding to the "Load In Background" flag in the inspector, when this flag is set, the loading will happen delayed without blocking the main thread.
-    ///// </summary>
-    //public bool loadInBackground { get; set; }
     /// <summary>
     /// Returns the current load state of the audio data associated with an AudioClip.
     /// </summary>
@@ -81,10 +65,6 @@ namespace IBM.Watson.DeveloperCloud.Utilities
     /// The load type of the clip.
     /// </summary>
     public AudioClipLoadType loadType { get; }
-    ///// <summary>
-    ///// Preloads audio data of the clip when the clip asset is loaded. When this flag is off, scripts have to call AudioClip.LoadAudioData() to load the data before the clip can be played. Properties like length, channels and format are available before the audio data has been loaded.
-    ///// </summary>
-    //public bool preloadAudioData { get; set; }
     /// <summary>
     /// The length of the audio clip in samples.
     /// </summary>
@@ -138,61 +118,8 @@ namespace IBM.Watson.DeveloperCloud.Utilities
       clip.frequency = frequency;
       clip.stream = stream;
 
-      //clip.SetData()
-      //clip.DataAvailableCallback = dataAvailableCallback;
-      //clip.RecordingStoppedCallback = recordingStoppedCallback;
-
-      //WaveIn waveIn = new WaveIn(WaveCallbackInfo.FunctionCallback());
-      //waveIn.WaveFormat = new WaveFormat(frequency, channels);
-
-      //waveIn.DataAvailable += new EventHandler<WaveInEventArgs>(clip.DataAvailableCallback);
-      //waveIn.RecordingStopped += new EventHandler<StoppedEventArgs>(clip.RecordingStoppedCallback);
-      ////waveIn.StartRecording();
-
-      //clip.waveIn = waveIn;
-
       return clip;
     }
-
-    //public delegate void OnDataAvailable(object sender, WaveInEventArgs e);
-    //public delegate void OnRecordingStopped(object sender, StoppedEventArgs e);
-    //private void OnDataAvailable(object sender, WaveInEventArgs e)
-    //{
-    //  if (waveFile != null)
-    //  {
-    //    waveFile.Write(e.Buffer, 0, e.BytesRecorded);
-    //    waveFile.Flush();
-
-    //    int seconds = (int)(waveFile.Length / waveFile.WaveFormat.AverageBytesPerSecond);
-
-    //    if (seconds > 5)
-    //    {
-    //      Log.Debug("SpeechToTextTest", "mic recording stopped!");
-    //      waveIn.StopRecording();
-    //    }
-    //  }
-    //}
-
-    //private void OnRecordingStopped(object sender, StoppedEventArgs e)
-    //{
-    //  Log.Debug("SpeechToTextTest", "mic recording stopped!");
-
-    //  if (waveIn != null)
-    //  {
-    //    waveIn.DataAvailable -= new EventHandler<WaveInEventArgs>(MicrophoneDataAvailable);
-    //    waveIn.RecordingStopped -= new EventHandler<StoppedEventArgs>(MicrophoneRecordingStopped);
-
-    //    waveIn.Dispose();
-    //    waveIn = null;
-    //  }
-
-    //  if (waveFile != null)
-    //  {
-    //    waveFile.Dispose();
-    //    waveFile = null;
-    //  }
-    //}
-
   }
 
   public enum AudioDataLoadState
