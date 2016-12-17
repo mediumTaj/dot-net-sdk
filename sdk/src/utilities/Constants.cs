@@ -53,7 +53,7 @@ namespace IBM.Watson.DeveloperCloud.Utilities
         public static class String
         {
             /// <exclude />
-            public const string VERSION = "watson-developer-cloud-dot-net-sdk-0.1.0";
+            public const string VERSION = "watson-developer-cloud-dot-net-sdk-0.1.1-alpha";
         }
     }
 }
