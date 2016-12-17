@@ -23,38 +23,38 @@ using System.Threading;
 
 namespace sdk.test
 {
-  public class IntegrationTest
-  {
-    protected AutoResetEvent autoEvent = new AutoResetEvent(false);
-    protected bool isBaseInitalized = false;
-    protected bool isTestInitalized = false;
-    protected string testDataPath;
-
-    [SetUp]
-    public virtual void Init()
+    public class IntegrationTest
     {
-      if (!isBaseInitalized)
-      {
-        Constants.Path.dataPath = TestContext.CurrentContext.TestDirectory + Path.DirectorySeparatorChar;
-        testDataPath = Constants.Path.dataPath + Constants.Path.APP_DATA + Path.DirectorySeparatorChar;
+        protected AutoResetEvent autoEvent = new AutoResetEvent(false);
+        protected bool isBaseInitalized = false;
+        protected bool isTestInitalized = false;
+        protected string testDataPath;
 
-        if (!Config.Instance.ConfigLoaded)
+        [SetUp]
+        public virtual void Init()
         {
-          string configPath = testDataPath + Constants.Path.CONFIG_FILE;
-          string configJson = File.ReadAllText(configPath);
-          if (!Config.Instance.LoadConfig(configJson))
-          {
-            Log.Debug("IntegrationTest", "Failed to load config");
-          }
-          else
-          {
-            isBaseInitalized = true;
-          }
-        }
+            if (!isBaseInitalized)
+            {
+                Constants.Path.dataPath = TestContext.CurrentContext.TestDirectory + Path.DirectorySeparatorChar;
+                testDataPath = Constants.Path.dataPath + Constants.Path.APP_DATA + Path.DirectorySeparatorChar;
 
-        if (!Config.Instance.ConfigLoaded)
-          Assert.Fail("Failed to load Config.");
-      }
+                if (!Config.Instance.ConfigLoaded)
+                {
+                    string configPath = testDataPath + Constants.Path.CONFIG_FILE;
+                    string configJson = File.ReadAllText(configPath);
+                    if (!Config.Instance.LoadConfig(configJson))
+                    {
+                        Log.Debug("IntegrationTest", "Failed to load config");
+                    }
+                    else
+                    {
+                        isBaseInitalized = true;
+                    }
+                }
+
+                if (!Config.Instance.ConfigLoaded)
+                    Assert.Fail("Failed to load Config.");
+            }
+        }
     }
-  }
 }
