@@ -23,7 +23,7 @@ using IBM.Watson.DeveloperCloud.Utilities;
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
-using WebSocketSharp;
+//using WebSocketSharp;
 
 #pragma warning disable 0618
 
@@ -279,48 +279,48 @@ namespace IBM.Watson.DeveloperCloud.Connection
         // NOTE: ALl functions in this region are operating in a background thread, do NOT call any Unity functions!
         private void SendMessages()
         {
-            try
-            {
-                WebSocket ws = null;
+            //try
+            //{
+            //    WebSocket ws = null;
 
-                ws = new WebSocket(URL);
-                //if (Headers != null)
-                //  ws.Headers = Headers;
-                if (Authentication != null)
-                    ws.SetCredentials(Authentication.User, Authentication.Password, true);
-                ws.OnOpen += OnWSOpen;
-                ws.OnClose += OnWSClose;
-                ws.OnError += OnWSError;
-                ws.OnMessage += OnWSMessage;
-                ws.Connect();
+            //    ws = new WebSocket(URL);
+            //    //if (Headers != null)
+            //    //  ws.Headers = Headers;
+            //    if (Authentication != null)
+            //        ws.SetCredentials(Authentication.User, Authentication.Password, true);
+            //    ws.OnOpen += OnWSOpen;
+            //    ws.OnClose += OnWSClose;
+            //    ws.OnError += OnWSError;
+            //    ws.OnMessage += OnWSMessage;
+            //    ws.Connect();
 
-                while (m_ConnectionState == ConnectionState.CONNECTED)
-                {
-                    m_SendEvent.WaitOne(500);
+            //    while (m_ConnectionState == ConnectionState.CONNECTED)
+            //    {
+            //        m_SendEvent.WaitOne(500);
 
-                    Message msg = null;
-                    lock (m_SendQueue)
-                    {
-                        if (m_SendQueue.Count > 0)
-                            msg = m_SendQueue.Dequeue();
-                    }
+            //        Message msg = null;
+            //        lock (m_SendQueue)
+            //        {
+            //            if (m_SendQueue.Count > 0)
+            //                msg = m_SendQueue.Dequeue();
+            //        }
 
-                    if (msg == null)
-                        continue;
+            //        if (msg == null)
+            //            continue;
 
-                    if (msg is TextMessage)
-                        ws.Send(((TextMessage)msg).Text);
-                    else if (msg is BinaryMessage)
-                        ws.Send(((BinaryMessage)msg).Data);
-                }
+            //        if (msg is TextMessage)
+            //            ws.Send(((TextMessage)msg).Text);
+            //        else if (msg is BinaryMessage)
+            //            ws.Send(((BinaryMessage)msg).Data);
+            //    }
 
-                ws.Close();
-            }
-            catch (System.Exception e)
-            {
-                m_ConnectionState = ConnectionState.DISCONNECTED;
-                Log.Error("WSConnector", "Caught WebSocket exception: {0}", e.ToString());
-            }
+            //    ws.Close();
+            //}
+            //catch (System.Exception e)
+            //{
+            //    m_ConnectionState = ConnectionState.DISCONNECTED;
+            //    Log.Error("WSConnector", "Caught WebSocket exception: {0}", e.ToString());
+            //}
         }
 
         private void OnWSOpen(object sender, System.EventArgs e)
@@ -328,28 +328,28 @@ namespace IBM.Watson.DeveloperCloud.Connection
             m_ConnectionState = ConnectionState.CONNECTED;
         }
 
-        private void OnWSClose(object sender, CloseEventArgs e)
-        {
-            m_ConnectionState = e.WasClean ? ConnectionState.CLOSED : ConnectionState.DISCONNECTED;
-        }
+        //private void OnWSClose(object sender, CloseEventArgs e)
+        //{
+        //    m_ConnectionState = e.WasClean ? ConnectionState.CLOSED : ConnectionState.DISCONNECTED;
+        //}
 
-        private void OnWSMessage(object sender, MessageEventArgs e)
-        {
-            Message msg = null;
-            if (e.Type == Opcode.Text)
-                msg = new TextMessage(e.Data);
-            else if (e.Type == Opcode.Binary)
-                msg = new BinaryMessage(e.RawData);
+        //private void OnWSMessage(object sender, MessageEventArgs e)
+        //{
+        //    Message msg = null;
+        //    if (e.Type == Opcode.Text)
+        //        msg = new TextMessage(e.Data);
+        //    else if (e.Type == Opcode.Binary)
+        //        msg = new BinaryMessage(e.RawData);
 
-            lock (m_ReceiveQueue)
-                m_ReceiveQueue.Enqueue(msg);
-            m_ReceiveEvent.Set();
-        }
+        //    lock (m_ReceiveQueue)
+        //        m_ReceiveQueue.Enqueue(msg);
+        //    m_ReceiveEvent.Set();
+        //}
 
-        private void OnWSError(object sender, ErrorEventArgs e)
-        {
-            m_ConnectionState = ConnectionState.DISCONNECTED;
-        }
+        //private void OnWSError(object sender, ErrorEventArgs e)
+        //{
+        //    m_ConnectionState = ConnectionState.DISCONNECTED;
+        //}
         #endregion
     }
 }
