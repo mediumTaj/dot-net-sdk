@@ -35,7 +35,7 @@ Ensure that you have the following prerequisites:
 ## Getting the Watson SDK and adding it to your project
 You can get the latest SDK release on NuGet
 ```
-Install-Package IBM.Watson
+PM> Install-Package IBM.Watson
 ```
 or manually [here][latest_release].
 
