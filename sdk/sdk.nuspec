@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>IBM.Watson</id>
+    <version>0.1.0</version>
+    <title>$title$</title>
+    <authors>Watson Developer Cloud</authors>
+    <owners>IBM</owners>
+    <licenseUrl>https://www.apache.org/licenses/LICENSE-2.0</licenseUrl>
+    <projectUrl>https://github.com/mediumTaj/dot-net-sdk</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Use this SDK to build Watson-powered applications in .NET Platform.</description>
+    <releaseNotes>This is the first Alpha release of the Watson Developer Cloud .NET Platform SDK. It shares a common library with the Watson Developer Cloud Unity SDK.</releaseNotes>
+    <copyright>Copyright 2016</copyright>
+    <tags>Watson IBM Cognitive text-to-speech speech-to-text natural-language speech text natural language tranlation translator visual recognition</tags>
+  </metadata>
+</package>
