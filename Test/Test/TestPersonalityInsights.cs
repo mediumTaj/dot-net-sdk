@@ -21,43 +21,43 @@ using NUnit.Framework;
 
 namespace sdk.test
 {
-  [TestFixture]
-  public class TestPersonalityInsights : IntegrationTest
-  {
-    PersonalityInsights personalityInsights = new PersonalityInsights();
-    private string testString = "test";
-    string dataPath = Constants.Path.APP_DATA + "/personalityInsights.json";
-
-    [Test]
-    public void PersonalityInsights_TestGetProfileText()
+    [TestFixture]
+    public class TestPersonalityInsights : IntegrationTest
     {
-      if(!personalityInsights.GetProfile((Profile profile, string data) =>
-      {
-        Assert.AreNotEqual(profile, null);
-        autoEvent.Set();
-      }, testString))
-      {
-        Assert.Fail("Failed to invoke GetProfile with text.");
-        autoEvent.Set();
-      }
+        PersonalityInsights personalityInsights = new PersonalityInsights();
+        private string testString = "test";
+        string dataPath = Constants.Path.APP_DATA + "/personalityInsights.json";
 
-      autoEvent.WaitOne();
+        [Test]
+        public void PersonalityInsights_TestGetProfileText()
+        {
+            if (!personalityInsights.GetProfile((Profile profile, string data) =>
+             {
+                 Assert.AreNotEqual(profile, null);
+                 autoEvent.Set();
+             }, testString))
+            {
+                Assert.Fail("Failed to invoke GetProfile with text.");
+                autoEvent.Set();
+            }
+
+            autoEvent.WaitOne();
+        }
+
+        [Test]
+        public void PersonalityInsights_TestGetProfileJson()
+        {
+            if (!personalityInsights.GetProfile((Profile profile, string data) =>
+             {
+                 Assert.AreNotEqual(profile, null);
+                 autoEvent.Set();
+             }, System.IO.Path.GetFullPath(dataPath), "application/json"))
+            {
+                Assert.Fail("Failed to invoke GetProfile with json.");
+                autoEvent.Set();
+            }
+
+            autoEvent.WaitOne();
+        }
     }
-
-    [Test]
-    public void PersonalityInsights_TestGetProfileJson()
-    {
-      if(!personalityInsights.GetProfile((Profile profile, string data) =>
-      {
-        Assert.AreNotEqual(profile, null);
-        autoEvent.Set();
-      }, System.IO.Path.GetFullPath(dataPath), "application/json"))
-      {
-        Assert.Fail("Failed to invoke GetProfile with json.");
-        autoEvent.Set();
-      }
-
-      autoEvent.WaitOne();
-    }
-  }
 }

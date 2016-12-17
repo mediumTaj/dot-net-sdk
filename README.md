@@ -33,12 +33,7 @@ Ensure that you have the following prerequisites:
 * [Visual Studio][get_visual_studio]. You can use the free **Community** edition.
 
 ## Getting the Watson SDK and adding it to your project
-You can get the latest SDK release using NuGet console in Visual Studio
-```
-PM> Install-Package [TODO package name here]
-```
-
-or manually install the package by clicking [here][latest_release].
+You can get the latest SDK release [here][latest_release].
 
 ## Configuring your service credentials
 You will need the 'username' and 'password' credentials or an 'api key' for each service. Service credentials are different from your Bluemix account username and password.

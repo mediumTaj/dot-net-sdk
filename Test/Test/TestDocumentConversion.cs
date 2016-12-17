@@ -20,69 +20,69 @@ using IBM.Watson.DeveloperCloud.Services.DocumentConversion.v1;
 
 namespace sdk.test
 {
-  [TestFixture]
-  public class TestDocumentConversion : IntegrationTest
-  {
-    private DocumentConversion documentConversion = new DocumentConversion();
-    private string examplePath;
-
-    override public void Init()
+    [TestFixture]
+    public class TestDocumentConversion : IntegrationTest
     {
-      base.Init();
+        private DocumentConversion documentConversion = new DocumentConversion();
+        private string examplePath;
 
-      if (!isTestInitalized)
-      {
-        examplePath = testDataPath + "watson_beats_jeopardy.html";
-        isTestInitalized = true;
-      }
+        override public void Init()
+        {
+            base.Init();
+
+            if (!isTestInitalized)
+            {
+                examplePath = testDataPath + "watson_beats_jeopardy.html";
+                isTestInitalized = true;
+            }
+        }
+
+        [Test]
+        public void DocumentConversion_TestConvertDocumentAnswerUnit()
+        {
+            if (!documentConversion.ConvertDocument((ConvertedDocument documentConversionResponse, string data) =>
+            {
+                Assert.AreNotEqual(documentConversionResponse, null);
+                autoEvent.Set();
+            }, examplePath, ConversionTarget.ANSWER_UNITS))
+            {
+                Assert.Fail();
+                autoEvent.Set();
+            }
+
+            autoEvent.WaitOne();
+        }
+
+        [Test]
+        public void DocumentConversion_TestConvertDocumentText()
+        {
+            if (!documentConversion.ConvertDocument((ConvertedDocument documentConversionResponse, string data) =>
+            {
+                Assert.AreNotEqual(documentConversionResponse, null);
+                autoEvent.Set();
+            }, examplePath, ConversionTarget.NORMALIZED_TEXT))
+            {
+                Assert.Fail();
+                autoEvent.Set();
+            }
+
+            autoEvent.WaitOne();
+        }
+
+        [Test]
+        public void DocumentConversion_TestConvertDocumentHTML()
+        {
+            if (!documentConversion.ConvertDocument((ConvertedDocument documentConversionResponse, string data) =>
+            {
+                Assert.AreNotEqual(documentConversionResponse, null);
+                autoEvent.Set();
+            }, examplePath, ConversionTarget.NORMALIZED_HTML))
+            {
+                Assert.Fail();
+                autoEvent.Set();
+            }
+
+            autoEvent.WaitOne();
+        }
     }
-
-    [Test]
-    public void DocumentConversion_TestConvertDocumentAnswerUnit()
-    {
-      if (!documentConversion.ConvertDocument((ConvertedDocument documentConversionResponse, string data) =>
-      {
-        Assert.AreNotEqual(documentConversionResponse, null);
-        autoEvent.Set();
-      }, examplePath, ConversionTarget.ANSWER_UNITS))
-      {
-        Assert.Fail();
-        autoEvent.Set();
-      }
-
-      autoEvent.WaitOne();
-    }
-
-    [Test]
-    public void DocumentConversion_TestConvertDocumentText()
-    {
-      if (!documentConversion.ConvertDocument((ConvertedDocument documentConversionResponse, string data) =>
-      {
-        Assert.AreNotEqual(documentConversionResponse, null);
-        autoEvent.Set();
-      }, examplePath, ConversionTarget.NORMALIZED_TEXT))
-      {
-        Assert.Fail();
-        autoEvent.Set();
-      }
-
-      autoEvent.WaitOne();
-    }
-
-    [Test]
-    public void DocumentConversion_TestConvertDocumentHTML()
-    {
-      if (!documentConversion.ConvertDocument((ConvertedDocument documentConversionResponse, string data) =>
-      {
-        Assert.AreNotEqual(documentConversionResponse, null);
-        autoEvent.Set();
-      }, examplePath, ConversionTarget.NORMALIZED_HTML))
-      {
-        Assert.Fail();
-        autoEvent.Set();
-      }
-
-      autoEvent.WaitOne();
-    }
-  }
 }

@@ -21,58 +21,58 @@ using System.IO;
 
 namespace sdk.test
 {
-  [TestFixture]
-  class TestToneAnalyzer : IntegrationTest
-  {
-    private ToneAnalyzer toneAnalyzer = new ToneAnalyzer();
-    private string toneAnalyzerTestDataPath = "watson_beats_jeopardy.txt";
-    private string toneAnalyzerTestDataString;
-
-    public override void Init()
+    [TestFixture]
+    class TestToneAnalyzer : IntegrationTest
     {
-      base.Init();
+        private ToneAnalyzer toneAnalyzer = new ToneAnalyzer();
+        private string toneAnalyzerTestDataPath = "watson_beats_jeopardy.txt";
+        private string toneAnalyzerTestDataString;
 
-      if (!isTestInitalized)
-      {
-        toneAnalyzerTestDataString = File.ReadAllText(testDataPath + toneAnalyzerTestDataPath);
-        isTestInitalized = true;
-      }
+        public override void Init()
+        {
+            base.Init();
+
+            if (!isTestInitalized)
+            {
+                toneAnalyzerTestDataString = File.ReadAllText(testDataPath + toneAnalyzerTestDataPath);
+                isTestInitalized = true;
+            }
+        }
+
+        [Test]
+        public void ToneAnalyzer_TestToneGET()
+        {
+            Log.Debug("TestToneAnalyzer", "Attempting to get tone using GET...");
+
+            if (!toneAnalyzer.GetToneAnalyze(toneAnalyzerTestDataString, (ToneAnalyzerResponse resp, string data) =>
+             {
+                 Assert.NotNull(resp);
+                 autoEvent.Set();
+             }))
+            {
+                Assert.Fail("Failed to invoke GetToneAnalyze() GET.");
+                autoEvent.Set();
+            }
+
+            autoEvent.WaitOne();
+        }
+
+        [Test]
+        public void ToneAnalyzer_TestTonePOST()
+        {
+            Log.Debug("TestToneAnalyzer", "Attempting to get tone using POST...");
+
+            if (!toneAnalyzer.GetToneAnalyze((ToneAnalyzerResponse resp, string data) =>
+            {
+                Assert.NotNull(resp);
+                autoEvent.Set();
+            }, toneAnalyzerTestDataString))
+            {
+                Assert.Fail("Failed to invoke GetToneAnalyze() POST.");
+                autoEvent.Set();
+            }
+
+            autoEvent.WaitOne();
+        }
     }
-
-    [Test]
-    public void ToneAnalyzer_TestToneGET()
-    {
-      Log.Debug("TestToneAnalyzer", "Attempting to get tone using GET...");
-
-      if (!toneAnalyzer.GetToneAnalyze(toneAnalyzerTestDataString, (ToneAnalyzerResponse resp, string data) =>
-       {
-         Assert.NotNull(resp);
-         autoEvent.Set();
-       }))
-      {
-        Assert.Fail("Failed to invoke GetToneAnalyze() GET.");
-        autoEvent.Set();
-      }
-
-      autoEvent.WaitOne();
-    }
-
-    [Test]
-    public void ToneAnalyzer_TestTonePOST()
-    {
-      Log.Debug("TestToneAnalyzer", "Attempting to get tone using POST...");
-
-      if (!toneAnalyzer.GetToneAnalyze((ToneAnalyzerResponse resp, string data) =>
-      {
-        Assert.NotNull(resp);
-        autoEvent.Set();
-      }, toneAnalyzerTestDataString))
-      {
-        Assert.Fail("Failed to invoke GetToneAnalyze() POST.");
-        autoEvent.Set();
-      }
-
-      autoEvent.WaitOne();
-    }
-  }
 }

@@ -20,66 +20,66 @@ using NUnit.Framework;
 
 namespace sdk.test
 {
-  [TestFixture]
-  public class TestConversation : IntegrationTest
-  {
-    Conversation conversation = new Conversation();
-    private string workspaceID;
-    private string input = "Can you unlock the door?";
-
-    override public void Init()
+    [TestFixture]
+    public class TestConversation : IntegrationTest
     {
-      base.Init();
+        Conversation conversation = new Conversation();
+        private string workspaceID;
+        private string input = "Can you unlock the door?";
 
-      if (!isTestInitalized)
-      {
-        workspaceID = Config.Instance.GetVariableValue("ConversationV1_ID");
-        if (string.IsNullOrEmpty(workspaceID))
-          Assert.Fail("Failed to find workspaceID");
+        override public void Init()
+        {
+            base.Init();
 
-        isTestInitalized = true;
-      }
+            if (!isTestInitalized)
+            {
+                workspaceID = Config.Instance.GetVariableValue("ConversationV1_ID");
+                if (string.IsNullOrEmpty(workspaceID))
+                    Assert.Fail("Failed to find workspaceID");
+
+                isTestInitalized = true;
+            }
+        }
+
+        [Test]
+        public void Conversation_TestMessageObject()
+        {
+            MessageResponse messageResponse = null;
+
+            if (!conversation.Message((MessageResponse resp, string data) =>
+            {
+                messageResponse = resp;
+                autoEvent.Set();
+            }, workspaceID, input))
+            {
+                Assert.Fail("Failed to send message! {0}", input);
+                autoEvent.Set();
+            }
+
+            autoEvent.WaitOne();
+            Assert.AreNotEqual(messageResponse, null);
+        }
+
+        [Test]
+        public void Conversation_TestMessageInput()
+        {
+            MessageResponse messageResponse = null;
+
+            MessageRequest messageRequest = new MessageRequest();
+            messageRequest.InputText = input;
+
+            if (!conversation.Message((MessageResponse resp, string data) =>
+            {
+                messageResponse = resp;
+                autoEvent.Set();
+            }, workspaceID, messageRequest))
+            {
+                Assert.Fail("Failed to send message! {0}", messageRequest.input);
+                autoEvent.Set();
+            }
+
+            autoEvent.WaitOne();
+            Assert.AreNotEqual(messageResponse, null);
+        }
     }
-
-    [Test]
-    public void Conversation_TestMessageObject()
-    {
-      MessageResponse messageResponse = null;
-
-      if (!conversation.Message((MessageResponse resp, string data) =>
-      {
-        messageResponse = resp;
-        autoEvent.Set();
-      }, workspaceID, input))
-      {
-        Assert.Fail("Failed to send message! {0}", input);
-        autoEvent.Set();
-      }
-
-      autoEvent.WaitOne();
-      Assert.AreNotEqual(messageResponse, null);
-    }
-
-    [Test]
-    public void Conversation_TestMessageInput()
-    {
-      MessageResponse messageResponse = null;
-
-      MessageRequest messageRequest = new MessageRequest();
-      messageRequest.InputText = input;
-
-      if (!conversation.Message((MessageResponse resp, string data) =>
-      {
-        messageResponse = resp;
-        autoEvent.Set();
-      }, workspaceID, messageRequest))
-      {
-        Assert.Fail("Failed to send message! {0}", messageRequest.input);
-        autoEvent.Set();
-      }
-
-      autoEvent.WaitOne();
-      Assert.AreNotEqual(messageResponse, null);
-    }
-  }
 }
