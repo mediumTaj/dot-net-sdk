@@ -1,0 +1,1 @@
+<Playlist Version="1.0"><Add Test="sdk.test.TestPersonalityInsights.TestGetProfileText" /><Add Test="sdk.test.TestPersonalityInsights.TestGetProfileJson" /></Playlist>

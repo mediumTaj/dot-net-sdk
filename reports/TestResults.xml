@@ -1,0 +1,670 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<test-run id="2" testcasecount="144" result="Passed" total="144" passed="144" failed="0" inconclusive="0" skipped="0" asserts="144" engine-version="3.5.0.0" clr-version="4.0.30319.42000" start-time="2016-12-17 02:04:52Z" end-time="2016-12-17 02:06:33Z" duration="100.854364">
+  <command-line><![CDATA["C:\Users\Ajiemar Santiago\Documents\_Projects\IBM\dot-net-sdk\Test/packages/NUnit.ConsoleRunner.3.5.0/tools/nunit3-console.exe" Test/Test/bin/Release/Test.dll -result=reports/TestResults.xml]]></command-line>
+  <test-suite type="Assembly" id="0-1157" name="Test.dll" fullname="C:\Users\Ajiemar Santiago\Documents\_Projects\IBM\dot-net-sdk\Test\Test\bin\Release\Test.dll" runstate="Runnable" testcasecount="144" result="Passed" start-time="2016-12-17 02:04:52Z" end-time="2016-12-17 02:06:33Z" duration="100.741072" total="144" passed="144" failed="0" inconclusive="0" skipped="0" asserts="144">
+    <environment framework-version="3.5.0.0" clr-version="4.0.30319.42000" os-version="Microsoft Windows NT 10.0.14393.0" platform="Win32NT" cwd="C:\Users\Ajiemar Santiago\Documents\_Projects\IBM\dot-net-sdk" machine-name="DOOM" user="Ajiemar Santiago" user-domain="DOOM" culture="en-US" uiculture="en-US" os-architecture="x64" />
+    <settings>
+      <setting name="DisposeRunners" value="True" />
+      <setting name="WorkDirectory" value="C:\Users\Ajiemar Santiago\Documents\_Projects\IBM\dot-net-sdk" />
+      <setting name="ImageRuntimeVersion" value="4.0.30319" />
+      <setting name="ImageTargetFrameworkName" value=".NETFramework,Version=v4.5.2" />
+      <setting name="ImageRequiresX86" value="False" />
+      <setting name="ImageRequiresDefaultAppDomainAssemblyResolver" value="False" />
+      <setting name="NumberOfTestWorkers" value="8" />
+    </settings>
+    <properties>
+      <property name="_PID" value="12036" />
+      <property name="_APPDOMAIN" value="test-domain-" />
+    </properties>
+    <test-suite type="TestSuite" id="0-1158" name="sdk" fullname="sdk" runstate="Runnable" testcasecount="144" result="Passed" start-time="2016-12-17 02:04:52Z" end-time="2016-12-17 02:06:33Z" duration="100.728582" total="144" passed="144" failed="0" inconclusive="0" skipped="0" asserts="144">
+      <test-suite type="TestSuite" id="0-1159" name="test" fullname="sdk.test" runstate="Runnable" testcasecount="144" result="Passed" start-time="2016-12-17 02:04:52Z" end-time="2016-12-17 02:06:33Z" duration="100.724583" total="144" passed="144" failed="0" inconclusive="0" skipped="0" asserts="144">
+        <test-suite type="TestFixture" id="0-1020" name="TestAlchemyDataNews" fullname="sdk.test.TestAlchemyDataNews" classname="sdk.test.TestAlchemyDataNews" runstate="Runnable" testcasecount="1" result="Passed" start-time="2016-12-17 02:04:52Z" end-time="2016-12-17 02:04:54Z" duration="2.160250" total="1" passed="1" failed="0" inconclusive="0" skipped="0" asserts="1">
+          <test-case id="0-1021" name="AlchemyAPI_TestDataNews" fullname="sdk.test.TestAlchemyDataNews.AlchemyAPI_TestDataNews" methodname="AlchemyAPI_TestDataNews" classname="sdk.test.TestAlchemyDataNews" runstate="Runnable" seed="412213191" result="Passed" start-time="2016-12-17 02:04:52Z" end-time="2016-12-17 02:04:54Z" duration="2.134887" asserts="1" />
+        </test-suite>
+        <test-suite type="TestFixture" id="0-1022" name="TestAlchemyLanguage" fullname="sdk.test.TestAlchemyLanguage" classname="sdk.test.TestAlchemyLanguage" runstate="Runnable" testcasecount="45" result="Passed" start-time="2016-12-17 02:04:54Z" end-time="2016-12-17 02:05:32Z" duration="37.580071" total="45" passed="45" failed="0" inconclusive="0" skipped="0" asserts="45">
+          <test-case id="0-1037" name="AlchemyAPI_TestDetectFeeds" fullname="sdk.test.TestAlchemyLanguage.AlchemyAPI_TestDetectFeeds" methodname="AlchemyAPI_TestDetectFeeds" classname="sdk.test.TestAlchemyLanguage" runstate="Runnable" seed="1718100586" result="Passed" start-time="2016-12-17 02:04:54Z" end-time="2016-12-17 02:04:55Z" duration="0.667375" asserts="1" />
+          <test-case id="0-1036" name="AlchemyAPI_TestExtractEntitiesHTML" fullname="sdk.test.TestAlchemyLanguage.AlchemyAPI_TestExtractEntitiesHTML" methodname="AlchemyAPI_TestExtractEntitiesHTML" classname="sdk.test.TestAlchemyLanguage" runstate="Runnable" seed="1507471059" result="Passed" start-time="2016-12-17 02:04:55Z" end-time="2016-12-17 02:04:56Z" duration="0.873619" asserts="1" />
+          <test-case id="0-1035" name="AlchemyAPI_TestExtractEntitiesText" fullname="sdk.test.TestAlchemyLanguage.AlchemyAPI_TestExtractEntitiesText" methodname="AlchemyAPI_TestExtractEntitiesText" classname="sdk.test.TestAlchemyLanguage" runstate="Runnable" seed="243199732" result="Passed" start-time="2016-12-17 02:04:56Z" end-time="2016-12-17 02:04:56Z" duration="0.415698" asserts="1" />
+          <test-case id="0-1034" name="AlchemyAPI_TestExtractEntitiesURL" fullname="sdk.test.TestAlchemyLanguage.AlchemyAPI_TestExtractEntitiesURL" methodname="AlchemyAPI_TestExtractEntitiesURL" classname="sdk.test.TestAlchemyLanguage" runstate="Runnable" seed="1008364029" result="Passed" start-time="2016-12-17 02:04:56Z" end-time="2016-12-17 02:04:57Z" duration="1.002233" asserts="1" />
+          <test-case id="0-1040" name="AlchemyAPI_TestExtractKeywordsHTML" fullname="sdk.test.TestAlchemyLanguage.AlchemyAPI_TestExtractKeywordsHTML" methodname="AlchemyAPI_TestExtractKeywordsHTML" classname="sdk.test.TestAlchemyLanguage" runstate="Runnable" seed="820097059" result="Passed" start-time="2016-12-17 02:04:57Z" end-time="2016-12-17 02:04:58Z" duration="0.415464" asserts="1" />
+          <test-case id="0-1039" name="AlchemyAPI_TestExtractKeywordsText" fullname="sdk.test.TestAlchemyLanguage.AlchemyAPI_TestExtractKeywordsText" methodname="AlchemyAPI_TestExtractKeywordsText" classname="sdk.test.TestAlchemyLanguage" runstate="Runnable" seed="410327587" result="Passed" start-time="2016-12-17 02:04:58Z" end-time="2016-12-17 02:04:58Z" duration="0.222205" asserts="1" />
+          <test-case id="0-1038" name="AlchemyAPI_TestExtractKeywordsURL" fullname="sdk.test.TestAlchemyLanguage.AlchemyAPI_TestExtractKeywordsURL" methodname="AlchemyAPI_TestExtractKeywordsURL" classname="sdk.test.TestAlchemyLanguage" runstate="Runnable" seed="78027881" result="Passed" start-time="2016-12-17 02:04:58Z" end-time="2016-12-17 02:04:59Z" duration="0.887459" asserts="1" />
+          <test-case id="0-1024" name="AlchemyAPI_TestGetAuthorsHTML" fullname="sdk.test.TestAlchemyLanguage.AlchemyAPI_TestGetAuthorsHTML" methodname="AlchemyAPI_TestGetAuthorsHTML" classname="sdk.test.TestAlchemyLanguage" runstate="Runnable" seed="972684439" result="Passed" start-time="2016-12-17 02:04:59Z" end-time="2016-12-17 02:04:59Z" duration="0.580716" asserts="1" />
+          <test-case id="0-1023" name="AlchemyAPI_TestGetAuthorsURL" fullname="sdk.test.TestAlchemyLanguage.AlchemyAPI_TestGetAuthorsURL" methodname="AlchemyAPI_TestGetAuthorsURL" classname="sdk.test.TestAlchemyLanguage" runstate="Runnable" seed="1488094660" result="Passed" start-time="2016-12-17 02:04:59Z" end-time="2016-12-17 02:05:00Z" duration="0.558594" asserts="1" />
+          <test-case id="0-1067" name="AlchemyAPI_TestGetCombinedDataHTML" fullname="sdk.test.TestAlchemyLanguage.AlchemyAPI_TestGetCombinedDataHTML" methodname="AlchemyAPI_TestGetCombinedDataHTML" classname="sdk.test.TestAlchemyLanguage" runstate="Runnable" seed="1766254326" result="Passed" start-time="2016-12-17 02:05:00Z" end-time="2016-12-17 02:05:03Z" duration="3.032295" asserts="1" />
+          <test-case id="0-1066" name="AlchemyAPI_TestGetCombinedDataText" fullname="sdk.test.TestAlchemyLanguage.AlchemyAPI_TestGetCombinedDataText" methodname="AlchemyAPI_TestGetCombinedDataText" classname="sdk.test.TestAlchemyLanguage" runstate="Runnable" seed="848175173" result="Passed" start-time="2016-12-17 02:05:03Z" end-time="2016-12-17 02:05:05Z" duration="2.395033" asserts="1" />
+          <test-case id="0-1065" name="AlchemyAPI_TestGetCombinedDataURL" fullname="sdk.test.TestAlchemyLanguage.AlchemyAPI_TestGetCombinedDataURL" methodname="AlchemyAPI_TestGetCombinedDataURL" classname="sdk.test.TestAlchemyLanguage" runstate="Runnable" seed="1007178887" result="Passed" start-time="2016-12-17 02:05:05Z" end-time="2016-12-17 02:05:08Z" duration="2.811158" asserts="1" />
+          <test-case id="0-1030" name="AlchemyAPI_TestGetDatesHTML" fullname="sdk.test.TestAlchemyLanguage.AlchemyAPI_TestGetDatesHTML" methodname="AlchemyAPI_TestGetDatesHTML" classname="sdk.test.TestAlchemyLanguage" runstate="Runnable" seed="1489073775" result="Passed" start-time="2016-12-17 02:05:08Z" end-time="2016-12-17 02:05:09Z" duration="0.804180" asserts="1" />
+          <test-case id="0-1029" name="AlchemyAPI_TestGetDatesText" fullname="sdk.test.TestAlchemyLanguage.AlchemyAPI_TestGetDatesText" methodname="AlchemyAPI_TestGetDatesText" classname="sdk.test.TestAlchemyLanguage" runstate="Runnable" seed="1769006866" result="Passed" start-time="2016-12-17 02:05:09Z" end-time="2016-12-17 02:05:09Z" duration="0.564442" asserts="1" />
+          <test-case id="0-1028" name="AlchemyAPI_TestGetDatesURL" fullname="sdk.test.TestAlchemyLanguage.AlchemyAPI_TestGetDatesURL" methodname="AlchemyAPI_TestGetDatesURL" classname="sdk.test.TestAlchemyLanguage" runstate="Runnable" seed="1537009805" result="Passed" start-time="2016-12-17 02:05:09Z" end-time="2016-12-17 02:05:10Z" duration="1.027919" asserts="1" />
+          <test-case id="0-1033" name="AlchemyAPI_TestGetEmotionsHTML" fullname="sdk.test.TestAlchemyLanguage.AlchemyAPI_TestGetEmotionsHTML" methodname="AlchemyAPI_TestGetEmotionsHTML" classname="sdk.test.TestAlchemyLanguage" runstate="Runnable" seed="977112083" result="Passed" start-time="2016-12-17 02:05:10Z" end-time="2016-12-17 02:05:12Z" duration="1.102893" asserts="1" />
+          <test-case id="0-1032" name="AlchemyAPI_TestGetEmotionsText" fullname="sdk.test.TestAlchemyLanguage.AlchemyAPI_TestGetEmotionsText" methodname="AlchemyAPI_TestGetEmotionsText" classname="sdk.test.TestAlchemyLanguage" runstate="Runnable" seed="1376474943" result="Passed" start-time="2016-12-17 02:05:12Z" end-time="2016-12-17 02:05:12Z" duration="0.673215" asserts="1" />
+          <test-case id="0-1031" name="AlchemyAPI_TestGetEmotionsURL" fullname="sdk.test.TestAlchemyLanguage.AlchemyAPI_TestGetEmotionsURL" methodname="AlchemyAPI_TestGetEmotionsURL" classname="sdk.test.TestAlchemyLanguage" runstate="Runnable" seed="288686384" result="Passed" start-time="2016-12-17 02:05:12Z" end-time="2016-12-17 02:05:13Z" duration="0.944594" asserts="1" />
+          <test-case id="0-1043" name="AlchemyAPI_TestGetLanguagesHTML" fullname="sdk.test.TestAlchemyLanguage.AlchemyAPI_TestGetLanguagesHTML" methodname="AlchemyAPI_TestGetLanguagesHTML" classname="sdk.test.TestAlchemyLanguage" runstate="Runnable" seed="1048284104" result="Passed" start-time="2016-12-17 02:05:13Z" end-time="2016-12-17 02:05:14Z" duration="0.565385" asserts="1" />
+          <test-case id="0-1042" name="AlchemyAPI_TestGetLanguagesText" fullname="sdk.test.TestAlchemyLanguage.AlchemyAPI_TestGetLanguagesText" methodname="AlchemyAPI_TestGetLanguagesText" classname="sdk.test.TestAlchemyLanguage" runstate="Runnable" seed="1524392141" result="Passed" start-time="2016-12-17 02:05:14Z" end-time="2016-12-17 02:05:14Z" duration="0.077203" asserts="1" />
+          <test-case id="0-1041" name="AlchemyAPI_TestGetLanguagesURL" fullname="sdk.test.TestAlchemyLanguage.AlchemyAPI_TestGetLanguagesURL" methodname="AlchemyAPI_TestGetLanguagesURL" classname="sdk.test.TestAlchemyLanguage" runstate="Runnable" seed="1951819931" result="Passed" start-time="2016-12-17 02:05:14Z" end-time="2016-12-17 02:05:14Z" duration="0.563329" asserts="1" />
+          <test-case id="0-1044" name="AlchemyAPI_TestGetMicroformatsURL" fullname="sdk.test.TestAlchemyLanguage.AlchemyAPI_TestGetMicroformatsURL" methodname="AlchemyAPI_TestGetMicroformatsURL" classname="sdk.test.TestAlchemyLanguage" runstate="Runnable" seed="917350295" result="Passed" start-time="2016-12-17 02:05:14Z" end-time="2016-12-17 02:05:16Z" duration="1.523087" asserts="1" />
+          <test-case id="0-1046" name="AlchemyAPI_TestGetPublicationDateHTML" fullname="sdk.test.TestAlchemyLanguage.AlchemyAPI_TestGetPublicationDateHTML" methodname="AlchemyAPI_TestGetPublicationDateHTML" classname="sdk.test.TestAlchemyLanguage" runstate="Runnable" seed="579849390" result="Passed" start-time="2016-12-17 02:05:16Z" end-time="2016-12-17 02:05:16Z" duration="0.252206" asserts="1" />
+          <test-case id="0-1045" name="AlchemyAPI_TestGetPublicationDateURL" fullname="sdk.test.TestAlchemyLanguage.AlchemyAPI_TestGetPublicationDateURL" methodname="AlchemyAPI_TestGetPublicationDateURL" classname="sdk.test.TestAlchemyLanguage" runstate="Runnable" seed="353037822" result="Passed" start-time="2016-12-17 02:05:16Z" end-time="2016-12-17 02:05:17Z" duration="0.509040" asserts="1" />
+          <test-case id="0-1026" name="AlchemyAPI_TestGetRankConceptsURL" fullname="sdk.test.TestAlchemyLanguage.AlchemyAPI_TestGetRankConceptsURL" methodname="AlchemyAPI_TestGetRankConceptsURL" classname="sdk.test.TestAlchemyLanguage" runstate="Runnable" seed="1681073206" result="Passed" start-time="2016-12-17 02:05:17Z" end-time="2016-12-17 02:05:17Z" duration="0.591375" asserts="1" />
+          <test-case id="0-1025" name="AlchemyAPI_TestGetRankedConceptsHTML" fullname="sdk.test.TestAlchemyLanguage.AlchemyAPI_TestGetRankedConceptsHTML" methodname="AlchemyAPI_TestGetRankedConceptsHTML" classname="sdk.test.TestAlchemyLanguage" runstate="Runnable" seed="344020103" result="Passed" start-time="2016-12-17 02:05:17Z" end-time="2016-12-17 02:05:18Z" duration="0.281219" asserts="1" />
+          <test-case id="0-1027" name="AlchemyAPI_TestGetRankedConceptsText" fullname="sdk.test.TestAlchemyLanguage.AlchemyAPI_TestGetRankedConceptsText" methodname="AlchemyAPI_TestGetRankedConceptsText" classname="sdk.test.TestAlchemyLanguage" runstate="Runnable" seed="1819835886" result="Passed" start-time="2016-12-17 02:05:18Z" end-time="2016-12-17 02:05:18Z" duration="0.249750" asserts="1" />
+          <test-case id="0-1058" name="AlchemyAPI_TestGetRankedTaxonomyHTML" fullname="sdk.test.TestAlchemyLanguage.AlchemyAPI_TestGetRankedTaxonomyHTML" methodname="AlchemyAPI_TestGetRankedTaxonomyHTML" classname="sdk.test.TestAlchemyLanguage" runstate="Runnable" seed="1980838975" result="Passed" start-time="2016-12-17 02:05:18Z" end-time="2016-12-17 02:05:19Z" duration="0.903200" asserts="1" />
+          <test-case id="0-1057" name="AlchemyAPI_TestGetRankedTaxonomyText" fullname="sdk.test.TestAlchemyLanguage.AlchemyAPI_TestGetRankedTaxonomyText" methodname="AlchemyAPI_TestGetRankedTaxonomyText" classname="sdk.test.TestAlchemyLanguage" runstate="Runnable" seed="1938076250" result="Passed" start-time="2016-12-17 02:05:19Z" end-time="2016-12-17 02:05:19Z" duration="0.611237" asserts="1" />
+          <test-case id="0-1056" name="AlchemyAPI_TestGetRankedTaxonomyURL" fullname="sdk.test.TestAlchemyLanguage.AlchemyAPI_TestGetRankedTaxonomyURL" methodname="AlchemyAPI_TestGetRankedTaxonomyURL" classname="sdk.test.TestAlchemyLanguage" runstate="Runnable" seed="1085221948" result="Passed" start-time="2016-12-17 02:05:19Z" end-time="2016-12-17 02:05:20Z" duration="0.977615" asserts="1" />
+          <test-case id="0-1062" name="AlchemyAPI_TestGetRawTextHTML" fullname="sdk.test.TestAlchemyLanguage.AlchemyAPI_TestGetRawTextHTML" methodname="AlchemyAPI_TestGetRawTextHTML" classname="sdk.test.TestAlchemyLanguage" runstate="Runnable" seed="1290593848" result="Passed" start-time="2016-12-17 02:05:20Z" end-time="2016-12-17 02:05:21Z" duration="0.354508" asserts="1" />
+          <test-case id="0-1061" name="AlchemyAPI_TestGetRawTextURL" fullname="sdk.test.TestAlchemyLanguage.AlchemyAPI_TestGetRawTextURL" methodname="AlchemyAPI_TestGetRawTextURL" classname="sdk.test.TestAlchemyLanguage" runstate="Runnable" seed="1815772584" result="Passed" start-time="2016-12-17 02:05:21Z" end-time="2016-12-17 02:05:21Z" duration="0.409531" asserts="1" />
+          <test-case id="0-1049" name="AlchemyAPI_TestGetRelationsHTML" fullname="sdk.test.TestAlchemyLanguage.AlchemyAPI_TestGetRelationsHTML" methodname="AlchemyAPI_TestGetRelationsHTML" classname="sdk.test.TestAlchemyLanguage" runstate="Runnable" seed="85264962" result="Passed" start-time="2016-12-17 02:05:21Z" end-time="2016-12-17 02:05:23Z" duration="1.407247" asserts="1" />
+          <test-case id="0-1048" name="AlchemyAPI_TestGetRelationsText" fullname="sdk.test.TestAlchemyLanguage.AlchemyAPI_TestGetRelationsText" methodname="AlchemyAPI_TestGetRelationsText" classname="sdk.test.TestAlchemyLanguage" runstate="Runnable" seed="2139687864" result="Passed" start-time="2016-12-17 02:05:23Z" end-time="2016-12-17 02:05:24Z" duration="1.449305" asserts="1" />
+          <test-case id="0-1047" name="AlchemyAPI_TestGetRelationsURL" fullname="sdk.test.TestAlchemyLanguage.AlchemyAPI_TestGetRelationsURL" methodname="AlchemyAPI_TestGetRelationsURL" classname="sdk.test.TestAlchemyLanguage" runstate="Runnable" seed="168262513" result="Passed" start-time="2016-12-17 02:05:24Z" end-time="2016-12-17 02:05:26Z" duration="2.375427" asserts="1" />
+          <test-case id="0-1055" name="AlchemyAPI_TestGetTargetedSentimentHTML" fullname="sdk.test.TestAlchemyLanguage.AlchemyAPI_TestGetTargetedSentimentHTML" methodname="AlchemyAPI_TestGetTargetedSentimentHTML" classname="sdk.test.TestAlchemyLanguage" runstate="Runnable" seed="1282471036" result="Passed" start-time="2016-12-17 02:05:26Z" end-time="2016-12-17 02:05:27Z" duration="0.386586" asserts="1" />
+          <test-case id="0-1054" name="AlchemyAPI_TestGetTargetedSentimentText" fullname="sdk.test.TestAlchemyLanguage.AlchemyAPI_TestGetTargetedSentimentText" methodname="AlchemyAPI_TestGetTargetedSentimentText" classname="sdk.test.TestAlchemyLanguage" runstate="Runnable" seed="2109445454" result="Passed" start-time="2016-12-17 02:05:27Z" end-time="2016-12-17 02:05:27Z" duration="0.240620" asserts="1" />
+          <test-case id="0-1053" name="AlchemyAPI_TestGetTargetedSentimentURL" fullname="sdk.test.TestAlchemyLanguage.AlchemyAPI_TestGetTargetedSentimentURL" methodname="AlchemyAPI_TestGetTargetedSentimentURL" classname="sdk.test.TestAlchemyLanguage" runstate="Runnable" seed="668332094" result="Passed" start-time="2016-12-17 02:05:27Z" end-time="2016-12-17 02:05:28Z" duration="0.659741" asserts="1" />
+          <test-case id="0-1060" name="AlchemyAPI_TestGetTextHTML" fullname="sdk.test.TestAlchemyLanguage.AlchemyAPI_TestGetTextHTML" methodname="AlchemyAPI_TestGetTextHTML" classname="sdk.test.TestAlchemyLanguage" runstate="Runnable" seed="1120015257" result="Passed" start-time="2016-12-17 02:05:28Z" end-time="2016-12-17 02:05:28Z" duration="0.562678" asserts="1" />
+          <test-case id="0-1052" name="AlchemyAPI_TestGetTextSentimentHTML" fullname="sdk.test.TestAlchemyLanguage.AlchemyAPI_TestGetTextSentimentHTML" methodname="AlchemyAPI_TestGetTextSentimentHTML" classname="sdk.test.TestAlchemyLanguage" runstate="Runnable" seed="710439857" result="Passed" start-time="2016-12-17 02:05:28Z" end-time="2016-12-17 02:05:29Z" duration="0.610883" asserts="1" />
+          <test-case id="0-1051" name="AlchemyAPI_TestGetTextSentimentText" fullname="sdk.test.TestAlchemyLanguage.AlchemyAPI_TestGetTextSentimentText" methodname="AlchemyAPI_TestGetTextSentimentText" classname="sdk.test.TestAlchemyLanguage" runstate="Runnable" seed="157783177" result="Passed" start-time="2016-12-17 02:05:29Z" end-time="2016-12-17 02:05:29Z" duration="0.126215" asserts="1" />
+          <test-case id="0-1050" name="AlchemyAPI_TestGetTextSentimentURL" fullname="sdk.test.TestAlchemyLanguage.AlchemyAPI_TestGetTextSentimentURL" methodname="AlchemyAPI_TestGetTextSentimentURL" classname="sdk.test.TestAlchemyLanguage" runstate="Runnable" seed="977205373" result="Passed" start-time="2016-12-17 02:05:29Z" end-time="2016-12-17 02:05:30Z" duration="0.666509" asserts="1" />
+          <test-case id="0-1059" name="AlchemyAPI_TestGetTextURL" fullname="sdk.test.TestAlchemyLanguage.AlchemyAPI_TestGetTextURL" methodname="AlchemyAPI_TestGetTextURL" classname="sdk.test.TestAlchemyLanguage" runstate="Runnable" seed="565327575" result="Passed" start-time="2016-12-17 02:05:30Z" end-time="2016-12-17 02:05:30Z" duration="0.424268" asserts="1" />
+          <test-case id="0-1064" name="AlchemyAPI_TestGetTitleHTML" fullname="sdk.test.TestAlchemyLanguage.AlchemyAPI_TestGetTitleHTML" methodname="AlchemyAPI_TestGetTitleHTML" classname="sdk.test.TestAlchemyLanguage" runstate="Runnable" seed="845612805" result="Passed" start-time="2016-12-17 02:05:30Z" end-time="2016-12-17 02:05:31Z" duration="0.539441" asserts="1" />
+          <test-case id="0-1063" name="AlchemyAPI_TestGetTitleURL" fullname="sdk.test.TestAlchemyLanguage.AlchemyAPI_TestGetTitleURL" methodname="AlchemyAPI_TestGetTitleURL" classname="sdk.test.TestAlchemyLanguage" runstate="Runnable" seed="383675570" result="Passed" start-time="2016-12-17 02:05:31Z" end-time="2016-12-17 02:05:32Z" duration="1.113677" asserts="1" />
+        </test-suite>
+        <test-suite type="TestFixture" id="0-1017" name="TestConversation" fullname="sdk.test.TestConversation" classname="sdk.test.TestConversation" runstate="Runnable" testcasecount="2" result="Passed" start-time="2016-12-17 02:05:32Z" end-time="2016-12-17 02:05:33Z" duration="0.909427" total="2" passed="2" failed="0" inconclusive="0" skipped="0" asserts="2">
+          <test-case id="0-1019" name="Conversation_TestMessageInput" fullname="sdk.test.TestConversation.Conversation_TestMessageInput" methodname="Conversation_TestMessageInput" classname="sdk.test.TestConversation" runstate="Runnable" seed="370422266" result="Passed" start-time="2016-12-17 02:05:32Z" end-time="2016-12-17 02:05:32Z" duration="0.729344" asserts="1" />
+          <test-case id="0-1018" name="Conversation_TestMessageObject" fullname="sdk.test.TestConversation.Conversation_TestMessageObject" methodname="Conversation_TestMessageObject" classname="sdk.test.TestConversation" runstate="Runnable" seed="801107392" result="Passed" start-time="2016-12-17 02:05:32Z" end-time="2016-12-17 02:05:33Z" duration="0.173289" asserts="1" />
+        </test-suite>
+        <test-suite type="TestFixture" id="0-1013" name="TestDocumentConversion" fullname="sdk.test.TestDocumentConversion" classname="sdk.test.TestDocumentConversion" runstate="Runnable" testcasecount="3" result="Passed" start-time="2016-12-17 02:05:33Z" end-time="2016-12-17 02:05:34Z" duration="0.936504" total="3" passed="3" failed="0" inconclusive="0" skipped="0" asserts="3">
+          <test-case id="0-1014" name="DocumentConversion_TestConvertDocumentAnswerUnit" fullname="sdk.test.TestDocumentConversion.DocumentConversion_TestConvertDocumentAnswerUnit" methodname="DocumentConversion_TestConvertDocumentAnswerUnit" classname="sdk.test.TestDocumentConversion" runstate="Runnable" seed="902983453" result="Passed" start-time="2016-12-17 02:05:33Z" end-time="2016-12-17 02:05:33Z" duration="0.327407" asserts="1" />
+          <test-case id="0-1016" name="DocumentConversion_TestConvertDocumentHTML" fullname="sdk.test.TestDocumentConversion.DocumentConversion_TestConvertDocumentHTML" methodname="DocumentConversion_TestConvertDocumentHTML" classname="sdk.test.TestDocumentConversion" runstate="Runnable" seed="887763728" result="Passed" start-time="2016-12-17 02:05:33Z" end-time="2016-12-17 02:05:33Z" duration="0.374783" asserts="1" />
+          <test-case id="0-1015" name="DocumentConversion_TestConvertDocumentText" fullname="sdk.test.TestDocumentConversion.DocumentConversion_TestConvertDocumentText" methodname="DocumentConversion_TestConvertDocumentText" classname="sdk.test.TestDocumentConversion" runstate="Runnable" seed="932485588" result="Passed" start-time="2016-12-17 02:05:33Z" end-time="2016-12-17 02:05:34Z" duration="0.224548" asserts="1" />
+        </test-suite>
+        <test-suite type="TestFixture" id="0-1007" name="TestLanguageTranslator" fullname="sdk.test.TestLanguageTranslator" classname="sdk.test.TestLanguageTranslator" runstate="Runnable" testcasecount="5" result="Passed" start-time="2016-12-17 02:05:34Z" end-time="2016-12-17 02:05:34Z" duration="0.640715" total="5" passed="5" failed="0" inconclusive="0" skipped="0" asserts="5">
+          <test-case id="0-1010" name="LanguageTranslator_TestGetLanguages" fullname="sdk.test.TestLanguageTranslator.LanguageTranslator_TestGetLanguages" methodname="LanguageTranslator_TestGetLanguages" classname="sdk.test.TestLanguageTranslator" runstate="Runnable" seed="166581734" result="Passed" start-time="2016-12-17 02:05:34Z" end-time="2016-12-17 02:05:34Z" duration="0.052158" asserts="1" />
+          <test-case id="0-1008" name="LanguageTranslator_TestGetModel" fullname="sdk.test.TestLanguageTranslator.LanguageTranslator_TestGetModel" methodname="LanguageTranslator_TestGetModel" classname="sdk.test.TestLanguageTranslator" runstate="Runnable" seed="1184145007" result="Passed" start-time="2016-12-17 02:05:34Z" end-time="2016-12-17 02:05:34Z" duration="0.190809" asserts="1" />
+          <test-case id="0-1009" name="LanguageTranslator_TestGetModels" fullname="sdk.test.TestLanguageTranslator.LanguageTranslator_TestGetModels" methodname="LanguageTranslator_TestGetModels" classname="sdk.test.TestLanguageTranslator" runstate="Runnable" seed="1559881855" result="Passed" start-time="2016-12-17 02:05:34Z" end-time="2016-12-17 02:05:34Z" duration="0.194113" asserts="1" />
+          <test-case id="0-1011" name="LanguageTranslator_TestIdentify" fullname="sdk.test.TestLanguageTranslator.LanguageTranslator_TestIdentify" methodname="LanguageTranslator_TestIdentify" classname="sdk.test.TestLanguageTranslator" runstate="Runnable" seed="796064685" result="Passed" start-time="2016-12-17 02:05:34Z" end-time="2016-12-17 02:05:34Z" duration="0.063290" asserts="1" />
+          <test-case id="0-1012" name="LanguageTranslator_TestTranslate" fullname="sdk.test.TestLanguageTranslator.LanguageTranslator_TestTranslate" methodname="LanguageTranslator_TestTranslate" classname="sdk.test.TestLanguageTranslator" runstate="Runnable" seed="1134035688" result="Passed" start-time="2016-12-17 02:05:34Z" end-time="2016-12-17 02:05:34Z" duration="0.122163" asserts="1" />
+        </test-suite>
+        <test-suite type="TestFixture" id="0-1000" name="TestNaturalLanguageClassifier" fullname="sdk.test.TestNaturalLanguageClassifier" classname="sdk.test.TestNaturalLanguageClassifier" runstate="Runnable" testcasecount="6" result="Passed" start-time="2016-12-17 02:05:34Z" end-time="2016-12-17 02:05:36Z" duration="1.377684" total="6" passed="6" failed="0" inconclusive="0" skipped="0" asserts="6">
+          <test-case id="0-1001" name="NaturalLanguageClassifier_TestTrainClassifier" fullname="sdk.test.TestNaturalLanguageClassifier.NaturalLanguageClassifier_TestTrainClassifier" methodname="NaturalLanguageClassifier_TestTrainClassifier" classname="sdk.test.TestNaturalLanguageClassifier" runstate="Runnable" seed="187333753" result="Passed" start-time="2016-12-17 02:05:34Z" end-time="2016-12-17 02:05:35Z" duration="0.751147" asserts="1">
+            <properties>
+              <property name="Order" value="0" />
+            </properties>
+            <output><![CDATA[[DEBUG][TestNaturalLanguageClassifier]: Attempting to train classifier...
+[DEBUG][TestNaturalLanguageClassifier]: Created classifier id: ff18c7x157-nlc-448.
+]]></output>
+          </test-case>
+          <test-case id="0-1002" name="NaturalLanguageClassifier_TestFindClassifier" fullname="sdk.test.TestNaturalLanguageClassifier.NaturalLanguageClassifier_TestFindClassifier" methodname="NaturalLanguageClassifier_TestFindClassifier" classname="sdk.test.TestNaturalLanguageClassifier" runstate="Runnable" seed="425656853" result="Passed" start-time="2016-12-17 02:05:35Z" end-time="2016-12-17 02:05:35Z" duration="0.209744" asserts="1">
+            <properties>
+              <property name="Order" value="1" />
+            </properties>
+            <output><![CDATA[[DEBUG][TestNaturalLanguageClassifier]: Attempting to find classifier dot-net-integration-test-classifier...
+[DEBUG][TestNaturalLanguageClassifier]: Found classifier dot-net-integration-test-classifier12/16/2016 8:05:34 PM, ff18c7x157-nlc-448.
+]]></output>
+          </test-case>
+          <test-case id="0-1003" name="NaturalLanguageClassifier_TestGetClassifier" fullname="sdk.test.TestNaturalLanguageClassifier.NaturalLanguageClassifier_TestGetClassifier" methodname="NaturalLanguageClassifier_TestGetClassifier" classname="sdk.test.TestNaturalLanguageClassifier" runstate="Runnable" seed="370708575" result="Passed" start-time="2016-12-17 02:05:35Z" end-time="2016-12-17 02:05:35Z" duration="0.059832" asserts="1">
+            <properties>
+              <property name="Order" value="2" />
+            </properties>
+            <output><![CDATA[[DEBUG][TestNaturalLanguageClassifier]: Attempting to get classifier ff18c7x157-nlc-448...
+[DEBUG][TestNaturalLanguageClassifier]: Got classifier ff18c7x157-nlc-448.
+]]></output>
+          </test-case>
+          <test-case id="0-1006" name="NaturalLanguageClassifier_TestDeleteClassifier" fullname="sdk.test.TestNaturalLanguageClassifier.NaturalLanguageClassifier_TestDeleteClassifier" methodname="NaturalLanguageClassifier_TestDeleteClassifier" classname="sdk.test.TestNaturalLanguageClassifier" runstate="Runnable" seed="645324473" result="Passed" start-time="2016-12-17 02:05:35Z" end-time="2016-12-17 02:05:35Z" duration="0.089562" asserts="1">
+            <properties>
+              <property name="Order" value="3" />
+            </properties>
+            <output><![CDATA[[DEBUG][TestNaturalLanguageClassifier]: Attempting to delete classifier ff18c7x157-nlc-448...
+[DEBUG][TestNaturalLanguageClassifier]: Deleted classifier ff18c7x157-nlc-448.
+]]></output>
+          </test-case>
+          <test-case id="0-1005" name="NaturalLanguageClassifier_TestClassify" fullname="sdk.test.TestNaturalLanguageClassifier.NaturalLanguageClassifier_TestClassify" methodname="NaturalLanguageClassifier_TestClassify" classname="sdk.test.TestNaturalLanguageClassifier" runstate="Runnable" seed="1439863889" result="Passed" start-time="2016-12-17 02:05:35Z" end-time="2016-12-17 02:05:35Z" duration="0.087802" asserts="1" />
+          <test-case id="0-1004" name="NaturalLanguageClassifier_TestGetClassifiers" fullname="sdk.test.TestNaturalLanguageClassifier.NaturalLanguageClassifier_TestGetClassifiers" methodname="NaturalLanguageClassifier_TestGetClassifiers" classname="sdk.test.TestNaturalLanguageClassifier" runstate="Runnable" seed="1727975059" result="Passed" start-time="2016-12-17 02:05:35Z" end-time="2016-12-17 02:05:36Z" duration="0.157326" asserts="1" />
+        </test-suite>
+        <test-suite type="TestFixture" id="0-1068" name="TestPersonalityInsights" fullname="sdk.test.TestPersonalityInsights" classname="sdk.test.TestPersonalityInsights" runstate="Runnable" testcasecount="2" result="Passed" start-time="2016-12-17 02:05:36Z" end-time="2016-12-17 02:05:36Z" duration="0.199543" total="2" passed="2" failed="0" inconclusive="0" skipped="0" asserts="2">
+          <test-case id="0-1070" name="PersonalityInsights_TestGetProfileJson" fullname="sdk.test.TestPersonalityInsights.PersonalityInsights_TestGetProfileJson" methodname="PersonalityInsights_TestGetProfileJson" classname="sdk.test.TestPersonalityInsights" runstate="Runnable" seed="1621655053" result="Passed" start-time="2016-12-17 02:05:36Z" end-time="2016-12-17 02:05:36Z" duration="0.077779" asserts="1" />
+          <test-case id="0-1069" name="PersonalityInsights_TestGetProfileText" fullname="sdk.test.TestPersonalityInsights.PersonalityInsights_TestGetProfileText" methodname="PersonalityInsights_TestGetProfileText" classname="sdk.test.TestPersonalityInsights" runstate="Runnable" seed="585609840" result="Passed" start-time="2016-12-17 02:05:36Z" end-time="2016-12-17 02:05:36Z" duration="0.114324" asserts="1" />
+        </test-suite>
+        <test-suite type="TestFixture" id="0-1071" name="TestRetrieveAndRank" fullname="sdk.test.TestRetrieveAndRank" classname="sdk.test.TestRetrieveAndRank" runstate="Runnable" testcasecount="22" result="Passed" start-time="2016-12-17 02:05:36Z" end-time="2016-12-17 02:05:39Z" duration="3.638689" total="22" passed="22" failed="0" inconclusive="0" skipped="0" asserts="22">
+          <test-case id="0-1072" name="RetrieveAndRank_TestGetClusters" fullname="sdk.test.TestRetrieveAndRank.RetrieveAndRank_TestGetClusters" methodname="RetrieveAndRank_TestGetClusters" classname="sdk.test.TestRetrieveAndRank" runstate="Runnable" seed="1763172618" result="Passed" start-time="2016-12-17 02:05:36Z" end-time="2016-12-17 02:05:36Z" duration="0.066615" asserts="1">
+            <properties>
+              <property name="Order" value="0" />
+            </properties>
+            <output><![CDATA[[DEBUG][TestRetrieveAndRank]: Attempting to get clusters...
+]]></output>
+          </test-case>
+          <test-case id="0-1075" name="RetrieveAndRank_TestGetRankers" fullname="sdk.test.TestRetrieveAndRank.RetrieveAndRank_TestGetRankers" methodname="RetrieveAndRank_TestGetRankers" classname="sdk.test.TestRetrieveAndRank" runstate="Runnable" seed="238794159" result="Passed" start-time="2016-12-17 02:05:36Z" end-time="2016-12-17 02:05:36Z" duration="0.074236" asserts="1">
+            <properties>
+              <property name="Order" value="3" />
+            </properties>
+            <output><![CDATA[[DEBUG][TestRetrieveAndRank]: Attempting to get rankers...
+]]></output>
+          </test-case>
+          <test-case id="0-1076" name="RetrieveAndRank_TestCreateCluster" fullname="sdk.test.TestRetrieveAndRank.RetrieveAndRank_TestCreateCluster" methodname="RetrieveAndRank_TestCreateCluster" classname="sdk.test.TestRetrieveAndRank" runstate="Runnable" seed="322386118" result="Passed" start-time="2016-12-17 02:05:36Z" end-time="2016-12-17 02:05:36Z" duration="0.103814" asserts="1">
+            <properties>
+              <property name="Order" value="4" />
+            </properties>
+            <output><![CDATA[[DEBUG][TestRetrieveAndRank]: Attempting to create cluster...
+[DEBUG][TestRetrieveAndRank]: Created cluster sc0d24e86f_947e_4acd_b6a5_696588e50c1a.
+]]></output>
+          </test-case>
+          <test-case id="0-1077" name="RetrieveAndRank_TestGetCluster" fullname="sdk.test.TestRetrieveAndRank.RetrieveAndRank_TestGetCluster" methodname="RetrieveAndRank_TestGetCluster" classname="sdk.test.TestRetrieveAndRank" runstate="Runnable" seed="589351893" result="Passed" start-time="2016-12-17 02:05:36Z" end-time="2016-12-17 02:05:36Z" duration="0.064539" asserts="1">
+            <properties>
+              <property name="Order" value="5" />
+            </properties>
+            <output><![CDATA[[DEBUG][TestRetrieveAndRank]: Attempting to get cluster sc0d24e86f_947e_4acd_b6a5_696588e50c1a...
+]]></output>
+          </test-case>
+          <test-case id="0-1078" name="RetrieveAndRank_TestUploadClusterConfig" fullname="sdk.test.TestRetrieveAndRank.RetrieveAndRank_TestUploadClusterConfig" methodname="RetrieveAndRank_TestUploadClusterConfig" classname="sdk.test.TestRetrieveAndRank" runstate="Runnable" seed="801550934" result="Passed" start-time="2016-12-17 02:05:36Z" end-time="2016-12-17 02:05:36Z" duration="0.078850" asserts="1">
+            <properties>
+              <property name="Order" value="6" />
+            </properties>
+            <output><![CDATA[[DEBUG][TestRetrieveAndRank]: Attempting to upload cluster configs for sc0d24e86f_947e_4acd_b6a5_696588e50c1a...
+]]></output>
+          </test-case>
+          <test-case id="0-1079" name="RetrieveAndRank_TestGetClusterConfig" fullname="sdk.test.TestRetrieveAndRank.RetrieveAndRank_TestGetClusterConfig" methodname="RetrieveAndRank_TestGetClusterConfig" classname="sdk.test.TestRetrieveAndRank" runstate="Runnable" seed="471211825" result="Passed" start-time="2016-12-17 02:05:36Z" end-time="2016-12-17 02:05:36Z" duration="0.056266" asserts="1">
+            <properties>
+              <property name="Order" value="7" />
+            </properties>
+            <output><![CDATA[[DEBUG][TestRetrieveAndRank]: Attempting to get cluster config dotnet-integration-test-cluster for sc0d24e86f_947e_4acd_b6a5_696588e50c1a...
+]]></output>
+          </test-case>
+          <test-case id="0-1080" name="RetrieveAndRank_TestForwardCollectionRequestCreate" fullname="sdk.test.TestRetrieveAndRank.RetrieveAndRank_TestForwardCollectionRequestCreate" methodname="RetrieveAndRank_TestForwardCollectionRequestCreate" classname="sdk.test.TestRetrieveAndRank" runstate="Runnable" seed="883235329" result="Passed" start-time="2016-12-17 02:05:36Z" end-time="2016-12-17 02:05:36Z" duration="0.064052" asserts="1">
+            <properties>
+              <property name="Order" value="8" />
+            </properties>
+            <output><![CDATA[[DEBUG][TestRetrieveAndRank]: Attempting to forward collection request: Create dotnet-integration-test-collection...
+]]></output>
+          </test-case>
+          <test-case id="0-1081" name="RetrieveAndRank_TestIndexDocuments" fullname="sdk.test.TestRetrieveAndRank.RetrieveAndRank_TestIndexDocuments" methodname="RetrieveAndRank_TestIndexDocuments" classname="sdk.test.TestRetrieveAndRank" runstate="Runnable" seed="724936411" result="Passed" start-time="2016-12-17 02:05:36Z" end-time="2016-12-17 02:05:38Z" duration="1.537633" asserts="1">
+            <properties>
+              <property name="Order" value="9" />
+            </properties>
+            <output><![CDATA[[DEBUG][TestRetrieveAndRank]: Attempting to get index documents...
+[DEBUG][RetriveAndRank]: json: {"msg":"WRRCSS030: Solr cluster ID [sc0d24e86f_947e_4acd_b6a5_696588e50c1a] does not exist.","code":404}
+]]></output>
+          </test-case>
+          <test-case id="0-1082" name="RetrieveAndRank_TestStandardSearch" fullname="sdk.test.TestRetrieveAndRank.RetrieveAndRank_TestStandardSearch" methodname="RetrieveAndRank_TestStandardSearch" classname="sdk.test.TestRetrieveAndRank" runstate="Runnable" seed="1582322063" result="Passed" start-time="2016-12-17 02:05:38Z" end-time="2016-12-17 02:05:38Z" duration="0.057172" asserts="1">
+            <properties>
+              <property name="Order" value="10" />
+            </properties>
+            <output><![CDATA[[DEBUG][TestRetrieveAndRank]: Attempting standard search...
+]]></output>
+          </test-case>
+          <test-case id="0-1083" name="RetrieveAndRank_TestRankedSearch" fullname="sdk.test.TestRetrieveAndRank.RetrieveAndRank_TestRankedSearch" methodname="RetrieveAndRank_TestRankedSearch" classname="sdk.test.TestRetrieveAndRank" runstate="Runnable" seed="553785965" result="Passed" start-time="2016-12-17 02:05:38Z" end-time="2016-12-17 02:05:38Z" duration="0.064714" asserts="1">
+            <properties>
+              <property name="Order" value="11" />
+            </properties>
+            <output><![CDATA[[DEBUG][TestRetrieveAndRank]: Attempting ranked search...
+[ERROR][RESTConnector]: Parameger ranker_id value is null
+]]></output>
+          </test-case>
+          <test-case id="0-1084" name="RetrieveAndRank_TestGetClusterStatistics" fullname="sdk.test.TestRetrieveAndRank.RetrieveAndRank_TestGetClusterStatistics" methodname="RetrieveAndRank_TestGetClusterStatistics" classname="sdk.test.TestRetrieveAndRank" runstate="Runnable" seed="199564395" result="Passed" start-time="2016-12-17 02:05:38Z" end-time="2016-12-17 02:05:38Z" duration="0.073774" asserts="1">
+            <properties>
+              <property name="Order" value="12" />
+            </properties>
+            <output><![CDATA[[DEBUG][TestRetrieveAndRank]: Attempting to get cluster statistics...
+]]></output>
+          </test-case>
+          <test-case id="0-1085" name="RetrieveAndRank_TestResizeSOLRCluster" fullname="sdk.test.TestRetrieveAndRank.RetrieveAndRank_TestResizeSOLRCluster" methodname="RetrieveAndRank_TestResizeSOLRCluster" classname="sdk.test.TestRetrieveAndRank" runstate="Runnable" seed="2079592886" result="Passed" start-time="2016-12-17 02:05:38Z" end-time="2016-12-17 02:05:38Z" duration="0.228352" asserts="1">
+            <properties>
+              <property name="Order" value="13" />
+            </properties>
+            <output><![CDATA[[DEBUG][TestRetrieveAndRank]: Attempting to resize SOLR Cluster...
+]]></output>
+          </test-case>
+          <test-case id="0-1086" name="RetrieveAndRank_TestGetClusterResizeStatus" fullname="sdk.test.TestRetrieveAndRank.RetrieveAndRank_TestGetClusterResizeStatus" methodname="RetrieveAndRank_TestGetClusterResizeStatus" classname="sdk.test.TestRetrieveAndRank" runstate="Runnable" seed="1388760942" result="Passed" start-time="2016-12-17 02:05:38Z" end-time="2016-12-17 02:05:38Z" duration="0.055766" asserts="1">
+            <properties>
+              <property name="Order" value="14" />
+            </properties>
+            <output><![CDATA[[DEBUG][TestRetrieveAndRank]: Attempting to get cluster resize status...
+]]></output>
+          </test-case>
+          <test-case id="0-1073" name="RetrieveAndRank_TestGetClusterConfigs" fullname="sdk.test.TestRetrieveAndRank.RetrieveAndRank_TestGetClusterConfigs" methodname="RetrieveAndRank_TestGetClusterConfigs" classname="sdk.test.TestRetrieveAndRank" runstate="Runnable" seed="1821426705" result="Passed" start-time="2016-12-17 02:05:38Z" end-time="2016-12-17 02:05:38Z" duration="0.074425" asserts="1">
+            <properties>
+              <property name="Order" value="15" />
+            </properties>
+            <output><![CDATA[[DEBUG][TestRetrieveAndRank]: Attempting to list cluster configs for sc0d24e86f_947e_4acd_b6a5_696588e50c1a...
+[DEBUG][TestRetrieveAndRank]: Listed cluster configs for sc0d24e86f_947e_4acd_b6a5_696588e50c1a...
+]]></output>
+          </test-case>
+          <test-case id="0-1074" name="RetrieveAndRank_TestForwardCollectionRequestList" fullname="sdk.test.TestRetrieveAndRank.RetrieveAndRank_TestForwardCollectionRequestList" methodname="RetrieveAndRank_TestForwardCollectionRequestList" classname="sdk.test.TestRetrieveAndRank" runstate="Runnable" seed="1520089951" result="Passed" start-time="2016-12-17 02:05:38Z" end-time="2016-12-17 02:05:39Z" duration="0.161666" asserts="1">
+            <properties>
+              <property name="Order" value="16" />
+            </properties>
+            <output><![CDATA[[DEBUG][TestRetrieveAndRank]: Attempting to forward collection request: List dotnet-integration-test-collection...
+]]></output>
+          </test-case>
+          <test-case id="0-1087" name="RetrieveAndRank_TestCreateRanker" fullname="sdk.test.TestRetrieveAndRank.RetrieveAndRank_TestCreateRanker" methodname="RetrieveAndRank_TestCreateRanker" classname="sdk.test.TestRetrieveAndRank" runstate="Runnable" seed="941345108" result="Passed" start-time="2016-12-17 02:05:39Z" end-time="2016-12-17 02:05:39Z" duration="0.400575" asserts="1">
+            <properties>
+              <property name="Order" value="17" />
+            </properties>
+            <output><![CDATA[[DEBUG][TestRetrieveAndRank]: Attempting to create ranker...
+]]></output>
+          </test-case>
+          <test-case id="0-1088" name="RetrieveAndRank_TestRank" fullname="sdk.test.TestRetrieveAndRank.RetrieveAndRank_TestRank" methodname="RetrieveAndRank_TestRank" classname="sdk.test.TestRetrieveAndRank" runstate="Runnable" seed="141598688" result="Passed" start-time="2016-12-17 02:05:39Z" end-time="2016-12-17 02:05:39Z" duration="0.097278" asserts="1">
+            <properties>
+              <property name="Order" value="18" />
+            </properties>
+            <output><![CDATA[[DEBUG][TestRetrieveAndRank]: Attempting to rank...
+]]></output>
+          </test-case>
+          <test-case id="0-1089" name="RetrieveAndRank_TestGetRankerInfo" fullname="sdk.test.TestRetrieveAndRank.RetrieveAndRank_TestGetRankerInfo" methodname="RetrieveAndRank_TestGetRankerInfo" classname="sdk.test.TestRetrieveAndRank" runstate="Runnable" seed="957627501" result="Passed" start-time="2016-12-17 02:05:39Z" end-time="2016-12-17 02:05:39Z" duration="0.059789" asserts="1">
+            <properties>
+              <property name="Order" value="19" />
+            </properties>
+            <output><![CDATA[[DEBUG][TestRetrieveAndRank]: Attempting to get ranker info...
+]]></output>
+          </test-case>
+          <test-case id="0-1090" name="RetrieveAndRank_TestForwardCollectionRequestDelete" fullname="sdk.test.TestRetrieveAndRank.RetrieveAndRank_TestForwardCollectionRequestDelete" methodname="RetrieveAndRank_TestForwardCollectionRequestDelete" classname="sdk.test.TestRetrieveAndRank" runstate="Runnable" seed="1591317895" result="Passed" start-time="2016-12-17 02:05:39Z" end-time="2016-12-17 02:05:39Z" duration="0.055695" asserts="1">
+            <properties>
+              <property name="Order" value="20" />
+            </properties>
+            <output><![CDATA[[DEBUG][TestRetrieveAndRank]: Attempting to forward collection request: Delete dotnet-integration-test-collection...
+]]></output>
+          </test-case>
+          <test-case id="0-1091" name="RetrieveAndRank_TestDeleteClusterConfig" fullname="sdk.test.TestRetrieveAndRank.RetrieveAndRank_TestDeleteClusterConfig" methodname="RetrieveAndRank_TestDeleteClusterConfig" classname="sdk.test.TestRetrieveAndRank" runstate="Runnable" seed="97881817" result="Passed" start-time="2016-12-17 02:05:39Z" end-time="2016-12-17 02:05:39Z" duration="0.059391" asserts="1">
+            <properties>
+              <property name="Order" value="21" />
+            </properties>
+            <output><![CDATA[[DEBUG][TestRetrieveAndRank]: Attempting to delete cluster config dotnet-integration-test-cluster for sc0d24e86f_947e_4acd_b6a5_696588e50c1a...
+]]></output>
+          </test-case>
+          <test-case id="0-1092" name="RetrieveAndRank_TestDeleteRanker" fullname="sdk.test.TestRetrieveAndRank.RetrieveAndRank_TestDeleteRanker" methodname="RetrieveAndRank_TestDeleteRanker" classname="sdk.test.TestRetrieveAndRank" runstate="Runnable" seed="1010845595" result="Passed" start-time="2016-12-17 02:05:39Z" end-time="2016-12-17 02:05:39Z" duration="0.053882" asserts="1">
+            <properties>
+              <property name="Order" value="22" />
+            </properties>
+            <output><![CDATA[[DEBUG][TestRetrieveAndRank]: Attempting to delete ranker 76643bx23-rank-1490...
+]]></output>
+          </test-case>
+          <test-case id="0-1093" name="RetrieveAndRank_TestDeleteCluster" fullname="sdk.test.TestRetrieveAndRank.RetrieveAndRank_TestDeleteCluster" methodname="RetrieveAndRank_TestDeleteCluster" classname="sdk.test.TestRetrieveAndRank" runstate="Runnable" seed="1631768010" result="Passed" start-time="2016-12-17 02:05:39Z" end-time="2016-12-17 02:05:39Z" duration="0.066488" asserts="1">
+            <properties>
+              <property name="Order" value="23" />
+            </properties>
+            <output><![CDATA[[DEBUG][TestRetrieveAndRank]: Attempting to delete cluster sc0d24e86f_947e_4acd_b6a5_696588e50c1a...
+[DEBUG][RetrieveAndRank]: OnDeleteClusterResponse success: True
+]]></output>
+          </test-case>
+        </test-suite>
+        <test-suite type="TestFixture" id="0-1094" name="TestSpeechToText" fullname="sdk.test.TestSpeechToText" classname="sdk.test.TestSpeechToText" runstate="Runnable" testcasecount="18" result="Passed" start-time="2016-12-17 02:05:39Z" end-time="2016-12-17 02:05:45Z" duration="5.361832" total="18" passed="18" failed="0" inconclusive="0" skipped="0" asserts="18">
+          <test-case id="0-1099" name="SpeechToText_TestCreateCustomization" fullname="sdk.test.TestSpeechToText.SpeechToText_TestCreateCustomization" methodname="SpeechToText_TestCreateCustomization" classname="sdk.test.TestSpeechToText" runstate="Runnable" seed="592450809" result="Passed" start-time="2016-12-17 02:05:39Z" end-time="2016-12-17 02:05:40Z" duration="0.262901" asserts="1">
+            <properties>
+              <property name="Order" value="5" />
+            </properties>
+            <output><![CDATA[[DEBUG][TestSpeechToText]: Attempting to create customization...
+]]></output>
+          </test-case>
+          <test-case id="0-1100" name="SpeechToText_TestGetCustomization" fullname="sdk.test.TestSpeechToText.SpeechToText_TestGetCustomization" methodname="SpeechToText_TestGetCustomization" classname="sdk.test.TestSpeechToText" runstate="Runnable" seed="580333055" result="Passed" start-time="2016-12-17 02:05:40Z" end-time="2016-12-17 02:05:40Z" duration="0.059571" asserts="1">
+            <properties>
+              <property name="Order" value="6" />
+            </properties>
+            <output><![CDATA[[DEBUG][TestSpeechToText]: Attempting to get customization 4f639f90-c3fd-11e6-9114-3d8fb60f9e23...
+]]></output>
+          </test-case>
+          <test-case id="0-1102" name="SpeechToText_TestAddCustomCorpusUsingFile" fullname="sdk.test.TestSpeechToText.SpeechToText_TestAddCustomCorpusUsingFile" methodname="SpeechToText_TestAddCustomCorpusUsingFile" classname="sdk.test.TestSpeechToText" runstate="Runnable" seed="1159974641" result="Passed" start-time="2016-12-17 02:05:40Z" end-time="2016-12-17 02:05:40Z" duration="0.420422" asserts="1">
+            <properties>
+              <property name="Order" value="7" />
+            </properties>
+            <output><![CDATA[[DEBUG][TestSpeechToText]: Attempting to add custom corpus using file...
+]]></output>
+          </test-case>
+          <test-case id="0-1103" name="SpeechToText_TestAddCustomCorpusUsingData" fullname="sdk.test.TestSpeechToText.SpeechToText_TestAddCustomCorpusUsingData" methodname="SpeechToText_TestAddCustomCorpusUsingData" classname="sdk.test.TestSpeechToText" runstate="Runnable" seed="1715301590" result="Passed" start-time="2016-12-17 02:05:40Z" end-time="2016-12-17 02:05:40Z" duration="0.068881" asserts="1">
+            <properties>
+              <property name="Order" value="8" />
+            </properties>
+            <output><![CDATA[[DEBUG][TestSpeechToText]: Attempting to add custom corpus using data...
+]]></output>
+          </test-case>
+          <test-case id="0-1105" name="SpeechToText_TestAddCustomWordsUsingFile" fullname="sdk.test.TestSpeechToText.SpeechToText_TestAddCustomWordsUsingFile" methodname="SpeechToText_TestAddCustomWordsUsingFile" classname="sdk.test.TestSpeechToText" runstate="Runnable" seed="1612575511" result="Passed" start-time="2016-12-17 02:05:40Z" end-time="2016-12-17 02:05:40Z" duration="0.142905" asserts="1">
+            <properties>
+              <property name="Order" value="9" />
+            </properties>
+            <output><![CDATA[[DEBUG][TestSpeechToText]: Attempting to add custom words using file...
+]]></output>
+          </test-case>
+          <test-case id="0-1106" name="SpeechToText_TestAddCustomWordsUsingObject" fullname="sdk.test.TestSpeechToText.SpeechToText_TestAddCustomWordsUsingObject" methodname="SpeechToText_TestAddCustomWordsUsingObject" classname="sdk.test.TestSpeechToText" runstate="Runnable" seed="522290171" result="Passed" start-time="2016-12-17 02:05:40Z" end-time="2016-12-17 02:05:41Z" duration="0.071442" asserts="1">
+            <properties>
+              <property name="Order" value="10" />
+            </properties>
+            <output><![CDATA[[DEBUG][TestSpeechToText]: Attempting to add custom words using object...
+]]></output>
+          </test-case>
+          <test-case id="0-1107" name="SpeechToText_TestGetCustomWord" fullname="sdk.test.TestSpeechToText.SpeechToText_TestGetCustomWord" methodname="SpeechToText_TestGetCustomWord" classname="sdk.test.TestSpeechToText" runstate="Runnable" seed="53864162" result="Passed" start-time="2016-12-17 02:05:41Z" end-time="2016-12-17 02:05:41Z" duration="0.079328" asserts="1">
+            <properties>
+              <property name="Order" value="11" />
+            </properties>
+            <output><![CDATA[[DEBUG][TestSpeechToText]: Attempting to get custom word...
+]]></output>
+          </test-case>
+          <test-case id="0-1108" name="SpeechToText_TestTrainCustomization" fullname="sdk.test.TestSpeechToText.SpeechToText_TestTrainCustomization" methodname="SpeechToText_TestTrainCustomization" classname="sdk.test.TestSpeechToText" runstate="Runnable" seed="1424101682" result="Passed" start-time="2016-12-17 02:05:41Z" end-time="2016-12-17 02:05:41Z" duration="0.067947" asserts="1">
+            <properties>
+              <property name="Order" value="12" />
+            </properties>
+            <output><![CDATA[[DEBUG][TestSpeechToText]: Attempting to get train customization...
+]]></output>
+          </test-case>
+          <test-case id="0-1109" name="SpeechToText_TestDeleteCustomCorpus" fullname="sdk.test.TestSpeechToText.SpeechToText_TestDeleteCustomCorpus" methodname="SpeechToText_TestDeleteCustomCorpus" classname="sdk.test.TestSpeechToText" runstate="Runnable" seed="1553666975" result="Passed" start-time="2016-12-17 02:05:41Z" end-time="2016-12-17 02:05:41Z" duration="0.064916" asserts="1">
+            <properties>
+              <property name="Order" value="13" />
+            </properties>
+            <output><![CDATA[[DEBUG][TestSpeechToText]: Attempting to delete custom corpus...
+]]></output>
+          </test-case>
+          <test-case id="0-1110" name="SpeechToText_TestDeleteCustomWord" fullname="sdk.test.TestSpeechToText.SpeechToText_TestDeleteCustomWord" methodname="SpeechToText_TestDeleteCustomWord" classname="sdk.test.TestSpeechToText" runstate="Runnable" seed="2130262052" result="Passed" start-time="2016-12-17 02:05:41Z" end-time="2016-12-17 02:05:41Z" duration="0.065307" asserts="1">
+            <properties>
+              <property name="Order" value="14" />
+            </properties>
+            <output><![CDATA[[DEBUG][TestSpeechToText]: Attempting to delete custom word...
+]]></output>
+          </test-case>
+          <test-case id="0-1111" name="SpeechToText_TestResetCustomization" fullname="sdk.test.TestSpeechToText.SpeechToText_TestResetCustomization" methodname="SpeechToText_TestResetCustomization" classname="sdk.test.TestSpeechToText" runstate="Runnable" seed="930436060" result="Passed" start-time="2016-12-17 02:05:41Z" end-time="2016-12-17 02:05:41Z" duration="0.102592" asserts="1">
+            <properties>
+              <property name="Order" value="15" />
+            </properties>
+            <output><![CDATA[[DEBUG][TestSpeechToText]: Attempting to reset customization...
+]]></output>
+          </test-case>
+          <test-case id="0-1112" name="SpeechToText_TestDeleteCustomization" fullname="sdk.test.TestSpeechToText.SpeechToText_TestDeleteCustomization" methodname="SpeechToText_TestDeleteCustomization" classname="sdk.test.TestSpeechToText" runstate="Runnable" seed="1322661221" result="Passed" start-time="2016-12-17 02:05:41Z" end-time="2016-12-17 02:05:41Z" duration="0.071180" asserts="1">
+            <properties>
+              <property name="Order" value="16" />
+            </properties>
+            <output><![CDATA[[DEBUG][TestSpeechToText]: Attempting to delete customization...
+]]></output>
+          </test-case>
+          <test-case id="0-1101" name="SpeechToText_TestGetCustomCorpora" fullname="sdk.test.TestSpeechToText.SpeechToText_TestGetCustomCorpora" methodname="SpeechToText_TestGetCustomCorpora" classname="sdk.test.TestSpeechToText" runstate="Runnable" seed="1512970476" result="Passed" start-time="2016-12-17 02:05:41Z" end-time="2016-12-17 02:05:41Z" duration="0.077850" asserts="1">
+            <output><![CDATA[[DEBUG][TestSpeechToText]: Attempting to get custom corpora...
+]]></output>
+          </test-case>
+          <test-case id="0-1098" name="SpeechToText_TestGetCustomizations" fullname="sdk.test.TestSpeechToText.SpeechToText_TestGetCustomizations" methodname="SpeechToText_TestGetCustomizations" classname="sdk.test.TestSpeechToText" runstate="Runnable" seed="465322533" result="Passed" start-time="2016-12-17 02:05:41Z" end-time="2016-12-17 02:05:41Z" duration="0.284146" asserts="1">
+            <output><![CDATA[[DEBUG][TestSpeechToText]: Attempting to get customizations...
+]]></output>
+          </test-case>
+          <test-case id="0-1104" name="SpeechToText_TestGetCustomWords" fullname="sdk.test.TestSpeechToText.SpeechToText_TestGetCustomWords" methodname="SpeechToText_TestGetCustomWords" classname="sdk.test.TestSpeechToText" runstate="Runnable" seed="841932962" result="Passed" start-time="2016-12-17 02:05:41Z" end-time="2016-12-17 02:05:41Z" duration="0.077035" asserts="1">
+            <output><![CDATA[[DEBUG][TestSpeechToText]: Attempting to get custom words...
+]]></output>
+          </test-case>
+          <test-case id="0-1097" name="SpeechToText_TestGetModel" fullname="sdk.test.TestSpeechToText.SpeechToText_TestGetModel" methodname="SpeechToText_TestGetModel" classname="sdk.test.TestSpeechToText" runstate="Runnable" seed="1439167706" result="Passed" start-time="2016-12-17 02:05:41Z" end-time="2016-12-17 02:05:42Z" duration="0.061104" asserts="1">
+            <output><![CDATA[[DEBUG][TestSpeechToText]: Attempting to get model en-US_BroadbandModel...
+]]></output>
+          </test-case>
+          <test-case id="0-1096" name="SpeechToText_TestGetModels" fullname="sdk.test.TestSpeechToText.SpeechToText_TestGetModels" methodname="SpeechToText_TestGetModels" classname="sdk.test.TestSpeechToText" runstate="Runnable" seed="1077141882" result="Passed" start-time="2016-12-17 02:05:42Z" end-time="2016-12-17 02:05:42Z" duration="0.059642" asserts="1">
+            <output><![CDATA[[DEBUG][TestSpeechToText]: Attempting to get models...
+]]></output>
+          </test-case>
+          <test-case id="0-1095" name="SpeechToText_TestRecognize" fullname="sdk.test.TestSpeechToText.SpeechToText_TestRecognize" methodname="SpeechToText_TestRecognize" classname="sdk.test.TestSpeechToText" runstate="Runnable" seed="489818900" result="Passed" start-time="2016-12-17 02:05:42Z" end-time="2016-12-17 02:05:45Z" duration="3.258608" asserts="1">
+            <output><![CDATA[[DEBUG][TestSpeechToText]: Attempting to recognize speech...
+[STATUS][SpeechToText]: Received Recognize Response, Elapsed Time: 0, Results: 1
+]]></output>
+          </test-case>
+        </test-suite>
+        <test-suite type="TestFixture" id="0-1113" name="TestTextToSpeech" fullname="sdk.test.TestTextToSpeech" classname="sdk.test.TestTextToSpeech" runstate="Runnable" testcasecount="14" result="Passed" start-time="2016-12-17 02:05:45Z" end-time="2016-12-17 02:05:47Z" duration="1.805206" total="14" passed="14" failed="0" inconclusive="0" skipped="0" asserts="14">
+          <test-case id="0-1120" name="TextToSpeech_TestCreateCustomization" fullname="sdk.test.TestTextToSpeech.TextToSpeech_TestCreateCustomization" methodname="TextToSpeech_TestCreateCustomization" classname="sdk.test.TestTextToSpeech" runstate="Runnable" seed="1003101686" result="Passed" start-time="2016-12-17 02:05:45Z" end-time="2016-12-17 02:05:45Z" duration="0.141691" asserts="1">
+            <properties>
+              <property name="Order" value="4" />
+            </properties>
+            <output><![CDATA[[DEBUG][TestTextToSpeech]: Attempting to create customization...
+[DEBUG][TestTextToSpeech]: CreateCustomization() invoked: 7f53ca14-9e24-4fdb-903a-31f055d676bb
+]]></output>
+          </test-case>
+          <test-case id="0-1121" name="TextToSpeech_TestGetCustomization" fullname="sdk.test.TestTextToSpeech.TextToSpeech_TestGetCustomization" methodname="TextToSpeech_TestGetCustomization" classname="sdk.test.TestTextToSpeech" runstate="Runnable" seed="1992152883" result="Passed" start-time="2016-12-17 02:05:45Z" end-time="2016-12-17 02:05:45Z" duration="0.116924" asserts="1">
+            <properties>
+              <property name="Order" value="5" />
+            </properties>
+            <output><![CDATA[[DEBUG][TestTextToSpeech]: Attempting to get customization...
+]]></output>
+          </test-case>
+          <test-case id="0-1122" name="TextToSpeech_TestUpdateCustomization" fullname="sdk.test.TestTextToSpeech.TextToSpeech_TestUpdateCustomization" methodname="TextToSpeech_TestUpdateCustomization" classname="sdk.test.TestTextToSpeech" runstate="Runnable" seed="1439713" result="Passed" start-time="2016-12-17 02:05:45Z" end-time="2016-12-17 02:05:45Z" duration="0.292479" asserts="1">
+            <properties>
+              <property name="Order" value="6" />
+            </properties>
+            <output><![CDATA[[DEBUG][TestTextToSpeech]: Attempting to update customization...
+]]></output>
+          </test-case>
+          <test-case id="0-1123" name="TextToSpeech_TestGetCustomizationWords" fullname="sdk.test.TestTextToSpeech.TextToSpeech_TestGetCustomizationWords" methodname="TextToSpeech_TestGetCustomizationWords" classname="sdk.test.TestTextToSpeech" runstate="Runnable" seed="404079995" result="Passed" start-time="2016-12-17 02:05:45Z" end-time="2016-12-17 02:05:45Z" duration="0.078866" asserts="1">
+            <properties>
+              <property name="Order" value="7" />
+            </properties>
+            <output><![CDATA[[DEBUG][TestTextToSpeech]: Attempting to get customization words...
+]]></output>
+          </test-case>
+          <test-case id="0-1124" name="TextToSpeech_TestAddCustomizationWords" fullname="sdk.test.TestTextToSpeech.TextToSpeech_TestAddCustomizationWords" methodname="TextToSpeech_TestAddCustomizationWords" classname="sdk.test.TestTextToSpeech" runstate="Runnable" seed="374150000" result="Passed" start-time="2016-12-17 02:05:45Z" end-time="2016-12-17 02:05:46Z" duration="0.309768" asserts="1">
+            <properties>
+              <property name="Order" value="8" />
+            </properties>
+            <output><![CDATA[[DEBUG][TestTextToSpeech]: Attempting to get add customization words...
+]]></output>
+          </test-case>
+          <test-case id="0-1125" name="TextToSpeech_TestGetCustomizationWord" fullname="sdk.test.TestTextToSpeech.TextToSpeech_TestGetCustomizationWord" methodname="TextToSpeech_TestGetCustomizationWord" classname="sdk.test.TestTextToSpeech" runstate="Runnable" seed="440536767" result="Passed" start-time="2016-12-17 02:05:46Z" end-time="2016-12-17 02:05:46Z" duration="0.115444" asserts="1">
+            <properties>
+              <property name="Order" value="9" />
+            </properties>
+            <output><![CDATA[[DEBUG][TestTextToSpeech]: Attempting to get customization word...
+]]></output>
+          </test-case>
+          <test-case id="0-1126" name="TextToSpeech_TestDeleteCustomizationWord" fullname="sdk.test.TestTextToSpeech.TextToSpeech_TestDeleteCustomizationWord" methodname="TextToSpeech_TestDeleteCustomizationWord" classname="sdk.test.TestTextToSpeech" runstate="Runnable" seed="2041811249" result="Passed" start-time="2016-12-17 02:05:46Z" end-time="2016-12-17 02:05:46Z" duration="0.132552" asserts="1">
+            <properties>
+              <property name="Order" value="10" />
+            </properties>
+            <output><![CDATA[[DEBUG][TestTextToSpeech]: Attempting to delete customization word...
+]]></output>
+          </test-case>
+          <test-case id="0-1127" name="TextToSpeech_TestDeleteCustomizations" fullname="sdk.test.TestTextToSpeech.TextToSpeech_TestDeleteCustomizations" methodname="TextToSpeech_TestDeleteCustomizations" classname="sdk.test.TestTextToSpeech" runstate="Runnable" seed="1058585255" result="Passed" start-time="2016-12-17 02:05:46Z" end-time="2016-12-17 02:05:46Z" duration="0.116564" asserts="1">
+            <properties>
+              <property name="Order" value="11" />
+            </properties>
+            <output><![CDATA[[DEBUG][TestTextToSpeech]: Attempting to delete customization...
+]]></output>
+          </test-case>
+          <test-case id="0-1114" name="TextToSpeech_TestGet" fullname="sdk.test.TestTextToSpeech.TextToSpeech_TestGet" methodname="TextToSpeech_TestGet" classname="sdk.test.TestTextToSpeech" runstate="Runnable" seed="1245234877" result="Passed" start-time="2016-12-17 02:05:46Z" end-time="2016-12-17 02:05:46Z" duration="0.071150" asserts="1">
+            <output><![CDATA[[DEBUG][TestTextToSpeech]: Attempting to speech using GET...
+[DEBUG][TextToSpeech]: WAV INFO, channels = 1, bps = 16, samples = 42177, rate = 22050
+]]></output>
+          </test-case>
+          <test-case id="0-1119" name="TextToSpeech_TestGetCustomizations" fullname="sdk.test.TestTextToSpeech.TextToSpeech_TestGetCustomizations" methodname="TextToSpeech_TestGetCustomizations" classname="sdk.test.TestTextToSpeech" runstate="Runnable" seed="1421256956" result="Passed" start-time="2016-12-17 02:05:46Z" end-time="2016-12-17 02:05:46Z" duration="0.120697" asserts="1">
+            <output><![CDATA[[DEBUG][TestTextToSpeech]: Attempting to get customizations...
+]]></output>
+          </test-case>
+          <test-case id="0-1118" name="TextToSpeech_TestGetPronunciation" fullname="sdk.test.TestTextToSpeech.TextToSpeech_TestGetPronunciation" methodname="TextToSpeech_TestGetPronunciation" classname="sdk.test.TestTextToSpeech" runstate="Runnable" seed="1313109216" result="Passed" start-time="2016-12-17 02:05:46Z" end-time="2016-12-17 02:05:46Z" duration="0.071539" asserts="1">
+            <output><![CDATA[[DEBUG][TestTextToSpeech]: Attempting to get pronunciation...
+[DEBUG][TestTextToSpeech]: GetPronunciation() invoked: .
+]]></output>
+          </test-case>
+          <test-case id="0-1117" name="TextToSpeech_TestGetVoice" fullname="sdk.test.TestTextToSpeech.TextToSpeech_TestGetVoice" methodname="TextToSpeech_TestGetVoice" classname="sdk.test.TestTextToSpeech" runstate="Runnable" seed="140598758" result="Passed" start-time="2016-12-17 02:05:46Z" end-time="2016-12-17 02:05:47Z" duration="0.055719" asserts="1">
+            <output><![CDATA[[DEBUG][TestTextToSpeech]: Attempting to get voice...
+[DEBUG][TestTextToSpeech]: GetVoice() invoked: en-US_AllisonVoice
+]]></output>
+          </test-case>
+          <test-case id="0-1116" name="TextToSpeech_TestGetVoices" fullname="sdk.test.TestTextToSpeech.TextToSpeech_TestGetVoices" methodname="TextToSpeech_TestGetVoices" classname="sdk.test.TestTextToSpeech" runstate="Runnable" seed="544365154" result="Passed" start-time="2016-12-17 02:05:47Z" end-time="2016-12-17 02:05:47Z" duration="0.063673" asserts="1">
+            <output><![CDATA[[DEBUG][TestTextToSpeech]: Attempting to get voices...
+]]></output>
+          </test-case>
+          <test-case id="0-1115" name="TextToSpeech_TestPost" fullname="sdk.test.TestTextToSpeech.TextToSpeech_TestPost" methodname="TextToSpeech_TestPost" classname="sdk.test.TestTextToSpeech" runstate="Runnable" seed="928383011" result="Passed" start-time="2016-12-17 02:05:47Z" end-time="2016-12-17 02:05:47Z" duration="0.060349" asserts="1">
+            <output><![CDATA[[DEBUG][TestTextToSpeech]: Attempting to speech using POST...
+[DEBUG][TextToSpeech]: WAV INFO, channels = 1, bps = 16, samples = 43993, rate = 22050
+]]></output>
+          </test-case>
+        </test-suite>
+        <test-suite type="TestFixture" id="0-1128" name="TestToneAnalyzer" fullname="sdk.test.TestToneAnalyzer" classname="sdk.test.TestToneAnalyzer" runstate="Runnable" testcasecount="2" result="Passed" start-time="2016-12-17 02:05:47Z" end-time="2016-12-17 02:05:47Z" duration="0.173047" total="2" passed="2" failed="0" inconclusive="0" skipped="0" asserts="2">
+          <test-case id="0-1129" name="ToneAnalyzer_TestToneGET" fullname="sdk.test.TestToneAnalyzer.ToneAnalyzer_TestToneGET" methodname="ToneAnalyzer_TestToneGET" classname="sdk.test.TestToneAnalyzer" runstate="Runnable" seed="951200951" result="Passed" start-time="2016-12-17 02:05:47Z" end-time="2016-12-17 02:05:47Z" duration="0.051384" asserts="1">
+            <output><![CDATA[[DEBUG][TestToneAnalyzer]: Attempting to get tone using GET...
+]]></output>
+          </test-case>
+          <test-case id="0-1130" name="ToneAnalyzer_TestTonePOST" fullname="sdk.test.TestToneAnalyzer.ToneAnalyzer_TestTonePOST" methodname="ToneAnalyzer_TestTonePOST" classname="sdk.test.TestToneAnalyzer" runstate="Runnable" seed="513514464" result="Passed" start-time="2016-12-17 02:05:47Z" end-time="2016-12-17 02:05:47Z" duration="0.113961" asserts="1">
+            <output><![CDATA[[DEBUG][TestToneAnalyzer]: Attempting to get tone using POST...
+]]></output>
+          </test-case>
+        </test-suite>
+        <test-suite type="TestFixture" id="0-1131" name="TestTradeoffAnalytics" fullname="sdk.test.TestTradeoffAnalytics" classname="sdk.test.TestTradeoffAnalytics" runstate="Runnable" testcasecount="1" result="Passed" start-time="2016-12-17 02:05:47Z" end-time="2016-12-17 02:05:47Z" duration="0.223609" total="1" passed="1" failed="0" inconclusive="0" skipped="0" asserts="1">
+          <test-case id="0-1132" name="TradeoffAnalytics_TestDilemmas" fullname="sdk.test.TestTradeoffAnalytics.TradeoffAnalytics_TestDilemmas" methodname="TradeoffAnalytics_TestDilemmas" classname="sdk.test.TestTradeoffAnalytics" runstate="Runnable" seed="595314720" result="Passed" start-time="2016-12-17 02:05:47Z" end-time="2016-12-17 02:05:47Z" duration="0.220486" asserts="1">
+            <output><![CDATA[[DEBUG][TestTradeoffAnalytics]: Attempting to get solution to dilemma...
+]]></output>
+          </test-case>
+        </test-suite>
+        <test-suite type="TestFixture" id="0-1133" name="TestVisualRecognition" fullname="sdk.test.TestVisualRecognition" classname="sdk.test.TestVisualRecognition" runstate="Runnable" testcasecount="23" result="Passed" start-time="2016-12-17 02:05:47Z" end-time="2016-12-17 02:06:33Z" duration="45.665253" total="23" passed="23" failed="0" inconclusive="0" skipped="0" asserts="23">
+          <test-case id="0-1135" name="VisualRecognition_TestTrainClassifier" fullname="sdk.test.TestVisualRecognition.VisualRecognition_TestTrainClassifier" methodname="VisualRecognition_TestTrainClassifier" classname="sdk.test.TestVisualRecognition" runstate="Runnable" seed="1235734671" result="Passed" start-time="2016-12-17 02:05:47Z" end-time="2016-12-17 02:05:54Z" duration="7.204146" asserts="1">
+            <properties>
+              <property name="Order" value="1" />
+            </properties>
+            <output><![CDATA[[DEBUG][TestVisualRecognition]: Attempting to train classifier...
+]]></output>
+          </test-case>
+          <test-case id="0-1134" name="VisualRecognition_TestGetClassifiers" fullname="sdk.test.TestVisualRecognition.VisualRecognition_TestGetClassifiers" methodname="VisualRecognition_TestGetClassifiers" classname="sdk.test.TestVisualRecognition" runstate="Runnable" seed="156028597" result="Passed" start-time="2016-12-17 02:05:54Z" end-time="2016-12-17 02:05:57Z" duration="2.565391" asserts="1">
+            <properties>
+              <property name="Order" value="2" />
+            </properties>
+            <output><![CDATA[[DEBUG][TestVisualRecognition]: Attempting to get classifiers...
+[DEBUG][TestVisualRecognition]: 42 classifiers found.
+]]></output>
+          </test-case>
+          <test-case id="0-1136" name="VisualRecognition_TestFindClassifier" fullname="sdk.test.TestVisualRecognition.VisualRecognition_TestFindClassifier" methodname="VisualRecognition_TestFindClassifier" classname="sdk.test.TestVisualRecognition" runstate="Runnable" seed="1412940703" result="Passed" start-time="2016-12-17 02:05:57Z" end-time="2016-12-17 02:05:59Z" duration="2.115020" asserts="1">
+            <properties>
+              <property name="Order" value="3" />
+            </properties>
+            <output><![CDATA[[DEBUG][TestVisualRecognition]: Attempting to find classifier dotnet-integration-test-classifier...
+]]></output>
+          </test-case>
+          <test-case id="0-1137" name="VisualRecognition_TestGetClassifier" fullname="sdk.test.TestVisualRecognition.VisualRecognition_TestGetClassifier" methodname="VisualRecognition_TestGetClassifier" classname="sdk.test.TestVisualRecognition" runstate="Runnable" seed="1339325791" result="Passed" start-time="2016-12-17 02:05:59Z" end-time="2016-12-17 02:05:59Z" duration="0.452713" asserts="1">
+            <properties>
+              <property name="Order" value="4" />
+            </properties>
+            <output><![CDATA[[DEBUG][TestVisualRecognition]: Attempting to get classifier...
+]]></output>
+          </test-case>
+          <test-case id="0-1138" name="VisualRecognition_TestUpdateClassifier" fullname="sdk.test.TestVisualRecognition.VisualRecognition_TestUpdateClassifier" methodname="VisualRecognition_TestUpdateClassifier" classname="sdk.test.TestVisualRecognition" runstate="Runnable" seed="846594277" result="Passed" start-time="2016-12-17 02:05:59Z" end-time="2016-12-17 02:06:06Z" duration="6.670806" asserts="1">
+            <properties>
+              <property name="Order" value="5" />
+            </properties>
+            <output><![CDATA[[DEBUG][TestVisualRecognition]: Attempting to update classifier...
+]]></output>
+          </test-case>
+          <test-case id="0-1139" name="VisualRecognition_TestClassifyGET" fullname="sdk.test.TestVisualRecognition.VisualRecognition_TestClassifyGET" methodname="VisualRecognition_TestClassifyGET" classname="sdk.test.TestVisualRecognition" runstate="Runnable" seed="1012474590" result="Passed" start-time="2016-12-17 02:06:06Z" end-time="2016-12-17 02:06:09Z" duration="2.828339" asserts="1">
+            <properties>
+              <property name="Order" value="6" />
+            </properties>
+            <output><![CDATA[[DEBUG][TestVisualRecognition]: Attempting to classify using GET...
+]]></output>
+          </test-case>
+          <test-case id="0-1140" name="VisualRecognition_TestClassifyPOST" fullname="sdk.test.TestVisualRecognition.VisualRecognition_TestClassifyPOST" methodname="VisualRecognition_TestClassifyPOST" classname="sdk.test.TestVisualRecognition" runstate="Runnable" seed="1420231082" result="Passed" start-time="2016-12-17 02:06:09Z" end-time="2016-12-17 02:06:13Z" duration="4.011977" asserts="1">
+            <properties>
+              <property name="Order" value="7" />
+            </properties>
+            <output><![CDATA[[DEBUG][TestVisualRecognition]: Attempting to classify using POST...
+]]></output>
+          </test-case>
+          <test-case id="0-1141" name="VisualRecognition_TestDetectFacesGET" fullname="sdk.test.TestVisualRecognition.VisualRecognition_TestDetectFacesGET" methodname="VisualRecognition_TestDetectFacesGET" classname="sdk.test.TestVisualRecognition" runstate="Runnable" seed="729337043" result="Passed" start-time="2016-12-17 02:06:13Z" end-time="2016-12-17 02:06:17Z" duration="3.924876" asserts="1">
+            <properties>
+              <property name="Order" value="8" />
+            </properties>
+            <output><![CDATA[[DEBUG][TestVisualRecognition]: Attempting to detect faces using GET...
+]]></output>
+          </test-case>
+          <test-case id="0-1142" name="VisualRecognition_TestDetectFacesPOST" fullname="sdk.test.TestVisualRecognition.VisualRecognition_TestDetectFacesPOST" methodname="VisualRecognition_TestDetectFacesPOST" classname="sdk.test.TestVisualRecognition" runstate="Runnable" seed="302294414" result="Passed" start-time="2016-12-17 02:06:17Z" end-time="2016-12-17 02:06:19Z" duration="2.370545" asserts="1">
+            <properties>
+              <property name="Order" value="9" />
+            </properties>
+            <output><![CDATA[[DEBUG][TestVisualRecognition]: Attempting to detect faces using POST...
+]]></output>
+          </test-case>
+          <test-case id="0-1143" name="VisualRecognition_TestRecognizeTextGET" fullname="sdk.test.TestVisualRecognition.VisualRecognition_TestRecognizeTextGET" methodname="VisualRecognition_TestRecognizeTextGET" classname="sdk.test.TestVisualRecognition" runstate="Runnable" seed="1304696358" result="Passed" start-time="2016-12-17 02:06:19Z" end-time="2016-12-17 02:06:21Z" duration="1.885291" asserts="1">
+            <properties>
+              <property name="Order" value="10" />
+            </properties>
+            <output><![CDATA[[DEBUG][TestVisualRecognition]: Attempting to recognize text using GET...
+]]></output>
+          </test-case>
+          <test-case id="0-1144" name="VisualRecognition_TestRecognizeTextPOST" fullname="sdk.test.TestVisualRecognition.VisualRecognition_TestRecognizeTextPOST" methodname="VisualRecognition_TestRecognizeTextPOST" classname="sdk.test.TestVisualRecognition" runstate="Runnable" seed="1562681756" result="Passed" start-time="2016-12-17 02:06:21Z" end-time="2016-12-17 02:06:28Z" duration="6.575136" asserts="1">
+            <properties>
+              <property name="Order" value="11" />
+            </properties>
+            <output><![CDATA[[DEBUG][TestVisualRecognition]: Attempting to recognize text using POST...
+]]></output>
+          </test-case>
+          <test-case id="0-1145" name="VisualRecognition_TestGetCollections" fullname="sdk.test.TestVisualRecognition.VisualRecognition_TestGetCollections" methodname="VisualRecognition_TestGetCollections" classname="sdk.test.TestVisualRecognition" runstate="Runnable" seed="1935915517" result="Passed" start-time="2016-12-17 02:06:28Z" end-time="2016-12-17 02:06:28Z" duration="0.361252" asserts="1">
+            <properties>
+              <property name="Order" value="12" />
+            </properties>
+            <output><![CDATA[[DEBUG][TestVisualRecognition]: Attempting to get collections...
+]]></output>
+          </test-case>
+          <test-case id="0-1146" name="VisualRecognition_TestCreateCollection" fullname="sdk.test.TestVisualRecognition.VisualRecognition_TestCreateCollection" methodname="VisualRecognition_TestCreateCollection" classname="sdk.test.TestVisualRecognition" runstate="Runnable" seed="878335105" result="Passed" start-time="2016-12-17 02:06:28Z" end-time="2016-12-17 02:06:28Z" duration="0.390214" asserts="1">
+            <properties>
+              <property name="Order" value="13" />
+            </properties>
+            <output><![CDATA[[DEBUG][TestVisualRecognition]: Attempting to create collection...
+]]></output>
+          </test-case>
+          <test-case id="0-1147" name="VisualRecognition_TestGetCollection" fullname="sdk.test.TestVisualRecognition.VisualRecognition_TestGetCollection" methodname="VisualRecognition_TestGetCollection" classname="sdk.test.TestVisualRecognition" runstate="Runnable" seed="735031188" result="Passed" start-time="2016-12-17 02:06:28Z" end-time="2016-12-17 02:06:29Z" duration="0.087529" asserts="1">
+            <properties>
+              <property name="Order" value="14" />
+            </properties>
+            <output><![CDATA[[DEBUG][TestVisualRecognition]: Attempting to get collection...
+]]></output>
+          </test-case>
+          <test-case id="0-1148" name="VisualRecognition_TestGetCollectionImages" fullname="sdk.test.TestVisualRecognition.VisualRecognition_TestGetCollectionImages" methodname="VisualRecognition_TestGetCollectionImages" classname="sdk.test.TestVisualRecognition" runstate="Runnable" seed="1379313392" result="Passed" start-time="2016-12-17 02:06:29Z" end-time="2016-12-17 02:06:29Z" duration="0.153168" asserts="1">
+            <properties>
+              <property name="Order" value="15" />
+            </properties>
+            <output><![CDATA[[DEBUG][TestVisualRecognition]: Attempting to get collection images...
+]]></output>
+          </test-case>
+          <test-case id="0-1149" name="VisualRecognition_TestAddCollectionImage" fullname="sdk.test.TestVisualRecognition.VisualRecognition_TestAddCollectionImage" methodname="VisualRecognition_TestAddCollectionImage" classname="sdk.test.TestVisualRecognition" runstate="Runnable" seed="1374819510" result="Passed" start-time="2016-12-17 02:06:29Z" end-time="2016-12-17 02:06:30Z" duration="1.049406" asserts="1">
+            <properties>
+              <property name="Order" value="16" />
+            </properties>
+            <output><![CDATA[[DEBUG][TestVisualRecognition]: Attempting to add collection image...
+]]></output>
+          </test-case>
+          <test-case id="0-1150" name="VisualRecognition_TestGetImage" fullname="sdk.test.TestVisualRecognition.VisualRecognition_TestGetImage" methodname="VisualRecognition_TestGetImage" classname="sdk.test.TestVisualRecognition" runstate="Runnable" seed="1677643428" result="Passed" start-time="2016-12-17 02:06:30Z" end-time="2016-12-17 02:06:30Z" duration="0.318805" asserts="1">
+            <properties>
+              <property name="Order" value="17" />
+            </properties>
+            <output><![CDATA[[DEBUG][TestVisualRecognition]: Attempting to get image details...
+]]></output>
+          </test-case>
+          <test-case id="0-1151" name="VisualRecognition_TestGetMetadata" fullname="sdk.test.TestVisualRecognition.VisualRecognition_TestGetMetadata" methodname="VisualRecognition_TestGetMetadata" classname="sdk.test.TestVisualRecognition" runstate="Runnable" seed="456911751" result="Passed" start-time="2016-12-17 02:06:30Z" end-time="2016-12-17 02:06:30Z" duration="0.073263" asserts="1">
+            <properties>
+              <property name="Order" value="18" />
+            </properties>
+            <output><![CDATA[[DEBUG][TestVisualRecognition]: Attempting to get metadata...
+]]></output>
+          </test-case>
+          <test-case id="0-1152" name="VisualRecognition_TestFindSimilar" fullname="sdk.test.TestVisualRecognition.VisualRecognition_TestFindSimilar" methodname="VisualRecognition_TestFindSimilar" classname="sdk.test.TestVisualRecognition" runstate="Runnable" seed="1153131850" result="Passed" start-time="2016-12-17 02:06:30Z" end-time="2016-12-17 02:06:31Z" duration="0.785143" asserts="1">
+            <properties>
+              <property name="Order" value="19" />
+            </properties>
+            <output><![CDATA[[DEBUG][TestVisualRecognition]: Attempting to FindSimilar...
+]]></output>
+          </test-case>
+          <test-case id="0-1153" name="VisualRecognition_TestDeleteImageMetadata" fullname="sdk.test.TestVisualRecognition.VisualRecognition_TestDeleteImageMetadata" methodname="VisualRecognition_TestDeleteImageMetadata" classname="sdk.test.TestVisualRecognition" runstate="Runnable" seed="195121331" result="Passed" start-time="2016-12-17 02:06:31Z" end-time="2016-12-17 02:06:31Z" duration="0.326947" asserts="1">
+            <properties>
+              <property name="Order" value="20" />
+            </properties>
+            <output><![CDATA[[DEBUG][TestVisualRecognition]: Attempting to delete image metadata...
+]]></output>
+          </test-case>
+          <test-case id="0-1154" name="VisualRecognition_TestDeleteCollectionImage" fullname="sdk.test.TestVisualRecognition.VisualRecognition_TestDeleteCollectionImage" methodname="VisualRecognition_TestDeleteCollectionImage" classname="sdk.test.TestVisualRecognition" runstate="Runnable" seed="1455978114" result="Passed" start-time="2016-12-17 02:06:31Z" end-time="2016-12-17 02:06:32Z" duration="0.320444" asserts="1">
+            <properties>
+              <property name="Order" value="21" />
+            </properties>
+            <output><![CDATA[[DEBUG][TestVisualRecognition]: Attempting to delte an image from collection...
+]]></output>
+          </test-case>
+          <test-case id="0-1155" name="VisualRecognition_TestDeleteCollection" fullname="sdk.test.TestVisualRecognition.VisualRecognition_TestDeleteCollection" methodname="VisualRecognition_TestDeleteCollection" classname="sdk.test.TestVisualRecognition" runstate="Runnable" seed="217833265" result="Passed" start-time="2016-12-17 02:06:32Z" end-time="2016-12-17 02:06:32Z" duration="0.365709" asserts="1">
+            <properties>
+              <property name="Order" value="22" />
+            </properties>
+            <output><![CDATA[[DEBUG][TestVisualRecognition]: Attempting to delete collection...
+]]></output>
+          </test-case>
+          <test-case id="0-1156" name="VisualRecognition_TestDeleteClassifier" fullname="sdk.test.TestVisualRecognition.VisualRecognition_TestDeleteClassifier" methodname="VisualRecognition_TestDeleteClassifier" classname="sdk.test.TestVisualRecognition" runstate="Runnable" seed="433993314" result="Passed" start-time="2016-12-17 02:06:32Z" end-time="2016-12-17 02:06:33Z" duration="0.743570" asserts="1">
+            <properties>
+              <property name="Order" value="23" />
+            </properties>
+            <output><![CDATA[[DEBUG][TestVisualRecognition]: Attempting to delete classifier dotnetintegrationtestclassifier_1722263690...
+[DEBUG][VisualRecognition]: Attempting to delete classifier dotnetintegrationtestclassifier_1722263690
+]]></output>
+          </test-case>
+        </test-suite>
+      </test-suite>
+    </test-suite>
+  </test-suite>
+</test-run>
