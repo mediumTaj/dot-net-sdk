@@ -18,12 +18,17 @@
 // uncomment to enable debugging
 //#define ENABLE_DEBUGGING
 
-using System;
-using System.Collections.Generic;
 using IBM.Watson.DeveloperCloud.Utilities;
 using IBM.Watson.DeveloperCloud.Logging;
-using RestSharp;
-using FullSerializer;
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Text;
+using System.Net;
+using System.Threading;
+using System.Net.Http;
+using System.Threading.Tasks;
+using System.Net.Http.Headers;
 
 namespace IBM.Watson.DeveloperCloud.Connection
 {
@@ -49,12 +54,6 @@ namespace IBM.Watson.DeveloperCloud.Connection
         /// The class is returned by a Request object containing the response to a request made
         /// by the client.
         /// </summary>
-        /// 
-        #region Response
-        /// <summary>
-        /// The class is returned by a Request object containing the response to a request made
-        /// by the client.
-        /// </summary>
         public class Response
         {
             #region Public Properties
@@ -75,10 +74,8 @@ namespace IBM.Watson.DeveloperCloud.Connection
             /// </summary>
             public float ElapsedTime { get; set; }
             #endregion
-        }
-        #endregion
+        };
 
-        #region Form
         /// <summary>
         /// Multi-part form data class.
         /// </summary>
@@ -138,9 +135,7 @@ namespace IBM.Watson.DeveloperCloud.Connection
             /// </summary>
             public string MimeType { get; set; }
         };
-        #endregion
 
-        #region Request
         /// <summary>
         /// This class is created to make a request to send to the server.
         /// </summary>
@@ -156,11 +151,6 @@ namespace IBM.Watson.DeveloperCloud.Connection
             }
 
             #region Public Properties
-            private static float sm_LogResponseTime = 3.0f;
-            /// <summary>
-            /// Specify a time to log to the logging system when a response takes longer than this amount.
-            /// </summary>
-            public static float LogResponseTime { get { return sm_LogResponseTime; } set { sm_LogResponseTime = value; } }
             /// <summary>
             /// Custom timeout for this Request. This timeout is used if this timeout is larger than the value in the Config class.
             /// </summary>
@@ -177,6 +167,7 @@ namespace IBM.Watson.DeveloperCloud.Connection
             /// True to send request as PUT.
             /// </summary>
             public bool Put { get; set; }
+            /// <summary>
             /// <summary>
             /// The name of the function to invoke on the server.
             /// </summary>
@@ -212,9 +203,13 @@ namespace IBM.Watson.DeveloperCloud.Connection
             #endregion
         }
         #endregion
-        #endregion
 
         #region Public Properties
+        private static float sm_LogResponseTime = 3.0f;
+        /// <summary>
+        /// Specify a time to log to the logging system when a response takes longer than this amount.
+        /// </summary>
+        public static float LogResponseTime { get { return sm_LogResponseTime; } set { sm_LogResponseTime = value; } }
         /// <summary>
         /// Base URL for REST requests.
         /// </summary>
@@ -232,13 +227,8 @@ namespace IBM.Watson.DeveloperCloud.Connection
         #region Private Data
         //! Dictionary of connectors by service & function.
         private static Dictionary<string, RESTConnector> sm_Connectors = new Dictionary<string, RESTConnector>();
-        private int m_ActiveConnections = 0;
-        private Queue<Request> m_Requests = new Queue<Request>();
-        private RestClient m_restClient = new RestClient();
-        private static fsSerializer sm_Serializer = new fsSerializer();
         #endregion
 
-        #region Connectors
         /// <summary>
         /// This function returns a RESTConnector object for the given service and function. 
         /// </summary>
@@ -279,7 +269,6 @@ namespace IBM.Watson.DeveloperCloud.Connection
         {
             sm_Connectors.Clear();
         }
-        #endregion
 
         #region Send Interface
         /// <summary>
@@ -296,14 +285,25 @@ namespace IBM.Watson.DeveloperCloud.Connection
 
             m_Requests.Enqueue(request);
 
+            // if we are not already running a co-routine to send the Requests
+            // then start one at this point.
             if (m_ActiveConnections < Config.Instance.MaxRestConnections)
+            {
+                // This co-routine will increment m_ActiveConnections then yield back to us so
+                // we can return from the Send() as quickly as possible.
                 ProcessRequestQueue();
+            }
 
             return true;
         }
         #endregion
 
-        #region AddHeaders
+        #region Private Data
+        private int m_ActiveConnections = 0;
+        private Queue<Request> m_Requests = new Queue<Request>();
+        #endregion
+
+        #region Private Functions
         private void AddHeaders(Dictionary<string, string> headers)
         {
             if (Authentication != null)
@@ -321,130 +321,242 @@ namespace IBM.Watson.DeveloperCloud.Connection
 
             headers.Add("User-Agent", Constants.String.VERSION);
         }
-        #endregion
 
-        #region ProcessRequestQueue
-        private void ProcessRequestQueue()
+        private async void ProcessRequestQueue()
         {
             m_ActiveConnections += 1;
 
             while (m_Requests.Count > 0)
             {
-                if (m_restClient == null)
-                    throw new WatsonException("Rest Client is null!");
-
                 Request req = m_Requests.Dequeue();
-
                 if (req.Cancel)
                     continue;
-
                 string url = URL;
                 if (!string.IsNullOrEmpty(req.Function))
                     url += req.Function;
 
-                m_restClient.BaseUrl = new Uri(url);
-                m_restClient.UserAgent = Constants.String.VERSION;
-
-                RestRequest restRequest = new RestRequest();
-
+                StringBuilder args = null;
                 foreach (var kp in req.Parameters)
                 {
                     var key = kp.Key;
                     var value = kp.Value;
-                    string newVal = "";
 
                     if (value is string)
-                        newVal = Uri.EscapeUriString((string)value);
+                        value = Uri.EscapeDataString((string)value);             // escape the value
                     else if (value is byte[])
-                        newVal = Convert.ToBase64String((byte[])value);
+                        value = Convert.ToBase64String((byte[])value);    // convert any byte data into base64 string
                     else if (value is Int32 || value is Int64 || value is UInt32 || value is UInt64)
-                        newVal = value.ToString();
+                        value = value.ToString();
                     else if (value != null)
                         Log.Warning("RESTConnector", "Unsupported parameter value type {0}", value.GetType().Name);
                     else
-                        Log.Error("RESTConnector", "Parameger {0} value is null", key);
+                        Log.Error("RESTConnector", "Parameter {0} value is null", key);
 
-                    if (!string.IsNullOrEmpty(newVal))
-                        restRequest.AddQueryParameter(key, newVal);
+                    if (args == null)
+                        args = new StringBuilder();
+                    else
+                        args.Append("&");                  // append separator
+
+                    args.Append(key + "=" + value);       // append key=value
                 }
 
-                AddHeaders(req.Headers);
+                if (args != null && args.Length > 0)
+                    url += "?" + args.ToString();
 
-                foreach (KeyValuePair<string, string> kv in req.Headers)
-                    restRequest.AddHeader(kv.Key, kv.Value);
+                AddHeaders(req.Headers);
 
                 Response resp = new Response();
 
                 DateTime startTime = DateTime.Now;
                 if (!req.Delete)
                 {
-                    if (req.Forms != null)
-                    {
-                        restRequest.Method = req.Put ? Method.PUT : Method.POST;
+                    HttpResponseMessage response;
 
-                        if (req.Send != null)
-                            Log.Warning("RESTConnector", "Do not use both Send & Form fields in a Request object.");
-
-                        try
+                    using (HttpClient www = new HttpClient())
+                        if (req.Forms != null)
                         {
-                            foreach (var formData in req.Forms)
+                            //  POST
+                            if (req.Send != null)
+                                Log.Warning("RESTConnector", "Do not use both Send & Form fields in a Request object.");
+
+                            MultipartFormDataContent form = new MultipartFormDataContent();
+                            try
                             {
-                                if (formData.Value.IsBinary)
-                                    restRequest.AddFileBytes(formData.Key, formData.Value.Contents, formData.Value.FileName, formData.Value.MimeType);
-                                else if (formData.Value.BoxedObject is string)
-                                    restRequest.AddParameter(formData.Key, formData.Value.BoxedObject, ParameterType.GetOrPost);
-                                else if (formData.Value.BoxedObject is int)
-                                    restRequest.AddParameter(formData.Key, formData.Value.BoxedObject, ParameterType.GetOrPost);
-                                else if (formData.Value.BoxedObject != null)
-                                    Log.Warning("RESTConnector", "Unsupported form field type {0}", formData.Value.BoxedObject.GetType().ToString());
+                                foreach (var formData in req.Forms)
+                                {
+                                    if (formData.Value.IsBinary)
+                                    {
+                                        HttpContent byteContent = new ByteArrayContent(formData.Value.Contents);
+                                        form.Add(byteContent, formData.Key, formData.Value.FileName);
+                                    }
+                                    else if (formData.Value.BoxedObject is string)
+                                    {
+                                        HttpContent stringContent = new StringContent((string)formData.Value.BoxedObject);
+                                        form.Add(stringContent, formData.Key);
+                                    }
+                                    else if (formData.Value.BoxedObject is int)
+                                    {
+                                        HttpContent intContent = new StringContent(formData.Value.BoxedObject.ToString());
+                                        form.Add(intContent, formData.Key);
+                                    }
+                                    else if (formData.Value.BoxedObject != null)
+                                        Log.Warning("RESTConnector", "Unsupported form field type {0}", formData.Value.BoxedObject.GetType().ToString());
+                                }
+                                foreach (var headerData in form.Headers)
+                                    req.Headers[headerData.Key] = headerData.Value.ToString();
+                            }
+                            catch (Exception e)
+                            {
+                                Log.Error("RESTConnector", "Exception when initializing WWWForm: {0}", e.ToString());
+                            }
+
+                            try
+                            {
+                                response = await www.PostAsync(url, form);
+
+                                if (response.IsSuccessStatusCode)
+                                {
+                                    resp.Success = true;
+                                    resp.Data = await response.Content.ReadAsByteArrayAsync();
+                                }
+                                else
+                                {
+                                    Log.Debug("RESTConnector", "An error occured... Status code {0}", response.StatusCode);
+                                }
+                            }
+                            catch (Exception e)
+                            {
+                                Log.Debug("RESTConnector", "Error: {0}", e.Message);
                             }
                         }
-                        catch (Exception e)
+                        else if (req.Send == null)
                         {
-                            Log.Error("RESTConnector", "Exception when initializing form: {0}", e.ToString());
+                            //  GET
+                            try
+                            {
+                                response = await www.GetAsync(url);
+
+                                if (response.IsSuccessStatusCode)
+                                {
+                                    resp.Success = true;
+                                    resp.Data = await response.Content.ReadAsByteArrayAsync();
+                                }
+                                else
+                                {
+                                    Log.Debug("RESTConnector", "An error occured... Status code {0}", response.StatusCode);
+                                }
+                            }
+                            catch (Exception e)
+                            {
+                                Log.Debug("RESTConnector", "Error: {0}", e.Message);
+                            }
                         }
-                    }
-                    else if (req.Send == null)
-                    {
-                        restRequest.Method = Method.GET;
-                    }
-                    else
-                    {
-                        restRequest.Method = req.Put ? Method.PUT : Method.POST;
-                        restRequest.AddParameter(req.Headers["Content-Type"], req.Send, ParameterType.RequestBody);
-                    }
+                        else
+                        {
+                            //  POST Body
+                            try
+                            {
+                                HttpContent byteArrayContent = new ByteArrayContent(req.Send);
+                                if (req.Put)
+                                {
+                                    response = await www.PutAsync(url, byteArrayContent);
+                                }
+                                else
+                                {
+                                    HttpRequestMessage message = new HttpRequestMessage(HttpMethod.Post, url);
+                                    message.Content = byteArrayContent;
+                                    www.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                                    response = await www.SendAsync(message);
+                                }
+
+                                if (response.IsSuccessStatusCode)
+                                {
+                                    resp.Success = true;
+                                    resp.Data = await response.Content.ReadAsByteArrayAsync();
+                                }
+                                else
+                                {
+                                    Log.Debug("RESTConnector", "An error occured... Status code {0}", response.StatusCode);
+                                }
+                            }
+                            catch (Exception e)
+                            {
+                                Log.Debug("RESTConnector", "Error: {0}", e.Message);
+                            }
+                        }
 
 #if ENABLE_DEBUGGING
                     Log.Debug("RESTConnector", "URL: {0}", url);
 #endif
-
-                    m_restClient.ExecuteAsync(restRequest, response =>
-                    {
-                        resp.Success = true;
-                        resp.Data = response.RawBytes;
-                        req.OnResponse?.Invoke(req, resp);
-                    });
-                }
-                else if (req.Delete)
-                {
-
-#if ENABLE_DEBUGGING
-                    Log.Debug("RESTConnector", "Delete Request URL: {0}", url);
-#endif
-
-
-                    restRequest.Method = Method.DELETE;
-
-                    m_restClient.ExecuteAsync(restRequest, response =>
-                    {
-                        resp.Success = true;
-                        resp.Data = response.RawBytes;
-                        req.OnResponse?.Invoke(req, resp);
-                    });
-                    resp.ElapsedTime = (float)(DateTime.Now - startTime).TotalSeconds;
+                    
+                    if (req.OnResponse != null)
+                        req.OnResponse(req, resp);
+                    
                 }
             }
+
+            // reduce the connection count before we exit..
+            m_ActiveConnections -= 1;
         }
+
+        private class DeleteRequest
+        {
+            public string URL { get; set; }
+            public Dictionary<string, string> Headers { get; set; }
+            public bool IsComplete { get; set; }
+            public bool Success { get; set; }
+
+            private Thread m_Thread = null;
+
+            public bool Send(string url, Dictionary<string, string> headers)
+            {
+#if ENABLE_DEBUGGING
+                Log.Debug("RESTConnector", "DeleteRequest, Send: {0}, m_Thread:{1}", url, m_Thread);
+#endif
+                if (m_Thread != null && m_Thread.IsAlive)
+                    return false;
+
+                URL = url;
+                Headers = new Dictionary<string, string>();
+                foreach (var kp in headers)
+                {
+                    if (kp.Key != "User-Agent")
+                        Headers[kp.Key] = kp.Value;
+                }
+
+                m_Thread = new Thread(ProcessRequest);
+
+                m_Thread.Start();
+                return true;
+            }
+
+            private void ProcessRequest()
+            {
+#if ENABLE_DEBUGGING
+                Log.Debug("RESTConnector", "DeleteRequest, ProcessRequest {0}", URL);
+#endif
+
+                WebRequest deleteReq = WebRequest.Create(URL);
+
+                foreach (var kp in Headers)
+                    deleteReq.Headers.Add(kp.Key, kp.Value);
+                deleteReq.Method = "DELETE";
+
+#if ENABLE_DEBUGGING
+                Log.Debug("RESTConnector", "DeleteRequest, sending deletereq {0}", deleteReq);
+#endif
+                HttpWebResponse deleteResp = deleteReq.GetResponse() as HttpWebResponse;
+#if ENABLE_DEBUGGING
+                Log.Debug("RESTConnector", "DELETE Request SENT: {0}", URL);
+#endif
+                Success = deleteResp.StatusCode == HttpStatusCode.OK || deleteResp.StatusCode == HttpStatusCode.NoContent;
+#if ENABLE_DEBUGGING
+                Log.Debug("RESTConnector", "DELETE Request COMPLETE: {0}", URL);
+#endif
+                IsComplete = true;
+            }
+        }
+
+        #endregion
     }
-    #endregion
 }

@@ -1,4 +1,6 @@
-﻿/**
+﻿
+using IBM.Watson.DeveloperCloud.Logging;
+/**
 * Copyright 2015 IBM Corp. All Rights Reserved.
 *
 * Licensed under the Apache License, Version 2.0 (the "License");
@@ -16,6 +18,7 @@
 */
 using IBM.Watson.DeveloperCloud.Services.AlchemyAPI.v1;
 using NUnit.Framework;
+using System;
 using System.Collections.Generic;
 
 namespace sdk.test

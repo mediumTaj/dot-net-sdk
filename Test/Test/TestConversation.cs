@@ -1,4 +1,6 @@
-﻿/**
+﻿
+using IBM.Watson.DeveloperCloud.Logging;
+/**
 * Copyright 2015 IBM Corp. All Rights Reserved.
 *
 * Licensed under the Apache License, Version 2.0 (the "License");
@@ -17,6 +19,7 @@
 using IBM.Watson.DeveloperCloud.Services.Conversation.v1;
 using IBM.Watson.DeveloperCloud.Utilities;
 using NUnit.Framework;
+using System;
 
 namespace sdk.test
 {
@@ -44,11 +47,17 @@ namespace sdk.test
         [Test]
         public void Conversation_TestMessageObject()
         {
-            MessageResponse messageResponse = null;
-
             if (!conversation.Message((MessageResponse resp, string data) =>
             {
-                messageResponse = resp;
+                try
+                {
+                    Assert.NotNull(resp);
+                }
+                catch(Exception e)
+                {
+                    Assert.Fail("resp is null. {0}", e.Message);
+                }
+
                 autoEvent.Set();
             }, workspaceID, input))
             {
@@ -57,20 +66,25 @@ namespace sdk.test
             }
 
             autoEvent.WaitOne();
-            Assert.AreNotEqual(messageResponse, null);
         }
 
         [Test]
         public void Conversation_TestMessageInput()
         {
-            MessageResponse messageResponse = null;
-
             MessageRequest messageRequest = new MessageRequest();
             messageRequest.InputText = input;
 
             if (!conversation.Message((MessageResponse resp, string data) =>
             {
-                messageResponse = resp;
+                try
+                {
+                    Assert.NotNull(resp);
+                }
+                catch(Exception e)
+                {
+                    Assert.Fail("resp is null. {0}", e.Message);
+                }
+
                 autoEvent.Set();
             }, workspaceID, messageRequest))
             {
@@ -79,7 +93,6 @@ namespace sdk.test
             }
 
             autoEvent.WaitOne();
-            Assert.AreNotEqual(messageResponse, null);
         }
     }
 }
