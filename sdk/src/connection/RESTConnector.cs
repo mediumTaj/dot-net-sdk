@@ -21,14 +21,13 @@
 using IBM.Watson.DeveloperCloud.Utilities;
 using IBM.Watson.DeveloperCloud.Logging;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 using System.Net;
 using System.Threading;
 using System.Net.Http;
-using System.Threading.Tasks;
 using System.Net.Http.Headers;
+using System.IO;
 
 namespace IBM.Watson.DeveloperCloud.Connection
 {
@@ -285,14 +284,7 @@ namespace IBM.Watson.DeveloperCloud.Connection
 
             m_Requests.Enqueue(request);
 
-            // if we are not already running a co-routine to send the Requests
-            // then start one at this point.
-            if (m_ActiveConnections < Config.Instance.MaxRestConnections)
-            {
-                // This co-routine will increment m_ActiveConnections then yield back to us so
-                // we can return from the Send() as quickly as possible.
-                ProcessRequestQueue();
-            }
+            ProcessRequestQueue();
 
             return true;
         }
@@ -370,9 +362,10 @@ namespace IBM.Watson.DeveloperCloud.Connection
                 DateTime startTime = DateTime.Now;
                 if (!req.Delete)
                 {
-                    HttpResponseMessage response;
+                    //HttpResponseMessage response;
 
                     using (HttpClient www = new HttpClient())
+                    {
                         if (req.Forms != null)
                         {
                             //  POST
@@ -380,30 +373,25 @@ namespace IBM.Watson.DeveloperCloud.Connection
                                 Log.Warning("RESTConnector", "Do not use both Send & Form fields in a Request object.");
 
                             MultipartFormDataContent form = new MultipartFormDataContent();
+
                             try
                             {
                                 foreach (var formData in req.Forms)
                                 {
                                     if (formData.Value.IsBinary)
-                                    {
-                                        HttpContent byteContent = new ByteArrayContent(formData.Value.Contents);
-                                        form.Add(byteContent, formData.Key, formData.Value.FileName);
-                                    }
+                                        form.Add(new ByteArrayContent(formData.Value.Contents), formData.Key, formData.Value.FileName);
                                     else if (formData.Value.BoxedObject is string)
-                                    {
-                                        HttpContent stringContent = new StringContent((string)formData.Value.BoxedObject);
-                                        form.Add(stringContent, formData.Key);
-                                    }
+                                        form.Add(new StringContent((string)formData.Value.BoxedObject), formData.Key);
                                     else if (formData.Value.BoxedObject is int)
-                                    {
-                                        HttpContent intContent = new StringContent(formData.Value.BoxedObject.ToString());
-                                        form.Add(intContent, formData.Key);
-                                    }
+                                        form.Add(new StringContent(formData.Value.BoxedObject.ToString()), formData.Key);
                                     else if (formData.Value.BoxedObject != null)
                                         Log.Warning("RESTConnector", "Unsupported form field type {0}", formData.Value.BoxedObject.GetType().ToString());
                                 }
+
                                 foreach (var headerData in form.Headers)
+                                {
                                     req.Headers[headerData.Key] = headerData.Value.ToString();
+                                }
                             }
                             catch (Exception e)
                             {
@@ -412,16 +400,17 @@ namespace IBM.Watson.DeveloperCloud.Connection
 
                             try
                             {
-                                response = await www.PostAsync(url, form);
-
-                                if (response.IsSuccessStatusCode)
+                                using (HttpResponseMessage response = await www.PostAsync(url, form))
                                 {
-                                    resp.Success = true;
-                                    resp.Data = await response.Content.ReadAsByteArrayAsync();
-                                }
-                                else
-                                {
-                                    Log.Debug("RESTConnector", "An error occured... Status code {0}", response.StatusCode);
+                                    if (response.IsSuccessStatusCode)
+                                    {
+                                        resp.Success = true;
+                                        resp.Data = await response.Content.ReadAsByteArrayAsync();
+                                    }
+                                    else
+                                    {
+                                        Log.Debug("RESTConnector", "An error occured... Status code {0}", response.StatusCode);
+                                    }
                                 }
                             }
                             catch (Exception e)
@@ -434,49 +423,20 @@ namespace IBM.Watson.DeveloperCloud.Connection
                             //  GET
                             try
                             {
-                                response = await www.GetAsync(url);
-
-                                if (response.IsSuccessStatusCode)
+                                using (HttpResponseMessage response = await www.GetAsync(url))
                                 {
-                                    resp.Success = true;
-                                    resp.Data = await response.Content.ReadAsByteArrayAsync();
-                                }
-                                else
-                                {
-                                    Log.Debug("RESTConnector", "An error occured... Status code {0}", response.StatusCode);
-                                }
-                            }
-                            catch (Exception e)
-                            {
-                                Log.Debug("RESTConnector", "Error: {0}", e.Message);
-                            }
-                        }
-                        else
-                        {
-                            //  POST Body
-                            try
-                            {
-                                HttpContent byteArrayContent = new ByteArrayContent(req.Send);
-                                if (req.Put)
-                                {
-                                    response = await www.PutAsync(url, byteArrayContent);
-                                }
-                                else
-                                {
-                                    HttpRequestMessage message = new HttpRequestMessage(HttpMethod.Post, url);
-                                    message.Content = byteArrayContent;
-                                    www.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-                                    response = await www.SendAsync(message);
-                                }
-
-                                if (response.IsSuccessStatusCode)
-                                {
-                                    resp.Success = true;
-                                    resp.Data = await response.Content.ReadAsByteArrayAsync();
-                                }
-                                else
-                                {
-                                    Log.Debug("RESTConnector", "An error occured... Status code {0}", response.StatusCode);
+                                    using (HttpContent content = response.Content)
+                                    {
+                                        if (response.IsSuccessStatusCode)
+                                        {
+                                            resp.Success = true;
+                                            resp.Data = await content.ReadAsByteArrayAsync();
+                                        }
+                                        else
+                                        {
+                                            Log.Debug("RESTConnector", "An error occured... Status code {0}", response.StatusCode);
+                                        }
+                                    }
                                 }
                             }
                             catch (Exception e)
@@ -484,14 +444,68 @@ namespace IBM.Watson.DeveloperCloud.Connection
                                 Log.Debug("RESTConnector", "Error: {0}", e.Message);
                             }
                         }
+                        //else
+                        //{
+                        //    //  POST Body
+                        //    try
+                        //    {
+                        //        HttpContent byteArrayContent = new ByteArrayContent(req.Send);
+
+                        //        if (req.Put)
+                        //        {
+                        //            response = await www.PutAsync(url, byteArrayContent);
+                        //        }
+                        //        else
+                        //        {
+                        //            //HttpRequestMessage message = new HttpRequestMessage(HttpMethod.Post, url);
+                        //            //message.Content = byteArrayContent;
+                        //            ////message.Content.Headers.Add("Content-Type", req.Headers["Content-Type"]);
+                        //            ////MediaTypeHeaderValue contentType;
+                        //            ////MediaTypeHeaderValue.TryParse(req.Headers["Content-Type"], out contentType);
+                        //            ////message.Content.Headers.ContentType = contentType;
+                        //            //message.Content.Headers.ContentType = new MediaTypeWithQualityHeaderValue(req.Headers["ContentType"]);
+                        //            //www.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(req.Headers["Accept"]));
+                        //            ////response = await www.PostAsync(url, byteArrayContent);
+                        //            //response = await www.SendAsync(message);
+
+                        //            //using (MemoryStream requestStream = new MemoryStream())
+                        //            //{
+                        //            //    HttpContent streamContent = new StreamContent(requestStream);
+                        //            //    requestStream.Write(req.Send, 0, req.Send.Length);
+
+                        //            //    response = await www.PostAsync(url, streamContent);
+                        //            //}
+
+
+                        //            response = await www.PostAsync(url, byteArrayContent);
+                        //        }
+
+                        //        if (response.IsSuccessStatusCode)
+                        //        {
+                        //            resp.Success = true;
+                        //            resp.Data = await response.Content.ReadAsByteArrayAsync();
+                        //        }
+                        //        else
+                        //        {
+                        //            Log.Debug("RESTConnector", "An error occured... Status code {0}", response.StatusCode);
+                        //        }
+                        //    }
+                        //    catch (Exception e)
+                        //    {
+                        //        Log.Debug("RESTConnector", "Error: {0}", e.Message);
+                        //    }
+                        //}
 
 #if ENABLE_DEBUGGING
                     Log.Debug("RESTConnector", "URL: {0}", url);
 #endif
-                    
-                    if (req.OnResponse != null)
-                        req.OnResponse(req, resp);
-                    
+
+                        if (req.OnResponse != null)
+                        {
+                            req.OnResponse(req, resp);
+                        }
+
+                    }
                 }
             }
 

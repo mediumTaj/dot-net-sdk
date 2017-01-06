@@ -44,7 +44,7 @@ namespace sdk.test
         {
             Log.Debug("TestToneAnalyzer", "Attempting to get tone using GET...");
 
-            if (!toneAnalyzer.GetToneAnalyze(toneAnalyzerTestDataString, (ToneAnalyzerResponse resp, string data) =>
+            if (!toneAnalyzer.GetToneAnalyze("testing tone", (ToneAnalyzerResponse resp, string data) =>
              {
                  Assert.NotNull(resp);
                  autoEvent.Set();

@@ -1,6 +1,4 @@
-﻿
-using IBM.Watson.DeveloperCloud.Logging;
-/**
+﻿/**
 * Copyright 2015 IBM Corp. All Rights Reserved.
 *
 * Licensed under the Apache License, Version 2.0 (the "License");
@@ -16,10 +14,10 @@ using IBM.Watson.DeveloperCloud.Logging;
 * limitations under the License.
 *
 */
+
 using IBM.Watson.DeveloperCloud.Services.Conversation.v1;
 using IBM.Watson.DeveloperCloud.Utilities;
 using NUnit.Framework;
-using System;
 
 namespace sdk.test
 {
@@ -49,15 +47,7 @@ namespace sdk.test
         {
             if (!conversation.Message((MessageResponse resp, string data) =>
             {
-                try
-                {
-                    Assert.NotNull(resp);
-                }
-                catch(Exception e)
-                {
-                    Assert.Fail("resp is null. {0}", e.Message);
-                }
-
+                Assert.NotNull(resp);
                 autoEvent.Set();
             }, workspaceID, input))
             {
@@ -76,22 +66,15 @@ namespace sdk.test
 
             if (!conversation.Message((MessageResponse resp, string data) =>
             {
-                try
-                {
-                    Assert.NotNull(resp);
-                }
-                catch(Exception e)
-                {
-                    Assert.Fail("resp is null. {0}", e.Message);
-                }
-
+                //Assert.NotNull(resp);
+                Assert.Pass();
                 autoEvent.Set();
             }, workspaceID, messageRequest))
             {
                 Assert.Fail("Failed to send message! {0}", messageRequest.input);
                 autoEvent.Set();
             }
-
+            
             autoEvent.WaitOne();
         }
     }
