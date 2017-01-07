@@ -26,8 +26,6 @@ using System.Text;
 using System.Net;
 using System.Threading;
 using System.Net.Http;
-using System.Net.Http.Headers;
-using System.IO;
 
 namespace IBM.Watson.DeveloperCloud.Connection
 {
@@ -226,6 +224,7 @@ namespace IBM.Watson.DeveloperCloud.Connection
         #region Private Data
         //! Dictionary of connectors by service & function.
         private static Dictionary<string, RESTConnector> sm_Connectors = new Dictionary<string, RESTConnector>();
+        private AutoResetEvent autoEvent = new AutoResetEvent(false);
         #endregion
 
         /// <summary>
@@ -285,6 +284,7 @@ namespace IBM.Watson.DeveloperCloud.Connection
             m_Requests.Enqueue(request);
 
             ProcessRequestQueue();
+            autoEvent.WaitOne();
 
             return true;
         }
@@ -406,10 +406,13 @@ namespace IBM.Watson.DeveloperCloud.Connection
                                     {
                                         resp.Success = true;
                                         resp.Data = await response.Content.ReadAsByteArrayAsync();
+
+                                        autoEvent.Set();
                                     }
                                     else
                                     {
                                         Log.Debug("RESTConnector", "An error occured... Status code {0}", response.StatusCode);
+                                        autoEvent.Set();
                                     }
                                 }
                             }
@@ -436,12 +439,15 @@ namespace IBM.Watson.DeveloperCloud.Connection
                                         {
                                             Log.Debug("RESTConnector", "An error occured... Status code {0}", response.StatusCode);
                                         }
+
+                                        autoEvent.Set();
                                     }
                                 }
                             }
                             catch (Exception e)
                             {
                                 Log.Debug("RESTConnector", "Error: {0}", e.Message);
+                                autoEvent.Set();
                             }
                         }
                         //else

@@ -16,6 +16,7 @@
 */
 using IBM.Watson.DeveloperCloud.Services.AlchemyAPI.v1;
 using NUnit.Framework;
+using System;
 
 namespace sdk.test
 {
@@ -61,8 +62,18 @@ namespace sdk.test
         {
             if (!alchemyLanguage.GetAuthors((AuthorsData authors, string data) =>
             {
-                Assert.AreNotEqual(authors, null);
+                try
+                {
+                    Assert.That(authors.status, Is.EqualTo("ERROR"));
+                    //Assert.AreNotEqual(authors.status, "ERROR");
+                }
+                catch (Exception e)
+                {
+                    Assert.Fail(string.Format("Error: {0}", e.Message));
+                }
+
                 autoEvent.Set();
+
             }, example_html_article))
             {
                 Assert.Fail();
